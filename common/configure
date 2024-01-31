@@ -10,8 +10,8 @@ MAKEFILE="$(mktemp)"
 UNINSTALL_FILES="$(mktemp)"
 UNINSTALL_DIRS="$(mktemp)"
 
-#set default options
-PYTHON="python3"
+# set default options
+PYTHON="/usr/bin/python3"
 
 USR_BIN_FILES="backintime backintime-askpass"
 
@@ -133,7 +133,11 @@ if [ -n "$unknown_args" ]; then
     echo "Unknown Arguments: $unknown_args"
 fi
 
-if [ -n "$(sed -e "s#^python3\? #${PYTHON} #gw /dev/stdout" -i $USR_BIN_FILES)" ]
+if [ ! -f "$PYTHON" ]; then
+    echo "Warning: \"${PYTHON}\" not found on this computer"
+fi
+
+if [ -n "$(sed -e "s#^/usr/bin/python3\? #${PYTHON} #gw /dev/stdout" -i $USR_BIN_FILES)" ]
 then
     echo "Replacement of python path with \"${PYTHON}\" successful."
 else
@@ -277,9 +281,9 @@ for i in "pytest" "py.test-3" "py.test-3.6" "py.test-3.5" "py.test-3.4"; do
     fi
 done
 COVERAGE=$(which coverage 2>/dev/null)
-#use "coverage run" only on travis-ci.org and if it is available
-#this will pass information to coveralls.io.
-#otherwise use "python", "python3" or if available "py.test-3"
+# Use "coverage run" only on travis-ci.org and if it is available
+# this will pass information to coveralls.io.
+# Otherwise use "python", "python3" or if available "py.test-3"
 if onTravis && [ -n "${COVERAGE}" ]; then
     CMD="coverage run -p"
 else
