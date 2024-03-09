@@ -75,21 +75,29 @@ installation options provided and maintained by third parties.
 
 ## Known Problems and Workarounds
 
+In the current development version:
+- [Missing Qt6 in Ubuntu 22.04 LTS](#missing_qt6_in_ubuntu_2204_lts)
+
 In the latest stable release:
 - [File permissions handling and therefore possible non-differential backups](#file-permissions-handling-and-therefore-possible-non-differential-backups)
-- RTE "module 'qttools' has no attribute 'initate_translator'" with encFS when prompting the user for a password (#1553)
 - [Warning: apt-key is deprecated. Manage keyring files in trusted.gpg.d instead (see apt-key(8)).](#warning-apt-key-is-deprecated-manage-keyring-files-in-trustedgpgd-instead-see-apt-key8)
 - [`qt5_probing.py` may hang with high CPU usage when running BiT as `root` via `cron`](#qt5_probingpy-may-hang-with-high-cpu-usage-when-running-bit-as-root-via-cron)
 
 In older releases:
+- RTE "module 'qttools' has no attribute 'initate_translator'" with encFS when prompting the user for a password (#1553)
 - [Tray icon or other icons not shown correctly](#tray-icon-or-other-icons-not-shown-correctly)
 - [Non-working password safe and BiT forgets passwords (keyring backend issues)](#non-working-password-safe-and-bit-forgets-passwords-keyring-backend-issues)
 - [Incompatibility with rsync >= 3.2.4](#incompatibility-with-rsync-324-or-newer)
 - [Python 3.10 compatibility and Ubuntu version](#python-310-compatibility-and-ubuntu-version)
 
+### Problems in the current development version
+
+#### Missing Qt6 in Ubuntu 22.04 LTS
+
+The dependencies [`python3-pyqt6
 ### Problems in the latest stable release
 
-All releases can be found in the [list of releases](https://github.com/bit-team/backintime/releases).
+See [list of releases](https://github.com/bit-team/backintime/releases).
 
 #### File permissions handling and therefore possible non-differential backups
 
