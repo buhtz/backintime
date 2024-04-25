@@ -8,7 +8,7 @@
 ### Fixed
 -->
 
-## 1.4.4-dev (development of upcoming release)
+## [1.4.4-dev] (development of upcoming release)
 
 ### Fixed
 
@@ -33,7 +33,7 @@
 - Support rsync '--one-file-system' in Expert Options (#1598)
 - "*-dev" version strings contain last commit hash (#1637)
 
-## 1.4.3 (2024-01-30)
+## [1.4.3] (2024-01-30)
 
 ### Added
 
@@ -65,7 +65,7 @@
 - Schedule dropdown menu used "minutes" instead of "hours".
 - Unhandled exception "TypeError: 'NoneType' object is not callable" in tools.py function __log_keyring_warning (#820). 
 
-## 1.4.1 (2023-10-01)
+## [1.4.1] (2023-10-01)
 
 ### Uncategorized
 
@@ -77,7 +77,7 @@
 
 - GUI didn't start when "show hidden files" button was on (#1535).
 
-## 1.4.0 (2023-09-14)
+## [1.4.0] (2023-09-14)
 
 ### Uncategorized
 
@@ -123,7 +123,7 @@
 - Rearranged menu bar and its entries in the main window (#1487, #1478).
 - Configure user interface language via config file and GUI.
 
-## 1.3.3 (2023-01-04)
+## [1.3.3] (2023-01-04)
 
 ### Added
 
@@ -157,19 +157,19 @@
 - [Arch Linux] AUR pkg "backintime-git": Build tests fails and installation is aborted (#1233, fixed with #921)
 - Wrong systray icon showing in Wayland (#1244)
 
-## 1.3.2 (2022-03-12)
+## [1.3.2] (2022-03-12)
 
 ### Fixed
 
 - Tests no longer work with Python 3.10 (https://github.com/bit-team/backintime/issues/1175)
 
-## 1.3.1 (2021-07-05)
+## [1.3.1] (2021-07-05)
 
 ### Uncategorized
 
 - Uncategorized : bump version, forgot to push branch to Github before releasing
 
-## 1.3.0 (2021-07-04)
+## [1.3.0] (2021-07-04)
 
 ### Uncategorized
 
@@ -185,13 +185,13 @@
 - YEAR missing in config (https://github.com/bit-team/backintime/issues/1023)
 - SSH module didn't send identification string while checking if remote host is available (https://github.com/bit-team/backintime/issues/1030)
 
-## 1.2.1 (2019-08-25)
+## [1.2.1] (2019-08-25)
 
 ### Fixed
 
 - TypeError in backintime.py if mount failed while running a snapshot (https://github.com/bit-team/backintime/issues/1005)
 
-## 1.2.0 (2019-04-27)
+## [1.2.0] (2019-04-27)
 
 ### Fixed
 
@@ -303,13 +303,13 @@
 - Uncategorized : rewrite huge parts of snapshots.py
 - Uncategorized : remove backwards compatibility to version < 1.0
 
-## 1.1.24 (2017-11-07)
+## [1.1.24] (2017-11-07)
 
 ### Fixed
 
 - CVE-2017-16667: shell injection in notify-send (https://github.com/bit-team/backintime/issues/834)
 
-## 1.1.22 (2017-10-28)
+## [1.1.22] (2017-10-28)
 
 ### Fixed
 
@@ -317,26 +317,26 @@
 - backintime root crontab doesn't run; missing line-feed 0x0A on last line (https://github.com/bit-team/backintime/issues/552781)
 - can't open files with spaces in name (https://github.com/bit-team/backintime/issues/552552)
 
-## 1.1.20 (2017-04-09)
+## [1.1.20] (2017-04-09)
 
 ### Fixed
 
 - CVE-2017-7572: polkit CheckAuthorization: race condition in privilege authorization
 
-## 1.1.18 (2017-03-29)
+## [1.1.18] (2017-03-29)
 
 ### Fixed
 
 - manual snapshots from GUI didn't work (https://github.com/bit-team/backintime/issues/728)
 
-## 1.1.16 (2017-03-28)
+## [1.1.16] (2017-03-28)
 
 ### Fixed
 
 - start a new ssh-agent instance only if necessary (https://github.com/bit-team/backintime/issues/722)
 - OSError when running backup-job from systemd (https://github.com/bit-team/backintime/issues/720)
 
-## 1.1.14 (2017-03-05)
+## [1.1.14] (2017-03-05)
 
 ### Fixed
 
@@ -346,14 +346,14 @@
 - use current folder if no file is selected in files view
 - restore filesystem-root without 'Full rsync mode' with ACL and/or xargs activated broke whole system (https://github.com/bit-team/backintime/issues/708)
 
-## 1.1.12 (2016-01-11)
+## [1.1.12] (2016-01-11)
 
 ### Fixed
 
 - remove x-terminal-emulator dependency (https://github.com/bit-team/backintime/issues/515)
 - AttributeError in About Dialog (https://github.com/bit-team/backintime/issues/515)
 
-## 1.1.10 (2016-01-09)
+## [1.1.10] (2016-01-09)
 
 ### Fixed
 
@@ -386,7 +386,7 @@
 - Uncategorized : speed up mounting of SSH+encrypted profiles
 - Uncategorized : Move source code and bug tracking to GitHub
 
-## 1.1.8 (2015-09-28)
+## [1.1.8] (2015-09-28)
 
 ### Fixed
 
@@ -430,7 +430,7 @@
 - Uncategorized : rewrite command-line argument parsing. Now using argparse
 - Uncategorized : add expert option SSH command prefix
 
-## 1.1.6 (2015-06-27)
+## [1.1.6] (2015-06-27)
 
 ### Uncategorized
 
@@ -454,7 +454,7 @@
 - failed to restore file names with white spaces using CLI (https://launchpad.net/bugs/1435602)
 - UnboundLocalError with 'last_snapshot' in _free_space (https://launchpad.net/bugs/1437623)
 
-## 1.1.4 (2015-03-22)
+## [1.1.4] (2015-03-22)
 
 ### Uncategorized
 
@@ -479,7 +479,7 @@
 - ugly theme while running as root on Gnome based DEs (https://launchpad.net/bugs/1418447)
 - UnicodeError thrown if filename has broken charset (https://launchpad.net/bugs/1419694)
 
-## 1.1.2 (2015-02-04)
+## [1.1.2] (2015-02-04)
 
 ### Uncategorized
 
@@ -489,7 +489,7 @@
 - Uncategorized : move compression from install to build in Makefiles
 - Uncategorized : use pkexec to start backintime-qt4 as root
 
-## 1.1.0 (2015-01-15)
+## [1.1.0] (2015-01-15)
 
 ### Uncategorized
 
@@ -547,7 +547,7 @@
 - 'inotify_add_watch failed' while closing BIT
 - systray icon didn't show up (https://bugs.launchpad.net/backintime/+bug/658424)
 
-## 1.0.40 (2014-11-02)
+## [1.0.40] (2014-11-02)
 
 ### Uncategorized
 
@@ -558,7 +558,7 @@
 
 - 'Attempt to unlock mutex that was not locked'... this time for good
 
-## 1.0.38 (2014-10-01)
+## [1.0.38] (2014-10-01)
 
 ### Fixed
 
@@ -571,7 +571,7 @@
 
 - Uncategorized : compare os.path.realpath instead of os.stat to get devices UUID
 
-## 1.0.36 (2014-08-06)
+## [1.0.36] (2014-08-06)
 
 ### Uncategorized
 
@@ -588,7 +588,7 @@
 - TypeError in config.py check_config() (https://bugzilla.redhat.com/show_bug.cgi?id=1091644)
 - unhandled exception in create_last_snapshot_symlink() (https://bugs.launchpad.net/bugs/1269991)
 
-## 1.0.34 (2013-12-21)
+## [1.0.34] (2013-12-21)
 
 ### Uncategorized
 
@@ -598,13 +598,13 @@
 
 - BIT running as root shutdown after snapshot, regardless of option checked (https://bugs.launchpad.net/bugs/1261022)
 
-## 1.0.32 (2013-12-13)
+## [1.0.32] (2013-12-13)
 
 ### Fixed
 
 - cron scheduled snapshots won't start with 1.0.30
 
-## 1.0.30 (2013-12-12)
+## [1.0.30] (2013-12-12)
 
 ### Uncategorized
 
@@ -624,7 +624,7 @@
 - Ubuntu Lucid doesn't provide SecretServiceKeyring (https://bugs.launchpad.net/backintime/+bug/1243911)
 - 'gksu backintime-gnome' failed with dbus.exceptions.DBusException
 
-## 1.0.28 (2013-10-19)
+## [1.0.28] (2013-10-19)
 
 ### Uncategorized
 
@@ -646,7 +646,7 @@
 - KPassivePopup is not defined (https://bugs.launchpad.net/backintime/+bug/871475)
 - ValueError while reading pw-cache PID (https://answers.launchpad.net/backintime/+question/235407)
 
-## 1.0.26 (2013-09-07)
+## [1.0.26] (2013-09-07)
 
 ### Uncategorized
 
@@ -674,7 +674,7 @@
 - unreadable dark KDE color schemes (https://bugs.launchpad.net/backintime/+bug/1184920)
 - permission denied if remote uid wasn't the same as local uid
 
-## 1.0.24 (2013-05-08)
+## [1.0.24] (2013-05-08)
 
 ### Uncategorized
 
@@ -696,7 +696,7 @@
 - GtkWarning: Unknown property: GtkLabel.margin-top
 - check keyring backend only if password is needed
 
-## 1.0.22 (2013-03-26)
+## [1.0.22] (2013-03-26)
 
 ### Uncategorized
 
@@ -710,13 +710,13 @@
 - host not found in known_hosts if port != 22 (https://bugs.launchpad.net/backintime/+bug/1130356)
 - sshtools.py used not POSIX conform conditionals
 
-## 1.0.20 (2012-12-15)
+## [1.0.20] (2012-12-15)
 
 ### Fixed
 
 - restore remote path with spaces using mode ssh returned error
 
-## 1.0.18 (2012-11-17)
+## [1.0.18] (2012-11-17)
 
 ### Uncategorized
 
@@ -729,19 +729,19 @@
 - https://bugs.launchpad.net/backintime/+bug/1078979
 - https://bugs.launchpad.net/backintime/+bug/1079479
 
-## 1.0.16 (2012-11-15)
+## [1.0.16] (2012-11-15)
 
 ### Uncategorized
 
 - Fix a package dependency problem ... this time for good (https : //bugs.launchpad.net/backintime/+bug/1077446)
 
-## 1.0.14 (2012-11-09)
+## [1.0.14] (2012-11-09)
 
 ### Uncategorized
 
 - Uncategorized : Fix a package dependency problem
 
-## 1.0.12 (2012-11-08)
+## [1.0.12] (2012-11-08)
 
 ### Uncategorized
 
@@ -758,13 +758,13 @@
 - glade (xml) files did not translate
 - https://bugs.launchpad.net/backintime/+bug/1073867
 
-## 1.0.10 (2012-03-06)
+## [1.0.10] (2012-03-06)
 
 ### Uncategorized
 
 - Uncategorized : Add "Restore to ..." in replacement of copy (with or without drag & drop) because copy don't restore user/group/rights
 
-## 1.0.8 (2011-06-18)
+## [1.0.8] (2011-06-18)
 
 ### Fixed
 
@@ -773,7 +773,7 @@
 - https://bugs.launchpad.net/backintime/+bug/696663
 - https://bugs.launchpad.net/backintime/+bug/671946
 
-## 1.0.6 (2011-01-02)
+## [1.0.6] (2011-01-02)
 
 ### Fixed
 
@@ -784,7 +784,7 @@
 
 - Smart remove : configurable options (https://bugs.launchpad.net/backintime/+bug/406765)
 
-## 1.0.4 (2010-10-28)
+## [1.0.4] (2010-10-28)
 
 ### Uncategorized
 
@@ -797,14 +797,14 @@
 
 - https://bugs.launchpad.net/backintime/+bug/664783
 
-## 1.0.2 (2010-10-16)
+## [1.0.2] (2010-10-16)
 
 ### Uncategorized
 
 - Uncategorized : reduce log file (no more duplicate "Compare with..." lines)
 - Uncategorized : declare backintime-kde4 packages as a replacement of backintime-kde
 
-## 1.0 (2010-10-16)
+## [1.0] (2010-10-16)
 
 ### Uncategorized
 
@@ -874,7 +874,7 @@
 - https://bugs.launchpad.net/backintime/+bug/447841
 - https://bugs.launchpad.net/backintime/+bug/412695
 
-## 0.9.26 (2009-05-19)
+## [0.9.26] (2009-05-19)
 
 ### Uncategorized
 
@@ -893,7 +893,7 @@
 - https://bugs.launchpad.net/backintime/+bug/374477
 - https://bugs.launchpad.net/backintime/+bug/375113
 
-## 0.9.24 (2009-05-07)
+## [0.9.24] (2009-05-07)
 
 ### Uncategorized
 
@@ -908,13 +908,13 @@
 - GNOME : break the big glade file in multiple file
 - Uncategorized : backintime is no longer aware of 'backintime-gnome' and 'backintime-kde4'  
 
-## 0.9.22.1 (2009-04-27)
+## [0.9.22.1] (2009-04-27)
 
 ### Uncategorized
 
 - Uncategorized : fix French translation
 
-## 0.9.22 (2009-04-24)
+## [0.9.22] (2009-04-24)
 
 ### Uncategorized
 
@@ -932,14 +932,14 @@
 - follow FreeDesktop directories specs :  
 - new install system : use more common steps (./configure; make; sudo make install)
 
-## 0.9.20 (2009-04-06)
+## [0.9.20] (2009-04-06)
 
 ### Uncategorized
 
 - smart remove : fix an important bug and make it more verbose in syslog
 - Uncategorized : update Spanish translation (Francisco Manuel García Claramonte <franciscomanuel.garcia@hispalinux.es>)
 
-## 0.9.18 (2009-04-02)
+## [0.9.18] (2009-04-02)
 
 ### Uncategorized
 
@@ -962,13 +962,13 @@
 - GNOME & KDE4 : rework settings dialog
 - SettingDialog : add an option to enable/disable notifications
 
-## 0.9.16.1 (2009-03-16)
+## [0.9.16.1] (2009-03-16)
 
 ### Uncategorized
 
 - Uncategorized : fix a bug/crush for French version
 
-## 0.9.16 (2009-03-13)
+## [0.9.16] (2009-03-13)
 
 ### Uncategorized
 
@@ -986,7 +986,7 @@
 - GNOME & KDE4 : add notify if the snapshots directory don't exists
 - KDE4 : rework MainWindow
 
-## 0.9.14 (2009-03-05)
+## [0.9.14] (2009-03-05)
 
 ### Uncategorized
 
@@ -998,7 +998,7 @@
 - GNOME & KDE4 : rework SettingsDialog
 - GNOME & KDE4 : add "smart" remove
 
-## 0.9.12 (2009-02-28)
+## [0.9.12] (2009-02-28)
 
 ### Fixed
 
@@ -1010,7 +1010,7 @@
 - KDE4 : add help
 - Uncategorized : add Slovenian translation (Vanja Cvelbar <cvelbar@gmail.com>)
 
-## 0.9.10 (2009-02-24)
+## [0.9.10] (2009-02-24)
 
 ### Uncategorized
 
@@ -1021,7 +1021,7 @@
 
 - fix a segfault when running from cron
 
-## 0.9.8 (2009-02-20)
+## [0.9.8] (2009-02-20)
 
 ### Uncategorized
 
@@ -1036,7 +1036,7 @@
 
 - unable to restore files that contains space char in their name
 
-## 0.9.6 (2009-02-09)
+## [0.9.6] (2009-02-09)
 
 ### Uncategorized
 
@@ -1047,7 +1047,7 @@
 - GNOME & KDE4 : add update snapshots button
 - GNOME : handle special folders icons (home, desktop)
 
-## 0.9.4 (2009-01-30)
+## [0.9.4] (2009-01-30)
 
 ### Uncategorized
 
@@ -1056,7 +1056,7 @@
 - KDE4 (>= 4.1) : first version (not finished)
 - Uncategorized : update man
 
-## 0.9.2 (2009-01-16)
+## [0.9.2] (2009-01-16)
 
 ### Uncategorized
 
@@ -1071,7 +1071,7 @@
 - if you add "/a" in include directories and "/a/b" in exclude patterns, "/a/b*" items 
 - it does not include ".*" items even if they are not excluded  
 
-## 0.9 (2009-01-09)
+## [0.9] (2009-01-09)
 
 ### Uncategorized
 
@@ -1085,7 +1085,7 @@
 
 - when you open snapshots dialog for the second time ( or more ) and you make a diff  
 
-## 0.8.20 (2008-12-22)
+## [0.8.20] (2008-12-22)
 
 ### Fixed
 
@@ -1095,7 +1095,7 @@
 
 - getmessages.sh : ignore "gtk-" items (this are gtk stock item ids and should not be changed)
 
-## 0.8.18 (2008-12-17)
+## [0.8.18] (2008-12-17)
 
 ### Uncategorized
 
@@ -1103,14 +1103,14 @@
 - Uncategorized : add sort columns in MainWindow/FileView (by name, by size or by date) and SnapshotsDialog (by date)
 - Uncategorized : fix German translation (Michael Wiedmann <mw@miwie.in-berlin.de>)
 
-## 0.8.16 (2008-12-11)
+## [0.8.16] (2008-12-11)
 
 ### Uncategorized
 
 - add Drag & Drop from MainWindow : FileView/SnapshotsDialog to Nautilus
 - Uncategorized : update German translation (Michael Wiedmann <mw@miwie.in-berlin.de>)
 
-## 0.8.14 (2008-12-07)
+## [0.8.14] (2008-12-07)
 
 ### Uncategorized
 
@@ -1119,7 +1119,7 @@
 - when taking a new backup based on the previous one don't copy the previous extra info (ex : name)
 - Uncategorized : copy unsafe links when taking a snapshot
 
-## 0.8.12 (2008-12-01)
+## [0.8.12] (2008-12-01)
 
 ### Uncategorized
 
@@ -1130,7 +1130,7 @@
 - toolbars : show icons only
 - Uncategorized : update Spanish translation (Francisco Manuel García Claramonte <franciscomanuel.garcia@hispalinux.es>)
 
-## 0.8.10 (2008-11-22)
+## [0.8.10] (2008-11-22)
 
 ### Uncategorized
 
@@ -1140,34 +1140,34 @@
 - Uncategorized : fix a small bug in copy to clipboard
 - Uncategorized : update Spanish translation (Francisco Manuel García Claramonte <franciscomanuel.garcia@hispalinux.es>)
 
-## 0.8.8 (2008-11-19)
+## [0.8.8] (2008-11-19)
 
 ### Uncategorized
 
 - SnapshotsDialog : add diff
 - Uncategorized : update Spanish translation (Francisco Manuel García Claramonte <franciscomanuel.garcia@hispalinux.es>)
 
-## 0.8.6 (2008-11-17)
+## [0.8.6] (2008-11-17)
 
 ### Uncategorized
 
 - Uncategorized : fix change backup path crush
 - Uncategorized : add SnapshotsDialog
 
-## 0.8.2 (2008-11-14)
+## [0.8.2] (2008-11-14)
 
 ### Uncategorized
 
 - add right-click menu in files list : open (using gnome-open), copy (you can paste in Nautilus), restore (for snapshots only)
 - Uncategorized : add Copy toolbar button for files list
 
-## 0.8.1 (2008-11-10)
+## [0.8.1] (2008-11-10)
 
 ### Uncategorized
 
 - Uncategorized : add every 5/10 minutes automatic backup
 
-## 0.8 (2008-11-07)
+## [0.8] (2008-11-07)
 
 ### Uncategorized
 
@@ -1185,14 +1185,14 @@
 
 - when the application was started a second time it raise the first application's window but not always focused
 
-## 0.7.4 (2008-11-03)
+## [0.7.4] (2008-11-03)
 
 ### Uncategorized
 
 - Uncategorized : if there is already a GUI instance running raise it
 - Uncategorized : add Spanish translation (Francisco Manuel García Claramonte <franciscomanuel.garcia@hispalinux.es>)
 
-## 0.7.2 (2008-10-28)
+## [0.7.2] (2008-10-28)
 
 ### Uncategorized
 
@@ -1200,7 +1200,7 @@
 - Uncategorized : remember last path
 - Uncategorized : capitalize month in timeline (bug in french translation)
 
-## 0.7 (2008-10-22)
+## [0.7] (2008-10-22)
 
 ### Uncategorized
 
@@ -1209,20 +1209,20 @@
 - Uncategorized : multi-lingual support
 - Uncategorized : add French translation
 
-## 0.6.4 (2008-10-20)
+## [0.6.4] (2008-10-20)
 
 ### Uncategorized
 
 - Uncategorized : remove About & Settings dialogs from the pager
 - Uncategorized : allow only one instance of the application
 
-## 0.6.2 (2008-10-16)
+## [0.6.2] (2008-10-16)
 
 ### Uncategorized
 
 - Uncategorized : remember window position & size
 
-## 0.6 (2008-10-13)
+## [0.6] (2008-10-13)
 
 ### Uncategorized
 
@@ -1230,14 +1230,14 @@
 - Uncategorized : the background color for group items in timeline and places reflect more 
 - Uncategorized : during restore only restore button is grayed ( even if everything is blocked )
 
-## 0.5.1 (2008-10-10)
+## [0.5.1] (2008-10-10)
 
 ### Uncategorized
 
 - Uncategorized : add size & date columns in files view
 - Uncategorized : changed some texts
 
-## 0.5 (2008-10-03)
+## [0.5] (2008-10-03)
 
 ### Uncategorized
 

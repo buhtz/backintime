@@ -153,7 +153,7 @@ def to_markdown(data, fh):
 
     # each release
     for version, date, categories in data:
-        fh.write(f'\n## {version} ({date})\n')
+        fh.write(f'\n## [{version}] ({date})\n')
 
         ref_links.append(f'[{version}]: {url}{version}\n')
 
