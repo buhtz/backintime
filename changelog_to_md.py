@@ -106,7 +106,7 @@ REX_GITHUB_ISSUE_URL = re.compile(
 LAUNCHPAD_BASE_URL = 'https://bugs.launchpad.net/backintime/+bug/'
 LAUNCHPAD_BASE_URL3 = 'https://launchpad.net/bugs/'
 LAUNCHPAD_BASE_URL4 = 'https://bugs.launchpad.net/bugs/'
-GITHUB_ISSUE_BASE_URL = 'https://github.com/bit-team/backintime/issue/'
+GITHUB_ISSUE_BASE_URL = 'https://github.com/bit-team/backintime/issues/'
 GITHUB_PULL_BASE_URL = 'https://github.com/bit-team/backintime/pull/'
 
 github_link_cache = {}

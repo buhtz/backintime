@@ -12,70 +12,70 @@
 
 ### Fixed
 
-- Validation of diff command settings in compare snapshots dialog ([#1662](https://github.com/bit-team/backintime/pull/1662)) (@stcksmsh Kosta Vukicevic)
-- Open symlinked folders in file view ([#1476](https://github.com/bit-team/backintime/pull/1476))
-- Respect dark mode using color roles ([#1601](https://github.com/bit-team/backintime/pull/1601))
-- "Highly recommended" exclusion pattern in "Manage Profile" dialog's "Exclude" tab show missings only ([#1620](https://github.com/bit-team/backintime/pull/1620))
-- `make install` ignored $(DEST) in file migration part ([#1630](https://github.com/bit-team/backintime/pull/1630))
+- Validation of diff command settings in compare snapshots dialog ([#1662](https://github.com/bit-team/backintime/issues/1662)) (@stcksmsh Kosta Vukicevic)
+- Open symlinked folders in file view ([#1476](https://github.com/bit-team/backintime/issues/1476))
+- Respect dark mode using color roles ([#1601](https://github.com/bit-team/backintime/issues/1601))
+- "Highly recommended" exclusion pattern in "Manage Profile" dialog's "Exclude" tab show missings only ([#1620](https://github.com/bit-team/backintime/issues/1620))
+- `make install` ignored $(DEST) in file migration part ([#1630](https://github.com/bit-team/backintime/issues/1630))
 
 ### Uncategorized
 
 - Build:Activate PyLint error E0401 (import-error)
 - Dependency:Migration to PyQt6
-- Build:PyLint unit test is skipped if PyLint isn't installed, but will always run on TravisCI ([#1634](https://github.com/bit-team/backintime/pull/1634))
-- Build:Git commit hash is presevered while "make install" ([#1637](https://github.com/bit-team/backintime/pull/1637))
-- Build:Fix bash-completion symlink creation while installing & adding --diagnostics ([#1615](https://github.com/bit-team/backintime/pull/1615))
+- Build:PyLint unit test is skipped if PyLint isn't installed, but will always run on TravisCI ([#1634](https://github.com/bit-team/backintime/issues/1634))
+- Build:Git commit hash is presevered while "make install" ([#1637](https://github.com/bit-team/backintime/issues/1637))
+- Build:Fix bash-completion symlink creation while installing & adding --diagnostics ([#1615](https://github.com/bit-team/backintime/issues/1615))
 - Build:Activate PyLint error E602 (undefined-variable)
 - Build:TravisCI use PyQt (except arch "ppc64le")
 
 ### Added
 
-- Support rsync '--one-file-system' in Expert Options ([#1598](https://github.com/bit-team/backintime/pull/1598))
-- "*-dev" version strings contain last commit hash ([#1637](https://github.com/bit-team/backintime/pull/1637))
+- Support rsync '--one-file-system' in Expert Options ([#1598](https://github.com/bit-team/backintime/issues/1598))
+- "*-dev" version strings contain last commit hash ([#1637](https://github.com/bit-team/backintime/issues/1637))
 
 ## [1.4.3] (2024-01-30)
 
 ### Added
 
-- Exclude 'SingletonLock' and 'SingletonCookie' (Discord) and 'lock' (Mozilla Firefox) files by default (part of [#1555](https://github.com/bit-team/backintime/pull/1555))
+- Exclude 'SingletonLock' and 'SingletonCookie' (Discord) and 'lock' (Mozilla Firefox) files by default (part of [#1555](https://github.com/bit-team/backintime/issues/1555))
 
 ### Uncategorized
 
-- Work around:Relax `rsync` exit code 23: Ignore instead of error now (part of [#1587](https://github.com/bit-team/backintime/pull/1587))
+- Work around:Relax `rsync` exit code 23: Ignore instead of error now (part of [#1587](https://github.com/bit-team/backintime/issues/1587))
 - Feature (experimental):Add new snapshot log filter `rsync transfer failures (experimental)` to find them easier (they are normally not shown as "error").  
-- Improve:Launcher for BiT GUI (root) does not enforce Wayland anymore but uses same settings as for BiT GUI (userland) ([#1350](https://github.com/bit-team/backintime/pull/1350))
-- Change of semantics:BiT running as root never disables suspend during taking a backup ("inhibit suspend") even though this may have worked before in BiT <= v1.4.1 sometimes (required to fix [#1592](https://github.com/bit-team/backintime/pull/1592))
+- Improve:Launcher for BiT GUI (root) does not enforce Wayland anymore but uses same settings as for BiT GUI (userland) ([#1350](https://github.com/bit-team/backintime/issues/1350))
+- Change of semantics:BiT running as root never disables suspend during taking a backup ("inhibit suspend") even though this may have worked before in BiT <= v1.4.1 sometimes (required to fix [#1592](https://github.com/bit-team/backintime/issues/1592))
 - Build:Use PyLint in unit testing to catch E1101 (no-member) errors.
 - Build:Activate PyLint warning W1401 (anomalous-backslash-in-string).
 - Build:Add codespell config.
 - Build:Allow manual specification of python executable (--python=PYTHON_PATH) in common/configure and qt/configure
-- Build:All starter scripts do use an absolute path to the python executable by default now via common/configure and qt/configure ([#1574](https://github.com/bit-team/backintime/pull/1574))
-- Build:Install dbus configuration file to /usr/share not /etc ([#1596](https://github.com/bit-team/backintime/pull/1596))
-- Build:`configure` does delete old installed files (`qt4plugin.py` and `net.launchpad.backintime.serviceHelper.conf`) that were renamed or moved in a previous release ([#1596](https://github.com/bit-team/backintime/pull/1596))
+- Build:All starter scripts do use an absolute path to the python executable by default now via common/configure and qt/configure ([#1574](https://github.com/bit-team/backintime/issues/1574))
+- Build:Install dbus configuration file to /usr/share not /etc ([#1596](https://github.com/bit-team/backintime/issues/1596))
+- Build:`configure` does delete old installed files (`qt4plugin.py` and `net.launchpad.backintime.serviceHelper.conf`) that were renamed or moved in a previous release ([#1596](https://github.com/bit-team/backintime/issues/1596))
 - Translation:Minor modifications in source strings and updating language files.
-- Refactor:Solved circular dependency between tools.py and logger.py to fix [#820](https://github.com/bit-team/backintime/pull/820)
+- Refactor:Solved circular dependency between tools.py and logger.py to fix [#820](https://github.com/bit-team/backintime/issues/820)
 - Improved:qtsystrayicon.py, qt5_probing.py, usercallbackplugin.py and all parts of app.py 
 
 ### Fixed
 
-- 'qt5_probing.py' hangs when BiT is run as root and no user is logged into a desktop environment ([#1592](https://github.com/bit-team/backintime/pull/1592) and [#1580](https://github.com/bit-team/backintime/pull/1580))
-- Launching BiT GUI (root) hangs on Wayland without showing the GUI ([#836](https://github.com/bit-team/backintime/pull/836))
-- Disabling suspend during taking a backup ("inhibit suspend") hangs when BiT is run as root and no user is logged into a desktop environment ([#1592](https://github.com/bit-team/backintime/pull/1592))
-- RTE: module 'qttools' has no attribute 'initate_translator' with encFS when prompting the user for a password ([#1553](https://github.com/bit-team/backintime/pull/1553)).
+- 'qt5_probing.py' hangs when BiT is run as root and no user is logged into a desktop environment ([#1592](https://github.com/bit-team/backintime/issues/1592) and [#1580](https://github.com/bit-team/backintime/issues/1580))
+- Launching BiT GUI (root) hangs on Wayland without showing the GUI ([#836](https://github.com/bit-team/backintime/issues/836))
+- Disabling suspend during taking a backup ("inhibit suspend") hangs when BiT is run as root and no user is logged into a desktop environment ([#1592](https://github.com/bit-team/backintime/issues/1592))
+- RTE: module 'qttools' has no attribute 'initate_translator' with encFS when prompting the user for a password ([#1553](https://github.com/bit-team/backintime/issues/1553)).
 - Schedule dropdown menu used "minutes" instead of "hours".
-- Unhandled exception "TypeError: 'NoneType' object is not callable" in tools.py function __log_keyring_warning ([#820](https://github.com/bit-team/backintime/pull/820)). 
+- Unhandled exception "TypeError: 'NoneType' object is not callable" in tools.py function __log_keyring_warning ([#820](https://github.com/bit-team/backintime/issues/820)). 
 
 ## [1.4.1] (2023-10-01)
 
 ### Uncategorized
 
-- Dependency:Add "qt translations" to GUI runtime dependencies ([#1538](https://github.com/bit-team/backintime/pull/1538)).
-- Build:Unit tests do generically ignore all instead of well-known warnings now ([#1539](https://github.com/bit-team/backintime/pull/1539)).
-- Build:Warnings about missing Qt translation now are ignored while testing ([#1537](https://github.com/bit-team/backintime/pull/1537)).
+- Dependency:Add "qt translations" to GUI runtime dependencies ([#1538](https://github.com/bit-team/backintime/issues/1538)).
+- Build:Unit tests do generically ignore all instead of well-known warnings now ([#1539](https://github.com/bit-team/backintime/issues/1539)).
+- Build:Warnings about missing Qt translation now are ignored while testing ([#1537](https://github.com/bit-team/backintime/issues/1537)).
 
 ### Fixed
 
-- GUI didn't start when "show hidden files" button was on ([#1535](https://github.com/bit-team/backintime/pull/1535)).
+- GUI didn't start when "show hidden files" button was on ([#1535](https://github.com/bit-team/backintime/issues/1535)).
 
 ## [1.4.0] (2023-09-14)
 
@@ -83,85 +83,85 @@
 
 - Project:Renamed branch "master" to "main" and started "gitflow" branching model.
 - Refactor:Renamed qt4plugin.py to systrayiconplugin.py (we are using Qt5 for years now ;-)
-- Refactor:Removed unfinished feature "Full system backup" ([#1526](https://github.com/bit-team/backintime/pull/1526))
-- GUI Change:View last (snapshot) log button in GUI uses "document-open-recent" icon now instead of "document-new" ([#1386](https://github.com/bit-team/backintime/pull/1386))
-- Breaking change:Minimal Python version 3.8 required ([#1358](https://github.com/bit-team/backintime/pull/1358)).
-- Removed:Handling and checking of user group "fuse" ([#1472](https://github.com/bit-team/backintime/pull/1472)).
-- Documentation:Removed outdated docbook ([#1345](https://github.com/bit-team/backintime/pull/1345)).
-- Build:Introduced .readthedocs.yaml as asked by ReadTheDocs.org ([#1443](https://github.com/bit-team/backintime/pull/1443)).
+- Refactor:Removed unfinished feature "Full system backup" ([#1526](https://github.com/bit-team/backintime/issues/1526))
+- GUI Change:View last (snapshot) log button in GUI uses "document-open-recent" icon now instead of "document-new" ([#1386](https://github.com/bit-team/backintime/issues/1386))
+- Breaking change:Minimal Python version 3.8 required ([#1358](https://github.com/bit-team/backintime/issues/1358)).
+- Removed:Handling and checking of user group "fuse" ([#1472](https://github.com/bit-team/backintime/issues/1472)).
+- Documentation:Removed outdated docbook ([#1345](https://github.com/bit-team/backintime/issues/1345)).
+- Build:Introduced .readthedocs.yaml as asked by ReadTheDocs.org ([#1443](https://github.com/bit-team/backintime/issues/1443)).
 - Dependency:The oxygen icons should be installed with the BiT Qt GUI since they are used as fallback in case of missing icons
-- Translation:Strings to translate now easier to understand for translators ([#1448](https://github.com/bit-team/backintime/pull/1448), [#1457](https://github.com/bit-team/backintime/pull/1457), [#1462](https://github.com/bit-team/backintime/pull/1462), [#1465](https://github.com/bit-team/backintime/pull/1465)).
-- Translation:Improved completeness of translations and additional modifications of source strings ([#1454](https://github.com/bit-team/backintime/pull/1454), [#1512](https://github.com/bit-team/backintime/pull/1512))
-- Translation:Plural forms support ([#1488](https://github.com/bit-team/backintime/pull/1488)).
-- Removed:Translation in Canadian English, British English and Javanese ([#1455](https://github.com/bit-team/backintime/pull/1455)).
-- Added:Translation in Persian and Vietnamese ([#1460](https://github.com/bit-team/backintime/pull/1460)).
-- Added:Message to users (after 10 starts of BIT Gui) to motivate them contributing translations ([#1473](https://github.com/bit-team/backintime/pull/1473)).
+- Translation:Strings to translate now easier to understand for translators ([#1448](https://github.com/bit-team/backintime/issues/1448), [#1457](https://github.com/bit-team/backintime/issues/1457), [#1462](https://github.com/bit-team/backintime/issues/1462), [#1465](https://github.com/bit-team/backintime/issues/1465)).
+- Translation:Improved completeness of translations and additional modifications of source strings ([#1454](https://github.com/bit-team/backintime/issues/1454), [#1512](https://github.com/bit-team/backintime/issues/1512))
+- Translation:Plural forms support ([#1488](https://github.com/bit-team/backintime/issues/1488)).
+- Removed:Translation in Canadian English, British English and Javanese ([#1455](https://github.com/bit-team/backintime/issues/1455)).
+- Added:Translation in Persian and Vietnamese ([#1460](https://github.com/bit-team/backintime/issues/1460)).
+- Added:Message to users (after 10 starts of BIT Gui) to motivate them contributing translations ([#1473](https://github.com/bit-team/backintime/issues/1473)).
 
 ### Fixed
 
-- AttributeError: can't set attribute 'showHiddenFiles' in app.py ([#1532](https://github.com/bit-team/backintime/pull/1532))
-- Check SSH login works on machines with limited commands ([#1442](https://github.com/bit-team/backintime/pull/1442))
-- Missing icon in SSH private key button ([#1364](https://github.com/bit-team/backintime/pull/1364))
-- Master issue for missing or empty system-tray icon ([#1306](https://github.com/bit-team/backintime/pull/1306))
-- System-tray icon missing or empty (GUI and cron) ([#1236](https://github.com/bit-team/backintime/pull/1236))
-- Improve KDE plasma icon compatibility ([#1159](https://github.com/bit-team/backintime/pull/1159))
-- Unit test fails on some machines due to warning "Ignoring XDG_SESSION_TYPE=wayland on Gnome..." ([#1429](https://github.com/bit-team/backintime/pull/1429))
-- Generation of config-manpage caused an error with Debian's Lintian ([#1398](https://github.com/bit-team/backintime/pull/1398)).
-- Return empty list in smartRemove ([#1392](https://github.com/bit-team/backintime/pull/1392), Debian Bug Report 973760)
-- Taking a snapshot reports `rsync` errors now even if no snapshot was taken ([#1491](https://github.com/bit-team/backintime/pull/1491))
-- takeSnapshot() recognizes errors now by also evaluating the rsync exit code ([#489](https://github.com/bit-team/backintime/pull/489)) 
-- The error user-callback is now always called if an error happened while taking a snapshot ([#1491](https://github.com/bit-team/backintime/pull/1491))
+- AttributeError: can't set attribute 'showHiddenFiles' in app.py ([#1532](https://github.com/bit-team/backintime/issues/1532))
+- Check SSH login works on machines with limited commands ([#1442](https://github.com/bit-team/backintime/issues/1442))
+- Missing icon in SSH private key button ([#1364](https://github.com/bit-team/backintime/issues/1364))
+- Master issue for missing or empty system-tray icon ([#1306](https://github.com/bit-team/backintime/issues/1306))
+- System-tray icon missing or empty (GUI and cron) ([#1236](https://github.com/bit-team/backintime/issues/1236))
+- Improve KDE plasma icon compatibility ([#1159](https://github.com/bit-team/backintime/issues/1159))
+- Unit test fails on some machines due to warning "Ignoring XDG_SESSION_TYPE=wayland on Gnome..." ([#1429](https://github.com/bit-team/backintime/issues/1429))
+- Generation of config-manpage caused an error with Debian's Lintian ([#1398](https://github.com/bit-team/backintime/issues/1398)).
+- Return empty list in smartRemove ([#1392](https://github.com/bit-team/backintime/issues/1392), Debian Bug Report 973760)
+- Taking a snapshot reports `rsync` errors now even if no snapshot was taken ([#1491](https://github.com/bit-team/backintime/issues/1491))
+- takeSnapshot() recognizes errors now by also evaluating the rsync exit code ([#489](https://github.com/bit-team/backintime/issues/489)) 
+- The error user-callback is now always called if an error happened while taking a snapshot ([#1491](https://github.com/bit-team/backintime/issues/1491))
 - D-Bus serviceHelper error "LimitExceeded: Maximum length of command line reached (100)": 
-- Treat rsync exit code 24 as INFO instead of ERROR ([#1506](https://github.com/bit-team/backintime/pull/1506))
-- Add support for ChainerBackend class as keyring which iterates over all supported keyring backends ([#1410](https://github.com/bit-team/backintime/pull/1410))
+- Treat rsync exit code 24 as INFO instead of ERROR ([#1506](https://github.com/bit-team/backintime/issues/1506))
+- Add support for ChainerBackend class as keyring which iterates over all supported keyring backends ([#1410](https://github.com/bit-team/backintime/issues/1410))
 
 ### Added
 
-- Introduce new error codes for the "error" user callback (as part of [#1491](https://github.com/bit-team/backintime/pull/1491)):  
-- The `rsync` exit code is now contained in the snapshot log (part of [#489](https://github.com/bit-team/backintime/pull/489)). Example: 
-- Exclude /swapfile by default ([#1053](https://github.com/bit-team/backintime/pull/1053))
-- Rearranged menu bar and its entries in the main window ([#1487](https://github.com/bit-team/backintime/pull/1487), [#1478](https://github.com/bit-team/backintime/pull/1478)).
+- Introduce new error codes for the "error" user callback (as part of [#1491](https://github.com/bit-team/backintime/issues/1491)):  
+- The `rsync` exit code is now contained in the snapshot log (part of [#489](https://github.com/bit-team/backintime/issues/489)). Example: 
+- Exclude /swapfile by default ([#1053](https://github.com/bit-team/backintime/issues/1053))
+- Rearranged menu bar and its entries in the main window ([#1487](https://github.com/bit-team/backintime/issues/1487), [#1478](https://github.com/bit-team/backintime/issues/1478)).
 - Configure user interface language via config file and GUI.
 
 ## [1.3.3] (2023-01-04)
 
 ### Added
 
-- New command line argument "--diagnostics" to show helpful info for better issue support ([#1100](https://github.com/bit-team/backintime/pull/1100))
-- Write all log output to stderr; do not pollute stdout with INFO and WARNING messages anymore ([#1337](https://github.com/bit-team/backintime/pull/1337))
+- New command line argument "--diagnostics" to show helpful info for better issue support ([#1100](https://github.com/bit-team/backintime/issues/1100))
+- Write all log output to stderr; do not pollute stdout with INFO and WARNING messages anymore ([#1337](https://github.com/bit-team/backintime/issues/1337))
 
 ### Uncategorized
 
-- GUI change:Remove Exit button from the toolbar ([#172](https://github.com/bit-team/backintime/pull/172))
-- GUI change:Define accelerator keys for menu bar and tabs, as well as toolbar shortcuts ([#1104](https://github.com/bit-team/backintime/pull/1104))
-- Desktop integration:Update .desktop file to mark Back In Time as a single main window program ([#1258](https://github.com/bit-team/backintime/pull/1258))
-- Documentation update:Correct description of profile<N>.schedule.time in backintime-config manpage ([#1270](https://github.com/bit-team/backintime/pull/1270))
-- Translation update:Brazilian Portuguese ([#1267](https://github.com/bit-team/backintime/pull/1267))
-- Translation update:Italian ([#1110](https://github.com/bit-team/backintime/pull/1110), [#1123](https://github.com/bit-team/backintime/pull/1123))
-- Translation update:French ([#1077](https://github.com/bit-team/backintime/pull/1077))
-- Testing:Fix a test fail when dealing with an empty crontab ([#1181](https://github.com/bit-team/backintime/pull/1181))
-- Testing:Fix a test fail when dealing with an empty config file ([#1305](https://github.com/bit-team/backintime/pull/1305))
+- GUI change:Remove Exit button from the toolbar ([#172](https://github.com/bit-team/backintime/issues/172))
+- GUI change:Define accelerator keys for menu bar and tabs, as well as toolbar shortcuts ([#1104](https://github.com/bit-team/backintime/issues/1104))
+- Desktop integration:Update .desktop file to mark Back In Time as a single main window program ([#1258](https://github.com/bit-team/backintime/issues/1258))
+- Documentation update:Correct description of profile<N>.schedule.time in backintime-config manpage ([#1270](https://github.com/bit-team/backintime/issues/1270))
+- Translation update:Brazilian Portuguese ([#1267](https://github.com/bit-team/backintime/issues/1267))
+- Translation update:Italian ([#1110](https://github.com/bit-team/backintime/issues/1110), [#1123](https://github.com/bit-team/backintime/issues/1123))
+- Translation update:French ([#1077](https://github.com/bit-team/backintime/issues/1077))
+- Testing:Fix a test fail when dealing with an empty crontab ([#1181](https://github.com/bit-team/backintime/issues/1181))
+- Testing:Fix a test fail when dealing with an empty config file ([#1305](https://github.com/bit-team/backintime/issues/1305))
 - Testing:Skip "test_quiet_mode" (does not work reliably)
-- Testing:Improve "test_diagnostics_arg" (introduced with [#1100](https://github.com/bit-team/backintime/pull/1100)) to no longer fail 
-- Testing:Numerous fixes and extensions to testing ([#1115](https://github.com/bit-team/backintime/pull/1115), [#1213](https://github.com/bit-team/backintime/pull/1213), [#1279](https://github.com/bit-team/backintime/pull/1279), [#1280](https://github.com/bit-team/backintime/pull/1280), [#1281](https://github.com/bit-team/backintime/pull/1281), [#1285](https://github.com/bit-team/backintime/pull/1285), [#1288](https://github.com/bit-team/backintime/pull/1288), [#1290](https://github.com/bit-team/backintime/pull/1290), [#1293](https://github.com/bit-team/backintime/pull/1293), [#1309](https://github.com/bit-team/backintime/pull/1309), [#1334](https://github.com/bit-team/backintime/pull/1334))
+- Testing:Improve "test_diagnostics_arg" (introduced with [#1100](https://github.com/bit-team/backintime/issues/1100)) to no longer fail 
+- Testing:Numerous fixes and extensions to testing ([#1115](https://github.com/bit-team/backintime/issues/1115), [#1213](https://github.com/bit-team/backintime/issues/1213), [#1279](https://github.com/bit-team/backintime/issues/1279), [#1280](https://github.com/bit-team/backintime/issues/1280), [#1281](https://github.com/bit-team/backintime/issues/1281), [#1285](https://github.com/bit-team/backintime/issues/1285), [#1288](https://github.com/bit-team/backintime/issues/1288), [#1290](https://github.com/bit-team/backintime/issues/1290), [#1293](https://github.com/bit-team/backintime/issues/1293), [#1309](https://github.com/bit-team/backintime/issues/1309), [#1334](https://github.com/bit-team/backintime/issues/1334))
 
 ### Fixed
 
-- RTE "reentrant call inside io.BufferedWriter" in logFile.flush() during backup ([#1003](https://github.com/bit-team/backintime/pull/1003))
-- Incompatibility with rsync 3.2.4 or later because of rsync's "new argument protection" ([#1247](https://github.com/bit-team/backintime/pull/1247)). Deactivate "--old-args" rsync argument earlier recommended to users as a workaround.
+- RTE "reentrant call inside io.BufferedWriter" in logFile.flush() during backup ([#1003](https://github.com/bit-team/backintime/issues/1003))
+- Incompatibility with rsync 3.2.4 or later because of rsync's "new argument protection" ([#1247](https://github.com/bit-team/backintime/issues/1247)). Deactivate "--old-args" rsync argument earlier recommended to users as a workaround.
 - DeprecationWarnings about invalid escape sequences.
-- AttributeError in "Diff Options" dialog ([#898](https://github.com/bit-team/backintime/pull/898))
-- Settings GUI: "Save password to Keyring" was disabled due to "no appropriate keyring found" ([#1321](https://github.com/bit-team/backintime/pull/1321))
+- AttributeError in "Diff Options" dialog ([#898](https://github.com/bit-team/backintime/issues/898))
+- Settings GUI: "Save password to Keyring" was disabled due to "no appropriate keyring found" ([#1321](https://github.com/bit-team/backintime/issues/1321))
 - Back in Time did not start with D-Bus error   
-- Avoid logging errors while waiting for a target drive to be mounted ([#1142](https://github.com/bit-team/backintime/pull/1142), [#1143](https://github.com/bit-team/backintime/pull/1143), [#1328](https://github.com/bit-team/backintime/pull/1328))
-- [Arch Linux] AUR pkg "backintime-git": Build tests fails and installation is aborted ([#1233](https://github.com/bit-team/backintime/pull/1233), fixed with [#921](https://github.com/bit-team/backintime/pull/921))
-- Wrong systray icon showing in Wayland ([#1244](https://github.com/bit-team/backintime/pull/1244))
+- Avoid logging errors while waiting for a target drive to be mounted ([#1142](https://github.com/bit-team/backintime/issues/1142), [#1143](https://github.com/bit-team/backintime/issues/1143), [#1328](https://github.com/bit-team/backintime/issues/1328))
+- [Arch Linux] AUR pkg "backintime-git": Build tests fails and installation is aborted ([#1233](https://github.com/bit-team/backintime/issues/1233), fixed with [#921](https://github.com/bit-team/backintime/issues/921))
+- Wrong systray icon showing in Wayland ([#1244](https://github.com/bit-team/backintime/issues/1244))
 
 ## [1.3.2] (2022-03-12)
 
 ### Fixed
 
-- Tests no longer work with Python 3.10 (https://github.com/bit-team/backintime/issues/1175)
+- Tests no longer work with Python 3.10 ([#1175](https://github.com/bit-team/backintime/issues/1175))
 
 ## [1.3.1] (2021-07-05)
 
@@ -182,58 +182,58 @@
 
 ### Fixed
 
-- YEAR missing in config (https://github.com/bit-team/backintime/issues/1023)
-- SSH module didn't send identification string while checking if remote host is available (https://github.com/bit-team/backintime/issues/1030)
+- YEAR missing in config ([#1023](https://github.com/bit-team/backintime/issues/1023))
+- SSH module didn't send identification string while checking if remote host is available ([#1030](https://github.com/bit-team/backintime/issues/1030))
 
 ## [1.2.1] (2019-08-25)
 
 ### Fixed
 
-- TypeError in backintime.py if mount failed while running a snapshot (https://github.com/bit-team/backintime/issues/1005)
+- TypeError in backintime.py if mount failed while running a snapshot ([#1005](https://github.com/bit-team/backintime/issues/1005))
 
 ## [1.2.0] (2019-04-27)
 
 ### Fixed
 
-- Exit code is linked to the wrong status message (https://github.com/bit-team/backintime/issues/906)
-- AppName showed 'python3' instead of 'Back In Time' (https://github.com/bit-team/backintime/issues/950)
-- configured cipher is not used with all ssh-commands (https://github.com/bit-team/backintime/issues/934)
-- 'make test' fails because local SSH server is running on non-standard port (https://github.com/bit-team/backintime/issues/945)
-- 23:00 is missing in the list of every day hours (https://github.com/bit-team/backintime/issues/736)
-- ssh-agent output changed (https://github.com/bit-team/backintime/issues/840)
-- exception on making backintime folder world writable (https://github.com/bit-team/backintime/issues/812)
-- stat free space for snapshot folder instead of backintime folder (https://github.com/bit-team/backintime/issues/733)
-- backintime root crontab doesn't run; missing line-feed 0x0A on last line (https://github.com/bit-team/backintime/issues/781)
-- IndexError in inhibitSuspend (https://github.com/bit-team/backintime/issues/772)
+- Exit code is linked to the wrong status message ([#906](https://github.com/bit-team/backintime/issues/906))
+- AppName showed 'python3' instead of 'Back In Time' ([#950](https://github.com/bit-team/backintime/issues/950))
+- configured cipher is not used with all ssh-commands ([#934](https://github.com/bit-team/backintime/issues/934))
+- 'make test' fails because local SSH server is running on non-standard port ([#945](https://github.com/bit-team/backintime/issues/945))
+- 23:00 is missing in the list of every day hours ([#736](https://github.com/bit-team/backintime/issues/736))
+- ssh-agent output changed ([#840](https://github.com/bit-team/backintime/issues/840))
+- exception on making backintime folder world writable ([#812](https://github.com/bit-team/backintime/issues/812))
+- stat free space for snapshot folder instead of backintime folder ([#733](https://github.com/bit-team/backintime/issues/733))
+- backintime root crontab doesn't run; missing line-feed 0x0A on last line ([#781](https://github.com/bit-team/backintime/issues/781))
+- IndexError in inhibitSuspend ([#772](https://github.com/bit-team/backintime/issues/772))
 - polkit CheckAuthorization: race condition in privilege authorization (https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-7572)
-- OSError when running backup-job from systemd (https://github.com/bit-team/backintime/issues/720)
-- restore filesystem-root without 'Full rsync mode' with ACL and/or xargs activated broke whole system (https://github.com/bit-team/backintime/issues/708)
-- use current folder if no file is selected in files view (https://github.com/bit-team/backintime/issues/687, https://github.com/bit-team/backintime/issues/685)
-- don't reload profile after editing profile name (https://github.com/bit-team/backintime/issues/706)
+- OSError when running backup-job from systemd ([#720](https://github.com/bit-team/backintime/issues/720))
+- restore filesystem-root without 'Full rsync mode' with ACL and/or xargs activated broke whole system ([#708](https://github.com/bit-team/backintime/issues/708))
+- use current folder if no file is selected in files view ([#687](https://github.com/bit-team/backintime/issues/687), [#685](https://github.com/bit-team/backintime/issues/685))
+- don't reload profile after editing profile name ([#706](https://github.com/bit-team/backintime/issues/706))
 - Exception in FileInfo
-- failed to restore suid permissions (https://github.com/bit-team/backintime/issues/661)
-- on remount user-callback got called AFTER trying to mount (https://github.com/bit-team/backintime/issues/654)
-- confirm restore dialog has no scroll bar (https://github.com/bit-team/backintime/issues/625)
-- DEFAULT_EXCLUDE not deletable (https://github.com/bit-team/backintime/issues/634)
-- GUI status bar unreadable (https://github.com/bit-team/backintime/issues/612)
-- udev schedule not working (https://github.com/bit-team/backintime/issues/605)
+- failed to restore suid permissions ([#661](https://github.com/bit-team/backintime/issues/661))
+- on remount user-callback got called AFTER trying to mount ([#654](https://github.com/bit-team/backintime/issues/654))
+- confirm restore dialog has no scroll bar ([#625](https://github.com/bit-team/backintime/issues/625))
+- DEFAULT_EXCLUDE not deletable ([#634](https://github.com/bit-team/backintime/issues/634))
+- GUI status bar unreadable ([#612](https://github.com/bit-team/backintime/issues/612))
+- udev schedule not working ([#605](https://github.com/bit-team/backintime/issues/605))
 - decode path spooled from /etc/mtab (https://github.com/bit-team/backintime/pull/607)
-- in snapshots.py, gives more helpful advice if a lock file is present that shouldn't be.  (https://github.com/bit-team/backintime/issues/601)
-- Fail to create remote snapshot path with spaces (https://github.com/bit-team/backintime/issues/567)
-- broken new_snapshot can run into infinite saveToContinue loop (https://github.com/bit-team/backintime/issues/583)
-- udev schedule didn't work with LUKS encrypted drives (https://github.com/bit-team/backintime/issues/466)
-- sshMaxArg failed on none default ssh port (https://github.com/bit-team/backintime/issues/581)
-- failed if remote host send SSH banner (https://github.com/bit-team/backintime/issues/581)
-- incorrect handling of IPv6 addresses (https://github.com/bit-team/backintime/issues/577)
-- Snapshot Log View freeze on big log files (https://github.com/bit-team/backintime/issues/456)
+- in snapshots.py, gives more helpful advice if a lock file is present that shouldn't be.  ([#601](https://github.com/bit-team/backintime/issues/601))
+- Fail to create remote snapshot path with spaces ([#567](https://github.com/bit-team/backintime/issues/567))
+- broken new_snapshot can run into infinite saveToContinue loop ([#583](https://github.com/bit-team/backintime/issues/583))
+- udev schedule didn't work with LUKS encrypted drives ([#466](https://github.com/bit-team/backintime/issues/466))
+- sshMaxArg failed on none default ssh port ([#581](https://github.com/bit-team/backintime/issues/581))
+- failed if remote host send SSH banner ([#581](https://github.com/bit-team/backintime/issues/581))
+- incorrect handling of IPv6 addresses ([#577](https://github.com/bit-team/backintime/issues/577))
+- Snapshot Log View freeze on big log files ([#456](https://github.com/bit-team/backintime/issues/456))
 - 'inotify_add_watch failed: file or directory not found' after deleting snapshot
-- a continued snapshot was not incremental (https://github.com/bit-team/backintime/issues/557)
+- a continued snapshot was not incremental ([#557](https://github.com/bit-team/backintime/issues/557))
 - config backup in snapshot had wrong name if using --config option
-- Can't open files with spaces in name (https://github.com/bit-team/backintime/issues/552)
-- BIT-root won't start from .desktop file (https://github.com/bit-team/backintime/issues/549)
-- Keyring doesn't work with KDE Plasma5 (https://github.com/bit-team/backintime/issues/545)
+- Can't open files with spaces in name ([#552](https://github.com/bit-team/backintime/issues/552))
+- BIT-root won't start from .desktop file ([#549](https://github.com/bit-team/backintime/issues/549))
+- Keyring doesn't work with KDE Plasma5 ([#545](https://github.com/bit-team/backintime/issues/545))
 - Qt4 built-in phrases where not translated (https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=816197)
-- configure ignore unknown args (https://github.com/bit-team/backintime/issues/547)
+- configure ignore unknown args ([#547](https://github.com/bit-team/backintime/issues/547))
 - snapshots-list on command-line was not sorted
 - SHA256 ssh-key fingerprint was not detected
 - new snapshot did not show up after finished
@@ -241,32 +241,32 @@
 - wildcards ? and [] wasn't recognized correctly
 - last char of last element in tools.get_rsync_caps got cut off
 - TypeError in tools.get_git_ref_hash
-- don't include empty values in list (https://github.com/bit-team/backintime/issues/521)
+- don't include empty values in list ([#521](https://github.com/bit-team/backintime/issues/521))
 - bash-completion doesn't work for backintime-qt4
-- 'make unittest' incorrectly used 'coverage' by default (https://github.com/bit-team/backintime/issues/522)
-- pm-utils is deprecated; Remove dependency (https://github.com/bit-team/backintime/issues/519)
+- 'make unittest' incorrectly used 'coverage' by default ([#522](https://github.com/bit-team/backintime/issues/522))
+- pm-utils is deprecated; Remove dependency ([#519](https://github.com/bit-team/backintime/issues/519))
 
 ### Uncategorized
 
 - minor changes to allow running BiT inside Docker (https://github.com/bit-team/backintime/pull/959)
-- remove progressbar on systray icon until BiT has it's own icon (https://github.com/bit-team/backintime/issues/902)
-- clarify 'nocache' option (https://github.com/bit-team/backintime/issues/857)
-- create a config-backup in root dir if backup is encrypted (https://github.com/bit-team/backintime/issues/556)
+- remove progressbar on systray icon until BiT has it's own icon ([#902](https://github.com/bit-team/backintime/issues/902))
+- clarify 'nocache' option ([#857](https://github.com/bit-team/backintime/issues/857))
+- create a config-backup in root dir if backup is encrypted ([#556](https://github.com/bit-team/backintime/issues/556))
 - remove unused and undocumented userscript plugin
 - add contextmenu for logview dialog which can copy, exclude and decode lines
 - move progressbar under statusbar
-- alleviate default exclude [Tt]rash* (https://github.com/bit-team/backintime/issues/759)
-- enable high DPI scaling (https://github.com/bit-team/backintime/issues/732)
-- Smart Remove try to keep healthy snapshots (https://github.com/bit-team/backintime/issues/703)
-- ask for restore-to path before confirm (https://github.com/bit-team/backintime/issues/678)
-- fix 'Back in Time (root)' on wayland (https://github.com/bit-team/backintime/issues/640)
-- sort int values in config numerical instead if alphabetical (https://github.com/bit-team/backintime/issues/175#issuecomment-272941811)
-- set timestamp directly after new snapshot (https://github.com/bit-team/backintime/issues/584)
-- add shortcut CTRL+H for toggle show hidden files to fileselect dialog (https://github.com/bit-team/backintime/issues/378)
+- alleviate default exclude [Tt]rash* ([#759](https://github.com/bit-team/backintime/issues/759))
+- enable high DPI scaling ([#732](https://github.com/bit-team/backintime/issues/732))
+- Smart Remove try to keep healthy snapshots ([#703](https://github.com/bit-team/backintime/issues/703))
+- ask for restore-to path before confirm ([#678](https://github.com/bit-team/backintime/issues/678))
+- fix 'Back in Time (root)' on wayland ([#640](https://github.com/bit-team/backintime/issues/640))
+- sort int values in config numerical instead if alphabetical ([#175](https://github.com/bit-team/backintime/issues/175)#issuecomment-272941811)
+- set timestamp directly after new snapshot ([#584](https://github.com/bit-team/backintime/issues/584))
+- add shortcut CTRL+H for toggle show hidden files to fileselect dialog ([#378](https://github.com/bit-team/backintime/issues/378))
 - add 'Edit user-callback' dialog
-- redesign restore menu (https://github.com/bit-team/backintime/issues/661)
-- add ability to disable SSH command- and ping-check (https://github.com/bit-team/backintime/issues/647)
-- enable bwlimit for local profiles (https://github.com/bit-team/backintime/issues/646)
+- redesign restore menu ([#661](https://github.com/bit-team/backintime/issues/661))
+- add ability to disable SSH command- and ping-check ([#647](https://github.com/bit-team/backintime/issues/647))
+- enable bwlimit for local profiles ([#646](https://github.com/bit-team/backintime/issues/646))
 - import remote host-key into known_hosts from Settings
 - copy public SSH key to remote host from Settings
 - create a new SSH key from Settings
@@ -274,20 +274,20 @@
 - rename paths and methods from *qt4* into *qt*
 - rename executable backintime-qt4 into backintime-qt
 - new config version 6, rename qt4 keys into qt, add new domain for schedule
-- check crontab entries on every GUI startup (https://github.com/bit-team/backintime/issues/129)
+- check crontab entries on every GUI startup ([#129](https://github.com/bit-team/backintime/issues/129))
 - start a new ssh-agent instance only if necessary
-- add cli command 'shutdown' (https://github.com/bit-team/backintime/issues/596)
+- add cli command 'shutdown' ([#596](https://github.com/bit-team/backintime/issues/596))
 - add cli command 'smart-remove'
-- make LogView and Settings Dialog non-modal (https://github.com/bit-team/backintime/issues/608)
-- port to Qt5/pyqt5 (https://github.com/bit-team/backintime/issues/518)
+- make LogView and Settings Dialog non-modal ([#608](https://github.com/bit-team/backintime/issues/608))
+- port to Qt5/pyqt5 ([#518](https://github.com/bit-team/backintime/issues/518))
 - Recognize changes on previous runs while continuing new snapshots
-- Add pause, resume and stop function for running snapshots (https://github.com/bit-team/backintime/issues/474, https://github.com/bit-team/backintime/issues/195)
+- Add pause, resume and stop function for running snapshots ([#474](https://github.com/bit-team/backintime/issues/474), [#195](https://github.com/bit-team/backintime/issues/195))
 - use rsync to save permissions
 - replace os.system calls with subprocess.Popen
 - automatically refresh log view if a snapshot is currently running
 - remove dependency for extended 'find' command on remote host
 - make full-rsync mode default, remove the other mode
-- use rsync to remove snapshots which will give a nice speedup (https://github.com/bit-team/backintime/issues/151)
+- use rsync to remove snapshots which will give a nice speedup ([#151](https://github.com/bit-team/backintime/issues/151))
 - open temporary local copy of files instead of original backup on double-click in GUI
 - add option to decrypt paths in systray menu with mode ssh-encrypted
 - open current log directly from systray icon during taking a snapshot
@@ -307,15 +307,15 @@
 
 ### Fixed
 
-- CVE-2017-16667: shell injection in notify-send (https://github.com/bit-team/backintime/issues/834)
+- CVE-2017-16667: shell injection in notify-send ([#834](https://github.com/bit-team/backintime/issues/834))
 
 ## [1.1.22] (2017-10-28)
 
 ### Fixed
 
-- stat free space for snapshot folder instead of backintime folder (https://github.com/bit-team/backintime/issues/552733)
-- backintime root crontab doesn't run; missing line-feed 0x0A on last line (https://github.com/bit-team/backintime/issues/552781)
-- can't open files with spaces in name (https://github.com/bit-team/backintime/issues/552552)
+- stat free space for snapshot folder instead of backintime folder ([#552733](https://github.com/bit-team/backintime/issues/552733))
+- backintime root crontab doesn't run; missing line-feed 0x0A on last line ([#552781](https://github.com/bit-team/backintime/issues/552781))
+- can't open files with spaces in name ([#552552](https://github.com/bit-team/backintime/issues/552552))
 
 ## [1.1.20] (2017-04-09)
 
@@ -327,62 +327,62 @@
 
 ### Fixed
 
-- manual snapshots from GUI didn't work (https://github.com/bit-team/backintime/issues/728)
+- manual snapshots from GUI didn't work ([#728](https://github.com/bit-team/backintime/issues/728))
 
 ## [1.1.16] (2017-03-28)
 
 ### Fixed
 
-- start a new ssh-agent instance only if necessary (https://github.com/bit-team/backintime/issues/722)
-- OSError when running backup-job from systemd (https://github.com/bit-team/backintime/issues/720)
+- start a new ssh-agent instance only if necessary ([#722](https://github.com/bit-team/backintime/issues/722))
+- OSError when running backup-job from systemd ([#720](https://github.com/bit-team/backintime/issues/720))
 
 ## [1.1.14] (2017-03-05)
 
 ### Fixed
 
-- udev schedule not working (https://github.com/bit-team/backintime/issues/605)
-- Keyring doesn't work with KDE Plasma5 (https://github.com/bit-team/backintime/issues/545)
-- nameError in tools.make_dirs (https://github.com/bit-team/backintime/issues/622)
+- udev schedule not working ([#605](https://github.com/bit-team/backintime/issues/605))
+- Keyring doesn't work with KDE Plasma5 ([#545](https://github.com/bit-team/backintime/issues/545))
+- nameError in tools.make_dirs ([#622](https://github.com/bit-team/backintime/issues/622))
 - use current folder if no file is selected in files view
-- restore filesystem-root without 'Full rsync mode' with ACL and/or xargs activated broke whole system (https://github.com/bit-team/backintime/issues/708)
+- restore filesystem-root without 'Full rsync mode' with ACL and/or xargs activated broke whole system ([#708](https://github.com/bit-team/backintime/issues/708))
 
 ## [1.1.12] (2016-01-11)
 
 ### Fixed
 
-- remove x-terminal-emulator dependency (https://github.com/bit-team/backintime/issues/515)
-- AttributeError in About Dialog (https://github.com/bit-team/backintime/issues/515)
+- remove x-terminal-emulator dependency ([#515](https://github.com/bit-team/backintime/issues/515))
+- AttributeError in About Dialog ([#515](https://github.com/bit-team/backintime/issues/515))
 
 ## [1.1.10] (2016-01-09)
 
 ### Fixed
 
-- failed to remove empty lock file (https://github.com/bit-team/backintime/issues/505)
-- Restore the correct file owner and group fail if they are not present in system (https://github.com/bit-team/backintime/issues/58)
+- failed to remove empty lock file ([#505](https://github.com/bit-team/backintime/issues/505))
+- Restore the correct file owner and group fail if they are not present in system ([#58](https://github.com/bit-team/backintime/issues/58))
 - QObject::startTimer error on closing app
 - FileNotFoundError while starting pw-cache from source
-- suppress warning about failed inhibit suspend if run as root (https://github.com/bit-team/backintime/issues/500)
-- UI blocked/grayed out while removing snapshot (https://github.com/bit-team/backintime/issues/487)
-- pw-cache failed on leftover PID file, using ApplicationInstance now (https://github.com/bit-team/backintime/issues/468)
-- failed to parse some arguments (https://github.com/bit-team/backintime/issues/492)
+- suppress warning about failed inhibit suspend if run as root ([#500](https://github.com/bit-team/backintime/issues/500))
+- UI blocked/grayed out while removing snapshot ([#487](https://github.com/bit-team/backintime/issues/487))
+- pw-cache failed on leftover PID file, using ApplicationInstance now ([#468](https://github.com/bit-team/backintime/issues/468))
+- failed to parse some arguments ([#492](https://github.com/bit-team/backintime/issues/492))
 - failed to start GUI if launched from systray icon
-- deleted snapshot is still listed in Timeline if using mode SSH (https://github.com/bit-team/backintime/issues/493)
-- PermissionError while deleting readonly files on sshfs mounted share (https://github.com/bit-team/backintime/issues/490)
-- create new encrypted profiles with encfs >= 1.8.0 failed (https://github.com/bit-team/backintime/issues/477)
-- AttributeError in common/tools.py if keyring is missing (https://github.com/bit-team/backintime/issues/473)
+- deleted snapshot is still listed in Timeline if using mode SSH ([#493](https://github.com/bit-team/backintime/issues/493))
+- PermissionError while deleting readonly files on sshfs mounted share ([#490](https://github.com/bit-team/backintime/issues/490))
+- create new encrypted profiles with encfs >= 1.8.0 failed ([#477](https://github.com/bit-team/backintime/issues/477))
+- AttributeError in common/tools.py if keyring is missing ([#473](https://github.com/bit-team/backintime/issues/473))
 - remote rename of 'new_snapshot' folder sometimes isn't recognized locally; rename local now (https://answers.launchpad.net/questions/271792)
 
 ### Uncategorized
 
-- Add Icon 'show-hidden' (https://github.com/bit-team/backintime/issues/507)
+- Add Icon 'show-hidden' ([#507](https://github.com/bit-team/backintime/issues/507))
 - Add Modify for Full System Backup button to settings page, to change some profile settings
 - add get|set_list_value to configfile
 - subclass ApplicationInstance in GUIApplicationInstance to reduce redundant code
 - speed up app start by adding snapshots to timeline in background thread
-- add warning on failed permission restore (https://github.com/bit-team/backintime/issues/58)
+- add warning on failed permission restore ([#58](https://github.com/bit-team/backintime/issues/58))
 - add unittest (thanks to Dorian, Alexandre, Aurélien and Gregory from IAGL)
-- continue an unfinished new_snapshot if possible (https://github.com/bit-team/backintime/issues/400)
-- Add Nautilus-like shortcuts for navigating in file browser (https://github.com/bit-team/backintime/issues/483)
+- continue an unfinished new_snapshot if possible ([#400](https://github.com/bit-team/backintime/issues/400))
+- Add Nautilus-like shortcuts for navigating in file browser ([#483](https://github.com/bit-team/backintime/issues/483))
 - speed up mounting of SSH+encrypted profiles
 - Move source code and bug tracking to GitHub
 
