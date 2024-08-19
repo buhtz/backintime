@@ -95,10 +95,17 @@ class Konfig(metaclass=singleton.Singleton):
 
     @property
     def profile_names(self) -> list[str]:
+        "bar"
         return list(self._profiles.keys())
+
+    @profile_names.setter
+    def profile_names(self, val):
+        """boom"""
+        pass
 
     @property
     def profile_ids(self) -> list[int]:
+        """foo"""
         return list(self._profiles.values())
 
     def load(self):
