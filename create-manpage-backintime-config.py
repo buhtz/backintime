@@ -182,6 +182,7 @@ def process_line(d, key, profile, instance, name, var, default, commentline,
             default = default.lower()
 
         d[key][INSTANCE] = instance
+        print(f'\n{force_var=} {var=} {name=}')
         d[key][NAME] = re.sub(
             r'%[\S]', '<%s>' % select(force_var, var).upper(), name
         )
