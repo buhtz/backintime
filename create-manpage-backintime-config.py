@@ -109,6 +109,9 @@ def output(instance='', name='', values='', default='',
            comment='', reference='', line=0):
     """
     """
+    print(f'output() :: {instance=} {name=} {values=} {default=} {comment=} '
+          f'{reference=} {line=}')
+
     if not default:
         default = "''"
 
@@ -125,6 +128,8 @@ def output(instance='', name='', values='', default='',
         ret += 'Default: %-18s %s line: %d\n' % (default, reference, line)
 
     ret += '.RE\n'
+
+    print(f'output() :: {ret=}\n')
 
     return ret
 
