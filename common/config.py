@@ -668,14 +668,14 @@ class Config(configfile.ConfigFileWithProfiles):
         self.setProfileStrValue('snapshots.ssh.proxy_host', value, profile_id)
 
     def sshProxyPort(self, profile_id=None):
-        #?SSH Port on remote proxy host.;0-65535
+        #?Proxy host port used to connect to remote host.;0-65535
         return self.profileIntValue('snapshots.ssh.proxy_host_port', '22', profile_id)
 
-    def setSshProxyPort(self, value, profile_id=None):
+    def setSshProxyPort(self, value, profile_id = None):
         self.setProfileIntValue('snapshots.ssh.proxy_host_port', value, profile_id)
 
     def sshProxyUser(self, profile_id=None):
-        #?Remote SSH Proxy user
+        #?Remote SSH user;;the local users name
         return self.profileStrValue('snapshots.ssh.proxy_user', getpass.getuser(), profile_id)
 
     def setSshProxyUser(self, value, profile_id=None):

@@ -774,7 +774,7 @@ Default: IP or domain address
 .RS
 Type: int       Allowed Values: 0-65535
 .br
-SSH Port on remote proxy host.
+Proxy host port used to connect to remote host.
 .PP
 Default: 22
 .RE
@@ -783,9 +783,9 @@ Default: 22
 .RS
 Type: str       Allowed Values: text
 .br
-Remote SSH Proxy user
+Remote SSH user
 .PP
-Default: getpass.getuser(
+Default: the local users name
 .RE
 
 .IP "\fIprofile<N>.snapshots.ssh.user\fR" 6
