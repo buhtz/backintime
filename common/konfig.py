@@ -95,17 +95,10 @@ class Konfig(metaclass=singleton.Singleton):
 
     @property
     def profile_names(self) -> list[str]:
-        "bar"
         return list(self._profiles.keys())
-
-    @profile_names.setter
-    def profile_names(self, val):
-        """boom"""
-        pass
 
     @property
     def profile_ids(self) -> list[int]:
-        """foo"""
         return list(self._profiles.values())
 
     def load(self):
@@ -131,6 +124,20 @@ class Konfig(metaclass=singleton.Singleton):
             # Write to file without section header
             handle.write(''.join(buffer.readlines()[1:]))
             logger.debug(f'Configuration written to "{self._path}".')
+
+    @property
+    def hash_collision(self):
+        """Internal value used to prevent hash collisions on mountpoints.
+        Do not change this.
+
+        {
+            'name': 'global.hash_collision',
+            'values': (0, 99999),
+            'default': 0,
+        }
+        """
+        return self._conf['global.hash_collision']
+
 
 
 if __name__ == '__main__':

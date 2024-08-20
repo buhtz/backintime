@@ -1,21 +1,12 @@
 #!/usr/bin/env python3
-#    Back In Time
-#    Copyright (C) 2012-2022 Germar Reitze
+# SPDX-FileCopyrightText: © 2012-2022 Germar Reitze
+# SPDX-FileCopyrightText: © 2024 Christian BUHTZ <c.buhtz@posteo.jp>
 #
-#    This program is free software; you can redistribute it and/or modify
-#    it under the terms of the GNU General Public License as published by
-#    the Free Software Foundation; either version 2 of the License, or
-#    (at your option) any later version.
+# SPDX-License-Identifier: GPL-2.0
 #
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU General Public License for more details.
-#
-#    You should have received a copy of the GNU General Public License along
-#    with this program; if not, write to the Free Software Foundation, Inc.,
-#    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-
+# This file is part of the program "Back In Time" which is released under GNU
+# General Public License v2 (GPLv2).
+# See file LICENSE or go to <https://www.gnu.org/licenses/#GPL>.
 """This script is a helper to create a manpage about Back In Times's config
 file.
 
@@ -46,26 +37,34 @@ in the `#?` description, separated by `;` there is the comment,  value,
 force_default and force_var. If there is no forced value it will chose the
 value based on the instance with `select_values`
 """
-
-import re
 import os
 import sys
+import re
+import inspect
+from pathlib import Path
 from time import strftime, gmtime
+# Workaround (see #1575)
+sys.path.insert(0, str(Path.cwd() / 'common'))
+import konfig
+import version
 
-PATH = os.path.join(os.getcwd(), 'common')
+# PATH = os.path.join(os.getcwd(), 'common')
+# CONFIG = os.path.join(PATH, 'config.py')
+MAN = Path.cwd() / 'common' / 'man' / 'C' / 'backintime-config.1'
 
-CONFIG = os.path.join(PATH, 'config.py')
-MAN = os.path.join(PATH, 'man/C/backintime-config.1')
-
-with open(os.path.join(PATH, '../VERSION'), 'r') as f:
-    VERSION = f.read().strip('\n')
+# with open(os.path.join(PATH, '../VERSION'), 'r') as f:
+#     VERSION = f.read().strip('\n')
 
 SORT = True  # True = sort by alphabet; False = sort by line numbering
 
-c_list = re.compile(r'.*?self\.(?!set)((?:profile)?)(List)Value ?\( ?[\'"](.*?)[\'"], ?((?:\(.*\)|[^,]*)), ?[\'"]?([^\'",\)]*)[\'"]?')
-c = re.compile(r'.*?self\.(?!set)((?:profile)?)(.*?)Value ?\( ?[\'"](.*?)[\'"] ?(%?[^,]*?), ?[\'"]?([^\'",\)]*)[\'"]?')
+# c_list = re.compile(r'.*?self\.(?!set)((?:profile)?)(List)Value ?\( ?[\'"](.*?)[\'"], ?((?:\(.*\)|[^,]*)), ?[\'"]?([^\'",\)]*)[\'"]?')
+# c = re.compile(r'.*?self\.(?!set)((?:profile)?)(.*?)Value ?\( ?[\'"](.*?)[\'"] ?(%?[^,]*?), ?[\'"]?([^\'",\)]*)[\'"]?')
 
-HEADER = r'''.TH backintime-config 1 "%s" "version %s" "USER COMMANDS"
+
+VERSION = version.__version__
+TIMESTAMP = strftime('%b %Y', gmtime())
+
+HEADER = r'''.TH backintime-config 1 "{TIMESTAMP}" "version {VERSION}" "USER COMMANDS"
 .SH NAME
 config \- BackInTime configuration files.
 .SH SYNOPSIS
@@ -86,14 +85,14 @@ Arguments don't need to be quoted. All characters are allowed except '='.
 .PP
 Run 'backintime check-config' to verify the configfile, create the snapshot folder and crontab entries.
 .SH POSSIBLE KEYWORDS
-''' % (strftime('%b %Y', gmtime()), VERSION)
+'''
 
 FOOTER = r'''.SH SEE ALSO
 backintime, backintime-qt.
 .PP
 Back In Time also has a website: https://github.com/bit-team/backintime
 .SH AUTHOR
-This manual page was written by BIT Team(<bit-dev@python.org>).
+This manual page was written by the BIT Team(<bit-dev@python.org>).
 '''
 
 INSTANCE = 'instance'
@@ -128,7 +127,7 @@ def groff_paragraph_break() -> str:
     return '.PP\n'
 
 
-def output(instance='', name='', values='', default='',
+def entry_to_groff(instance='', name='', values='', default='',
            comment='', reference='', line=0):
     """Generate GNU Troff (groff) markup code for the given config entry."""
     if not default:
@@ -157,7 +156,7 @@ def select(a, b):
     return b
 
 
-def select_values(instance, values):
+def _DEPRECATED_select_values(instance, values):
     if values:
         return values
 
@@ -168,7 +167,7 @@ def select_values(instance, values):
     }[instance.lower()]
 
 
-def process_line(d, key, profile, instance, name, var, default, commentline,
+def _DEPRECATED_process_line(d, key, profile, instance, name, var, default, commentline,
                  values, force_var, force_default, replace_default, counter):
     """Parsing the config.py Python code"""
     # Ignore commentlines with #?! and 'config.version'
@@ -209,166 +208,102 @@ def process_line(d, key, profile, instance, name, var, default, commentline,
         d[key][LINE] = counter
 
 
+def _get_public_properties(cls: type) -> tuple:
+    """Extract the public properties from our target config class."""
+    def _is_public_property(val):
+        return (
+            not val.startswith('_')
+            and isinstance(getattr(cls, val), property)
+        )
+
+    return tuple(filter(_is_public_property, dir(konfig.Konfig)))
+
+def lint_manpage() -> bool:
+    """
+    LC_ALL=C.UTF-8 MANROFFSEQ='' MANWIDTH=80 man --warnings -E UTF-8 -l -Tutf8 -Z <file> >/dev/null
+    """
+    return False
+
+
 def main():
-    d = {
-        'profiles.version': {
-            INSTANCE: 'int',
-            NAME: 'profiles.version',
-            VALUES: '1',
-            DEFAULT: '1',
-            COMMENT: 'Internal version of profiles config.',
-            REFERENCE: 'configfile.py',
-            LINE: 419
-        },
-        'profiles': {
-            INSTANCE: 'str',
-            NAME: 'profiles',
-            VALUES: 'int separated by colon (e.g. 1:3:4)',
-            DEFAULT: '1',
-            COMMENT: 'All active Profiles (<N> in profile<N>.snapshots...).',
-            REFERENCE: 'configfile.py',
-            LINE: 472
-        },
-        'profile<N>.name': {
-            INSTANCE: 'str',
-            NAME: 'profile<N>.name',
-            VALUES: 'text',
-            DEFAULT: 'Main profile',
-            COMMENT: 'Name of this profile.',
-            REFERENCE: 'configfile.py',
-            LINE: 704
-        }
-    }
+    # Extract multiline string between { and the latest }
+    rex = re.compile(r'\{([\s\S]*)\}')
 
-    # Default variables and there values collected from config.py
-    replace_default = {}
+    entries = {}
+    profile_entries = {}
 
-    # Variables named "CONFIG_VERSION" or with names starting with "DEFAULT"
-    regex_default = re.compile(r'(^DEFAULT[\w]*|CONFIG_VERSION)[\s]*= (.*)')
+    # Each "global" public property
+    for prop in _get_public_properties(konfig.Konfig):
+        attr = getattr(konfig.Konfig, prop)
 
-    with open(CONFIG, 'r') as f:
-        print(f'Read and parse "{CONFIG}".')
-        commentline = ''
-        values = force_var = force_default = instance \
-            = name = var = default = None
+        # Ignore properties without docstring
+        if not attr.__doc__:
+            print(f'Ignoring "{prop}" because of missing docstring.')
+            continue
 
-        for counter, line in enumerate(f, 1):
-            line = line.lstrip()
+        print(f'Public property: {prop}')
+        print(attr.__doc__)
 
-            # parse for DEFAULT variable
-            m_default = regex_default.match(line)
+        doc = attr.__doc__
 
-            # DEFAULT variable
-            if m_default:
-                replace_default[m_default.group(1)] \
-                    = m_default.group(2)
-                continue
+        # extract the dict
+        the_dict = rex.search(doc).groups()[0]
+        the_dict = '{' + the_dict + '}'
+        # Remove dict-like string from the doc string
+        doc = doc.replace(the_dict, '')
+        # Remove empty lines and other blanks
+        doc = ' '.join(line.strip()
+                       for line in
+                       filter(lambda val: len(val.strip()), doc.split('\n')))
+        # Make it a real dict
+        the_dict = eval(the_dict)
+        the_dict['doc'] = doc
 
-            # Comment intended to use for the manpage
-            if line.startswith('#?'):
-                if commentline \
-                   and ';' not in commentline \
-                   and not commentline.endswith('\\n'):
-                    commentline += ' '
+        # store the result
+        entries[the_dict.pop('name')] = the_dict
 
-                commentline += line.lstrip('#?').rstrip('\n')
+    import json
+    print(json.dumps(entries, indent=4))
 
-                continue
+    # Each "profile" public property
+    for prop in _get_public_properties(konfig.Konfig.Profile):
+        attr = getattr(konfig.Konfig.Profile, prop)
 
-            # Simple comments are ignored
-            if line.startswith('#'):
-                commentline = ''
-                continue
 
-            # e.g. "return self.profileListValue('snapshots.include', ('str:value', 'int:type'), [], profile_id)"
-            # becomes
-            # ('profile', 'List', 'snapshots.include', "('str:value', 'int:type')", '[]')
-            m = c_list.match(line)
 
-            if not m:
-                # e.g. "return self.profileBoolValue('snapshots.use_checksum', False, profile_id)"
-                # becomes
-                # ('profile', 'Bool', 'snapshots.use_checksum', '', 'False')
-                m = c.match(line)
+    sys.exit()
 
-            # Ignore undocumented (without "#?" comments) variables.
-            if m and not commentline:
-                continue
 
-            if m:
-                profile, instance, name, var, default = m.groups()
 
-                if profile == 'profile':
-                    name = 'profile<N>.' + name
-
-                var = var.lstrip('% ')
-
-                if instance.lower() == 'list':
-
-                    type_key = [x.strip('"\'') for x in re.findall(r'["\'].*?["\']', var)]
-
-                    commentline_split = commentline.split('::')
-
-                    for i, tk in enumerate(type_key):
-                        t, k = tk.split(':', maxsplit=1)
-
-                        process_line(
-                            d,
-                            key,
-                            profile,
-                            'int',
-                            '%s.size' % name,
-                            var,
-                            r'\-1',
-                            'Quantity of %s.<I> entries.' % name,
-                            values,
-                            force_var,
-                            force_default,
-                            replace_default,
-                            counter)
-
-                        key = '%s.%s' % (name, k)
-                        key = key.lower()
-
-                        process_line(
-                            d,
-                            key,
-                            profile,
-                            t,
-                            '%s.<I>.%s' % (name, k),
-                            var,
-                            '',
-                            commentline_split[i],
-                            values,
-                            force_var,
-                            force_default,
-                            replace_default,
-                            counter
-                        )
-
-                else:
-                    key = re.sub(r'%[\S]', var, name).lower()
-
-                process_line(
-                    d,
-                    key,
-                    profile,
-                    instance,
-                    name,
-                    var,
-                    default,
-                    commentline,
-                    values,
-                    force_var,
-                    force_default,
-                    replace_default,
-                    counter
-                )
-
-                values = force_var = force_default = instance \
-                    = name = var = default = None
-
-                commentline = ''
+    # d = {
+    #     'profiles.version': {
+    #         INSTANCE: 'int',
+    #         NAME: 'profiles.version',
+    #         VALUES: '1',
+    #         DEFAULT: '1',
+    #         COMMENT: 'Internal version of profiles config.',
+    #         REFERENCE: 'configfile.py',
+    #         LINE: 419
+    #     },
+    #     'profiles': {
+    #         INSTANCE: 'str',
+    #         NAME: 'profiles',
+    #         VALUES: 'int separated by colon (e.g. 1:3:4)',
+    #         DEFAULT: '1',
+    #         COMMENT: 'All active Profiles (<N> in profile<N>.snapshots...).',
+    #         REFERENCE: 'configfile.py',
+    #         LINE: 472
+    #     },
+    #     'profile<N>.name': {
+    #         INSTANCE: 'str',
+    #         NAME: 'profile<N>.name',
+    #         VALUES: 'text',
+    #         DEFAULT: 'Main profile',
+    #         COMMENT: 'Name of this profile.',
+    #         REFERENCE: 'configfile.py',
+    #         LINE: 704
+    #     }
+    # }
 
     """
     Example for content of 'd':
@@ -382,7 +317,7 @@ def main():
             "reference": "configfile.py",
             "line": 472
         },
-            "profile<N>.name": {
+        "profile<N>.name": {
             "instance": "str",
             "name": "profile<N>.name",
             "values": "text",
@@ -392,9 +327,9 @@ def main():
             "line": 704
         }
     """
-    with open(MAN, 'w') as f:
+    with MAN.open('w', encoding='utf-8') as handle:
         print(f'Write GNU Troff (groff) markup to "{MAN}". {SORT=}')
-        f.write(HEADER)
+        handle.write(HEADER)
 
         if SORT:
             # Sort by alphabet
@@ -403,8 +338,12 @@ def main():
             # Sort by line numbering (in the source file)
             s = lambda x: d[x][LINE]
 
-        f.write('\n'.join(output(**d[key]) for key in sorted(d, key=s)))
-        f.write(FOOTER)
+        handle.write('\n'.join(
+            entry_to_groff(**d[key])
+            for key in sorted(d, key=s)
+        ))
+
+        handle.write(FOOTER)
 
 
 if __name__ == '__main__':

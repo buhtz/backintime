@@ -44,7 +44,7 @@ This manual page was written by the BIT Team(<bit-dev@python.org>).
 
 
 
-def _get_public_properties() -> tuple:
+def _get_public_properties(cls) -> tuple:
     """Extract the public properties from our target config class."""
     def _is_public_property(val):
         return (
