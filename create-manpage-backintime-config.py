@@ -41,6 +41,7 @@ import os
 import sys
 import re
 import inspect
+import subprocess
 from pathlib import Path
 from time import strftime, gmtime
 from typing import Any
@@ -51,13 +52,9 @@ import version
 
 MAN = Path.cwd() / 'common' / 'man' / 'C' / 'backintime-config.1'
 
-INSTANCE = 'instance'
-NAME = 'name'
-VALUES = 'values'
-DEFAULT = 'default'
-COMMENT = 'comment'
-REFERENCE = 'reference'
-LINE = 'line'
+# |--------------------------|
+# | GNU Trof (groff) helpers |
+# |--------------------------|
 
 def groff_section(section: str) -> str:
     """Section header"""
@@ -72,8 +69,8 @@ def groff_italic(text: str) -> str:
     return f'\\fI{text}\\fR'
 
 def groff_bold(text: str) -> str:
-    """.B Bold"""
-    return f'.B{text}\n'
+    """Bold"""
+    return f'\\fB{text}\\fR'
 
 def groff_bold_roman(text: str) -> str:
     """The first part of the text is marked bold the rest is
@@ -97,6 +94,10 @@ def groff_paragraph_break() -> str:
     """.PP - Paragraph break"""
     return '.PP\n'
 
+# |--------------------|
+# | Content generation |
+# |--------------------|
+
 def header():
     stamp = strftime('%b %Y', gmtime())
     ver = version.__version__
@@ -108,7 +109,7 @@ def header():
     content += 'config \- Back In Time configuration file.\n'
 
     content += groff_section('SYNOPSIS')
-    content += '~/.config/backintime/config'
+    content += '~/.config/backintime/config\n'
     content += groff_linebreak()
     content += '/etc/backintime/config\n'
 
@@ -138,7 +139,6 @@ def header():
 
     return content
 
-
 def entry_to_groff(name: str, doc: str, values: Any, default: Any) -> None:
     """Generate GNU Troff (groff) markup code for the given config entry."""
     type_name = type(default).__name__
@@ -157,8 +157,8 @@ def entry_to_groff(name: str, doc: str, values: Any, default: Any) -> None:
 
 def footer() -> str:
     content = groff_section('SEE ALSO')
-    content += groff_bold_roman('backintime  (1),')
-    content += groff_bold_roman('backintime-qt  (1)')
+    content += groff_bold_roman('backintime (1),')
+    content += groff_bold_roman('backintime-qt (1)')
     content += groff_paragraph_break()
     content += 'Back In Time also has a website: ' \
                'https://github.com/bit-team/backintime\n'
@@ -169,65 +169,9 @@ def footer() -> str:
 
     return content
 
-
-def select(a, b):
-    if a:
-        return a
-
-    return b
-
-
-def _DEPRECATED_select_values(instance, values):
-    if values:
-        return values
-
-    return {
-        'bool': 'true|false',
-        'str': 'text',
-        'int': '0-99999'
-    }[instance.lower()]
-
-
-def _DEPRECATED_process_line(d, key, profile, instance, name, var, default, commentline,
-                 values, force_var, force_default, replace_default, counter):
-    """Parsing the config.py Python code"""
-    # Ignore commentlines with #?! and 'config.version'
-    comment = None
-
-    if not commentline.startswith('!') and key not in d:
-        d[key] = {}
-        commentline = commentline.split(';')
-
-        try:
-            comment = commentline[0]
-            values = commentline[1]
-            force_default = commentline[2]
-            force_var = commentline[3]
-
-        except IndexError:
-            pass
-
-        if default.startswith('self.') and default[5:] in replace_default:
-            default = replace_default[default[5:]]
-
-        if isinstance(force_default, str) \
-           and force_default.startswith('self.') \
-           and force_default[5:] in replace_default:
-            force_default = replace_default[force_default[5:]]
-
-        if instance.lower() == 'bool':
-            default = default.lower()
-
-        d[key][INSTANCE] = instance
-        d[key][NAME] = re.sub(
-            r'%[\S]', '<%s>' % select(force_var, var).upper(), name
-        )
-        d[key][VALUES] = select_values(instance, values)
-        d[key][DEFAULT] = select(force_default, default)
-        d[key][COMMENT] = re.sub(r'\\n', '\n.br\n', comment)
-        d[key][REFERENCE] = 'config.py'
-        d[key][LINE] = counter
-
+# |------|
+# | Misc |
+# |------|
 
 def _get_public_properties(cls: type) -> tuple:
     """Extract the public properties from our target config class."""
@@ -239,12 +183,50 @@ def _get_public_properties(cls: type) -> tuple:
 
     return tuple(filter(_is_public_property, dir(konfig.Konfig)))
 
-def lint_manpage() -> bool:
-    """
-    LC_ALL=C.UTF-8 MANROFFSEQ='' MANWIDTH=80 man --warnings -E UTF-8 -l -Tutf8 -Z <file> >/dev/null
-    """
-    return False
+def lint_manpage(path: Path) -> bool:
+    """Lint the manpage the same way as the Debian Lintian does."""
 
+    print('Linting man page...')
+
+    cmd = [
+        'man',
+        '--warnings',
+        '-E',
+        'UTF-8',
+        '-l',
+        '-Tutf8',
+        '-Z',
+        str(path)
+    ]
+
+    env = dict(
+        **os.environ,
+        LC_ALL='C.UTF-8',
+        # MANROFFSEQ="''",
+        MANWIDTH='80',
+    )
+
+    try:
+        with open('/dev/null', 'w') as devnull:
+            result = subprocess.run(
+                cmd,
+                env=env,
+                check=True,
+                text=True,
+                stdout=devnull,
+                stderr=subprocess.PIPE
+            )
+
+    except subprocess.CalledProcessError as exc:
+        raise RuntimeError(f'Unexpected error: {exc.stderr=}') from exc
+
+    # Report warnings
+    if result.stderr:
+        print(result.stderr)
+        return False
+
+    print('No problems reported')
+    return True
 
 def main():
     """
@@ -369,6 +351,9 @@ def main():
         handle.write(footer())
         handle.write('\n')
 
+        print(f'Finished creating man page.')
+
+    lint_manpage(MAN)
 
 if __name__ == '__main__':
     main()
