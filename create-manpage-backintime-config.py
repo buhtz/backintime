@@ -42,7 +42,6 @@ import sys
 import re
 import inspect
 import subprocess
-import json
 from pathlib import Path
 from time import strftime, gmtime
 from typing import Any
@@ -55,26 +54,33 @@ MAN = Path.cwd() / 'common' / 'man' / 'C' / 'backintime-config.1'
 
 # Extract multiline string between { and the latest }
 REX_DICT_EXTRACT = re.compile(r'\{([\s\S]*)\}')
+# Extract attribute name
+REX_ATTR_NAME = re.compile(r"self\._conf\[['\"](.*)['\"]\]")
 
 # |--------------------------|
 # | GNU Trof (groff) helpers |
 # |--------------------------|
 
+
 def groff_section(section: str) -> str:
     """Section header"""
     return f'.SH {section}\n'
+
 
 def groff_indented_paragraph(label: str, indent: int=6) -> str:
     """.IP - Indented Paragraph"""
     return f'.IP "{label}" {indent}'
 
+
 def groff_italic(text: str) -> str:
     """\\fi - Italic"""
     return f'\\fI{text}\\fR'
 
+
 def groff_bold(text: str) -> str:
     """Bold"""
     return f'\\fB{text}\\fR'
+
 
 def groff_bold_roman(text: str) -> str:
     """The first part of the text is marked bold the rest is
@@ -83,6 +89,7 @@ def groff_bold_roman(text: str) -> str:
     Used to reference other man pages."""
     return f'.BR {text}\n'
 
+
 def groff_indented_block(text: str) -> str:
     """
     .RS - Start indented block
@@ -90,9 +97,11 @@ def groff_indented_block(text: str) -> str:
     """
     return f'\n.RS\n{text}\n.RE\n'
 
+
 def groff_linebreak() -> str:
     """.br - Line break"""
     return '.br\n'
+
 
 def groff_paragraph_break() -> str:
     """.PP - Paragraph break"""
@@ -102,6 +111,7 @@ def groff_paragraph_break() -> str:
 # | Content generation |
 # |--------------------|
 
+
 def header():
     stamp = strftime('%b %Y', gmtime())
     ver = version.__version__
@@ -110,7 +120,7 @@ def header():
               f'"version {ver}" "USER COMMANDS"\n'
 
     content += groff_section('NAME')
-    content += 'config \- Back In Time configuration file.\n'
+    content += 'config \\- Back In Time configuration file.\n'
 
     content += groff_section('SYNOPSIS')
     content += '~/.config/backintime/config\n'
@@ -124,7 +134,7 @@ def header():
     content += '. But it is possible to use Back In Time e.g. on a ' \
                'headless server. You have to create the configuration file ' \
                '(~/.config/backintime/config) manually. Look inside ' \
-               '/usr/share/doc/backintime\-common/examples/ for examples.\n'
+               '/usr/share/doc/backintime\\-common/examples/ for examples.\n'
 
     content += groff_paragraph_break()
     content += 'The configuration file has the following format:\n'
@@ -143,6 +153,7 @@ def header():
 
     return content
 
+
 def entry_to_groff(name: str, doc: str, values: Any, default: Any) -> None:
     """Generate GNU Troff (groff) markup code for the given config entry."""
     type_name = type(default).__name__
@@ -152,12 +163,14 @@ def entry_to_groff(name: str, doc: str, values: Any, default: Any) -> None:
     ret += f'{doc}\n'
     ret += groff_paragraph_break()
 
-    ret += f'Default: {default}'
+    if default is not None:
+        ret += f'Default: {default}'
 
     ret = groff_indented_block(ret)
     ret = groff_indented_paragraph(groff_italic(name)) + ret
 
     return ret
+
 
 def footer() -> str:
     content = groff_section('SEE ALSO')
@@ -177,6 +190,7 @@ def footer() -> str:
 # | Misc |
 # |------|
 
+
 def _get_public_properties(cls: type) -> tuple:
     """Extract the public properties from our target config class."""
     def _is_public_property(val):
@@ -186,6 +200,7 @@ def _get_public_properties(cls: type) -> tuple:
         )
 
     return tuple(filter(_is_public_property, dir(cls)))
+
 
 def lint_manpage(path: Path) -> bool:
     """Lint the manpage the same way as the Debian Lintian does."""
@@ -232,7 +247,8 @@ def lint_manpage(path: Path) -> bool:
     print('No problems reported')
     return True
 
-def inspect_properties(cls: type):
+
+def inspect_properties(cls: type, name_prefix: str = ''):
     entries = {}
 
     # Each public property in the class
@@ -247,6 +263,14 @@ def inspect_properties(cls: type):
 
         print(f'{cls.__name__}.{prop}')
 
+        # Extract config field name from code (self._conf['config.field'])
+        try:
+            name = REX_ATTR_NAME.findall(inspect.getsource(attr.fget))[0]
+        except IndexError as exc:
+            raise RuntimeError('Can not find name of config field in '
+                               f'the body of "{prop}".') from exc
+
+        # Full doc string
         doc = attr.__doc__
 
         # extract the dict from docstring
@@ -266,7 +290,9 @@ def inspect_properties(cls: type):
 
         # store the result
         the_dict['doc'] = doc
-        entries[the_dict.pop('name')] = the_dict
+        # name = the_dict.pop('name')
+        # name = name_prefix + prop.replace('_', '.')
+        entries[name] = the_dict
 
     return entries
 
@@ -276,70 +302,50 @@ def main():
     information is extracted to create a man page of it.
 
     Only public properties with doc strings are used. The doc strings also
-    need to contain a with additional information.
+    need to contain a dict with additional information like allowed values and
+    default values. The data type is determined form the default value. The
+    property name is determined from the property methods name.
 
     Example ::
 
         {
-            'option.name': {
-                'values': (0, 99999),
-                'default': 0,
-                'doc': 'description text',
-            },
+            'values': (0, 99999),
+            'default': 0,
         }
     """
 
+    # Inspect the classes and extract man page related data from them.
     global_entries = inspect_properties(konfig.Konfig)
-    profile_entries = inspect_properties(konfig.Konfig.Profile)
-    # # Each "global" public property
-    # for prop in _get_public_properties(konfig.Konfig):
-    #     attr = getattr(konfig.Konfig, prop)
+    profile_entries = inspect_properties(
+        konfig.Konfig.Profile, 'profile<N>.')
 
-    #     # Ignore properties without docstring
-    #     if not attr.__doc__:
-    #         print(f'Ignoring "{prop}" because of missing docstring.')
-    #         continue
-
-    #     doc = attr.__doc__
-
-    #     # extract the dict
-    #     the_dict = rex.search(doc).groups()[0]
-    #     the_dict = '{' + the_dict + '}'
-    #     # Remove dict-like string from the doc string
-    #     doc = doc.replace(the_dict, '')
-    #     # Remove empty lines and other blanks
-    #     doc = ' '.join(line.strip()
-    #                    for line in
-    #                    filter(lambda val: len(val.strip()), doc.split('\n')))
-    #     # Make it a real dict
-    #     the_dict = eval(the_dict)
-    #     the_dict['doc'] = doc
-
-    #     # store the result
-    #     entries[the_dict.pop('name')] = the_dict
-
-
+    # Create the man page file
     with MAN.open('w', encoding='utf-8') as handle:
         print(f'Write GNU Troff (groff) markup to "{MAN}".')
+
+        # HEADER
         handle.write(header())
 
+        # PROPERTIES
         for name, entry in {**global_entries, **profile_entries}.items():
             handle.write(
                 entry_to_groff(
                     name=name,
                     doc=entry['doc'],
                     values=entry['values'],
-                    default=entry['default']
+                    default=entry.get('default', None),
                 )
             )
             handle.write('\n')
 
+        # FOOTER
         handle.write(footer())
         handle.write('\n')
 
-        print(f'Finished creating man page.')
+        print('Finished creating man page.')
 
     lint_manpage(MAN)
+
 
 if __name__ == '__main__':
     main()

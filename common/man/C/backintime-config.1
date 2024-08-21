@@ -16,7 +16,10 @@ Arguments don't need to be quoted. All characters are allowed except '='.
 .PP
 Run 'backintime check-config' to verify the configfile, create the snapshot folder and crontab entries.
 .SH POSSIBLE KEYWORDS
-.IP "\fIglobal.hash_collision\fR" 6
+.IP "\fI
+            'values': (0, 99999),
+            'default': 0,
+        \fR" 6
 .RS
 Type: int       Allowed Values: (0, 99999)
 .br
@@ -25,13 +28,38 @@ Internal value used to prevent hash collisions on mountpoints. Do not change thi
 Default: 0
 .RE
 
-.IP "\fIprofile<N>.snapshots.mode\fR" 6
+.IP "\fI
+            'values': 'ISO 639 language codes'
+        \fR" 6
+.RS
+Type: NoneType  Allowed Values: ISO 639 language codes
+.br
+Language code (ISO 639) used to translate the user interface. If empty the operating systems current local is used. If 'en' the translation is not active and the original English source strings are used. It is the same if the value is unknown.
+.PP
+
+.RE
+
+.IP "\fI
+               'values': 'local|local_encfs|ssh|ssh_encfs',
+               'default': 'local',
+            \fR" 6
 .RS
 Type: str       Allowed Values: local|local_encfs|ssh|ssh_encfs
 .br
 Use mode (or backend) for this snapshot. Look at 'man backintime' section 'Modes'.
 .PP
 Default: local
+.RE
+
+.IP "\fI
+                'values': 'absolute path',
+            \fR" 6
+.RS
+Type: NoneType  Allowed Values: absolute path
+.br
+Where to save snapshots in mode 'local'. This path must contain a folderstructure like 'backintime/<HOST>/<USER>/<PROFILE_ID>'.
+.PP
+
 .RE
 
 .SH SEE ALSO

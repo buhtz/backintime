@@ -8,11 +8,28 @@
 from __future__ import annotations
 import os
 import configparser
-from typing import Union
+import inspect
+from typing import Union, Any
 from pathlib import Path
 from io import StringIO
 import singleton
 import logger
+
+
+def _attr_by_caller() -> str:
+    """The name of the calling method is transformed into an config file attribute name.
+
+    It is a helper function used `Konfig` and `Konfig.Profile` class.
+
+    Returns:
+        The attribute name.
+    """
+
+    # e.g. "hash_collision" if called from "Konfig.hash_collision" property
+    method_name = inspect.currentframe().f_back.f_code.co_name
+
+    # e.g. "hash_collision" -> "hash.collision"
+    return method_name.replace('_', '.')
 
 
 class Konfig(metaclass=singleton.Singleton):
@@ -20,33 +37,6 @@ class Konfig(metaclass=singleton.Singleton):
 
     That class is a replacement for the `config.Config` class.
     """
-    # use with ConfigParser(defaults=_DEFAULT)
-    # _DEFAULT = {
-    #     'foo': 7,
-    #     'bar': 'bähm',
-    #     'profiles': '24842'
-    # }
-
-    # class _AttrSection:
-    #     def __init__(self,
-    #                  name: str,
-    #                  parent: _AttrSection,
-    #                  section: configparser.SectionProxy):
-    #         self._name = name
-    #         self._parent = parent
-    #         self._section = section
-
-    #     def full_attr_name(self) -> str:
-    #         return f'{self.parent.full_attr_name}.{self._name}'
-
-    #     def __getattr__(self, attr: str):
-    #         if '.' in attr:
-    #             attr_section = _AttrSection(
-    #                 name=attr, parent=self, section=self._section)
-    #             return attr_section[attr]
-
-    #         return self._conf[attr]
-
     class Profile:
         def __init__(self, profile_id: int, config: Konfig):
             self._config = config
@@ -59,34 +49,37 @@ class Konfig(metaclass=singleton.Singleton):
                 # RETURN DEFAULT
                 raise exc
 
+        def _value_by_property_name(self) -> Any:
+            """Return the value based on the calling property method."""
+            attr_name = foobar()
+            # method_name = inspect.currentframe().f_back.f_code.co_name
+            # attr_name = method_name.replace('_', '.')
+
+            return self[attr_name]
+
         @property
         def snapshots_mode(self):
-            """Use mode (or backend) for this snapshot. Look at 'man backintime'
-        section 'Modes'.
+            """Use mode (or backend) for this snapshot. Look at 'man
+            backintime' section 'Modes'.
 
             {
-               'name': 'profile<N>.snapshots.mode',
                'values': 'local|local_encfs|ssh|ssh_encfs',
                'default': 'local',
             }
-
-            Eigenen NAmen herausfinden:
-            inspect.currentframe().f_code.co_name
-
-
-            lass MyClass:
-                def get_current_method_name(self):
-                    return inspect.currentframe().f_back.f_code.co_name
-
-                def my_method1(self):
-                    print("Current method name:",
-            self.get_current_method_name())
-
-                def my_method2(self):
-                    print("Current method name:", self.get_current_method_name())
             """
             return self['snapshots.mode']
+            # return self._value_by_property_name()
 
+        @property
+        def snapshots_path(self):
+            """Where to save snapshots in mode 'local'. This path must contain
+            a folderstructure like 'backintime/<HOST>/<USER>/<PROFILE_ID>'.
+
+            {
+                'values': 'absolute path',
+            }
+            """
+            return self._value_by_property_name()
 
     _DEFAULT_SECTION = '[bit]'
 
@@ -159,20 +152,40 @@ class Konfig(metaclass=singleton.Singleton):
             logger.debug(f'Configuration written to "{self._path}".')
 
     @property
-    def hash_collision(self):
+    def hash_collision(self) -> int:
         """Internal value used to prevent hash collisions on mountpoints.
         Do not change this.
 
         {
-            'name': 'global.hash_collision',
             'values': (0, 99999),
             'default': 0,
         }
         """
         return self._conf['global.hash_collision']
 
+    @property
+    def language(self) -> str:
+        """Language code (ISO 639) used to translate the user interface. If
+        empty the operating systems current local is used. If 'en' the
+        translation is not active and the original English source strings are
+        used. It is the same if the value is unknown.
+        {
+            'values': 'ISO 639 language codes'
+        }
+        """
+        return self._conf['global.language']
+
 
 
 if __name__ == '__main__':
+    # Workaround because of missing gettext config
     _ = lambda s: s
+
     k = Konfig()
+    print(f'{k._conf.keys()=}')
+
+    print(f'{k.profile_names=}')
+    print(f'{k.profile_ids=}')
+    print(f'{k.global_hash_collision=}')
+    p = k.profile(2)
+    print(f'{p.snapshots_mode=}')
