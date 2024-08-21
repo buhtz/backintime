@@ -43,57 +43,13 @@ import re
 import inspect
 from pathlib import Path
 from time import strftime, gmtime
+from typing import Any
 # Workaround (see #1575)
 sys.path.insert(0, str(Path.cwd() / 'common'))
 import konfig
 import version
 
-# PATH = os.path.join(os.getcwd(), 'common')
-# CONFIG = os.path.join(PATH, 'config.py')
 MAN = Path.cwd() / 'common' / 'man' / 'C' / 'backintime-config.1'
-
-# with open(os.path.join(PATH, '../VERSION'), 'r') as f:
-#     VERSION = f.read().strip('\n')
-
-SORT = True  # True = sort by alphabet; False = sort by line numbering
-
-# c_list = re.compile(r'.*?self\.(?!set)((?:profile)?)(List)Value ?\( ?[\'"](.*?)[\'"], ?((?:\(.*\)|[^,]*)), ?[\'"]?([^\'",\)]*)[\'"]?')
-# c = re.compile(r'.*?self\.(?!set)((?:profile)?)(.*?)Value ?\( ?[\'"](.*?)[\'"] ?(%?[^,]*?), ?[\'"]?([^\'",\)]*)[\'"]?')
-
-
-VERSION = version.__version__
-TIMESTAMP = strftime('%b %Y', gmtime())
-
-HEADER = r'''.TH backintime-config 1 "{TIMESTAMP}" "version {VERSION}" "USER COMMANDS"
-.SH NAME
-config \- BackInTime configuration files.
-.SH SYNOPSIS
-~/.config/backintime/config
-.br
-/etc/backintime/config
-.SH DESCRIPTION
-Back In Time was developed as pure GUI program and so most functions are only
-usable with backintime-qt. But it is possible to use
-Back In Time e.g. on a headless server. You have to create the configuration file
-(~/.config/backintime/config) manually. Look inside /usr/share/doc/backintime\-common/examples/ for examples.
-.PP
-The configuration file has the following format:
-.br
-keyword=arguments
-.PP
-Arguments don't need to be quoted. All characters are allowed except '='.
-.PP
-Run 'backintime check-config' to verify the configfile, create the snapshot folder and crontab entries.
-.SH POSSIBLE KEYWORDS
-'''
-
-FOOTER = r'''.SH SEE ALSO
-backintime, backintime-qt.
-.PP
-Back In Time also has a website: https://github.com/bit-team/backintime
-.SH AUTHOR
-This manual page was written by the BIT Team(<bit-dev@python.org>).
-'''
 
 INSTANCE = 'instance'
 NAME = 'name'
@@ -103,6 +59,10 @@ COMMENT = 'comment'
 REFERENCE = 'reference'
 LINE = 'line'
 
+def groff_section(section: str) -> str:
+    """Section header"""
+    return f'.SH {section}\n'
+
 def groff_indented_paragraph(label: str, indent: int=6) -> str:
     """.IP - Indented Paragraph"""
     return f'.IP "{label}" {indent}'
@@ -110,6 +70,17 @@ def groff_indented_paragraph(label: str, indent: int=6) -> str:
 def groff_italic(text: str) -> str:
     """\\fi - Italic"""
     return f'\\fI{text}\\fR'
+
+def groff_bold(text: str) -> str:
+    """.B Bold"""
+    return f'.B{text}\n'
+
+def groff_bold_roman(text: str) -> str:
+    """The first part of the text is marked bold the rest is
+    roman/normal.
+
+    Used to reference other man pages."""
+    return f'.BR {text}\n'
 
 def groff_indented_block(text: str) -> str:
     """
@@ -126,27 +97,77 @@ def groff_paragraph_break() -> str:
     """.PP - Paragraph break"""
     return '.PP\n'
 
+def header():
+    stamp = strftime('%b %Y', gmtime())
+    ver = version.__version__
 
-def entry_to_groff(instance='', name='', values='', default='',
-           comment='', reference='', line=0):
+    content = f'.TH backintime-config 1 "{stamp}" ' \
+              f'"version {ver}" "USER COMMANDS"\n'
+
+    content += groff_section('NAME')
+    content += 'config \- Back In Time configuration file.\n'
+
+    content += groff_section('SYNOPSIS')
+    content += '~/.config/backintime/config'
+    content += groff_linebreak()
+    content += '/etc/backintime/config\n'
+
+    content += groff_section('DESCRIPTION')
+    content += 'Back In Time was developed as pure GUI program and so most ' \
+               'functions are only usable with '
+    content += groff_bold('backintime-qt')
+    content += '. But it is possible to use Back In Time e.g. on a ' \
+               'headless server. You have to create the configuration file ' \
+               '(~/.config/backintime/config) manually. Look inside ' \
+               '/usr/share/doc/backintime\-common/examples/ for examples.\n'
+
+    content += groff_paragraph_break()
+    content += 'The configuration file has the following format:\n'
+    content += groff_linebreak()
+    content += 'keyword=arguments\n'
+
+    content += groff_paragraph_break()
+    content += "Arguments don't need to be quoted. All characters are " \
+               "allowed except '='.\n"
+
+    content += groff_paragraph_break()
+    content += "Run 'backintime check-config' to verify the configfile, " \
+               "create the snapshot folder and crontab entries.\n"
+
+    content += groff_section('POSSIBLE KEYWORDS')
+
+    return content
+
+
+def entry_to_groff(name: str, doc: str, values: Any, default: Any) -> None:
     """Generate GNU Troff (groff) markup code for the given config entry."""
-    if not default:
-        default = "''"
+    type_name = type(default).__name__
 
-    ret = f'Type: {instance.lower():<10}Allowed Values: {values}\n'
+    ret = f'Type: {type_name:<10}Allowed Values: {values}\n'
     ret += groff_linebreak()
-    ret += f'{comment}\n'
+    ret += f'{doc}\n'
     ret += groff_paragraph_break()
 
-    if SORT:
-        ret += f'Default: {default}'
-    else:
-        ret += f'Default: {default:<18} {reference} line: {line}'
+    ret += f'Default: {default}'
 
     ret = groff_indented_block(ret)
     ret = groff_indented_paragraph(groff_italic(name)) + ret
 
     return ret
+
+def footer() -> str:
+    content = groff_section('SEE ALSO')
+    content += groff_bold_roman('backintime  (1),')
+    content += groff_bold_roman('backintime-qt  (1)')
+    content += groff_paragraph_break()
+    content += 'Back In Time also has a website: ' \
+               'https://github.com/bit-team/backintime\n'
+
+    content += groff_section('AUTHOR')
+    content += 'This manual page was written by the ' \
+               'Back In Time Team (<bit-dev@python.org>).'
+
+    return content
 
 
 def select(a, b):
@@ -226,6 +247,15 @@ def lint_manpage() -> bool:
 
 
 def main():
+    """
+    {
+        'global.hash_collision': {
+            'values': (0, 99999),
+            'default': 0,
+            'doc': 'description text',
+        },
+    }
+    """
     # Extract multiline string between { and the latest }
     rex = re.compile(r'\{([\s\S]*)\}')
 
@@ -265,15 +295,9 @@ def main():
     import json
     print(json.dumps(entries, indent=4))
 
-    # Each "profile" public property
-    for prop in _get_public_properties(konfig.Konfig.Profile):
-        attr = getattr(konfig.Konfig.Profile, prop)
-
-
-
-    sys.exit()
-
-
+    # # Each "profile" public property
+    # for prop in _get_public_properties(konfig.Konfig.Profile):
+    #     attr = getattr(konfig.Konfig.Profile, prop)
 
     # d = {
     #     'profiles.version': {
@@ -306,7 +330,7 @@ def main():
     # }
 
     """
-    Example for content of 'd':
+    Example for content of 'entries':
         {
             "profiles": {
             "instance": "str",
@@ -328,22 +352,22 @@ def main():
         }
     """
     with MAN.open('w', encoding='utf-8') as handle:
-        print(f'Write GNU Troff (groff) markup to "{MAN}". {SORT=}')
-        handle.write(HEADER)
+        print(f'Write GNU Troff (groff) markup to "{MAN}".')
+        handle.write(header())
 
-        if SORT:
-            # Sort by alphabet
-            s = lambda x: x
-        else:
-            # Sort by line numbering (in the source file)
-            s = lambda x: d[x][LINE]
+        for name, entry in entries.items():
+            handle.write(
+                entry_to_groff(
+                    name=name,
+                    doc=entry['doc'],
+                    values=entry['values'],
+                    default=entry['default']
+                )
+            )
+            handle.write('\n')
 
-        handle.write('\n'.join(
-            entry_to_groff(**d[key])
-            for key in sorted(d, key=s)
-        ))
-
-        handle.write(FOOTER)
+        handle.write(footer())
+        handle.write('\n')
 
 
 if __name__ == '__main__':
