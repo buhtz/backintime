@@ -16,22 +16,6 @@ import singleton
 import logger
 
 
-def _attr_by_caller() -> str:
-    """The name of the calling method is transformed into an config file attribute name.
-
-    It is a helper function used `Konfig` and `Konfig.Profile` class.
-
-    Returns:
-        The attribute name.
-    """
-
-    # e.g. "hash_collision" if called from "Konfig.hash_collision" property
-    method_name = inspect.currentframe().f_back.f_code.co_name
-
-    # e.g. "hash_collision" -> "hash.collision"
-    return method_name.replace('_', '.')
-
-
 class Konfig(metaclass=singleton.Singleton):
     """Manage configuration of Back In Time.
 
@@ -49,14 +33,6 @@ class Konfig(metaclass=singleton.Singleton):
                 # RETURN DEFAULT
                 raise exc
 
-        def _value_by_property_name(self) -> Any:
-            """Return the value based on the calling property method."""
-            attr_name = foobar()
-            # method_name = inspect.currentframe().f_back.f_code.co_name
-            # attr_name = method_name.replace('_', '.')
-
-            return self[attr_name]
-
         @property
         def snapshots_mode(self):
             """Use mode (or backend) for this snapshot. Look at 'man
@@ -68,7 +44,6 @@ class Konfig(metaclass=singleton.Singleton):
             }
             """
             return self['snapshots.mode']
-            # return self._value_by_property_name()
 
         @property
         def snapshots_path(self):
@@ -77,9 +52,10 @@ class Konfig(metaclass=singleton.Singleton):
 
             {
                 'values': 'absolute path',
+                'type': str,
             }
             """
-            return self._value_by_property_name()
+            return self['snapshots.path']
 
     _DEFAULT_SECTION = '[bit]'
 
@@ -108,8 +84,11 @@ class Konfig(metaclass=singleton.Singleton):
         # # First/Default profile not stored with name
         # self._profiles[1] = _('Main profile')
 
-    def __getitem__(self, key: str):
+    def __getitem__(self, key: str) -> Any:
         return self._conf[key]
+
+    def __setitem__(self, key: str, val: Any) -> None:
+        self._conf[key] = val
 
     def profile(self, name_or_id: Union[str, int]) -> Profile:
         if isinstance(name_or_id, int):
@@ -161,7 +140,11 @@ class Konfig(metaclass=singleton.Singleton):
             'default': 0,
         }
         """
-        return self._conf['global.hash_collision']
+        return self['global.hash_collision']
+
+    @hash_collision.setter
+    def hash_collision(self, val: int) -> None:
+        self['global.hash_collision'] = val
 
     @property
     def language(self) -> str:
@@ -170,11 +153,31 @@ class Konfig(metaclass=singleton.Singleton):
         translation is not active and the original English source strings are
         used. It is the same if the value is unknown.
         {
-            'values': 'ISO 639 language codes'
+            'values': 'ISO 639 language codes',
+            'type': str
         }
         """
-        return self._conf['global.language']
+        return self['global.language']
 
+    @language.setter
+    def language(self, lang: str) -> None:
+        self['global.language'] = lang
+
+    @property
+    def global_flock(self) -> bool:
+        """Prevent multiple snapshots (from different profiles or users) to be
+        run at the same time.
+        {
+            'values': 'true|false',
+            'default': 'false',
+            'type': bool
+        }
+        """
+        return self['global.use_flock']
+
+    @global_flock.setter
+    def global_flock(self, value: bool) -> None:
+        self['global.use_flock'] = value
 
 
 if __name__ == '__main__':
@@ -182,10 +185,12 @@ if __name__ == '__main__':
     _ = lambda s: s
 
     k = Konfig()
-    print(f'{k._conf.keys()=}')
 
     print(f'{k.profile_names=}')
     print(f'{k.profile_ids=}')
-    print(f'{k.global_hash_collision=}')
+    print(f'{k.hash_collision=}')
+    print(f'{k.language=}')
+    print(f'{k.global_flock=}')
+
     p = k.profile(2)
     print(f'{p.snapshots_mode=}')

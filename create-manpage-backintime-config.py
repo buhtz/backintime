@@ -55,7 +55,7 @@ MAN = Path.cwd() / 'common' / 'man' / 'C' / 'backintime-config.1'
 # Extract multiline string between { and the latest }
 REX_DICT_EXTRACT = re.compile(r'\{([\s\S]*)\}')
 # Extract attribute name
-REX_ATTR_NAME = re.compile(r"self\._conf\[['\"](.*)['\"]\]")
+REX_ATTR_NAME = re.compile(r"self(?:\._conf)?\[['\"](.*)['\"]\]")
 
 # |--------------------------|
 # | GNU Trof (groff) helpers |
@@ -154,16 +154,31 @@ def header():
     return content
 
 
-def entry_to_groff(name: str, doc: str, values: Any, default: Any) -> None:
+def entry_to_groff(name: str,
+                   doc: str,
+                   values: Any,
+                   default: Any,
+                   its_type: type) -> None:
     """Generate GNU Troff (groff) markup code for the given config entry."""
-    type_name = type(default).__name__
+
+    if its_type is not None:
+        if isinstance(its_type, str):
+            type_name = its_type
+        else:
+            type_name = its_type.__name__
+    elif default is not None:
+        type_name = type(default).__name__
+    else:
+        type_name = ''
 
     ret = f'Type: {type_name:<10}Allowed Values: {values}\n'
     ret += groff_linebreak()
     ret += f'{doc}\n'
     ret += groff_paragraph_break()
 
+    print(f'{name=} {default=}')
     if default is not None:
+        print('BUT')
         ret += f'Default: {default}'
 
     ret = groff_indented_block(ret)
@@ -248,7 +263,8 @@ def lint_manpage(path: Path) -> bool:
     return True
 
 
-def inspect_properties(cls: type, name_prefix: str = ''):
+def inspect_properties(cls: type,
+                       name_prefix: str = ''):
     entries = {}
 
     # Each public property in the class
@@ -315,9 +331,13 @@ def main():
     """
 
     # Inspect the classes and extract man page related data from them.
-    global_entries = inspect_properties(konfig.Konfig)
+    global_entries = inspect_properties(
+        cls=konfig.Konfig,
+    )
     profile_entries = inspect_properties(
-        konfig.Konfig.Profile, 'profile<N>.')
+        cls=konfig.Konfig.Profile,
+        name_prefix='profile<N>.'
+    )
 
     # Create the man page file
     with MAN.open('w', encoding='utf-8') as handle:
@@ -334,6 +354,7 @@ def main():
                     doc=entry['doc'],
                     values=entry['values'],
                     default=entry.get('default', None),
+                    its_type=entry.get('type', None),
                 )
             )
             handle.write('\n')
