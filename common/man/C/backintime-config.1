@@ -25,6 +25,15 @@ Internal value used to prevent hash collisions on mountpoints. Do not change thi
 Default: 0
 .RE
 
+.IP "\fIprofile<N>.snapshots.mode\fR" 6
+.RS
+Type: str       Allowed Values: local|local_encfs|ssh|ssh_encfs
+.br
+Use mode (or backend) for this snapshot. Look at 'man backintime' section 'Modes'.
+.PP
+Default: local
+.RE
+
 .SH SEE ALSO
 .BR backintime (1),
 .BR backintime-qt (1)

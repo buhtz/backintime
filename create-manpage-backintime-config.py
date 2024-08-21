@@ -42,6 +42,7 @@ import sys
 import re
 import inspect
 import subprocess
+import json
 from pathlib import Path
 from time import strftime, gmtime
 from typing import Any
@@ -51,6 +52,9 @@ import konfig
 import version
 
 MAN = Path.cwd() / 'common' / 'man' / 'C' / 'backintime-config.1'
+
+# Extract multiline string between { and the latest }
+REX_DICT_EXTRACT = re.compile(r'\{([\s\S]*)\}')
 
 # |--------------------------|
 # | GNU Trof (groff) helpers |
@@ -181,7 +185,7 @@ def _get_public_properties(cls: type) -> tuple:
             and isinstance(getattr(cls, val), property)
         )
 
-    return tuple(filter(_is_public_property, dir(konfig.Konfig)))
+    return tuple(filter(_is_public_property, dir(cls)))
 
 def lint_manpage(path: Path) -> bool:
     """Lint the manpage the same way as the Debian Lintian does."""
@@ -228,116 +232,98 @@ def lint_manpage(path: Path) -> bool:
     print('No problems reported')
     return True
 
-def main():
-    """
-    {
-        'global.hash_collision': {
-            'values': (0, 99999),
-            'default': 0,
-            'doc': 'description text',
-        },
-    }
-    """
-    # Extract multiline string between { and the latest }
-    rex = re.compile(r'\{([\s\S]*)\}')
-
+def inspect_properties(cls: type):
     entries = {}
-    profile_entries = {}
 
-    # Each "global" public property
-    for prop in _get_public_properties(konfig.Konfig):
-        attr = getattr(konfig.Konfig, prop)
+    # Each public property in the class
+    for prop in _get_public_properties(cls):
+        attr = getattr(cls, prop)
 
         # Ignore properties without docstring
         if not attr.__doc__:
-            print(f'Ignoring "{prop}" because of missing docstring.')
+            print(f'Ignoring "{cls.__name__}.{prop}" because of '
+                  'missing docstring.')
             continue
 
-        print(f'Public property: {prop}')
-        print(attr.__doc__)
+        print(f'{cls.__name__}.{prop}')
 
         doc = attr.__doc__
 
-        # extract the dict
-        the_dict = rex.search(doc).groups()[0]
+        # extract the dict from docstring
+        the_dict = REX_DICT_EXTRACT.search(doc).groups()[0]
         the_dict = '{' + the_dict + '}'
-        # Remove dict-like string from the doc string
+
+        # remove the dict from docstring
         doc = doc.replace(the_dict, '')
-        # Remove empty lines and other blanks
+
+        # Make it a real dict
+        the_dict = eval(the_dict)
+
+        # Clean up the docstring from empty lines and other blanks
         doc = ' '.join(line.strip()
                        for line in
                        filter(lambda val: len(val.strip()), doc.split('\n')))
-        # Make it a real dict
-        the_dict = eval(the_dict)
-        the_dict['doc'] = doc
 
         # store the result
+        the_dict['doc'] = doc
         entries[the_dict.pop('name')] = the_dict
 
-    import json
-    print(json.dumps(entries, indent=4))
+    return entries
 
-    # # Each "profile" public property
-    # for prop in _get_public_properties(konfig.Konfig.Profile):
-    #     attr = getattr(konfig.Konfig.Profile, prop)
 
-    # d = {
-    #     'profiles.version': {
-    #         INSTANCE: 'int',
-    #         NAME: 'profiles.version',
-    #         VALUES: '1',
-    #         DEFAULT: '1',
-    #         COMMENT: 'Internal version of profiles config.',
-    #         REFERENCE: 'configfile.py',
-    #         LINE: 419
-    #     },
-    #     'profiles': {
-    #         INSTANCE: 'str',
-    #         NAME: 'profiles',
-    #         VALUES: 'int separated by colon (e.g. 1:3:4)',
-    #         DEFAULT: '1',
-    #         COMMENT: 'All active Profiles (<N> in profile<N>.snapshots...).',
-    #         REFERENCE: 'configfile.py',
-    #         LINE: 472
-    #     },
-    #     'profile<N>.name': {
-    #         INSTANCE: 'str',
-    #         NAME: 'profile<N>.name',
-    #         VALUES: 'text',
-    #         DEFAULT: 'Main profile',
-    #         COMMENT: 'Name of this profile.',
-    #         REFERENCE: 'configfile.py',
-    #         LINE: 704
-    #     }
-    # }
+def main():
+    """The classes `Konfig` and `Konfig.Profile` are inspected and relevant
+    information is extracted to create a man page of it.
 
-    """
-    Example for content of 'entries':
+    Only public properties with doc strings are used. The doc strings also
+    need to contain a with additional information.
+
+    Example ::
+
         {
-            "profiles": {
-            "instance": "str",
-            "name": "profiles",
-            "values": "int separated by colon (e.g. 1:3:4)",
-            "default": "1",
-            "comment": "All active Profiles (<N> in profile<N>.snapshots...).",
-            "reference": "configfile.py",
-            "line": 472
-        },
-        "profile<N>.name": {
-            "instance": "str",
-            "name": "profile<N>.name",
-            "values": "text",
-            "default": "Main profile",
-            "comment": "Name of this profile.",
-            "reference": "configfile.py",
-            "line": 704
+            'option.name': {
+                'values': (0, 99999),
+                'default': 0,
+                'doc': 'description text',
+            },
         }
     """
+
+    global_entries = inspect_properties(konfig.Konfig)
+    profile_entries = inspect_properties(konfig.Konfig.Profile)
+    # # Each "global" public property
+    # for prop in _get_public_properties(konfig.Konfig):
+    #     attr = getattr(konfig.Konfig, prop)
+
+    #     # Ignore properties without docstring
+    #     if not attr.__doc__:
+    #         print(f'Ignoring "{prop}" because of missing docstring.')
+    #         continue
+
+    #     doc = attr.__doc__
+
+    #     # extract the dict
+    #     the_dict = rex.search(doc).groups()[0]
+    #     the_dict = '{' + the_dict + '}'
+    #     # Remove dict-like string from the doc string
+    #     doc = doc.replace(the_dict, '')
+    #     # Remove empty lines and other blanks
+    #     doc = ' '.join(line.strip()
+    #                    for line in
+    #                    filter(lambda val: len(val.strip()), doc.split('\n')))
+    #     # Make it a real dict
+    #     the_dict = eval(the_dict)
+    #     the_dict['doc'] = doc
+
+    #     # store the result
+    #     entries[the_dict.pop('name')] = the_dict
+
+
     with MAN.open('w', encoding='utf-8') as handle:
         print(f'Write GNU Troff (groff) markup to "{MAN}".')
         handle.write(header())
 
-        for name, entry in entries.items():
+        for name, entry in {**global_entries, **profile_entries}.items():
             handle.write(
                 entry_to_groff(
                     name=name,

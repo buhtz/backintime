@@ -53,7 +53,40 @@ class Konfig(metaclass=singleton.Singleton):
             self._prefix = f'profile{profile_id}'
 
         def __getitem__(self, key: str):
-            return self._config[f'{self._prefix}.{key}']
+            try:
+                return self._config[f'{self._prefix}.{key}']
+            except KeyError as exc:
+                # RETURN DEFAULT
+                raise exc
+
+        @property
+        def snapshots_mode(self):
+            """Use mode (or backend) for this snapshot. Look at 'man backintime'
+        section 'Modes'.
+
+            {
+               'name': 'profile<N>.snapshots.mode',
+               'values': 'local|local_encfs|ssh|ssh_encfs',
+               'default': 'local',
+            }
+
+            Eigenen NAmen herausfinden:
+            inspect.currentframe().f_code.co_name
+
+
+            lass MyClass:
+                def get_current_method_name(self):
+                    return inspect.currentframe().f_back.f_code.co_name
+
+                def my_method1(self):
+                    print("Current method name:",
+            self.get_current_method_name())
+
+                def my_method2(self):
+                    print("Current method name:", self.get_current_method_name())
+            """
+            return self['snapshots.mode']
+
 
     _DEFAULT_SECTION = '[bit]'
 
