@@ -22,6 +22,10 @@ class Konfig(metaclass=singleton.Singleton):
     That class is a replacement for the `config.Config` class.
     """
     class Profile:
+        DEFAULT_VALUES = {
+            'snapshots.ssh.port': 22,
+        }
+
         def __init__(self, profile_id: int, config: Konfig):
             self._config = config
             self._prefix = f'profile{profile_id}'
@@ -30,11 +34,10 @@ class Konfig(metaclass=singleton.Singleton):
             try:
                 return self._config[f'{self._prefix}.{key}']
             except KeyError as exc:
-                # RETURN DEFAULT
-                raise exc
+                return self.DEFAULT_VALUES[key]
 
         @property
-        def snapshots_mode(self):
+        def snapshots_mode(self) -> str:
             """Use mode (or backend) for this snapshot. Look at 'man
             backintime' section 'Modes'.
 
@@ -46,7 +49,7 @@ class Konfig(metaclass=singleton.Singleton):
             return self['snapshots.mode']
 
         @property
-        def snapshots_path(self):
+        def snapshots_path(self) -> str:
             """Where to save snapshots in mode 'local'. This path must contain
             a folderstructure like 'backintime/<HOST>/<USER>/<PROFILE_ID>'.
 
@@ -55,7 +58,52 @@ class Konfig(metaclass=singleton.Singleton):
                 'type': str,
             }
             """
+            raise NotImplementedError('see original in Config class')
             return self['snapshots.path']
+
+        @property
+        def ssh_snapshots_path(self) -> str:
+            """Snapshot path on remote host. If the path is relative (no
+            leading '/') it will start from remote Users homedir. An empty path
+            will be replaced with './'.
+
+            {
+                'values': 'absolute or relative path',
+                'type': str,
+            }
+
+            """
+            return self['snapshots.ssh.path']
+
+        @property
+        def ssh_host(self):
+            """Remote host used for mode 'ssh' and 'ssh_encfs'.
+
+            {
+                'values': 'IP or domain address',
+            }
+            """
+            return self['snapshots.ssh.host']
+
+        @ssh_host.setter
+        def ssh_host(self, value: str) -> None:
+            self['snapshots.ssh.host'] = value
+
+        @property
+        def ssh_port(self) -> str:
+            """SSH Port on remote host.
+
+            {
+                'values': '0-65535',
+                'default': 22,
+            }
+            """
+            return self['snapshots.ssh.port']
+
+        @ssh_port.setter
+        def ssh_port(self, value: int) -> None:
+            self['snapshots.ssh.port'] = value
+
 
     _DEFAULT_SECTION = '[bit]'
 

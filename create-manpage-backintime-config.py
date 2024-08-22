@@ -166,8 +166,6 @@ def entry_to_groff(name: str,
             type_name = its_type
         else:
             type_name = its_type.__name__
-    elif default is not None:
-        type_name = type(default).__name__
     else:
         type_name = ''
 
@@ -176,7 +174,6 @@ def entry_to_groff(name: str,
     ret += f'{doc}\n'
     ret += groff_paragraph_break()
 
-    print(f'{name=} {default=}')
     if default is not None:
         print('BUT')
         ret += f'Default: {default}'
@@ -306,6 +303,20 @@ def inspect_properties(cls: type,
 
         # store the result
         the_dict['doc'] = doc
+
+        # type (by return value annotation)
+        if 'type' not in the_dict:
+            sig = inspect.signature(attr.fget)
+            try:
+                the_dict['type'] = sig.return_annotation
+                print(f'{prop=} {the_dict["type"]=}')
+            except AttributeError:
+                pass
+
+        # type by default values
+        if 'type' not in the_dict and 'default' in the_dict:
+            the_dict['type'] = type(the_dict['default']).__name__
+
         # name = the_dict.pop('name')
         # name = name_prefix + prop.replace('_', '.')
         entries[name] = the_dict

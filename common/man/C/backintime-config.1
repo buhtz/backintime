@@ -61,6 +61,33 @@ Where to save snapshots in mode 'local'. This path must contain a folderstructur
 
 .RE
 
+.IP "\fIsnapshots.ssh.host\fR" 6
+.RS
+Type: _empty    Allowed Values: IP or domain address
+.br
+Remote host used for mode 'ssh' and 'ssh_encfs'.
+.PP
+
+.RE
+
+.IP "\fIsnapshots.ssh.port\fR" 6
+.RS
+Type: str       Allowed Values: 0-65535
+.br
+SSH Port on remote host.
+.PP
+Default: 22
+.RE
+
+.IP "\fIsnapshots.ssh.path\fR" 6
+.RS
+Type: str       Allowed Values: absolute or relative path
+.br
+Snapshot path on remote host. If the path is relative (no leading '/') it will start from remote Users homedir. An empty path will be replaced with './'.
+.PP
+
+.RE
+
 .SH SEE ALSO
 .BR backintime (1),
 .BR backintime-qt (1)
