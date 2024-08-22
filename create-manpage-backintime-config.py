@@ -175,7 +175,6 @@ def entry_to_groff(name: str,
     ret += groff_paragraph_break()
 
     if default is not None:
-        print('BUT')
         ret += f'Default: {default}'
 
     ret = groff_indented_block(ret)
@@ -211,7 +210,7 @@ def _get_public_properties(cls: type) -> tuple:
             and isinstance(getattr(cls, val), property)
         )
 
-    return tuple(filter(_is_public_property, dir(cls)))
+    return tuple(filter(_is_public_property, cls.__dict__.keys()))
 
 
 def lint_manpage(path: Path) -> bool:
@@ -256,12 +255,45 @@ def lint_manpage(path: Path) -> bool:
         print(result.stderr)
         return False
 
-    print('No problems reported')
+    print('No problems reported.')
     return True
 
 
-def inspect_properties(cls: type,
-                       name_prefix: str = ''):
+def inspect_properties(cls: type, name_prefix: str = '') -> dict[str, dict]:
+    """Collect details about propiertes of the class `cls`.
+
+    All public properties containing a doc string are considered.
+    Some values can be specified with a dictionary contained in the doc string
+    but don't have to, except the 'values' field containing the allowed values.
+    The docstring is used as description ('doc'). The type annoation of the
+    return value is used as 'type'. The name of the config field is extracted
+    from the code body of the property method.
+
+    Example of a result ::
+
+        {
+            'global.hash_collision':
+            {
+                'values': '0-99999',
+                'default': 0,
+                'doc': 'Internal value ...',
+                'type': 'int'
+            },
+        }
+
+    Results in a man page entry like this ::
+
+        POSSIBLE KEYWORDS
+
+            global.hash_collision
+                Type: int       Allowed Values: 0-99999
+                Internal value ...
+
+                Default: 0
+
+    Returns:
+        A dictionary indexed by the config option field names.
+    """
     entries = {}
 
     # Each public property in the class
@@ -274,6 +306,7 @@ def inspect_properties(cls: type,
                   'missing docstring.')
             continue
 
+        # DEBUG
         print(f'{cls.__name__}.{prop}')
 
         # Extract config field name from code (self._conf['config.field'])
@@ -304,22 +337,28 @@ def inspect_properties(cls: type,
         # store the result
         the_dict['doc'] = doc
 
+        # default value
+        if 'default' not in the_dict:
+            try:
+                the_dict['default'] = cls.DEFAULT_VALUES[name]
+            except KeyError:
+                pass
+
         # type (by return value annotation)
         if 'type' not in the_dict:
-            sig = inspect.signature(attr.fget)
-            try:
-                the_dict['type'] = sig.return_annotation
-                print(f'{prop=} {the_dict["type"]=}')
-            except AttributeError:
-                pass
+            return_type = inspect.signature(attr.fget).return_annotation
+
+            if return_type != inspect.Signature.empty:
+                the_dict['type'] = return_type
 
         # type by default values
         if 'type' not in the_dict and 'default' in the_dict:
             the_dict['type'] = type(the_dict['default']).__name__
 
-        # name = the_dict.pop('name')
-        # name = name_prefix + prop.replace('_', '.')
         entries[name] = the_dict
+
+        # DEBUG
+        # print(f'entries[{name}]={entries[name]}')
 
     return entries
 

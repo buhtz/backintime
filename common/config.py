@@ -43,7 +43,7 @@ try:
     _('Warning')
 except NameError:
     _ = lambda val: val
-
+import bitbase
 import tools
 import configfile
 import logger
@@ -322,21 +322,7 @@ class Config(configfile.ConfigFileWithProfiles):
                     )
         }
 
-        self.SSH_CIPHERS = {
-            'default': _('Default'),
-            'aes128-ctr': 'AES128-CTR',
-            'aes192-ctr': 'AES192-CTR',
-            'aes256-ctr': 'AES256-CTR',
-            'arcfour256': 'ARCFOUR256',
-            'arcfour128': 'ARCFOUR128',
-            'aes128-cbc': 'AES128-CBC',
-            '3des-cbc': '3DES-CBC',
-            'blowfish-cbc': 'Blowfish-CBC',
-            'cast128-cbc': 'Cast128-CBC',
-            'aes192-cbc': 'AES192-CBC',
-            'aes256-cbc': 'AES256-CBC',
-            'arcfour': 'ARCFOUR'
-        }
+        self.SSH_CIPHERS = bitbase.SSH_CIPHERS
 
     def save(self):
         self.setIntValue('config.version', self.CONFIG_VERSION)

@@ -9,6 +9,7 @@ from __future__ import annotations
 import os
 import configparser
 import inspect
+import getpass
 from typing import Union, Any
 from pathlib import Path
 from io import StringIO
@@ -21,9 +22,18 @@ class Konfig(metaclass=singleton.Singleton):
 
     That class is a replacement for the `config.Config` class.
     """
+
+    DEFAULT_VALUES = {
+    }
+
     class Profile:
         DEFAULT_VALUES = {
             'snapshots.ssh.port': 22,
+            'snapshots.ssh.cipher': 'default',
+            'snapshots.ssh.user': getpass.getuser(),
+            'snapshots.cipher': 'default',
+            'snapshots.ssh.private_key_file':
+                str(Path('~') / '.ssh' / 'id_rsa'),
         }
 
         def __init__(self, profile_id: int, config: Konfig):
@@ -55,7 +65,6 @@ class Konfig(metaclass=singleton.Singleton):
 
             {
                 'values': 'absolute path',
-                'type': str,
             }
             """
             raise NotImplementedError('see original in Config class')
@@ -69,14 +78,13 @@ class Konfig(metaclass=singleton.Singleton):
 
             {
                 'values': 'absolute or relative path',
-                'type': str,
             }
 
             """
             return self['snapshots.ssh.path']
 
         @property
-        def ssh_host(self):
+        def ssh_host(self) -> str:
             """Remote host used for mode 'ssh' and 'ssh_encfs'.
 
             {
@@ -90,7 +98,7 @@ class Konfig(metaclass=singleton.Singleton):
             self['snapshots.ssh.host'] = value
 
         @property
-        def ssh_port(self) -> str:
+        def ssh_port(self) -> int:
             """SSH Port on remote host.
 
             {
@@ -103,6 +111,99 @@ class Konfig(metaclass=singleton.Singleton):
         @ssh_port.setter
         def ssh_port(self, value: int) -> None:
             self['snapshots.ssh.port'] = value
+
+        @property
+        def ssh_user(self) -> str:
+            """Remote SSH user.
+
+            {
+                'default': 'local users name',
+                'values': 'text',
+            }
+            """
+            return self['snapshots.ssh.user']
+
+        @ssh_user.setter
+        def ssh_user(self, value: str) -> None:
+            self['snapshots.ssh.user'] = value
+
+        @property
+        def ssh_cipher(self) -> str:
+            """Cipher that is used for encrypting the SSH tunnel. Depending on
+            the environment (network bandwidth, cpu and hdd performance) a
+            different cipher might be faster.
+
+            {
+                'values': 'default | aes192-cbc | aes256-cbc | aes128-ctr ' \
+                          '| aes192-ctr | aes256-ctr | arcfour | arcfour256 ' \
+                          '| arcfour128 | aes128-cbc | 3des-cbc | ' \
+                          'blowfish-cbc | cast128-cbc',
+            }
+            """
+            return self['snapshots.ssh.cipher']
+
+        @ssh_cipher.setter
+        def ssh_cipher(self, value: str) -> None:
+            self['snapshots.ssh.cipher'] = value
+
+        @property
+        def ssh_private_key_file(self) -> Path:
+            """Private key file used for password-less authentication on remote
+            host.
+
+            {
+                'values': 'absolute path to private key file',
+                'type': 'str'
+            }
+
+            """
+            raise NotImplementedError('see original in Config class')
+            path_string = self['snapshots.ssh.private_key_file']
+            return Path(path_string)
+
+        @property
+        def ssh_proxy_host(self) -> str:
+            """Proxy host (or jump host) used to connect to remote host.
+
+            {
+                'values': 'IP or domain address',
+            }
+            """
+            return self['snapshots.ssh.proxy_host']
+
+        @ssh_proxy_host.setter
+        def ssh_proxy_host(self, value: str) -> None:
+            self['snapshots.ssh.proxy_host'] = value
+
+        @property
+        def ssh_proxy_port(self) -> int:
+            """Port of SSH proxy (jump) host used to connect to remote host.
+
+            {
+                'values': '0-65535',
+                'default': 22,
+            }
+            """
+            return self['snapshots.ssh.proxy_port']
+
+        @ssh_proxy_port.setter
+        def ssh_proxy_port(self, value: int) -> None:
+            self['snapshots.ssh.proxy_port'] = value
+
+        @property
+        def ssh_proxy_user(self) -> str:
+            """SSH user at proxy (jump) host.
+
+            {
+                'default': 'local users name',
+                'values': 'text',
+            }
+            """
+            return self['snapshots.ssh.proxy_user']
+
+        @ssh_proxy_user.setter
+        def ssh_proxy_user(self, value: str) -> None:
+            self['snapshots.ssh.proxy_user'] = value
 
 
     _DEFAULT_SECTION = '[bit]'
@@ -184,7 +285,7 @@ class Konfig(metaclass=singleton.Singleton):
         Do not change this.
 
         {
-            'values': (0, 99999),
+            'values': '0-99999',
             'default': 0,
         }
         """
