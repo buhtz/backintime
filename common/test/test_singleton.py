@@ -20,20 +20,20 @@ class Test(unittest.TestCase):
 
     def setUp(self):
         # Clean up all instances
-        Singleton._instances = {}
+        singleton.Singleton._instances = {}
 
     def test_twins(self):
         """Identical id and values."""
-        a = Foo()
-        b = Foo()
+        a = self.Foo()
+        b = self.Foo()
 
         self.assertEqual(id(a), id(b))
         self.assertEqual(a.value, b.value)
 
     def test_share_value(self):
         """Modify value"""
-        a = Foo()
-        b = Foo()
+        a = self.Foo()
+        b = self.Foo()
         a.value = 'foobar'
 
         self.assertEqual(a.value, 'foobar')
@@ -41,10 +41,10 @@ class Test(unittest.TestCase):
 
     def test_multi_class(self):
         """Two different singleton classes."""
-        a = Foo()
-        b = Foo()
-        x = Bar()
-        y = Bar()
+        a = self.Foo()
+        b = self.Foo()
+        x = self.Bar()
+        y = self.Bar()
 
         self.assertEqual(id(a), id(b))
         self.assertEqual(id(x), id(y))

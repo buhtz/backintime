@@ -4,12 +4,12 @@
 # SPDX-License-Identifier: CC0-1.0
 #
 # This file is licensed under Creative Commons Zero v1.0 Universal (CC0-1.0)
-# and is part of the program "Back In time" which is released under GNU General
+# and is part of the program "Back In Time" which is released under GNU General
 # Public License v2 (GPLv2). See file LICENSE or go to
 # <https://www.gnu.org/licenses/#GPL>.
 #
-# Credits to Mr. Mars Landis describing that solution in his artile
-# 'Better Python Singleton with a Metaclass' at
+# Credits to Mr. Mars Landis describing that solution and comparing it to
+# alternatives in his article # 'Better Python Singleton with a Metaclass' at
 # <https://python.plainenglish.io/better-python-singleton-with-a-metaclass-41fb8bfe2127>
 # himself refering to this Stack Overflow
 # <https://stackoverflow.com/q/6760685/4865723> question as his inspiration.
@@ -74,4 +74,3 @@ class Singleton(type):
             cls._instances[cls] = super().__call__(*args, **kwargs)
 
             return cls._instances[cls]
-

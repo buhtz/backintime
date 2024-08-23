@@ -49,5 +49,5 @@ class Profiles(unittest.TestCase):
         self.assertIsInstance(sut.ssh_check_commands, bool)
         self.assertEqual(sut.ssh_cipher, 'default')
         self.assertIsInstance(sut.ssh_cipher, str)
-        self.assertEqual(sut.ssh_max_arg_length, 0)
-        self.assertIsInstance(sut.ssh_max_arg_length, int)
+        self.assertEqual(sut.ssh_port, 22)
+        self.assertIsInstance(sut.ssh_port, int)
