@@ -339,7 +339,7 @@ def inspect_properties(cls: type, name_prefix: str = '') -> dict[str, dict]:
         # default value
         if 'default' not in the_dict:
             try:
-                the_dict['default'] = cls.DEFAULT_VALUES[name]
+                the_dict['default'] = cls._DEFAULT_VALUES[name]
             except KeyError:
                 pass
 
@@ -384,7 +384,7 @@ def main():
         cls=konfig.Konfig,
     )
     profile_entries = inspect_properties(
-        cls=konfig.Konfig.Profile,
+        cls=konfig.Profile,
         name_prefix='profile<N>.'
     )
 
@@ -415,6 +415,7 @@ def main():
         print('Finished creating man page.')
 
     lint_manpage(MAN)
+
 
 if __name__ == '__main__':
     main()

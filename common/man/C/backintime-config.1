@@ -31,7 +31,7 @@ Type: str       Allowed Values: ISO 639 language codes
 .br
 Language code (ISO 639) used to translate the user interface. If empty the operating systems current local is used. If 'en' the translation is not active and the original English source strings are used. It is the same if the value is unknown.
 .PP
-
+Default: 
 .RE
 
 .IP "\fIglobal.use_flock\fR" 6
@@ -41,6 +41,24 @@ Type: bool      Allowed Values: true|false
 Prevent multiple snapshots (from different profiles or users) to be run at the same time.
 .PP
 Default: false
+.RE
+
+.IP "\fIsnapshots.mode\fR" 6
+.RS
+Type: str       Allowed Values: local|local_encfs|ssh|ssh_encfs
+.br
+Use mode (or backend) for this snapshot. Look at 'man backintime' section 'Modes'.
+.PP
+Default: local
+.RE
+
+.IP "\fIsnapshots.path\fR" 6
+.RS
+Type: str       Allowed Values: absolute path
+.br
+Where to save snapshots in mode 'local'. This path must contain a folderstructure like 'backintime/<HOST>/<USER>/<PROFILE_ID>'.
+.PP
+
 .RE
 
 .IP "\fIsnapshots.ssh.path\fR" 6
@@ -75,6 +93,83 @@ Default: 22
 Type: str       Allowed Values: text
 .br
 Remote SSH user.
+.PP
+Default: local users name
+.RE
+
+.IP "\fIsnapshots.ssh.cipher\fR" 6
+.RS
+Type: str       Allowed Values: default | aes192-cbc | aes256-cbc | aes128-ctr | aes192-ctr | aes256-ctr | arcfour | arcfour256 | arcfour128 | aes128-cbc | 3des-cbc | blowfish-cbc | cast128-cbc
+.br
+Cipher that is used for encrypting the SSH tunnel. Depending on the environment (network bandwidth, cpu and hdd performance) a different cipher might be faster.
+.PP
+Default: default
+.RE
+
+.IP "\fIsnapshots.ssh.private_key_file\fR" 6
+.RS
+Type: str       Allowed Values: absolute path to private key file
+.br
+Private key file used for password-less authentication on remote host.
+.PP
+Default: ~/.ssh/id_rsa
+.RE
+
+.IP "\fIsnapshots.ssh.proxy_host\fR" 6
+.RS
+Type: str       Allowed Values: IP or domain address
+.br
+Proxy host (or jump host) used to connect to remote host.
+.PP
+
+.RE
+
+.IP "\fIsnapshots.ssh.proxy_port\fR" 6
+.RS
+Type: int       Allowed Values: 0-65535
+.br
+Port of SSH proxy (jump) host used to connect to remote host.
+.PP
+Default: 22
+.RE
+
+.IP "\fIsnapshots.ssh.proxy_user\fR" 6
+.RS
+Type: str       Allowed Values: text
+.br
+SSH user at proxy (jump) host.
+.PP
+Default: local users name
+.RE
+
+.IP "\fIsnapshots.ssh.max_arg_length\fR" 6
+.RS
+Type: int       Allowed Values: 0, >700
+.br
+Maximum command length of commands run on remote host. This can be tested for all ssh profiles in the configuration with 'python3 /usr/share/backintime/common/sshMaxArg.py LENGTH'. The value '0' means unlimited length.
+.PP
+Default: 0
+.RE
+
+.IP "\fIsnapshots.ssh.check_commands\fR" 6
+.RS
+Type: bool      Allowed Values: true|false
+.br
+Check if all commands (used during takeSnapshot) work like expected on the remote host.
+.PP
+Default: True
+.RE
+
+.IP "\fIsnapshots.ssh.check_ping\fR" 6
+.RS
+Type: bool      Allowed Values: true|false
+.br
+Check if the remote host is available before trying to mount.
+.PP
+Default: True
+.RE
+
+.SH SEE ALSO
 .BR backintime (1),
 .BR backintime-qt (1)
 .PP
