@@ -9,7 +9,7 @@
 # <https://www.gnu.org/licenses/#GPL>.
 #
 # Credits to Mr. Mars Landis describing that solution and comparing it to
-# alternatives in his article # 'Better Python Singleton with a Metaclass' at
+# alternatives in his article 'Better Python Singleton with a Metaclass' at
 # <https://python.plainenglish.io/better-python-singleton-with-a-metaclass-41fb8bfe2127>
 # himself refering to this Stack Overflow
 # <https://stackoverflow.com/q/6760685/4865723> question as his inspiration.
@@ -57,9 +57,11 @@ Example ::
     >>> id(f) == id(b)
     False
 """
+
+
 class Singleton(type):
-    """
-    """
+    """Singleton implemention supporting inheritance and multiple classes."""
+
     _instances = {}
     """Hold single instances of multiple classes."""
 
@@ -69,7 +71,7 @@ class Singleton(type):
             # Re-use existing instance
             return cls._instances[cls]
 
-        except KeyError as exc:
+        except KeyError:
             # Create new instance
             cls._instances[cls] = super().__call__(*args, **kwargs)
 

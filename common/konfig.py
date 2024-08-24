@@ -2,7 +2,7 @@
 #
 # SPDX-License-Identifier: GPL-2.0-or-later
 #
-# This file is part of the program "Back In time" which is released under GNU
+# This file is part of the program "Back In Time" which is released under GNU
 # General Public License v2 (GPLv2).
 # See file LICENSE or go to <https://www.gnu.org/licenses/#GPL>.
 from __future__ import annotations
@@ -51,6 +51,9 @@ class Profile:
         except KeyError:
             return self._DEFAULT_VALUES[key]
 
+    def __setitem__(self, key: str, val: Any):
+        self._config[f'{self._prefix}.{key}'] = val
+
     @property
     def snapshots_mode(self) -> str:
         """Use mode (or backend) for this snapshot. Look at 'man
@@ -62,6 +65,10 @@ class Profile:
         }
         """
         return self['snapshots.mode']
+
+    @snapshots_mode.setter
+    def snapshots_mode(self, val: str) -> None:
+        self['snapshots.mode'] = val
 
     @property
     def snapshots_path(self) -> str:

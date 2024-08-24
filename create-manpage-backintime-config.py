@@ -311,6 +311,7 @@ def inspect_properties(cls: type, name_prefix: str = '') -> dict[str, dict]:
         # Extract config field name from code (self._conf['config.field'])
         try:
             name = REX_ATTR_NAME.findall(inspect.getsource(attr.fget))[0]
+            name = f'{name_prefix}{name}'
         except IndexError as exc:
             raise RuntimeError('Can not find name of config field in '
                                f'the body of "{prop}".') from exc

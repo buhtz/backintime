@@ -43,7 +43,7 @@ Prevent multiple snapshots (from different profiles or users) to be run at the s
 Default: false
 .RE
 
-.IP "\fIsnapshots.mode\fR" 6
+.IP "\fIprofile<N>.snapshots.mode\fR" 6
 .RS
 Type: str       Allowed Values: local|local_encfs|ssh|ssh_encfs
 .br
@@ -52,7 +52,7 @@ Use mode (or backend) for this snapshot. Look at 'man backintime' section 'Modes
 Default: local
 .RE
 
-.IP "\fIsnapshots.path\fR" 6
+.IP "\fIprofile<N>.snapshots.path\fR" 6
 .RS
 Type: str       Allowed Values: absolute path
 .br
@@ -61,7 +61,7 @@ Where to save snapshots in mode 'local'. This path must contain a folderstructur
 
 .RE
 
-.IP "\fIsnapshots.ssh.path\fR" 6
+.IP "\fIprofile<N>.snapshots.ssh.path\fR" 6
 .RS
 Type: str       Allowed Values: absolute or relative path
 .br
@@ -70,7 +70,7 @@ Snapshot path on remote host. If the path is relative (no leading '/') it will s
 
 .RE
 
-.IP "\fIsnapshots.ssh.host\fR" 6
+.IP "\fIprofile<N>.snapshots.ssh.host\fR" 6
 .RS
 Type: str       Allowed Values: IP or domain address
 .br
@@ -79,7 +79,7 @@ Remote host used for mode 'ssh' and 'ssh_encfs'.
 
 .RE
 
-.IP "\fIsnapshots.ssh.port\fR" 6
+.IP "\fIprofile<N>.snapshots.ssh.port\fR" 6
 .RS
 Type: int       Allowed Values: 0-65535
 .br
@@ -88,7 +88,7 @@ SSH Port on remote host.
 Default: 22
 .RE
 
-.IP "\fIsnapshots.ssh.user\fR" 6
+.IP "\fIprofile<N>.snapshots.ssh.user\fR" 6
 .RS
 Type: str       Allowed Values: text
 .br
@@ -97,25 +97,25 @@ Remote SSH user.
 Default: local users name
 .RE
 
-.IP "\fIsnapshots.ssh.cipher\fR" 6
+.IP "\fIprofile<N>.snapshots.ssh.cipher\fR" 6
 .RS
 Type: str       Allowed Values: default | aes192-cbc | aes256-cbc | aes128-ctr | aes192-ctr | aes256-ctr | arcfour | arcfour256 | arcfour128 | aes128-cbc | 3des-cbc | blowfish-cbc | cast128-cbc
 .br
 Cipher that is used for encrypting the SSH tunnel. Depending on the environment (network bandwidth, cpu and hdd performance) a different cipher might be faster.
 .PP
-Default: default
+
 .RE
 
-.IP "\fIsnapshots.ssh.private_key_file\fR" 6
+.IP "\fIprofile<N>.snapshots.ssh.private_key_file\fR" 6
 .RS
 Type: str       Allowed Values: absolute path to private key file
 .br
 Private key file used for password-less authentication on remote host.
 .PP
-Default: ~/.ssh/id_rsa
+
 .RE
 
-.IP "\fIsnapshots.ssh.proxy_host\fR" 6
+.IP "\fIprofile<N>.snapshots.ssh.proxy_host\fR" 6
 .RS
 Type: str       Allowed Values: IP or domain address
 .br
@@ -124,7 +124,7 @@ Proxy host (or jump host) used to connect to remote host.
 
 .RE
 
-.IP "\fIsnapshots.ssh.proxy_port\fR" 6
+.IP "\fIprofile<N>.snapshots.ssh.proxy_port\fR" 6
 .RS
 Type: int       Allowed Values: 0-65535
 .br
@@ -133,7 +133,7 @@ Port of SSH proxy (jump) host used to connect to remote host.
 Default: 22
 .RE
 
-.IP "\fIsnapshots.ssh.proxy_user\fR" 6
+.IP "\fIprofile<N>.snapshots.ssh.proxy_user\fR" 6
 .RS
 Type: str       Allowed Values: text
 .br
@@ -142,31 +142,31 @@ SSH user at proxy (jump) host.
 Default: local users name
 .RE
 
-.IP "\fIsnapshots.ssh.max_arg_length\fR" 6
+.IP "\fIprofile<N>.snapshots.ssh.max_arg_length\fR" 6
 .RS
 Type: int       Allowed Values: 0, >700
 .br
 Maximum command length of commands run on remote host. This can be tested for all ssh profiles in the configuration with 'python3 /usr/share/backintime/common/sshMaxArg.py LENGTH'. The value '0' means unlimited length.
 .PP
-Default: 0
+
 .RE
 
-.IP "\fIsnapshots.ssh.check_commands\fR" 6
+.IP "\fIprofile<N>.snapshots.ssh.check_commands\fR" 6
 .RS
 Type: bool      Allowed Values: true|false
 .br
 Check if all commands (used during takeSnapshot) work like expected on the remote host.
 .PP
-Default: True
+
 .RE
 
-.IP "\fIsnapshots.ssh.check_ping\fR" 6
+.IP "\fIprofile<N>.snapshots.ssh.check_ping\fR" 6
 .RS
 Type: bool      Allowed Values: true|false
 .br
 Check if the remote host is available before trying to mount.
 .PP
-Default: True
+
 .RE
 
 .SH SEE ALSO
