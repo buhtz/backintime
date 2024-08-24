@@ -2,7 +2,7 @@
 # SPDX-FileCopyrightText: © 2012-2022 Germar Reitze
 # SPDX-FileCopyrightText: © 2024 Christian BUHTZ <c.buhtz@posteo.jp>
 #
-# SPDX-License-Identifier: GPL-2.0
+# SPDX-License-Identifier: GPL-2.0-or-later
 #
 # This file is part of the program "Back In Time" which is released under GNU
 # General Public License v2 (GPLv2).
@@ -60,7 +60,6 @@ REX_ATTR_NAME = re.compile(r"self(?:\._conf)?\[['\"](.*)['\"]\]")
 # |--------------------------|
 # | GNU Trof (groff) helpers |
 # |--------------------------|
-
 
 def groff_section(section: str) -> str:
     """Section header"""
@@ -416,7 +415,6 @@ def main():
         print('Finished creating man page.')
 
     lint_manpage(MAN)
-
 
 if __name__ == '__main__':
     main()
