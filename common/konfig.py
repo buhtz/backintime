@@ -291,7 +291,7 @@ class Konfig(metaclass=singleton.Singleton):
         # EXtract all relevant lines of format 'profile*.name=*'
         name_items = filter(
             lambda val:
-                val[0].startswith('profile') and val[0].endswith('name'),
+                val[0].startswith('profile') and val[0].endswith('.name'),
             self._conf.items()
         )
         self._profiles = {
@@ -375,7 +375,9 @@ class Konfig(metaclass=singleton.Singleton):
 
         with self._path.open('w', encoding='utf-8') as handle:
             # Write to file without section header
-            handle.write(''.join(buffer.readlines()[1:]))
+            # Discard unwanted first line
+            buffer.readline()
+            handle.write(buffer.read())
             logger.debug(f'Configuration written to "{self._path}".')
 
     @property
