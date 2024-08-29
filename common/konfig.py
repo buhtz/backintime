@@ -275,7 +275,7 @@ class Konfig(metaclass=singleton.Singleton):
 
     _DEFAULT_SECTION = '[bit]'
 
-    def __init__(self, config_path: Path = None):
+    def __init__(self, config_path: Optional[Path] = None):
         if not config_path:
             xdg_config = os.environ.get('XDG_CONFIG_HOME',
                                         os.environ['HOME'] + '/.config')
