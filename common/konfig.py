@@ -278,7 +278,7 @@ class Konfig(metaclass=singleton.Singleton):
     def __init__(self, config_path: Optional[Path] = None):
         if not config_path:
             xdg_config = os.environ.get('XDG_CONFIG_HOME',
-                                        os.environ['HOME'] + '/.config')
+                                        Path.home() / '.config')
             self._path = Path(xdg_config) / 'backintime' / 'config'
         else:
             self._path = config_path
