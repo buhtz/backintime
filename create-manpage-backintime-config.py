@@ -115,40 +115,42 @@ def header():
     stamp = strftime('%b %Y', gmtime())
     ver = version.__version__
 
-    content = f'.TH backintime-config 1 "{stamp}" ' \
-              f'"version {ver}" "USER COMMANDS"\n'
+    content = ''.join([
+        f'.TH backintime-config 1 "{stamp}" '
+        f'"version {ver}" "USER COMMANDS"\n',
 
-    content += groff_section('NAME')
-    content += 'config \\- Back In Time configuration file.\n'
+        groff_section('NAME'),
+        'config \\- Back In Time configuration file.\n',
 
-    content += groff_section('SYNOPSIS')
-    content += '~/.config/backintime/config\n'
-    content += groff_linebreak()
-    content += '/etc/backintime/config\n'
+        groff_section('SYNOPSIS'),
+        '~/.config/backintime/config\n',
+        groff_linebreak(),
+        '/etc/backintime/config\n',
 
-    content += groff_section('DESCRIPTION')
-    content += 'Back In Time was developed as pure GUI program and so most ' \
-               'functions are only usable with '
-    content += groff_bold('backintime-qt')
-    content += '. But it is possible to use Back In Time e.g. on a ' \
-               'headless server. You have to create the configuration file ' \
-               '(~/.config/backintime/config) manually. Look inside ' \
-               '/usr/share/doc/backintime\\-common/examples/ for examples.\n'
+        groff_section('DESCRIPTION'),
+        'Back In Time was developed as pure GUI program and so most '
+        'functions are only usable with ',
+        groff_bold('backintime-qt'),
+        '. But it is possible to use Back In Time e.g. on a '
+        'headless server. You have to create the configuration file '
+        '(~/.config/backintime/config) manually. Look inside '
+        '/usr/share/doc/backintime\\-common/examples/ for examples.\n',
 
-    content += groff_paragraph_break()
-    content += 'The configuration file has the following format:\n'
-    content += groff_linebreak()
-    content += 'keyword=arguments\n'
+        groff_paragraph_break(),
+        'The configuration file has the following format:\n',
+        groff_linebreak(),
+        'keyword=arguments\n',
 
-    content += groff_paragraph_break()
-    content += "Arguments don't need to be quoted. All characters are " \
-               "allowed except '='.\n"
+        groff_paragraph_break(),
+        "Arguments don't need to be quoted. All characters are "
+        "allowed except '='.\n",
 
-    content += groff_paragraph_break()
-    content += "Run 'backintime check-config' to verify the configfile, " \
-               "create the snapshot folder and crontab entries.\n"
+        groff_paragraph_break(),
+        "Run 'backintime check-config' to verify the configfile, "
+        "create the snapshot folder and crontab entries.\n",
 
-    content += groff_section('POSSIBLE KEYWORDS')
+        groff_section('POSSIBLE KEYWORDS'),
+    ])
 
     return content
 
