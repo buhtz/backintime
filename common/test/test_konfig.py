@@ -48,6 +48,8 @@ class General(unittest.TestCase):
 
 
 class Read(unittest.TestCase):
+    """Read a config file/object"""
+
     def setUp(self):
         Konfig._instances = {}
 

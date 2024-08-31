@@ -38,6 +38,8 @@ class Profile:
         'snapshots.ssh.max_arg_length': 0,
         'snapshots.ssh.check_commands': True,
         'snapshots.ssh.check_ping': True,
+        'snapshots.local_encfs.path': '',
+        'snapshots.password.save': False,
     }
 
     def __init__(self, profile_id: int, config: Konfig):
@@ -78,8 +80,15 @@ class Profile:
             'values': 'absolute path',
         }
         """
-        raise NotImplementedError('see original in Config class')
+        raise NotImplementedError(
+            'see original in Config class. See also '
+            'Config.snapshotsFullPath(self, profile_id = None)')
+
         return self['snapshots.path']
+
+    @snapshots_path.setter
+    def snapshots_path(self, path):
+        raise NotImplementedError('see original in Config class.')
 
     @property
     def ssh_snapshots_path(self) -> str:
@@ -93,6 +102,10 @@ class Profile:
 
         """
         return self['snapshots.ssh.path']
+
+    @ssh_snapshots_path.setter
+    def ssh_snapshots_path(self, path):
+        raise NotImplementedError('see original in Config class.')
 
     @property
     def ssh_host(self) -> str:
@@ -171,6 +184,10 @@ class Profile:
         raise NotImplementedError('see original in Config class')
         path_string = self['snapshots.ssh.private_key_file']
         return Path(path_string)
+
+    @ssh_private_key_file.setter
+    def ssh_private_key_file(self, path: Path) -> None:
+        self['snapshots.ssh.private_key_file'] = path
 
     @property
     def ssh_proxy_host(self) -> str:
@@ -257,6 +274,48 @@ class Profile:
     def ssh_check_ping_host(self, value: bool) -> None:
         self['snapshots.ssh.check_ping'] = value
 
+    @property
+    def local_encfs_path(self) -> Path:
+        """Where to save snapshots in mode 'local_encfs'.
+
+        { values: 'absolute path' }
+        """
+        return self['snapshots.local_encfs.path']
+
+    @local_encfs_path.setter
+    def local_encfs_path(self, path: Path):
+        self['snapshots.local_encfs.path'] = str(path)
+
+    @property
+    def password_save(self) -> bool:
+        """Save password to system keyring (gnome-keyring or kwallet).
+        """
+        raise NotImplementedError(
+            'Refactor it first to make the field name mode independed. '
+            'profileN.snapshots.password.save')
+        return self['snapshots.password.save']
+
+    @password_save.setter
+    def password_save(self, value: bool) -> None:
+        self['snapshots.password.save'] = value
+
+    ------------- WEITER ---------------
+    @property
+    def password_use_cache(self, value: bool) -> None:
+        if mode is None:
+            mode = self.snapshotsMode(profile_id)
+        default = not tools.checkHomeEncrypt()
+        #?Cache password in RAM so it can be read by cronjobs.
+        #?Security issue: root might be able to read that password, too.
+        #?<MODE> must be the same as \fIprofile<N>.snapshots.mode\fR;;true if home is not encrypted
+        return self.profileBoolValue('snapshots.%s.password.use_cache' % mode, default, profile_id)
+
+    def setPasswordUseCache(self, value, profile_id = None, mode = None):
+        if mode is None:
+            mode = self.snapshotsMode(profile_id)
+        self.setProfileBoolValue('snapshots.%s.password.use_cache' % mode, value, profile_id)
+
+
 
 class Konfig(metaclass=singleton.Singleton):
     """Manage configuration data for Back In Time.
@@ -270,11 +329,20 @@ class Konfig(metaclass=singleton.Singleton):
         'global.hash_collision': 0,
         'global.language': '',
         'global.use_flock': False,
+        'internal.manual_starts_countdown': 10,
     }
 
     _DEFAULT_SECTION = '[bit]'
 
-    def __init__(self, buffer: Optional[TextIOWrapper] = None):
+    def __init__(self, buffer: Optional[TextIOWrapper, StringIO] = None):
+        """Constructor.
+
+        Args:
+            buffer: An open text-file handle or a string buffer ready to read.
+
+        Note: That method is executed only once because `Konfig` is a
+        singleton.
+        """
         if buffer:
             self.load(buffer)
         else:
@@ -302,6 +370,14 @@ class Konfig(metaclass=singleton.Singleton):
         self._conf[key] = val
 
     def profile(self, name_or_id: Union[str, int]) -> Profile:
+        """Return a `Profile` object related to the given name or id.
+
+        Args:
+            name_or_id: A name or an numeric id of a snapshot profile.
+
+        Raises:
+            KeyError: If no corresponding profile exists.
+        """
         if isinstance(name_or_id, int):
             profile_id = name_or_id
         else:
@@ -317,8 +393,12 @@ class Konfig(metaclass=singleton.Singleton):
     def profile_ids(self) -> list[int]:
         return list(self._profiles.values())
 
-    def load(self, buffer: TextIOWrapper):
-        """Load configuration from file like object."""
+    def load(self, buffer: Union[TextIOWrapper, StringIO]):
+        """Load configuration from file like object.
+
+        Args:
+            buffer: An open text-file handle or a string buffer ready to read.
+        """
 
         self._config_parser = configparser.ConfigParser(
             interpolation=None,
@@ -396,6 +476,26 @@ class Konfig(metaclass=singleton.Singleton):
     def global_flock(self, value: bool) -> None:
         self['global.use_flock'] = value
 
+    @property
+    def manual_starts_countdown(self) -> int:
+        # Countdown value about how often the users started the Back In Time
+        # GUI.
+
+        # It is an internal variable not meant to be used or manipulated be the
+        # users. At the end of the countown the
+        # :py:class:`ApproachTranslatorDialog` is presented to the user.
+        return self['internal.manual_starts_countdown']
+
+    def decrement_manual_starts_countdown(self):
+        """Counts down to -1.
+
+        See `manual_starts_countdown()` for details.
+        """
+        val = self.manual_starts_countdown
+
+        if val > -1:
+            self['internal.manual_starts_countdown'] = val - 1
+
 
 def config_file_path() -> Path:
     """Return the config file path.
@@ -415,9 +515,17 @@ if __name__ == '__main__':
     # Empty in-memory config file
     # k = Konfig(StringIO())
 
+    x = Konfig()
+    print(x)
+    print(x._conf)
+
     # Regular config file
     with config_file_path().open('r', encoding='utf-8') as handle:
-        k = Konfig(handle)
+        k = Konfig()
+        k.load(handle)
+
+    print(k)
+    print(k._conf)
 
     print(f'{k.profile_names=}')
     print(f'{k.profile_ids=}')
@@ -429,3 +537,6 @@ if __name__ == '__main__':
     print(f'{p.snapshots_mode=}')
     p.snapshots_mode='ssh'
     print(f'{p.snapshots_mode=}')
+
+    k.foobarasd = 7
+    p.foobarasd = 7
