@@ -10,8 +10,6 @@
 # Workaround: Mostly relevant on TravisCI but not exclusively.
 # While unittesting and without regular invocation of BIT the GNU gettext
 # class-based API isn't setup yet.
-# The bigger problem with config.py is that it do use translatable strings.
-# Strings like this do not belong into a config file or its context.
 try:
     _('Warning')
 except NameError:
