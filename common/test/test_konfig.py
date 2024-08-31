@@ -7,6 +7,8 @@
 # See file LICENSE or go to <https://www.gnu.org/licenses/#GPL>.
 import unittest
 import configparser
+import pyfakefs.fake_filesystem_unittest as pyfakefs_ut
+from pathlib import Path
 from io import StringIO
 from konfig import Konfig
 
@@ -43,6 +45,52 @@ class General(unittest.TestCase):
             Konfig(StringIO('qt.diff.params=%6 %1 %2'))
         except configparser.InterpolationSyntaxError as exc:
             self.fail(f'InterpolationSyntaxError was raised. {exc}')
+
+
+class Read(unittest.TestCase):
+    def setUp(self):
+        Konfig._instances = {}
+
+    def test_from_memory_via_ctor(self):
+        """Config in memory"""
+        buffer = StringIO('global.language=xz')
+        sut = Konfig(buffer)
+
+        self.assertEqual(sut.language, 'xz')
+
+    def test_from_memory_via_load(self):
+        """Config in memory"""
+        sut = Konfig()
+        self.assertEqual(sut.language, '')
+
+        buffer = StringIO('global.language=ab')
+        sut.load(buffer)
+        self.assertEqual(sut.language, 'ab')
+
+    @pyfakefs_ut.patchfs
+    def test_from_file_via_ctor(self, fake_fs):
+        """Config in from file"""
+        fp = Path.cwd() / 'file'
+        with fp.open('w', encoding='utf-8') as handle:
+            handle.write('global.language=rt\n')
+
+        with fp.open('r', encoding='utf-8') as handle:
+            sut = Konfig(handle)
+        self.assertEqual(sut.language, 'rt')
+
+    @pyfakefs_ut.patchfs
+    def test_from_file_via_load(self, fake_fs):
+        """Config in from file"""
+        sut = Konfig()
+        self.assertEqual(sut.language, '')
+
+        fp = Path.cwd() / 'filezwei'
+        with fp.open('w', encoding='utf-8') as handle:
+            handle.write('global.language=wq\n')
+
+        with fp.open('r', encoding='utf-8') as handle:
+            sut.load(handle)
+        self.assertEqual(sut.language, 'wq')
 
 
 class Profiles(unittest.TestCase):

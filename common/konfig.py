@@ -8,9 +8,8 @@
 from __future__ import annotations
 import configparser
 import getpass
-import contextlib
 import os
-from typing import Union, Any
+from typing import Union, Any, Optional
 from pathlib import Path
 from io import StringIO, TextIOWrapper
 import singleton
@@ -275,20 +274,14 @@ class Konfig(metaclass=singleton.Singleton):
 
     _DEFAULT_SECTION = '[bit]'
 
-    def __init__(self, config_path: Optional[Path] = None):
-        if not config_path:
-            xdg_config = os.environ.get('XDG_CONFIG_HOME',
-                                        Path.home() / '.config')
-            self._path = Path(xdg_config) / 'backintime' / 'config'
+    def __init__(self, buffer: Optional[TextIOWrapper] = None):
+        if buffer:
+            self.load(buffer)
         else:
-            self._path = config_path
-
-        logger.debug(f'Config path used: {self._path}')
-
-        self.load()
+            self._conf = {}
 
         # Names and IDs of profiles
-        # EXtract all relevant lines of format 'profile*.name=*'
+        # Extract all relevant lines of format 'profile*.name=*'
         name_items = filter(
             lambda val:
                 val[0].startswith('profile') and val[0].endswith('.name'),
@@ -324,46 +317,21 @@ class Konfig(metaclass=singleton.Singleton):
     def profile_ids(self) -> list[int]:
         return list(self._profiles.values())
 
-    def load(self):
+    def load(self, buffer: TextIOWrapper):
         """Load configuration from file like object."""
-        @contextlib.contextmanager
-        def _path_or_buffer(path_or_buffer: Union[Path, StringIO]
-                            ) -> Union[TextIOWrapper, StringIO]:
-            """Using a path or a in-memory file (buffer) with a with
-            statement."""
-            try:
-                # It is a regular file
-                path_or_buffer = path_or_buffer.open('r', encoding='utf-8')
-                print(f'{type(path_or_buffer)=}')
-
-            except AttributeError:
-                # Assuming a StringIO instance as in-memory file
-                pass
-
-            yield path_or_buffer
-
-            try:
-                # regular file: close it
-                path_or_buffer.close()
-
-            except AttributeError:
-                # in-memory file: "cursor" back to first byte
-                path_or_buffer.seek(0)
 
         self._config_parser = configparser.ConfigParser(
             interpolation=None,
             defaults={'profile1.name': _('Main profile')})
 
-        with _path_or_buffer(self._path) as handle:
-            print(handle)
-            content = handle.read()
-            logger.debug(f'Configuration read from "{self._path}".')
+        # raw content
+        content = buffer.read()
 
         # Add section header to make it a real INI file
         self._config_parser.read_string(f'{self._DEFAULT_SECTION}\n{content}')
 
         # The one and only main section
-        self._conf = self._config_parser['bit']
+        self._conf = self._config_parser[self._DEFAULT_SECTION[1:-1]]
 
     def save(self):
         """Store configuraton to the config file."""
@@ -431,12 +399,27 @@ class Konfig(metaclass=singleton.Singleton):
         self['global.use_flock'] = value
 
 
+def config_file_path() -> Path:
+    """Return the config file path.
+
+    Could be moved into backintime.py. sys.argv (--config) needs to be
+    considered.
+    """
+    xdg_config = os.environ.get('XDG_CONFIG_HOME', Path.home() / '.config')
+    path = Path(xdg_config) / 'backintime' / 'config'
+
+    logger.debug(f'Config path: {path}')
+
+    return path
+
+
 if __name__ == '__main__':
     # Empty in-memory config file
     # k = Konfig(StringIO())
 
     # Regular config file
-    k = Konfig(StringIO('Foo=%3 %1 %2'))
+    with config_file_path().open('r', encoding='utf-8') as handle:
+        k = Konfig(handle)
 
     print(f'{k.profile_names=}')
     print(f'{k.profile_ids=}')
