@@ -6,12 +6,17 @@
 # General Public License v2 (GPLv2).
 # See file LICENSE or go to <https://www.gnu.org/licenses/#GPL>.
 import unittest
+import configparser
 from io import StringIO
 from konfig import Konfig
 
 
 class General(unittest.TestCase):
     """Konfig class"""
+
+    def setUp(self):
+        Konfig._instances = {}
+
     def test_empty(self):
         """Empty config file"""
         sut = Konfig(StringIO(''))
@@ -32,9 +37,20 @@ class General(unittest.TestCase):
         self.assertEqual(sut.hash_collision, 0)
         self.assertIsInstance(sut.hash_collision, int)
 
+    def test_no_interpolation(self):
+        """Interpolation should be turned off"""
+        try:
+            Konfig(StringIO('qt.diff.params=%6 %1 %2'))
+        except configparser.InterpolationSyntaxError as exc:
+            self.fail(f'InterpolationSyntaxError was raised. {exc}')
+
 
 class Profiles(unittest.TestCase):
     """Konfig.Profile class"""
+
+    def setUp(self):
+        Konfig._instances = {}
+
     def test_empty(self):
         """Profile child objects"""
         konf = Konfig(StringIO(''))

@@ -351,6 +351,7 @@ class Konfig(metaclass=singleton.Singleton):
                 path_or_buffer.seek(0)
 
         self._config_parser = configparser.ConfigParser(
+            interpolation=None,
             defaults={'profile1.name': _('Main profile')})
 
         with _path_or_buffer(self._path) as handle:
@@ -435,7 +436,7 @@ if __name__ == '__main__':
     # k = Konfig(StringIO())
 
     # Regular config file
-    k = Konfig()
+    k = Konfig(StringIO('Foo=%3 %1 %2'))
 
     print(f'{k.profile_names=}')
     print(f'{k.profile_ids=}')
