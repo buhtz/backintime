@@ -333,21 +333,19 @@ class Konfig(metaclass=singleton.Singleton):
         # The one and only main section
         self._conf = self._config_parser[self._DEFAULT_SECTION[1:-1]]
 
-    def save(self):
+    def save(self, buffer: TextIOWrapper):
         """Store configuraton to the config file."""
 
         raise NotImplementedError('Prevent overwritting real config data.')
 
-        buffer = StringIO()
-        self._config_parser.write(buffer)
-        buffer.seek(0)
+        tmp_io_buffer = StringIO()
+        self._config_parser.write(tmp_io_buffer)
+        tmp_io_buffer.seek(0)
 
-        with self._path.open('w', encoding='utf-8') as handle:
-            # Write to file without section header
-            # Discard unwanted first line
-            buffer.readline()
-            handle.write(buffer.read())
-            logger.debug(f'Configuration written to "{self._path}".')
+        # Write to file without section header
+        # Discard unwanted first line
+        tmp_io_buffer.readline()
+        handle.write(tmp_io_buffer.read())
 
     @property
     def hash_collision(self) -> int:

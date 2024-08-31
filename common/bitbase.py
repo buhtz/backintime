@@ -7,6 +7,17 @@
 # See file LICENSE or go to <https://www.gnu.org/licenses/#GPL>.
 """Basic constants used in multiple modules."""
 
+# Workaround: Mostly relevant on TravisCI but not exclusively.
+# While unittesting and without regular invocation of BIT the GNU gettext
+# class-based API isn't setup yet.
+# The bigger problem with config.py is that it do use translatable strings.
+# Strings like this do not belong into a config file or its context.
+try:
+    _('Warning')
+except NameError:
+    _ = lambda val: val
+
+
 # See issue #1734 and #1735
 URL_ENCRYPT_TRANSITION = 'https://github.com/bit-team/backintime' \
                          '/blob/-/doc/ENCRYPT_TRANSITION.md'
