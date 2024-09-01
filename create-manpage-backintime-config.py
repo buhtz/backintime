@@ -322,7 +322,11 @@ def inspect_properties(cls: type, name_prefix: str = '') -> dict[str, dict]:
         doc = attr.__doc__
 
         # extract the dict from docstring
-        the_dict = REX_DICT_EXTRACT.search(doc).groups()[0]
+        try:
+            the_dict = REX_DICT_EXTRACT.search(doc).groups()[0]
+        except AttributeError:
+            the_dict = ''
+
         the_dict = '{' + the_dict + '}'
 
         # remove the dict from docstring
@@ -400,6 +404,7 @@ def main():
 
         # PROPERTIES
         for name, entry in {**global_entries, **profile_entries}.items():
+            # print(f'{name=} {entry=}')
             handle.write(
                 entry_to_groff(
                     name=name,

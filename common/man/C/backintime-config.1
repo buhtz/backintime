@@ -1,4 +1,4 @@
-.TH backintime-config 1 "Aug 2024" "version 1.5.3-dev.3e80feee" "USER COMMANDS"
+.TH backintime-config 1 "Sep 2024" "version 1.5.3-dev.3e80feee" "USER COMMANDS"
 .SH NAME
 config \- Back In Time configuration file.
 .SH SYNOPSIS
@@ -59,6 +59,33 @@ Type: str       Allowed Values: absolute path
 Where to save snapshots in mode 'local'. This path must contain a folderstructure like 'backintime/<HOST>/<USER>/<PROFILE_ID>'.
 .PP
 
+.RE
+
+.IP "\fIprofile<N>.snapshots.path.host\fR" 6
+.RS
+Type: str       Allowed Values: local hostname
+.br
+Set Host for snapshot path.
+.PP
+
+.RE
+
+.IP "\fIprofile<N>.snapshots.path.user\fR" 6
+.RS
+Type: str       Allowed Values: local username
+.br
+Set User for snapshot path.
+.PP
+
+.RE
+
+.IP "\fIprofile<N>.snapshots.path.profile\fR" 6
+.RS
+Type: str       Allowed Values: 1-99999
+.br
+Set Profile-ID for snapshot path
+.PP
+Default: current Profile-ID
 .RE
 
 .IP "\fIprofile<N>.snapshots.ssh.path\fR" 6
@@ -167,6 +194,33 @@ Type: bool      Allowed Values: true|false
 Check if the remote host is available before trying to mount.
 .PP
 
+.RE
+
+.IP "\fIprofile<N>.snapshots.local_encfs.path\fR" 6
+.RS
+Type: Path      Allowed Values: absolute path
+.br
+Where to save snapshots in mode 'local_encfs'.
+.PP
+
+.RE
+
+.IP "\fIprofile<N>.snapshots.password.save\fR" 6
+.RS
+Type: bool      Allowed Values: true|false
+.br
+Save password to system keyring (gnome-keyring or kwallet).
+.PP
+
+.RE
+
+.IP "\fIprofile<N>.snapshots.password.use_cache\fR" 6
+.RS
+Type: None      Allowed Values: true|false
+.br
+Cache password in RAM so it can be read by cronjobs. Security issue: root might be able to read that password, too.
+.PP
+Default: see #1855
 .RE
 
 .SH SEE ALSO

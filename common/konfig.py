@@ -9,6 +9,7 @@ from __future__ import annotations
 import configparser
 import getpass
 import os
+import socket
 from typing import Union, Any, Optional
 from pathlib import Path
 from io import StringIO, TextIOWrapper
@@ -30,6 +31,8 @@ class Profile:
     """Manages access to profile-specific configuration data."""
     _DEFAULT_VALUES = {
         'snapshots.mode': 'local',
+        'snapshots.path.host': socket.gethostname(),
+        'snapshots.path.user': getpass.getuser(),
         'snapshots.ssh.port': 22,
         'snapshots.ssh.cipher': 'default',
         'snapshots.ssh.user': getpass.getuser(),
@@ -89,6 +92,50 @@ class Profile:
     @snapshots_path.setter
     def snapshots_path(self, path):
         raise NotImplementedError('see original in Config class.')
+
+    @property
+    def snapshots_path_host(self) -> str:
+        """Set Host for snapshot path.
+
+        { 'values': 'local hostname' }
+        """
+        return self['snapshots.path.host']
+
+    @snapshots_path_host.setter
+    def snapshots_path_host(self, value: str) -> None:
+        self['snapshots.path.host'] = value
+
+    @property
+    def snapshots_path_user(self) -> str:
+        """Set User for snapshot path.
+
+        { 'values': 'local username' }
+        """
+        return self['snapshots.path.user']
+
+    @snapshots_path_user.setter
+    def snapshots_path_user(self, value: str) -> None:
+        self['snapshots.path.user'] = value
+
+    @property
+    def snapshots_path_profileid(self) -> str:
+        """Set Profile-ID for snapshot path
+
+        {
+            'values': '1-99999',
+            'default': 'current Profile-ID'
+        }
+        """
+        try:
+            return self['snapshots.path.profile']
+        except KeyError:
+            # Extract number from field prefix
+            # e.g. "profile1" -> "1"
+            return self._prefix.replace('profile', '')
+
+    @snapshots_path_profileid.setter
+    def snapshots_path_profileid(self, value: str) -> None:
+        self['snapshots.path.profile'] = value
 
     @property
     def ssh_snapshots_path(self) -> str:
@@ -278,7 +325,7 @@ class Profile:
     def local_encfs_path(self) -> Path:
         """Where to save snapshots in mode 'local_encfs'.
 
-        { values: 'absolute path' }
+        { 'values': 'absolute path' }
         """
         return self['snapshots.local_encfs.path']
 
@@ -289,6 +336,7 @@ class Profile:
     @property
     def password_save(self) -> bool:
         """Save password to system keyring (gnome-keyring or kwallet).
+        { 'values': 'true|false' }
         """
         raise NotImplementedError(
             'Refactor it first to make the field name mode independed. '
@@ -299,22 +347,26 @@ class Profile:
     def password_save(self, value: bool) -> None:
         self['snapshots.password.save'] = value
 
-    ------------- WEITER ---------------
     @property
     def password_use_cache(self, value: bool) -> None:
-        if mode is None:
-            mode = self.snapshotsMode(profile_id)
-        default = not tools.checkHomeEncrypt()
-        #?Cache password in RAM so it can be read by cronjobs.
-        #?Security issue: root might be able to read that password, too.
-        #?<MODE> must be the same as \fIprofile<N>.snapshots.mode\fR;;true if home is not encrypted
-        return self.profileBoolValue('snapshots.%s.password.use_cache' % mode, default, profile_id)
+        """Cache password in RAM so it can be read by cronjobs.
+        Security issue: root might be able to read that password, too.
 
-    def setPasswordUseCache(self, value, profile_id = None, mode = None):
-        if mode is None:
-            mode = self.snapshotsMode(profile_id)
-        self.setProfileBoolValue('snapshots.%s.password.use_cache' % mode, value, profile_id)
+        {
+            'values': 'true|false',
+            'default': 'see #1855'
+        }
+        """
+        raise NotImplementedError(
+            'Refactor it first to make the field name mode independed. '
+            'profileN.snapshots.password.use_cache.'
+            'See also Issue #1855 about encrypted home dir')
+        # ??? default = not tools.checkHomeEncrypt()
+        return self['snapshots.password.use_cache']
 
+    @password_use_cache.setter
+    def password_use_cache(self, value: bool) -> None:
+        self['snapshots.password.use_cache'] = value
 
 
 class Konfig(metaclass=singleton.Singleton):
