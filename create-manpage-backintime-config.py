@@ -395,6 +395,38 @@ def main():
         name_prefix='profile<N>.'
     )
 
+    # WORKAROuND:
+    # Structure of include/exclude fields can not be easly handled via
+    # properties and doc-string inspection. The structure will get
+    # modified in the future. Until then we add their man page docu
+    # manual.
+    inc_exc = {
+        'profile<N>.snapshots.exclude.<I>.value': {
+            'doc': 'Exclude this file or folder. <I> must be a counter '
+                   'starting with 1',
+            'values': 'file, folder or pattern (relative or absolute)',
+            'default': '',
+            'type': 'str'
+        },
+        # Don't worry. "exclude.<I>.type" does not exist.
+        'profile<N>.snapshots.include.<I>.value': {
+            'doc': 'Include this file or folder. <I> must be a counter '
+                   'starting with 1',
+            'values': 'absolute path',
+            'default': '',
+            'type': 'str'
+        },
+        'profile<N>.snapshots.include.<I>.type': {
+            'doc':
+                'Specify if ' + groff_indented_block(
+                    'profile<N>.snapshots.include.<I>.value')
+                + ' is a folder (0) or a file (1)',
+            'values': '0|1',
+            'default': 0,
+            'type': 'int'
+        },
+    }
+
     # Create the man page file
     with MAN.open('w', encoding='utf-8') as handle:
         print(f'Write GNU Troff (groff) markup to "{MAN}".')

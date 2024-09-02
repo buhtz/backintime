@@ -10,6 +10,7 @@ import configparser
 import getpass
 import os
 import socket
+import re
 from typing import Union, Any, Optional
 from pathlib import Path
 from io import StringIO, TextIOWrapper
@@ -43,6 +44,8 @@ class Profile:
         'snapshots.ssh.check_ping': True,
         'snapshots.local_encfs.path': '',
         'snapshots.password.save': False,
+        'snapshots.include': [],
+        'snapshots.exclude': [],
     }
 
     def __init__(self, profile_id: int, config: Konfig):
@@ -57,6 +60,9 @@ class Profile:
 
     def __setitem__(self, key: str, val: Any):
         self._config[f'{self._prefix}.{key}'] = val
+
+    def __delitem__(self, key: str) -> None:
+        del self._config[f'{self._prefix}.{key}']
 
     @property
     def snapshots_mode(self) -> str:
@@ -351,7 +357,6 @@ class Profile:
     def password_use_cache(self, value: bool) -> None:
         """Cache password in RAM so it can be read by cronjobs.
         Security issue: root might be able to read that password, too.
-
         {
             'values': 'true|false',
             'default': 'see #1855'
@@ -367,6 +372,86 @@ class Profile:
     @password_use_cache.setter
     def password_use_cache(self, value: bool) -> None:
         self['snapshots.password.use_cache'] = value
+
+    def _generic_include_exclude_ids(self, inc_exc_str: str) -> tuple[int]:
+        """Return two list of numeric IDs used for include and exclude values.
+
+        Return:
+            A two item tuple, first with include IDs and second with exclude.
+        """
+        rex = re.compile(r'^'
+                         + self._prefix
+                         + r'.snapshots.'
+                         + inc_exc_str
+                         + r'.(\d+).value')
+
+        ids = []
+
+        for item in self._config._conf:  # <-- Ugly, I know.
+            try:
+                ids.append(int(rex.findall(item)[0]))
+            except IndexError:
+                pass
+
+        return tuple(ids)
+
+    def _get_include_ids(self) -> tuple[int]:
+        """List of numeric IDs used for include values."""
+
+        return self._generic_include_exclude_ids('include')
+
+    def _get_exclude_ids(self) -> tuple[int]:
+        """List of numeric IDs used for exclude values."""
+        return self._generic_include_exclude_ids('exclude')
+
+    @property
+    def include(self) -> list[str, int]:
+        # Man page docu is added manually. See
+        # create-manpage-backintime-config.sh script.
+
+        # ('name', 0|1)
+        result = []
+
+        for id_val in self._get_include_ids():
+            result.append(
+                (
+                    self[f'snapshots.include.{id_val}.value'],
+                    int(self[f'snapshots.include.{id_val}.type'])
+                )
+            )
+
+        return result
+
+    @include.setter
+    def include(self, values: list[str, int]) -> None:
+        # delete existing values
+        for id_val in self._get_include_ids():
+            del self[f'snapshots.include.{id_val}.value']
+            del self[f'snapshots.include.{id_val}.type']
+
+        for idx, val in enumerate(values, 1):
+            self[f'snapshots.include.{idx}.value'] = val[0]
+            self[f'snapshots.include.{idx}.type'] = str(val[1])
+
+    @property
+    def exclude(self) -> list[str]:
+        # Man page docu is added manually. See
+        # create-manpage-backintime-config.sh script.
+        result = []
+
+        for id_val in self._get_exclude_ids():
+            result.append(self[f'snapshots.exclude.{id_val}.value'])
+
+        return result
+
+    @exclude.setter
+    def exclude(self, values: list[str]) -> None:
+        # delete existing values
+        for id_val in self._get_exclude_ids():
+            del self[f'snapshots.exclude.{id_val}.value']
+
+        for idx, val in enumerate(values, 1):
+            self[f'snapshots.exclude.{idx}.value'] = val
 
 
 class Konfig(metaclass=singleton.Singleton):
@@ -384,7 +469,7 @@ class Konfig(metaclass=singleton.Singleton):
         'internal.manual_starts_countdown': 10,
     }
 
-    _DEFAULT_SECTION = '[bit]'
+    _DEFAULT_SECTION = 'bit'
 
     def __init__(self, buffer: Optional[TextIOWrapper, StringIO] = None):
         """Constructor.
@@ -420,6 +505,9 @@ class Konfig(metaclass=singleton.Singleton):
 
     def __setitem__(self, key: str, val: Any) -> None:
         self._conf[key] = val
+
+    def __delitem__(self, key: str) -> None:
+        self._config_parser.remove_option(self._DEFAULT_SECTION, key)
 
     def profile(self, name_or_id: Union[str, int]) -> Profile:
         """Return a `Profile` object related to the given name or id.
@@ -460,10 +548,10 @@ class Konfig(metaclass=singleton.Singleton):
         content = buffer.read()
 
         # Add section header to make it a real INI file
-        self._config_parser.read_string(f'{self._DEFAULT_SECTION}\n{content}')
+        self._config_parser.read_string(f'[{self._DEFAULT_SECTION}]\n{content}')
 
         # The one and only main section
-        self._conf = self._config_parser[self._DEFAULT_SECTION[1:-1]]
+        self._conf = self._config_parser[self._DEFAULT_SECTION]
 
     def save(self, buffer: TextIOWrapper):
         """Store configuraton to the config file."""
@@ -586,9 +674,20 @@ if __name__ == '__main__':
     print(f'{k.global_flock=}')
 
     p = k.profile(2)
+    print(p._prefix)
     print(f'{p.snapshots_mode=}')
     p.snapshots_mode='ssh'
     print(f'{p.snapshots_mode=}')
+    print(f'{p.include=}')
 
-    k.foobarasd = 7
-    p.foobarasd = 7
+    p = k.profile(8)
+    print(p._prefix)
+    print(f'{p.include=}')
+
+    p = k.profile(9)
+    print(p._prefix)
+    print(f'{p.include=}')
+    print(f'{p.exclude=}')
+
+    p.include=[('foo', 0), ('bar', 1)]
+    print(f'{p.include=}')
