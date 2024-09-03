@@ -361,6 +361,13 @@ def inspect_properties(cls: type, name_prefix: str = '') -> dict[str, dict]:
         if 'type' not in the_dict and 'default' in the_dict:
             the_dict['type'] = type(the_dict['default']).__name__
 
+        # values if bool
+        if 'values' not in the_dict:
+            if the_dict['type'] == 'bool':
+                the_dict['values'] = 'true|false'
+            elif the_dict['type'] == 'int':
+                the_dict['values'] = '0-99999'
+
         entries[name] = the_dict
 
         # DEBUG
@@ -436,7 +443,7 @@ def main():
 
         # PROPERTIES
         for name, entry in {**global_entries, **profile_entries}.items():
-            # print(f'{name=} {entry=}')
+            print(f'{name=} {entry=}')
             handle.write(
                 entry_to_groff(
                     name=name,

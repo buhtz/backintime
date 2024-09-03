@@ -67,6 +67,7 @@ class Config(configfile.ConfigFileWithProfiles):
     CONFIG_VERSION = 6
     """Latest or highest possible version of Back in Time's config file."""
 
+    # Schedule mode codes
     NONE = 0
     AT_EVERY_BOOT = 1
     _5_MIN = 2

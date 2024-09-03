@@ -223,6 +223,33 @@ Cache password in RAM so it can be read by cronjobs. Security issue: root might 
 Default: see #1855
 .RE
 
+.IP "\fIprofile<N>.snapshots.exclude.bysize.enabled\fR" 6
+.RS
+Type: bool      Allowed Values: true|false
+.br
+Enable exclude files by size.
+.PP
+
+.RE
+
+.IP "\fIprofile<N>.snapshots.exclude.bysize.value\fR" 6
+.RS
+Type: int       Allowed Values: 0-99999
+.br
+Exclude files bigger than value in MiB. With 'Full rsync mode' disabled this will only affect new files because for rsync this is a transfer option, not an exclude option. So big files that has been backed up before will remain in snapshots even if they had changed.
+.PP
+
+.RE
+
+.IP "\fIprofile<N>.schedule.mode\fR" 6
+.RS
+Type: int       Allowed Values: 0|1|2|4|7|10|12|14|16|18|19|20|25|27|30|40|80
+.br
+Which schedule used for crontab. The crontab entry will be generated with 'backintime check-config'. 0 = Disabled 1 = at every boot 2 = every 5 minute 4 = every 10 minute 7 = every 30 minute 10 = every hour 12 = every 2 hours 14 = every 4 hours 16 = every 6 hours 18 = every 12 hours 19 = custom defined hours 20 = every day 25 = daily anacron 27 = when drive get connected 30 = every week 40 = every month 80 = every year
+.PP
+
+.RE
+
 .SH SEE ALSO
 .BR backintime (1),
 .BR backintime-qt (1)

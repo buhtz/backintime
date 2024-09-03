@@ -117,3 +117,76 @@ class Profiles(unittest.TestCase):
         self.assertIsInstance(sut.ssh_cipher, str)
         self.assertEqual(sut.ssh_port, 22)
         self.assertIsInstance(sut.ssh_port, int)
+
+
+class IncludeExclude(unittest.TestCase):
+    """About include and exclude fields"""
+
+    def setUp(self):
+        Konfig._instances = {}
+
+    def test_exclude_write(self):
+        """Write exclude fields"""
+        config = Konfig()
+        sut = config.profile(1)
+
+        self.assertEqual(sut.exclude, [])
+
+        sut.exclude = ['Worf', 'Garak']
+
+        self.assertEqual(sut.exclude, ['Worf', 'Garak'])
+
+    def test_include_write(self):
+        """Write include fields"""
+        config = Konfig()
+        sut = config.profile(1)
+
+        self.assertEqual(sut.include, [])
+
+        sut.include = [
+            ('/Cardassia/Prime', 0),
+            ('/Ferengi/Nar', 1),
+        ]
+
+        self.assertEqual(
+            sut.include,
+            [
+                ('/Cardassia/Prime', 0),
+                ('/Ferengi/Nar', 1),
+            ]
+        )
+
+
+    def test_included_read(self):
+        """Read include fields"""
+        config = Konfig(StringIO('\n'.join([
+            'profile1.snapshots.include.1.value=/foo/bar/folder',
+            'profile1.snapshots.include.1.type=0',
+            'profile1.snapshots.include.2.value=/foo/bar/file',
+            'profile1.snapshots.include.2.type=1',
+        ])))
+        sut = config.profile(1)
+
+        self.assertEqual(
+            sut.include,
+            [
+                ('/foo/bar/folder', 0),
+                ('/foo/bar/file', 1)
+            ]
+        )
+
+    def test_exclude_read(self):
+        """Read exclude fields"""
+        config = Konfig(StringIO('\n'.join([
+            'profile1.snapshots.exclude.2.value=/bar/foo/file',
+            'profile1.snapshots.exclude.1.value=/bar/foo/folder',
+        ])))
+        sut = config.profile(1)
+
+        self.assertEqual(
+            sut.exclude,
+            [
+                '/bar/foo/file',
+                '/bar/foo/folder',
+            ]
+        )

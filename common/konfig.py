@@ -46,6 +46,9 @@ class Profile:
         'snapshots.password.save': False,
         'snapshots.include': [],
         'snapshots.exclude': [],
+        'snapshots.exclude.bysize.enabled': False,
+        'snapshots.exclude.bysize.value': 500,
+        'schedule.mode': 0,
     }
 
     def __init__(self, profile_id: int, config: Konfig):
@@ -388,10 +391,14 @@ class Profile:
         ids = []
 
         for item in self._config._conf:  # <-- Ugly, I know.
+            # print(f'{item=}')  # DEBUG
             try:
                 ids.append(int(rex.findall(item)[0]))
             except IndexError:
                 pass
+
+        # DEBUG
+        # print(f'{inc_exc_str=} {ids=}')
 
         return tuple(ids)
 
@@ -452,6 +459,50 @@ class Profile:
 
         for idx, val in enumerate(values, 1):
             self[f'snapshots.exclude.{idx}.value'] = val
+
+    @property
+    def exclude_by_size_enabled(self) -> bool:
+        """Enable exclude files by size."""
+        return self['snapshots.exclude.bysize.enabled']
+
+    @exclude_by_size_enabled.setter
+    def exclude_by_size_enabled(self, value: bool) -> None:
+        self['snapshots.exclude.bysize.enabled'] = value
+
+    @property
+    def exclude_by_size(self) -> int:
+        """Exclude files bigger than value in MiB. With 'Full rsync mode'
+        disabled this will only affect new files because for rsync this is a
+        transfer option, not an exclude option. So big files that has been
+        backed up before will remain in snapshots even if they had changed.
+
+        """
+        return self['snapshots.exclude.bysize.value']
+
+    @exclude_by_size.setter
+    def exclude_by_size(self, value):
+        self['snapshots.exclude.bysize.value'] = value
+
+    @property
+    def schedule_mode(self) -> int:
+        """Which schedule used for crontab. The crontab entry will be
+        generated with 'backintime check-config'.\n
+         0 = Disabled\n 1 = at every boot\n 2 = every 5 minute\n
+         4 = every 10 minute\n 7 = every 30 minute\n10 = every hour\n
+        12 = every 2 hours\n14 = every 4 hours\n16 = every 6 hours\n
+        18 = every 12 hours\n19 = custom defined hours\n20 = every day\n
+        25 = daily anacron\n27 = when drive get connected\n30 = every week\n
+        40 = every month\n80 = every year
+
+        {
+            'values': '0|1|2|4|7|10|12|14|16|18|19|20|25|27|30|40|80'
+        }
+        """
+        return self['schedule.mode']
+
+    @schedule_mode.setter
+    def schedule_mode(self, value: int) -> None:
+        self['schedule.mode'] = value
 
 
 class Konfig(metaclass=singleton.Singleton):
