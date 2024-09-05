@@ -49,6 +49,13 @@ class Profile:
         'snapshots.exclude.bysize.enabled': False,
         'snapshots.exclude.bysize.value': 500,
         'schedule.mode': 0,
+        'schedule.debug': False,
+        'schedule.time': 0,
+        'schedule.day': 1,
+        'schedule.weekday': 7,
+        'schedule.custom_time': '8,12,18,23',
+        'schedule.repeatedly.period': 1,
+        'schedule.repeatedly.unit': 20,  # DAY
     }
 
     def __init__(self, profile_id: int, config: Konfig):
@@ -475,7 +482,6 @@ class Profile:
         disabled this will only affect new files because for rsync this is a
         transfer option, not an exclude option. So big files that has been
         backed up before will remain in snapshots even if they had changed.
-
         """
         return self['snapshots.exclude.bysize.value']
 
@@ -503,6 +509,91 @@ class Profile:
     @schedule_mode.setter
     def schedule_mode(self, value: int) -> None:
         self['schedule.mode'] = value
+
+    @property
+    def schedule_debug(self) -> bool:
+        """Enable debug output to system log for schedule mode."""
+        return self['schedule.debug']
+
+    @schedule_debug.setter
+    def schedule_debug(self, value: bool) -> None:
+        self['schedule.debug'] = value
+
+    @property
+    def schedule_time(self) -> int:
+        """Position-coded number with the format "hhmm" to specify the hour
+        and minute the cronjob should start (eg. 2015 means a quarter
+        past 8pm). Leading zeros can be omitted (eg. 30 = 0030).
+        Only valid for \fIprofile<N>.schedule.mode\fR = 20 (daily), 30 (weekly),
+40 (monthly) and 80 (yearly).
+        { 'values': '0-2400' }
+        """
+        return self['schedule.time']
+
+    @schedule_time.setter
+    def schedule_time(self, value: int) -> None:
+        self['schedule.time'] = value
+
+    @property
+    def schedule_day(self) -> int:
+        """Which day of month the cronjob should run? Only valid for
+        \fIprofile<N>.schedule.mode\fR >= 40.
+        { 'values': '1-28' }
+        """
+        return self['schedule.day']
+
+    @schedule_day.setter
+    def schedule_day(self, value: int) -> None:
+        self['schedule.day'] = value
+
+    @property
+    def schedule_weekday(self) -> int:
+        """Which day of week the cronjob should run? Only valid for
+        \fIprofile<N>.schedule.mode\fR = 30.
+        { 'values': '1 (monday) to 7 (sunday)' }
+        """
+        return self['schedule.weekday']
+
+    @schedule_weekday.setter
+    def schedule_weekday(self, value: int) -> None:
+        self['schedule.weekday'] = value
+
+    @property
+    def custom_backup_time(self) -> str:
+        """Custom hours for cronjob. Only valid for
+        \fIprofile<N>.schedule.mode\fR = 19
+        { 'values': 'comma separated int (8,12,18,23) or */3;8,12,18,23' }
+        """
+        return self['schedule.custom_time']
+
+    @custom_backup_time.setter
+    def custom_backup_time(self, value: str) -> None:
+        self['schedule.custom_time'] = value
+
+    @property
+    def schedule_repeated_period(self) -> int:
+        """
+        #?How many units to wait between new snapshots with anacron? Only valid
+        #?for \fIprofile<N>.schedule.mode\fR = 25|27.
+        """
+        return self['schedule.repeatedly.period']
+
+    @schedule_repeated_period.setter
+    def schedule_repeated_period(self, value: int) -> None:
+        self['schedule.repeatedly.period'] = value
+
+    @property
+    def schedule_repeated_unit(self) -> int:
+        """Units to wait between new snapshots with anacron.\n
+        10 = hours\n20 = days\n30 = weeks\n40 = months\n
+        Only valid for \fIprofile<N>.schedule.mode\fR = 25|27;
+        { 'values': '10|20|30|40' }
+        """
+        return self['schedule.repeatedly.unit']
+
+    @schedule_repeated_unit.setter
+    def schedule_repeated_unit(self, value: int) -> None:
+        self['schedule.repeatedly.unit'] = value
 
 
 class Konfig(metaclass=singleton.Singleton):
