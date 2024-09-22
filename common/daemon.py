@@ -1,11 +1,14 @@
 # SPDX-FileCopyrightText: © 2007 Sander Marechal
 # SPDX-FileCopyrightText: © 2016 Germar Reitze
 #
-# SPDX-License-Identifier: CC0 (public domain)
+# SPDX-License-Identifier: CC0-1.0
 #
-# This file is part of the program "Back In Time" which is released under GNU
-# General Public License v2 (GPLv2).
-# See file LICENSE or go to <https://www.gnu.org/licenses/#GPL>.
+# This file is released under Creative Commons Zero 1.0 (CC0-1.0) and part of
+# the program "Back In Time". The program as a whole is released under GNU
+# General Public License v2 or any later version (GPL-2.0-or-later).
+# See file/folder LICENSE or
+# go to <https://spdx.org/licenses/CC0-1.0.html>
+# and <https://spdx.org/licenses/GPL-2.0-or-later.html>.
 """A generic daemon class.
 
     Original from:
@@ -50,8 +53,9 @@ import logger
 from applicationinstance import ApplicationInstance
 
 
-def fdDup(old, new_fd, mode = 'w'):
-    """Duplicate file descriptor `old` to `new_fd` and closing the latter first.
+def fdDup(old, new_fd, mode='w'):
+    """Duplicate file descriptor `old` to `new_fd` and closing the latter
+    first.
 
     Used to redirect stdin, stdout and stderr from daemonized threads.
 
@@ -68,7 +72,6 @@ def fdDup(old, new_fd, mode = 'w'):
         logger.debug('Failed to redirect {}: {}'.format(old, str(e)))
 
 
-
 class Daemon:
     """A generic daemon class.
 
@@ -79,7 +82,7 @@ class Daemon:
                  stdin='/dev/null',
                  stdout='/dev/stdout',
                  stderr='/dev/null',
-                 umask = 0o022):
+                 umask=0o022):
         self.stdin = stdin
         self.stdout = stdout
         self.stderr = stderr
