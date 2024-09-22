@@ -5,6 +5,8 @@
 # This file is part of the program "Back In Time" which is released under GNU
 # General Public License v2 (GPLv2).
 # See file LICENSE or go to <https://www.gnu.org/licenses/#GPL>.
+"""Configuration mangament.
+"""
 from __future__ import annotations
 import configparser
 import getpass
@@ -25,10 +27,11 @@ import logger
 try:
     _('Warning')
 except NameError:
-    _ = lambda val: val
+    def _(val):
+        return val
 
 
-class Profile:
+class Profile:  # pylint: disable=too-many-public-methods
     """Manages access to profile-specific configuration data."""
     _DEFAULT_VALUES = {
         'snapshots.mode': 'local',
@@ -103,7 +106,7 @@ class Profile:
             'see original in Config class. See also '
             'Config.snapshotsFullPath(self, profile_id = None)')
 
-        return self['snapshots.path']
+        # return self['snapshots.path']
 
     @snapshots_path.setter
     def snapshots_path(self, path):
@@ -245,8 +248,8 @@ class Profile:
 
         """
         raise NotImplementedError('see original in Config class')
-        path_string = self['snapshots.ssh.private_key_file']
-        return Path(path_string)
+        # path_string = self['snapshots.ssh.private_key_file']
+        # return Path(path_string)
 
     @ssh_private_key_file.setter
     def ssh_private_key_file(self, path: Path) -> None:
@@ -308,7 +311,7 @@ class Profile:
         }
         """
         raise NotImplementedError('see org in Config')
-        return self['snapshots.ssh.max_arg_length']
+        # return self['snapshots.ssh.max_arg_length']
 
     @ssh_max_arg_length.setter
     def ssh_max_arg_length(self, length: int) -> None:
@@ -357,14 +360,14 @@ class Profile:
         raise NotImplementedError(
             'Refactor it first to make the field name mode independed. '
             'profileN.snapshots.password.save')
-        return self['snapshots.password.save']
+        # return self['snapshots.password.save']
 
     @password_save.setter
     def password_save(self, value: bool) -> None:
         self['snapshots.password.save'] = value
 
     @property
-    def password_use_cache(self, value: bool) -> None:
+    def password_use_cache(self) -> None:
         """Cache password in RAM so it can be read by cronjobs.
         Security issue: root might be able to read that password, too.
         {
@@ -377,7 +380,7 @@ class Profile:
             'profileN.snapshots.password.use_cache.'
             'See also Issue #1855 about encrypted home dir')
         # ??? default = not tools.checkHomeEncrypt()
-        return self['snapshots.password.use_cache']
+        # return self['snapshots.password.use_cache']
 
     @password_use_cache.setter
     def password_use_cache(self, value: bool) -> None:
@@ -385,6 +388,25 @@ class Profile:
 
     def _generic_include_exclude_ids(self, inc_exc_str: str) -> tuple[int]:
         """Return two list of numeric IDs used for include and exclude values.
+
+        The config file does have lines like this:
+
+            profile1.snapshots.include.1.values
+            profile1.snapshots.include.2.values
+            profile1.snapshots.include.3.values
+            ...
+            profile1.snapshots.include.8.values
+
+        or
+
+            profile1.snapshots.exclude.1.values
+            profile1.snapshots.exclude.2.values
+            profile1.snapshots.exclude.3.values
+            ...
+            profile1.snapshots.exclude.8.values
+
+        The numerical value between (in this example 1, 2, 3, 8) is extracted
+        via regex.
 
         Return:
             A two item tuple, first with include IDs and second with exclude.
@@ -397,15 +419,13 @@ class Profile:
 
         ids = []
 
-        for item in self._config._conf:  # <-- Ugly, I know.
-            # print(f'{item=}')  # DEBUG
+        # Ugly, I know. Handling of in/exclude will be rewritten soon. So no
+        # need to fix this.
+        for item in self._config._conf:  # pylint: disable=protected-access
             try:
                 ids.append(int(rex.findall(item)[0]))
             except IndexError:
                 pass
-
-        # DEBUG
-        # print(f'{inc_exc_str=} {ids=}')
 
         return tuple(ids)
 
@@ -419,7 +439,7 @@ class Profile:
         return self._generic_include_exclude_ids('exclude')
 
     @property
-    def include(self) -> list[str, int]:
+    def include(self) -> list[str, int]:  # pylint: disable=C0116
         # Man page docu is added manually. See
         # create-manpage-backintime-config.sh script.
 
@@ -448,7 +468,7 @@ class Profile:
             self[f'snapshots.include.{idx}.type'] = str(val[1])
 
     @property
-    def exclude(self) -> list[str]:
+    def exclude(self) -> list[str]:  # pylint: disable=C0116
         # Man page docu is added manually. See
         # create-manpage-backintime-config.sh script.
         result = []
@@ -524,8 +544,8 @@ class Profile:
         """Position-coded number with the format "hhmm" to specify the hour
         and minute the cronjob should start (eg. 2015 means a quarter
         past 8pm). Leading zeros can be omitted (eg. 30 = 0030).
-        Only valid for \fIprofile<N>.schedule.mode\fR = 20 (daily), 30 (weekly),
-40 (monthly) and 80 (yearly).
+        Only valid for \fIprofile<N>.schedule.mode\fR = 20 (daily),
+        30 (weekly), 40 (monthly) and 80 (yearly).
         { 'values': '0-2400' }
         """
         return self['schedule.time']
@@ -669,10 +689,12 @@ class Konfig(metaclass=singleton.Singleton):
 
     @property
     def profile_names(self) -> list[str]:
+        """List of profile names."""
         return list(self._profiles.keys())
 
     @property
     def profile_ids(self) -> list[int]:
+        """List of numerical profile ids."""
         return list(self._profiles.values())
 
     def load(self, buffer: Union[TextIOWrapper, StringIO]):
@@ -690,7 +712,8 @@ class Konfig(metaclass=singleton.Singleton):
         content = buffer.read()
 
         # Add section header to make it a real INI file
-        self._config_parser.read_string(f'[{self._DEFAULT_SECTION}]\n{content}')
+        self._config_parser.read_string(
+            f'[{self._DEFAULT_SECTION}]\n{content}')
 
         # The one and only main section
         self._conf = self._config_parser[self._DEFAULT_SECTION]
@@ -700,14 +723,14 @@ class Konfig(metaclass=singleton.Singleton):
 
         raise NotImplementedError('Prevent overwritting real config data.')
 
-        tmp_io_buffer = StringIO()
-        self._config_parser.write(tmp_io_buffer)
-        tmp_io_buffer.seek(0)
+        # tmp_io_buffer = StringIO()
+        # self._config_parser.write(tmp_io_buffer)
+        # tmp_io_buffer.seek(0)
 
-        # Write to file without section header
-        # Discard unwanted first line
-        tmp_io_buffer.readline()
-        handle.write(tmp_io_buffer.read())
+        # # Write to file without section header
+        # # Discard unwanted first line
+        # tmp_io_buffer.readline()
+        # handle.write(tmp_io_buffer.read())
 
     @property
     def hash_collision(self) -> int:
@@ -759,7 +782,7 @@ class Konfig(metaclass=singleton.Singleton):
         self['global.use_flock'] = value
 
     @property
-    def manual_starts_countdown(self) -> int:
+    def manual_starts_countdown(self) -> int:  # pylint: disable=C0116
         # Countdown value about how often the users started the Back In Time
         # GUI.
 
@@ -797,9 +820,9 @@ if __name__ == '__main__':
     # Empty in-memory config file
     # k = Konfig(StringIO())
 
-    x = Konfig()
-    print(x)
-    print(x._conf)
+    k = Konfig()
+    print(k)
+    print(k._conf)  # pylint: disable=protected-access
 
     # Regular config file
     with config_file_path().open('r', encoding='utf-8') as handle:
@@ -807,7 +830,7 @@ if __name__ == '__main__':
         k.load(handle)
 
     print(k)
-    print(k._conf)
+    print(k._conf)  # pylint: disable=protected-access
 
     print(f'{k.profile_names=}')
     print(f'{k.profile_ids=}')
@@ -816,20 +839,17 @@ if __name__ == '__main__':
     print(f'{k.global_flock=}')
 
     p = k.profile(2)
-    print(p._prefix)
     print(f'{p.snapshots_mode=}')
-    p.snapshots_mode='ssh'
+    p.snapshots_mode = 'ssh'
     print(f'{p.snapshots_mode=}')
     print(f'{p.include=}')
 
     p = k.profile(8)
-    print(p._prefix)
     print(f'{p.include=}')
 
     p = k.profile(9)
-    print(p._prefix)
     print(f'{p.include=}')
     print(f'{p.exclude=}')
 
-    p.include=[('foo', 0), ('bar', 1)]
+    p.include = [('foo', 0), ('bar', 1)]
     print(f'{p.include=}')

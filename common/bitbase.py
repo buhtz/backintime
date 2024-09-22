@@ -6,16 +6,17 @@
 # General Public License v2 (GPLv2). See file/folder LICENSE or go to
 # <https://spdx.org/licenses/GPL-2.0-or-later.html>.
 """Basic constants used in multiple modules."""
-
+from enum import Enum
 # Workaround: Mostly relevant on TravisCI but not exclusively.
 # While unittesting and without regular invocation of BIT the GNU gettext
 # class-based API isn't setup yet.
+# pylint: disable=duplicate-code
 try:
     _('Warning')
 except NameError:
-    _ = lambda val: val
+    def _(val):
+        return val
 
-from enum import Enum
 
 # See issue #1734 and #1735
 URL_ENCRYPT_TRANSITION = 'https://github.com/bit-team/backintime' \
@@ -37,9 +38,9 @@ SSH_CIPHERS = {
     'arcfour': 'ARCFOUR'
 }
 
+
 class TimeUnit(Enum):
-    """Describe time units used in context of scheduling.
-    """
+    """Describe time units used in context of scheduling."""
     HOUR = 10  # Config.HOUR
     DAY = 20  # Config.DAY
     WEEK = 30  # Config.WEEK
