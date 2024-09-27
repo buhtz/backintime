@@ -1166,7 +1166,6 @@ class Config(configfile.ConfigFileWithProfiles):
     def setPreserveXattr(self, value, profile_id = None):
         return self.setProfileBoolValue('snapshots.preserve_xattr', value, profile_id)
 
-    ---- WEITER ----
     def copyUnsafeLinks(self, profile_id = None):
         #?This tells rsync to copy the referent of symbolic links that point
         #?outside the copied tree.  Absolute symlinks are also treated like
@@ -1192,6 +1191,7 @@ class Config(configfile.ConfigFileWithProfiles):
     def setOneFileSystem(self, value, profile_id = None):
         return self.setProfileBoolValue('snapshots.one_file_system', value, profile_id)
 
+    ---- WEITER ----
     def rsyncOptionsEnabled(self, profile_id = None):
         #?Past additional options to rsync
         return self.profileBoolValue('snapshots.rsync_options.enabled', False, profile_id)

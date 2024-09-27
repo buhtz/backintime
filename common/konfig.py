@@ -91,19 +91,43 @@ class Profile:  # pylint: disable=too-many-public-methods
         'snapshots.no_on_battery': False,
         'snapshots.preserve_acl': False,
         'snapshots.preserve_xattr': False,
+        'snapshots.copy_unsafe_links': False,
+        'snapshots.copy_links': False,
+        'snapshots.one_file_system': False,
+        'snapshots.rsync_options.enabled': False,
     }
 
     def __init__(self, profile_id: int, config: Konfig):
         self._config = config
         self._prefix = f'profile{profile_id}'
 
-    def __getitem__(self, key: str):
+    def __getitem__(self, key: str) -> Any:
+        """Select a field of the profiles config by its name as a string and
+        return its value.
+
+        For example `self['field.name']` will return the value of field
+        `profile<N>.field.name`.
+
+        Return: The value of the config field if present. Otherwise a default
+        value taken from `self._DEFAULT_VALUES`.
+
+        Raises:
+            KeyError if the field or its default value is unknown.
+        """
         try:
             return self._config[f'{self._prefix}.{key}']
         except KeyError:
             return self._DEFAULT_VALUES[key]
 
-    def __setitem__(self, key: str, val: Any):
+    def __setitem__(self, key: str, val: Any) -> None:
+        """Set the value of a field of the profiles config.
+
+        For example `self['field.name'] = 7` will set the value `7` to the
+        field `profile<N>.field.name`.
+
+        Raises:
+            KeyError if the field is unknown.
+        """
         self._config[f'{self._prefix}.{key}'] = val
 
     def __delitem__(self, key: str) -> None:
@@ -971,6 +995,58 @@ class Profile:  # pylint: disable=too-many-public-methods
     def preserve_xattr(self, preserve: bool) -> None:
         """Preserve extended attributes (xattr)."""
         self['snapshots.preserve_xattr'] = preserve
+
+    @property
+    def copy_unsafe_links(self) -> bool:
+        """This tells rsync to copy the referent of symbolic links that point
+        outside the copied tree. Absolute symlinks are also treated like
+        ordinary files."""
+        return self['snapshots.copy_unsafe_links']
+
+    @copy_unsafe_links.setter
+    def copy_unsafe_links(self, enable: bool) -> None:
+        self['snapshots.copy_unsafe_links'] = enable
+
+    @property
+    def copy_links(self) -> bool:
+        """When symlinks are encountered, the item that they point to (the
+        reference) is copied, rather than the symlink.
+        """
+        return self['snapshots.copy_links']
+
+    @copy_links.settter
+    def copy_links(self, enable: bool) -> None:
+        self['snapshots.copy_links'] = enable
+
+    @property
+    def one_file_system(self) -> bool:
+        """Use rsync's "--one-file-system" to avoid crossing filesystem
+        boundaries when recursing.
+        """
+        return self['snapshots.one_file_system']
+
+    @one_file_system.setter
+    def one_file_system(self, enable: bool) -> None:
+        self['snapshots.one_file_system'] = enable
+
+    @property
+    def rsync_options_enabled(self) -> bool:
+        """Past additional options to rsync"""
+        return self.profileBoolValue('snapshots.rsync_options.enabled', False, profile_id)
+
+    @rsync_options_enabled.setter
+    def rsync_options_enabled(self, enable: bool) -> None:
+        self['snapshots.rsync_options.enabled'] = enable
+
+    @property
+    def rsync_options(self) -> str:
+        """Rsync options. Options must be quoted
+        e.g. \-\-exclude-from="/path/to/my exclude file"."""
+        return self['snapshots.rsync_options.value']
+
+    @rsync_options.setter
+    def rsync_options(self, options: str) -> None:
+        self['snapshots.rsync_options.value'] = options
 
 
 class Konfig(metaclass=singleton.Singleton):
