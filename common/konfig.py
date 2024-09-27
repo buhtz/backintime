@@ -18,6 +18,7 @@ from pathlib import Path
 from io import StringIO, TextIOWrapper
 import singleton
 import logger
+from bitbase import TimeUnit, StorageSizeUnit
 
 # Workaround: Mostly relevant on TravisCI but not exclusively.
 # While unittesting and without regular invocation of BIT the GNU gettext
@@ -58,7 +59,38 @@ class Profile:  # pylint: disable=too-many-public-methods
         'schedule.weekday': 7,
         'schedule.custom_time': '8,12,18,23',
         'schedule.repeatedly.period': 1,
-        'schedule.repeatedly.unit': 20,  # DAY
+        'schedule.repeatedly.unit': TimeUnit.DAY,
+        'snapshots.remove_old_snapshots.enabled': True,
+        'snapshots.remove_old_snapshots.value': 10,
+        'snapshots.remove_old_snapshots.unit': TimeUnit.YEAR,
+        'snapshots.min_free_space.enabled': True,
+        'snapshots.min_free_space.value': 1,
+        'snapshots.min_free_space.unit': StorageSizeUnit.GB,
+        'snapshots.min_free_inodes.enabled': True,
+        'snapshots.min_free_inodes.value': 2,
+        'snapshots.dont_remove_named_snapshots': True,
+        'snapshots.smart_remove': False,
+        'snapshots.smart_remove.keep_all': 2,
+        'snapshots.smart_remove.keep_one_per_day': 7,
+        'snapshots.smart_remove.keep_one_per_week': 4,
+        'snapshots.smart_remove.keep_one_per_month': 24,
+        'snapshots.smart_remove.run_remote_in_background': False,
+        'snapshots.notify.enabled': True,
+        'snapshots.backup_on_restore.enabled': True,
+        'snapshots.cron.nice': True,
+        'snapshots.cron.ionice': True,
+        'snapshots.user_backup.ionice': False,
+        'snapshots.ssh.nice': False,
+        'snapshots.ssh.ionice': False,
+        'snapshots.local.nocache': False,
+        'snapshots.ssh.nocache': False,
+        'snapshots.cron.redirect_stdout': True,
+        'snapshots.cron.redirect_stderr': False,
+        'snapshots.bwlimit.enabled': False,
+        'snapshots.bwlimit.value': 3000,
+        'snapshots.no_on_battery': False,
+        'snapshots.preserve_acl': False,
+        'snapshots.preserve_xattr': False,
     }
 
     def __init__(self, profile_id: int, config: Konfig):
@@ -592,9 +624,8 @@ class Profile:  # pylint: disable=too-many-public-methods
 
     @property
     def schedule_repeated_period(self) -> int:
-        """
-        #?How many units to wait between new snapshots with anacron? Only valid
-        #?for \fIprofile<N>.schedule.mode\fR = 25|27.
+        """How many units to wait between new snapshots with anacron? Only valid
+        for \fIprofile<N>.schedule.mode\fR = 25|27.
         """
         return self['schedule.repeatedly.period']
 
@@ -614,6 +645,332 @@ class Profile:  # pylint: disable=too-many-public-methods
     @schedule_repeated_unit.setter
     def schedule_repeated_unit(self, value: int) -> None:
         self['schedule.repeatedly.unit'] = value
+
+    @property
+    def remove_old_snapshots_enabled(self) -> bool:
+        """Remove all snapshots older than value + unit.
+        """
+        return self['snapshots.remove_old_snapshots.enabled']
+
+    @remove_old_snapshots_enabled.setter
+    def remove_old_snapshots_enabled(self, enabled: bool) -> None:
+        self['snapshots.remove_old_snapshots.enabled'] = enabled
+
+    @property
+    def remove_old_snapshots_value(self) -> int:
+        """Snapshots older than this times units will be removed."""
+        return['snapshots.remove_old_snapshots.value']
+
+    @remove_old_snapshots_value.setter
+    def remove_old_snapshots_value(self, value: int) -> None:
+        self['snapshots.remove_old_snapshots.value'] = value
+
+    @property
+    def remove_old_snapshots_unit(self) -> TimeUnit:
+        """Time unit to use to calculate removing of old snapshots.
+        20 = days; 30 = weeks; 80 = years
+        {
+            'values': '20|30|80'
+        }
+        """
+        return self['snapshots.remove_old_snapshots.unit']
+
+    @remove_old_snapshots_unit.setter
+    def remove_old_snapshots_unit(self, unit: TimeUnit) -> None:
+        self['snapshots.remove_old_snapshots.unit'] = unit
+
+    @property
+    def min_free_space_enabled(self) -> bool:
+        """Remove snapshots until \fIprofile<N>.snapshots.min_free_space.value\fR
+        free space is reached.
+        """
+        return self['snapshots.min_free_space.enabled']
+
+    @min_free_space_enabled.setter
+    def min_free_space_enabled(self, enable: bool) -> None:
+        self['snapshots.min_free_space.enabled'] = enable
+
+    @property
+    def min_free_space_value(self) -> int:
+        """Keep at least value + unit free space."""
+        return self['snapshots.min_free_space.value']
+
+    @min_free_space_value.setter
+    def min_free_space_value(self, value: int) -> None:
+        self['snapshots.min_free_space.value'] = value
+
+    @property
+    def min_free_space_unit(self) -> StorageSizeUnit:
+        """10 = MB\n20 = GB
+        { 'values': '10|20' }
+        """
+        return self['snapshots.min_free_space.unit']
+
+    @min_free_space_unit.setter
+    def min_free_space_unit(self, unit: StorageSizeUnit) -> None:
+        self['snapshots.min_free_space.unit'] = unit
+
+    @property
+    def min_free_inodes_enabled(self) -> bool:
+        """Remove snapshots until \fIprofile<N>.snapshots.min_free_inodes.value\fR
+        #?free inodes in % is reached.
+        """
+        return self['snapshots.min_free_inodes.enabled']
+
+    @min_free_inodes_enabled.setter
+    def min_free_inodes_enabled(self, enable: bool) -> None:
+        self['snapshots.min_free_inodes.enabled'] = enable
+
+    @property
+    def min_free_inodes_value(self) -> int:
+        """Keep at least value % free inodes.
+        { 'values': '1-15' }
+        """
+        return self['snapshots.min_free_inodes.value']
+
+    @min_free_inodes_value.setter
+    def min_free_inodes_value(self, value: int) -> None:
+        self['snapshots.min_free_inodes.value'] = value
+
+    @property
+    def dont_remove_named_snapshots(self) -> bool:
+        """Keep snapshots with names during smart_remove."""
+        return self['snapshots.dont_remove_named_snapshots']
+
+    @dont_remove_named_snapshots.setter
+    def dont_remove_named_snapshots(self, value: bool) -> None:
+        """Keep snapshots with names during smart_remove."""
+        self['snapshots.dont_remove_named_snapshots'] = value
+
+    @property
+    def keep_named_snapshots(self) -> bool:
+        return self.dont_remove_named_snapshots
+
+    @keep_named_snapshots.setter
+    def keep_named_snapshots(self, value: bool) -> None:
+        self.dont_remove_named_snapshots = value
+
+    @property
+    def smart_remove(self) -> bool:
+        """Run smart_remove to clean up old snapshots after a new snapshot was
+        created."""
+        return self['snapshots.smart_remove']
+
+    @smart_remove.setter
+    def smart_remove(self, enable: bool) -> None:
+        self['snapshots.smart_remove'] = enable
+
+    @property
+    def smart_remove_keep_all(self) -> int:
+        """Keep all snapshots for X days."""
+        return self['snapshots.smart_remove.keep_all']
+
+    @smart_remove_keep_all.setter
+    def smart_remove_keep_all(self, days: int) -> None:
+        self['snapshots.smart_remove.keep_all'] = days
+
+    @property
+    def smart_remove_keep_one_per_day(self) -> int:
+        """Keep one snapshot per day for X days."""
+        return self['snapshots.smart_remove.keep_one_per_day']
+
+    @smart_remove_keep_one_per_day.setter
+    def smart_remove_keep_one_per_day(self, days: int) -> None:
+        self['snapshots.smart_remove.keep_one_per_day'] = days
+
+    @property
+    def smart_remove_keep_one_per_week(self) -> int:
+        """Keep one snapshot per week for X weeks."""
+        return self['snapshots.smart_remove.keep_one_per_week']
+
+    @smart_remove_keep_one_per_week.setter
+    def smart_remove_keep_one_per_week(self, weeks: int) -> None:
+        self['snapshots.smart_remove.keep_one_per_week'] = weeks
+
+    @property
+    def smart_remove_keep_one_per_month(self) -> int:
+        """Keep one snapshot per month for X months."""
+        return self['snapshots.smart_remove.keep_one_per_month']
+
+    @smart_remove_keep_one_per_month.setter
+    def smart_remove_keep_one_per_month(self, months: int) -> None:
+        self['snapshots.smart_remove.keep_one_per_month'] = months
+
+    @property
+    def smart_remove_run_remote_in_background(self) -> bool:
+        """If using modes SSH or SSH-encrypted, run smart_remove in background
+        on remote machine"""
+        return self['snapshots.smart_remove.run_remote_in_background']
+
+    @smart_remove_run_remote_in_background.setter
+    def smart_remove_run_remote_in_background(self, enable: bool) -> None:
+        self['snapshots.smart_remove.run_remote_in_background'] = enable
+
+    @property
+    def notify(self) -> bool:
+        """Display notifications (errors, warnings) through libnotify or DBUS."""
+        return self['snapshots.notify.enabled']
+
+    @notify.setter
+    def notify(self, enable: bool) -> None:
+        self['snapshots.notify.enabled'] = enable
+
+    @property
+    def backup_on_restore(self) -> bool:
+        """Rename existing files before restore into FILE.backup.YYYYMMDD"""
+        return self['snapshots.backup_on_restore.enabled']
+
+    @backup_on_restore.setter
+    def backup_on_restore(self, enable: bool) -> None:
+        self['snapshots.backup_on_restore.enabled'] = enable
+
+    @property
+    def nice_on_cron(self) -> bool:
+        """Run cronjobs with 'nice \-n19'. This will give Back In Time the
+        lowest CPU priority to not interrupt any other working process."""
+        return self['snapshots.cron.nice']
+
+    @nice_on_cron.setter
+    def nice_on_cron(self, enable: bool) -> None:
+        self['snapshots.cron.nice'] = enable
+
+    @property
+    def ionice_on_cron(self) -> bool:
+        """Run cronjobs with 'ionice \-c2 \-n7'. This will give Back In Time
+        the owest IO bandwidth priority to not interrupt any other working
+        process.
+        """
+        return self['snapshots.cron.ionice']
+
+    @ionice_on_cron.setter
+    def ionice_on_cron(self, enable: bool) -> None:
+        self['snapshots.cron.ionice'] = enable
+
+    @property
+    def ionice_on_user(self) -> bool:
+        """Run Back In Time with 'ionice \-c2 \-n7' when taking a manual
+        snapshot. This will give Back In Time the lowest IO bandwidth priority
+        to not interrupt any other working process.
+        """
+        return self['snapshots.user_backup.ionice']
+
+    @ionice_on_user.setter
+    def ionice_on_user(self, enable: bool) -> None:
+        self['snapshots.user_backup.ionice'] = enable
+
+    @property
+    def nice_on_remote(self) -> bool:
+        """Run rsync and other commands on remote host with 'nice \-n19'."""
+        return self['snapshots.ssh.nice']
+
+    @nice_on_remote.setter
+    def nice_on_remote(self, enable: bool) -> None:
+        self['snapshots.ssh.nice'] = enable
+
+    @property
+    def ionice_on_remote(self) -> bool:
+        """Run rsync and other commands on remote host with
+        'ionice \-c2 \-n7'."""
+        return self['snapshots.ssh.ionice']
+
+    @ionice_on_remote.setter
+    def ionice_on_remote(self, enable: bool) -> None:
+        self['snapshots.ssh.ionice'] = enable
+
+    @property
+    def nocache_on_local(self) -> bool:
+        """Run rsync on local machine with 'nocache'.
+        This will prevent files from being cached in memory."""
+        return self['snapshots.local.nocache']
+
+    @nocache_on_local.setter
+    def nocache_on_local(self, enable: bool) -> None:
+        self['snapshots.local.nocache'] = enable
+
+    @property
+    def nocache_on_remote(self) -> bool:
+        """Run rsync on remote host with 'nocache'.
+        This will prevent files from being cached in memory."""
+        return self['snapshots.ssh.nocache']
+
+    @nocache_on_remote.setter
+    def nocache_on_remote(self, enable: bool) -> None:
+        self['snapshots.ssh.nocache'] = enable
+
+    @property
+    def redirect_stdout_in_cron(self) -> bool:
+        """Redirect stdout to /dev/null in cronjobs."""
+        return self['snapshots.cron.redirect_stdout']
+
+    @redirect_stdout_in_cron.setter
+    def redirect_stdout_in_cron(self, enable: bool) -> None:
+        self['snapshots.cron.redirect_stdout'] = enable
+
+    @property
+    def redirect_stderr_in_cron(self) -> bool:
+        """Redirect stderr to /dev/null in cronjobs."""
+        # Dev note (buhtz, 2024-09): Makes not much sense to me, to have a
+        # depended default value here. Can't find something helpful in the git
+        # logs about it.
+        # if self.isConfigured(profile_id):
+        #     default = True
+        # else:
+        #     default = self.DEFAULT_REDIRECT_STDERR_IN_CRON
+        return self['snapshots.cron.redirect_stderr']
+
+    @redirect_stderr_in_cron.setter
+    def redirect_stderr_in_cron(self, enable: bool) -> None:
+        self['snapshots.cron.redirect_stderr'] = enable
+
+    @property
+    def bw_limit_enabled(self) -> bool:
+        """Limit rsync bandwidth usage over network. Use this with mode SSH.
+        For mode Local you should rather use ionice."""
+        return self['snapshots.bwlimit.enabled']
+
+    @bw_limit_enabled.setter
+    def bw_limit_enabled(self, enable: bool) -> None:
+        self['snapshots.bwlimit.enabled'] = enable
+
+    @property
+    def bw_limit(self) -> int:
+        """Bandwidth limit in KB/sec."""
+        return self['snapshots.bwlimit.value']
+
+    @bw_limit.setter
+    def bw_limit(self, limit_kb_sec: int) -> None:
+        self['snapshots.bwlimit.value'] = limit_kb_sec
+
+    @property
+    def no_snapshot_on_battery(self) -> bool:
+        """Don't take snapshots if the Computer runs on battery."""
+        return self['snapshots.no_on_battery']
+
+    @no_snapshot_on_battery.setter
+    def no_snapshot_on_battery(self, enable: bool) -> None:
+        self['snapshots.no_on_battery'] = enable
+
+    @property
+    def preserve_alc(self) -> bool:
+        """Preserve Access Control Lists (ACL). The source and destination
+        systems must have compatible ACL entries for this option to work
+        properly.
+        """
+        return self['snapshots.preserve_acl']
+
+    @preserve_alc.setter
+    def preserve_alc(self, preserve: bool) -> None:
+        self['snapshots.preserve_acl'] = preserve
+
+    @property
+    def preserve_xattr(self) -> bool:
+        """Preserve extended attributes (xattr)."""
+        return self['snapshots.preserve_xattr']
+
+    @preserve_xattr.setter
+    def preserve_xattr(self, preserve: bool) -> None:
+        """Preserve extended attributes (xattr)."""
+        self['snapshots.preserve_xattr'] = preserve
 
 
 class Konfig(metaclass=singleton.Singleton):

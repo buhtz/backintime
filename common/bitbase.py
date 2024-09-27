@@ -45,3 +45,11 @@ class TimeUnit(Enum):
     DAY = 20  # Config.DAY
     WEEK = 30  # Config.WEEK
     MONTH = 40  # Config.MONTH
+    YEAR = 80  # Config.Year
+
+
+class StorageSizeUnit(Enum):
+    """Describe the units used to express the size of storage devices or file
+    system objects."""
+    MB = 10  # Config.DISK_UNIT_MB
+    GB = 20  # Config.DISK_UNIT_GB

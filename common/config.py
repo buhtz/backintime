@@ -917,7 +917,6 @@ class Config(configfile.ConfigFileWithProfiles):
     def setScheduleRepeatedUnit(self, value, profile_id = None):
         self.setProfileIntValue('schedule.repeatedly.unit', value, profile_id)
 
-    ---- WEITER ----
     def removeOldSnapshots(self, profile_id = None):
                 #?Remove all snapshots older than value + unit
         return (self.profileBoolValue('snapshots.remove_old_snapshots.enabled', True, profile_id),
@@ -1167,6 +1166,7 @@ class Config(configfile.ConfigFileWithProfiles):
     def setPreserveXattr(self, value, profile_id = None):
         return self.setProfileBoolValue('snapshots.preserve_xattr', value, profile_id)
 
+    ---- WEITER ----
     def copyUnsafeLinks(self, profile_id = None):
         #?This tells rsync to copy the referent of symbolic links that point
         #?outside the copied tree.  Absolute symlinks are also treated like
@@ -1391,7 +1391,7 @@ class Config(configfile.ConfigFileWithProfiles):
     def isConfigured(self, profile_id=None):
         """Checks if the program is configured.
 
-        It is assumed as configured if a snapshot path (backup destination) is
+        It is assumed as configured if a snapshot path (backup destination)
         and include files/directories (backup source) are given.
         """
         path = self.snapshotsPath(profile_id)
