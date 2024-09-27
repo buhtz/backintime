@@ -95,6 +95,14 @@ class Profile:  # pylint: disable=too-many-public-methods
         'snapshots.copy_links': False,
         'snapshots.one_file_system': False,
         'snapshots.rsync_options.enabled': False,
+        'snapshots.ssh.prefix.enabled': False,
+        # Config.DEFAULT_SSH_PREFIX
+        'snapshots.ssh.prefix.value': 'PATH=/opt/bin:/opt/sbin:\\$PATH',
+        'snapshots.continue_on_errors': True,
+        'snapshots.use_checksum': False,
+        'snapshots.log_level': 3,
+        'snapshots.take_snapshot_regardless_of_changes': False,
+        'global.use_flock': False,
     }
 
     def __init__(self, profile_id: int, config: Konfig):
@@ -1047,6 +1055,80 @@ class Profile:  # pylint: disable=too-many-public-methods
     @rsync_options.setter
     def rsync_options(self, options: str) -> None:
         self['snapshots.rsync_options.value'] = options
+
+    @property
+    def ssh_prefix_enabled(self) -> bool:
+        """Add prefix to every command which run through SSH on remote host."""
+        return self['snapshots.ssh.prefix.enabled']
+
+    @ssh_prefix_enabled.setter
+    def ssh_prefix_enabled(self, enable: bool) -> None:
+        self['snapshots.ssh.prefix.enabled'] = enable
+
+    @property
+    def ssh_prefix(self) -> str:
+        """Prefix to run before every command on remote host. Variables need to
+        be escaped with \\\\$FOO. This doesn't touch rsync. So to add a prefix
+        for rsync use \fIprofile<N>.snapshots.rsync_options.value\fR with
+        --rsync-path="FOO=bar:\\\\$FOO /usr/bin/rsync"
+        """
+        return self['snapshots.ssh.prefix.value']
+
+    @ssh_prefix.setter
+    def ssh_prefix(self, prefix: str) -> None:
+        self['snapshots.ssh.prefix.value'] = prefix
+
+    @property
+    def continue_on_errors(self) -> bool:
+        """Continue on errors. This will keep incomplete snapshots rather than
+        deleting and start over again."""
+        return self['snapshots.continue_on_errors']
+
+    @continue_on_errors.setter
+    def continue_on_errors(self, enable: bool) -> None:
+        self['snapshots.continue_on_errors'] = enable
+
+    @property
+    def use_checksum(self) -> bool:
+        """Use checksum to detect changes rather than size + time."""
+        return self['snapshots.use_checksum']
+
+    @use_checksum.setter
+    def use_checksum(self, enable: bool) -> None:
+        self['snapshots.use_checksum'] = enable
+
+    @property
+    def log_level(self) -> int:
+        """Log level used during takeSnapshot.\n1 = Error\n2 = Changes\n3 =
+        Info.
+        { 'values': '1-3' }
+        """
+        return self['snapshots.log_level']
+
+    @log_level.setter
+    def log_level(self, level: int) -> None:
+        self['snapshots.log_level'] = level
+
+    @property
+    def take_snapshot_regardless_of_changes(self) -> bool:
+        """Create a new snapshot regardless if there were changes or not."""
+        return self['snapshots.take_snapshot_regardless_of_changes']
+
+    @take_snapshot_regardless_of_changes.setter
+    def take_snapshot_regardless_of_changes(self, enable: bool) -> None:
+        self['snapshots.take_snapshot_regardless_of_changes'] = enable
+
+    @property
+    def global_flock(self) -> bool:
+        """Prevent multiple snapshots (from different profiles or users) to be
+        run at the same time.
+        """
+        return self['global.use_flock']
+
+    @global_flock.setter
+    def global_flock(self, enable: bool) -> None:
+        self['global.use_flock'] = enable
+
 
 
 class Konfig(metaclass=singleton.Singleton):

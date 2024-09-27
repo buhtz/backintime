@@ -1191,7 +1191,6 @@ class Config(configfile.ConfigFileWithProfiles):
     def setOneFileSystem(self, value, profile_id = None):
         return self.setProfileBoolValue('snapshots.one_file_system', value, profile_id)
 
-    ---- WEITER ----
     def rsyncOptionsEnabled(self, profile_id = None):
         #?Past additional options to rsync
         return self.profileBoolValue('snapshots.rsync_options.enabled', False, profile_id)
