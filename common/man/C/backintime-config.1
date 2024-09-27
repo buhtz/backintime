@@ -250,6 +250,393 @@ Which schedule used for crontab. The crontab entry will be generated with 'backi
 
 .RE
 
+.IP "\fIprofile<N>.schedule.debug\fR" 6
+.RS
+Type: bool      Allowed Values: true|false
+.br
+Enable debug output to system log for schedule mode.
+.PP
+
+.RE
+
+.IP "\fIprofile<N>.schedule.time\fR" 6
+.RS
+Type: int       Allowed Values: 0-2400
+.br
+Position-coded number with the format "hhmm" to specify the hour and minute the cronjob should start (eg. 2015 means a quarter past 8pm). Leading zeros can be omitted (eg. 30 = 0030). Only valid for Iprofile<N>.schedule.modeR = 20 (daily), 30 (weekly), 40 (monthly) and 80 (yearly).
+.PP
+
+.RE
+
+.IP "\fIprofile<N>.schedule.day\fR" 6
+.RS
+Type: int       Allowed Values: 1-28
+.br
+Which day of month the cronjob should run? Only valid for Iprofile<N>.schedule.modeR >= 40.
+.PP
+
+.RE
+
+.IP "\fIprofile<N>.schedule.weekday\fR" 6
+.RS
+Type: int       Allowed Values: 1 (monday) to 7 (sunday)
+.br
+Which day of week the cronjob should run? Only valid for Iprofile<N>.schedule.modeR = 30.
+.PP
+
+.RE
+
+.IP "\fIprofile<N>.schedule.custom_time\fR" 6
+.RS
+Type: str       Allowed Values: comma separated int (8,12,18,23) or */3;8,12,18,23
+.br
+Custom hours for cronjob. Only valid for Iprofile<N>.schedule.modeR = 19
+.PP
+
+.RE
+
+.IP "\fIprofile<N>.schedule.repeatedly.period\fR" 6
+.RS
+Type: int       Allowed Values: 0-99999
+.br
+How many units to wait between new snapshots with anacron? Only valid for Iprofile<N>.schedule.modeR = 25|27.
+.PP
+
+.RE
+
+.IP "\fIprofile<N>.schedule.repeatedly.unit\fR" 6
+.RS
+Type: int       Allowed Values: 10|20|30|40
+.br
+Units to wait between new snapshots with anacron. 10 = hours 20 = days 30 = weeks 40 = months Only valid for Iprofile<N>.schedule.modeR = 25|27;
+.PP
+
+.RE
+
+.IP "\fIprofile<N>.snapshots.remove_old_snapshots.enabled\fR" 6
+.RS
+Type: bool      Allowed Values: true|false
+.br
+Remove all snapshots older than value + unit.
+.PP
+
+.RE
+
+.IP "\fIprofile<N>.snapshots.remove_old_snapshots.value\fR" 6
+.RS
+Type: int       Allowed Values: 0-99999
+.br
+Snapshots older than this times units will be removed.
+.PP
+
+.RE
+
+.IP "\fIprofile<N>.snapshots.remove_old_snapshots.unit\fR" 6
+.RS
+Type: TimeUnit  Allowed Values: 20|30|80
+.br
+Time unit to use to calculate removing of old snapshots. 20 = days; 30 = weeks; 80 = years
+.PP
+
+.RE
+
+.IP "\fIprofile<N>.snapshots.min_free_space.enabled\fR" 6
+.RS
+Type: bool      Allowed Values: true|false
+.br
+Remove snapshots until Iprofile<N>.snapshots.min_free_space.valueR free space is reached.
+.PP
+
+.RE
+
+.IP "\fIprofile<N>.snapshots.min_free_space.value\fR" 6
+.RS
+Type: int       Allowed Values: 0-99999
+.br
+Keep at least value + unit free space.
+.PP
+
+.RE
+
+.IP "\fIprofile<N>.snapshots.min_free_space.unit\fR" 6
+.RS
+Type: StorageSizeUnitAllowed Values: 10|20
+.br
+10 = MB 20 = GB
+.PP
+
+.RE
+
+.IP "\fIprofile<N>.snapshots.min_free_inodes.enabled\fR" 6
+.RS
+Type: bool      Allowed Values: true|false
+.br
+Remove snapshots until Iprofile<N>.snapshots.min_free_inodes.valueR #?free inodes in % is reached.
+.PP
+
+.RE
+
+.IP "\fIprofile<N>.snapshots.min_free_inodes.value\fR" 6
+.RS
+Type: int       Allowed Values: 1-15
+.br
+Keep at least value % free inodes.
+.PP
+
+.RE
+
+.IP "\fIprofile<N>.snapshots.dont_remove_named_snapshots\fR" 6
+.RS
+Type: bool      Allowed Values: true|false
+.br
+Keep snapshots with names during smart_remove.
+.PP
+
+.RE
+
+.IP "\fIprofile<N>.snapshots.smart_remove\fR" 6
+.RS
+Type: bool      Allowed Values: true|false
+.br
+Run smart_remove to clean up old snapshots after a new snapshot was created.
+.PP
+
+.RE
+
+.IP "\fIprofile<N>.snapshots.smart_remove.keep_all\fR" 6
+.RS
+Type: int       Allowed Values: 0-99999
+.br
+Keep all snapshots for X days.
+.PP
+
+.RE
+
+.IP "\fIprofile<N>.snapshots.smart_remove.keep_one_per_day\fR" 6
+.RS
+Type: int       Allowed Values: 0-99999
+.br
+Keep one snapshot per day for X days.
+.PP
+
+.RE
+
+.IP "\fIprofile<N>.snapshots.smart_remove.keep_one_per_week\fR" 6
+.RS
+Type: int       Allowed Values: 0-99999
+.br
+Keep one snapshot per week for X weeks.
+.PP
+
+.RE
+
+.IP "\fIprofile<N>.snapshots.smart_remove.keep_one_per_month\fR" 6
+.RS
+Type: int       Allowed Values: 0-99999
+.br
+Keep one snapshot per month for X months.
+.PP
+
+.RE
+
+.IP "\fIprofile<N>.snapshots.smart_remove.run_remote_in_background\fR" 6
+.RS
+Type: bool      Allowed Values: true|false
+.br
+If using modes SSH or SSH-encrypted, run smart_remove in background on remote machine
+.PP
+
+.RE
+
+.IP "\fIprofile<N>.snapshots.notify.enabled\fR" 6
+.RS
+Type: bool      Allowed Values: true|false
+.br
+Display notifications (errors, warnings) through libnotify or DBUS.
+.PP
+
+.RE
+
+.IP "\fIprofile<N>.snapshots.backup_on_restore.enabled\fR" 6
+.RS
+Type: bool      Allowed Values: true|false
+.br
+Rename existing files before restore into FILE.backup.YYYYMMDD
+.PP
+
+.RE
+
+.IP "\fIprofile<N>.snapshots.cron.nice\fR" 6
+.RS
+Type: bool      Allowed Values: true|false
+.br
+Run cronjobs with 'nice \-n19'. This will give Back In Time the lowest CPU priority to not interrupt any other working process.
+.PP
+
+.RE
+
+.IP "\fIprofile<N>.snapshots.cron.ionice\fR" 6
+.RS
+Type: bool      Allowed Values: true|false
+.br
+Run cronjobs with 'ionice \-c2 \-n7'. This will give Back In Time the owest IO bandwidth priority to not interrupt any other working process.
+.PP
+
+.RE
+
+.IP "\fIprofile<N>.snapshots.user_backup.ionice\fR" 6
+.RS
+Type: bool      Allowed Values: true|false
+.br
+Run Back In Time with 'ionice \-c2 \-n7' when taking a manual snapshot. This will give Back In Time the lowest IO bandwidth priority to not interrupt any other working process.
+.PP
+
+.RE
+
+.IP "\fIprofile<N>.snapshots.ssh.nice\fR" 6
+.RS
+Type: bool      Allowed Values: true|false
+.br
+Run rsync and other commands on remote host with 'nice \-n19'.
+.PP
+
+.RE
+
+.IP "\fIprofile<N>.snapshots.ssh.ionice\fR" 6
+.RS
+Type: bool      Allowed Values: true|false
+.br
+Run rsync and other commands on remote host with 'ionice \-c2 \-n7'.
+.PP
+
+.RE
+
+.IP "\fIprofile<N>.snapshots.local.nocache\fR" 6
+.RS
+Type: bool      Allowed Values: true|false
+.br
+Run rsync on local machine with 'nocache'. This will prevent files from being cached in memory.
+.PP
+
+.RE
+
+.IP "\fIprofile<N>.snapshots.ssh.nocache\fR" 6
+.RS
+Type: bool      Allowed Values: true|false
+.br
+Run rsync on remote host with 'nocache'. This will prevent files from being cached in memory.
+.PP
+
+.RE
+
+.IP "\fIprofile<N>.snapshots.cron.redirect_stdout\fR" 6
+.RS
+Type: bool      Allowed Values: true|false
+.br
+Redirect stdout to /dev/null in cronjobs.
+.PP
+
+.RE
+
+.IP "\fIprofile<N>.snapshots.cron.redirect_stderr\fR" 6
+.RS
+Type: bool      Allowed Values: true|false
+.br
+Redirect stderr to /dev/null in cronjobs.
+.PP
+
+.RE
+
+.IP "\fIprofile<N>.snapshots.bwlimit.enabled\fR" 6
+.RS
+Type: bool      Allowed Values: true|false
+.br
+Limit rsync bandwidth usage over network. Use this with mode SSH. For mode Local you should rather use ionice.
+.PP
+
+.RE
+
+.IP "\fIprofile<N>.snapshots.bwlimit.value\fR" 6
+.RS
+Type: int       Allowed Values: 0-99999
+.br
+Bandwidth limit in KB/sec.
+.PP
+
+.RE
+
+.IP "\fIprofile<N>.snapshots.no_on_battery\fR" 6
+.RS
+Type: bool      Allowed Values: true|false
+.br
+Don't take snapshots if the Computer runs on battery.
+.PP
+
+.RE
+
+.IP "\fIprofile<N>.snapshots.preserve_acl\fR" 6
+.RS
+Type: bool      Allowed Values: true|false
+.br
+Preserve Access Control Lists (ACL). The source and destination systems must have compatible ACL entries for this option to work properly.
+.PP
+
+.RE
+
+.IP "\fIprofile<N>.snapshots.preserve_xattr\fR" 6
+.RS
+Type: bool      Allowed Values: true|false
+.br
+Preserve extended attributes (xattr).
+.PP
+
+.RE
+
+.IP "\fIprofile<N>.snapshots.copy_unsafe_links\fR" 6
+.RS
+Type: bool      Allowed Values: true|false
+.br
+This tells rsync to copy the referent of symbolic links that point outside the copied tree. Absolute symlinks are also treated like ordinary files.
+.PP
+
+.RE
+
+.IP "\fIprofile<N>.snapshots.copy_links\fR" 6
+.RS
+Type: bool      Allowed Values: true|false
+.br
+When symlinks are encountered, the item that they point to (the reference) is copied, rather than the symlink.
+.PP
+
+.RE
+
+.IP "\fIprofile<N>.snapshots.one_file_system\fR" 6
+.RS
+Type: bool      Allowed Values: true|false
+.br
+Use rsync's "--one-file-system" to avoid crossing filesystem boundaries when recursing.
+.PP
+
+.RE
+
+.IP "\fIprofile<N>.snapshots.rsync_options.enabled\fR" 6
+.RS
+Type: bool      Allowed Values: true|false
+.br
+Past additional options to rsync
+.PP
+
+.RE
+
+.IP "\fIprofile<N>.snapshots.rsync_options.value\fR" 6
+.RS
+Type: str       Allowed Values: text
+.br
+Rsync options. Options must be quoted e.g. \-\-exclude-from="/path/to/my exclude file".
+.PP
+
+.RE
+
 .SH SEE ALSO
 .BR backintime (1),
 .BR backintime-qt (1)

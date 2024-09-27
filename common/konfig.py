@@ -683,7 +683,7 @@ class Profile:  # pylint: disable=too-many-public-methods
     @property
     def remove_old_snapshots_value(self) -> int:
         """Snapshots older than this times units will be removed."""
-        return['snapshots.remove_old_snapshots.value']
+        return self['snapshots.remove_old_snapshots.value']
 
     @remove_old_snapshots_value.setter
     def remove_old_snapshots_value(self, value: int) -> None:
@@ -1014,7 +1014,7 @@ class Profile:  # pylint: disable=too-many-public-methods
         """
         return self['snapshots.copy_links']
 
-    @copy_links.settter
+    @copy_links.setter
     def copy_links(self, enable: bool) -> None:
         self['snapshots.copy_links'] = enable
 
@@ -1032,7 +1032,7 @@ class Profile:  # pylint: disable=too-many-public-methods
     @property
     def rsync_options_enabled(self) -> bool:
         """Past additional options to rsync"""
-        return self.profileBoolValue('snapshots.rsync_options.enabled', False, profile_id)
+        return self['snapshots.rsync_options.enabled']
 
     @rsync_options_enabled.setter
     def rsync_options_enabled(self, enable: bool) -> None:

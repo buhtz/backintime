@@ -217,7 +217,7 @@ def _get_public_properties(cls: type) -> tuple:
 def lint_manpage(path: Path) -> bool:
     """Lint the manpage the same way as the Debian Lintian does."""
 
-    print('Linting man page...')
+    print('Linting man page…')
 
     cmd = [
         'man',
@@ -257,6 +257,7 @@ def lint_manpage(path: Path) -> bool:
         return False
 
     print('No problems reported.')
+
     return True
 
 
@@ -295,6 +296,18 @@ def inspect_properties(cls: type, name_prefix: str = '') -> dict[str, dict]:
     Returns:
         A dictionary indexed by the config option field names.
     """
+    # The folloing fields/properties will produce warnings. But this is
+    # expected on happens on purpose. The list is used to "ease" the warning
+    # message.
+    expect_to_be_ignored = (
+        'Konfig.profile_names',
+        'Konfig.profile_ids',
+        'Konfig.manual_starts_countdown',
+        'Profile.include',
+        'Profile.exclude',
+        'Profile.keep_named_snapshots',
+    )
+
     entries = {}
 
     # Each public property in the class
@@ -303,20 +316,25 @@ def inspect_properties(cls: type, name_prefix: str = '') -> dict[str, dict]:
 
         # Ignore properties without docstring
         if not attr.__doc__:
-            print(f'Ignoring "{cls.__name__}.{prop}" because of '
+            full_prop = f'{cls.__name__}.{prop}'
+            ok = '(No problem) ' if full_prop in expect_to_be_ignored else ''
+            print(f'{ok}Ignoring "{full_prop}" because of '
                   'missing docstring.')
             continue
 
         # DEBUG
-        print(f'{cls.__name__}.{prop}')
+        # print(f'{cls.__name__}.{prop}')
 
         # Extract config field name from code (self._conf['config.field'])
         try:
             name = REX_ATTR_NAME.findall(inspect.getsource(attr.fget))[0]
             name = f'{name_prefix}{name}'
         except IndexError as exc:
-            raise RuntimeError('Can not find name of config field in '
-                               f'the body of "{prop}".') from exc
+            full_prop = f'{cls.__name__}.{prop}'
+            ok = '(No problem) ' if full_prop in expect_to_be_ignored else ''
+            print(f'{ok}Ignoring "{full_prop}" because it is not '
+                  'possible to find name of config field in its body.')
+            continue
 
         # Full doc string
         doc = attr.__doc__
@@ -367,6 +385,9 @@ def inspect_properties(cls: type, name_prefix: str = '') -> dict[str, dict]:
                 the_dict['values'] = 'true|false'
             elif the_dict['type'] == 'int':
                 the_dict['values'] = '0-99999'
+            elif the_dict['type'] == 'str':
+                the_dict['values'] = 'text'
+
 
         entries[name] = the_dict
 
@@ -443,16 +464,20 @@ def main():
 
         # PROPERTIES
         for name, entry in {**global_entries, **profile_entries}.items():
-            print(f'{name=} {entry=}')
-            handle.write(
-                entry_to_groff(
-                    name=name,
-                    doc=entry['doc'],
-                    values=entry['values'],
-                    default=entry.get('default', None),
-                    its_type=entry.get('type', None),
+            try:
+                handle.write(
+                    entry_to_groff(
+                        name=name,
+                        doc=entry['doc'],
+                        values=entry['values'],
+                        default=entry.get('default', None),
+                        its_type=entry.get('type', None),
+                    )
                 )
-            )
+            except Exception as exc:
+                print(f'{name=} {entry=}')
+                raise exc
+
             handle.write('\n')
 
         # FOOTER
