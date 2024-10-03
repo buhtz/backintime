@@ -119,7 +119,7 @@ class Profiles(unittest.TestCase):
         self.assertIsInstance(sut.ssh_port, int)
 
 
-class IncludeExclude(unittest.TestCase):
+class IncExc(unittest.TestCase):
     """About include and exclude fields"""
 
     def setUp(self):
@@ -156,8 +156,7 @@ class IncludeExclude(unittest.TestCase):
             ]
         )
 
-
-    def test_included_read(self):
+    def test_include_read(self):
         """Read include fields"""
         config = Konfig(StringIO('\n'.join([
             'profile1.snapshots.include.1.value=/foo/bar/folder',

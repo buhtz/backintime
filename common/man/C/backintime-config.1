@@ -1,4 +1,4 @@
-.TH backintime-config 1 "Sep 2024" "version 1.5.3-dev.3e80feee" "USER COMMANDS"
+.TH backintime-config 1 "Oct 2024" "version 1.5.3-dev.3e80feee" "USER COMMANDS"
 .SH NAME
 config \- Back In Time configuration file.
 .SH SYNOPSIS
@@ -263,7 +263,7 @@ Enable debug output to system log for schedule mode.
 .RS
 Type: int       Allowed Values: 0-2400
 .br
-Position-coded number with the format "hhmm" to specify the hour and minute the cronjob should start (eg. 2015 means a quarter past 8pm). Leading zeros can be omitted (eg. 30 = 0030). Only valid for Iprofile<N>.schedule.modeR = 20 (daily), 30 (weekly), 40 (monthly) and 80 (yearly).
+Position-coded number with the format "hhmm" to specify the hour and minute the cronjob should start (eg. 2015 means a quarter past 8pm). Leading zeros can be omitted (eg. 30 = 0030). Only valid for \fIprofile<N>.schedule.mode\fR = 20 (daily), 30 (weekly), 40 (monthly) and 80 (yearly).
 .PP
 
 .RE
@@ -272,7 +272,7 @@ Position-coded number with the format "hhmm" to specify the hour and minute the 
 .RS
 Type: int       Allowed Values: 1-28
 .br
-Which day of month the cronjob should run? Only valid for Iprofile<N>.schedule.modeR >= 40.
+Which day of month the cronjob should run? Only valid for \fIprofile<N>.schedule.mode\fR >= 40.
 .PP
 
 .RE
@@ -281,7 +281,7 @@ Which day of month the cronjob should run? Only valid for Iprofile<N>.schedule.m
 .RS
 Type: int       Allowed Values: 1 (monday) to 7 (sunday)
 .br
-Which day of week the cronjob should run? Only valid for Iprofile<N>.schedule.modeR = 30.
+Which day of week the cronjob should run? Only valid for \fIprofile<N>.schedule.mode\fR = 30.
 .PP
 
 .RE
@@ -290,7 +290,7 @@ Which day of week the cronjob should run? Only valid for Iprofile<N>.schedule.mo
 .RS
 Type: str       Allowed Values: comma separated int (8,12,18,23) or */3;8,12,18,23
 .br
-Custom hours for cronjob. Only valid for Iprofile<N>.schedule.modeR = 19
+Custom hours for cronjob. Only valid for \fIprofile<N>.schedule.mode\fR = 19
 .PP
 
 .RE
@@ -299,7 +299,7 @@ Custom hours for cronjob. Only valid for Iprofile<N>.schedule.modeR = 19
 .RS
 Type: int       Allowed Values: 0-99999
 .br
-How many units to wait between new snapshots with anacron? Only valid for Iprofile<N>.schedule.modeR = 25|27.
+How many units to wait between new snapshots with anacron? Only valid for \fIprofile<N>.schedule.mode\fR = 25|27.
 .PP
 
 .RE
@@ -308,7 +308,7 @@ How many units to wait between new snapshots with anacron? Only valid for Iprof
 .RS
 Type: int       Allowed Values: 10|20|30|40
 .br
-Units to wait between new snapshots with anacron. 10 = hours 20 = days 30 = weeks 40 = months Only valid for Iprofile<N>.schedule.modeR = 25|27;
+Units to wait between new snapshots with anacron. 10 = hours 20 = days 30 = weeks 40 = months Only valid for \fIprofile<N>.schedule.mode\fR = 25|27;
 .PP
 
 .RE
@@ -344,7 +344,7 @@ Time unit to use to calculate removing of old snapshots. 20 = days; 30 = weeks; 
 .RS
 Type: bool      Allowed Values: true|false
 .br
-Remove snapshots until Iprofile<N>.snapshots.min_free_space.valueR free space is reached.
+Remove snapshots until \fIprofile<N>.snapshots.min_free_space. value\fR free space is reached.
 .PP
 
 .RE
@@ -371,7 +371,7 @@ Type: StorageSizeUnitAllowed Values: 10|20
 .RS
 Type: bool      Allowed Values: true|false
 .br
-Remove snapshots until Iprofile<N>.snapshots.min_free_inodes.valueR #?free inodes in % is reached.
+Remove snapshots until \fIprofile<N>.snapshots.min_free_inodes.value\fR free inodes in % is reached.
 .PP
 
 .RE
@@ -470,7 +470,7 @@ Rename existing files before restore into FILE.backup.YYYYMMDD
 .RS
 Type: bool      Allowed Values: true|false
 .br
-Run cronjobs with 'nice \-n19'. This will give Back In Time the lowest CPU priority to not interrupt any other working process.
+Run cronjobs with nice-Value 19. This will give Back In Time the lowest CPU priority to not interrupt any other working process.
 .PP
 
 .RE
@@ -479,7 +479,7 @@ Run cronjobs with 'nice \-n19'. This will give Back In Time the lowest CPU prior
 .RS
 Type: bool      Allowed Values: true|false
 .br
-Run cronjobs with 'ionice \-c2 \-n7'. This will give Back In Time the owest IO bandwidth priority to not interrupt any other working process.
+Run cronjobs with 'ionice' and class 2 and level 7. This will give Back In Time the lowest IO bandwidth priority to not interrupt any other working process.
 .PP
 
 .RE
@@ -488,7 +488,7 @@ Run cronjobs with 'ionice \-c2 \-n7'. This will give Back In Time the owest IO b
 .RS
 Type: bool      Allowed Values: true|false
 .br
-Run Back In Time with 'ionice \-c2 \-n7' when taking a manual snapshot. This will give Back In Time the lowest IO bandwidth priority to not interrupt any other working process.
+Run Back In Time with 'ionice' and class 2 and level 7 when taking a manual snapshot. This will give Back In Time the lowest IO bandwidth priority to not interrupt any other working process.
 .PP
 
 .RE
@@ -497,7 +497,7 @@ Run Back In Time with 'ionice \-c2 \-n7' when taking a manual snapshot. This wil
 .RS
 Type: bool      Allowed Values: true|false
 .br
-Run rsync and other commands on remote host with 'nice \-n19'.
+Run rsync and other commands on remote host with 'nice' value 19.
 .PP
 
 .RE
@@ -506,7 +506,7 @@ Run rsync and other commands on remote host with 'nice \-n19'.
 .RS
 Type: bool      Allowed Values: true|false
 .br
-Run rsync and other commands on remote host with 'ionice \-c2 \-n7'.
+Run rsync and other commands on remote host with 'ionice' and class 2 and level 7.
 .PP
 
 .RE
@@ -632,7 +632,7 @@ Past additional options to rsync
 .RS
 Type: str       Allowed Values: text
 .br
-Rsync options. Options must be quoted e.g. \-\-exclude-from="/path/to/my exclude file".
+Rsync options. Options must be quoted.
 .PP
 
 .RE
@@ -650,7 +650,7 @@ Add prefix to every command which run through SSH on remote host.
 .RS
 Type: str       Allowed Values: text
 .br
-Prefix to run before every command on remote host. Variables need to be escaped with \\$FOO. This doesn't touch rsync. So to add a prefix for rsync use Iprofile<N>.snapshots.rsync_options.valueR with --rsync-path="FOO=bar:\\$FOO /usr/bin/rsync"
+Prefix to run before every command on remote host. Variables need to be escaped with \\$FOO. This doesn't touch rsync. So to add a prefix for rsync use \fIprofile<N>.snapshots.rsync_options.value\fR with --rsync-path="FOO=bar:\\$FOO /usr/bin/rsync"
 .PP
 
 .RE

@@ -5,6 +5,7 @@
 # This file is part of the program "Back In Time" which is released under GNU
 # General Public License v2 (GPLv2).
 # See file LICENSE or go to <https://www.gnu.org/licenses/#GPL>.
+# pylint: disable=too-many-lines,anomalous-backslash-in-string
 """Configuration mangament.
 """
 from __future__ import annotations
@@ -608,7 +609,7 @@ class Profile:  # pylint: disable=too-many-public-methods
         """Position-coded number with the format "hhmm" to specify the hour
         and minute the cronjob should start (eg. 2015 means a quarter
         past 8pm). Leading zeros can be omitted (eg. 30 = 0030).
-        Only valid for \fIprofile<N>.schedule.mode\fR = 20 (daily),
+        Only valid for \\fIprofile<N>.schedule.mode\\fR = 20 (daily),
         30 (weekly), 40 (monthly) and 80 (yearly).
         { 'values': '0-2400' }
         """
@@ -621,7 +622,7 @@ class Profile:  # pylint: disable=too-many-public-methods
     @property
     def schedule_day(self) -> int:
         """Which day of month the cronjob should run? Only valid for
-        \fIprofile<N>.schedule.mode\fR >= 40.
+        \\fIprofile<N>.schedule.mode\\fR >= 40.
         { 'values': '1-28' }
         """
         return self['schedule.day']
@@ -633,7 +634,7 @@ class Profile:  # pylint: disable=too-many-public-methods
     @property
     def schedule_weekday(self) -> int:
         """Which day of week the cronjob should run? Only valid for
-        \fIprofile<N>.schedule.mode\fR = 30.
+        \\fIprofile<N>.schedule.mode\\fR = 30.
         { 'values': '1 (monday) to 7 (sunday)' }
         """
         return self['schedule.weekday']
@@ -645,7 +646,7 @@ class Profile:  # pylint: disable=too-many-public-methods
     @property
     def custom_backup_time(self) -> str:
         """Custom hours for cronjob. Only valid for
-        \fIprofile<N>.schedule.mode\fR = 19
+        \\fIprofile<N>.schedule.mode\\fR = 19
         { 'values': 'comma separated int (8,12,18,23) or */3;8,12,18,23' }
         """
         return self['schedule.custom_time']
@@ -656,8 +657,8 @@ class Profile:  # pylint: disable=too-many-public-methods
 
     @property
     def schedule_repeated_period(self) -> int:
-        """How many units to wait between new snapshots with anacron? Only valid
-        for \fIprofile<N>.schedule.mode\fR = 25|27.
+        """How many units to wait between new snapshots with anacron? Only
+        valid for \\fIprofile<N>.schedule.mode\\fR = 25|27.
         """
         return self['schedule.repeatedly.period']
 
@@ -669,7 +670,7 @@ class Profile:  # pylint: disable=too-many-public-methods
     def schedule_repeated_unit(self) -> int:
         """Units to wait between new snapshots with anacron.\n
         10 = hours\n20 = days\n30 = weeks\n40 = months\n
-        Only valid for \fIprofile<N>.schedule.mode\fR = 25|27;
+        Only valid for \\fIprofile<N>.schedule.mode\\fR = 25|27;
         { 'values': '10|20|30|40' }
         """
         return self['schedule.repeatedly.unit']
@@ -713,8 +714,8 @@ class Profile:  # pylint: disable=too-many-public-methods
 
     @property
     def min_free_space_enabled(self) -> bool:
-        """Remove snapshots until \fIprofile<N>.snapshots.min_free_space.value\fR
-        free space is reached.
+        """Remove snapshots until \\fIprofile<N>.snapshots.min_free_space.
+        value\\fR free space is reached.
         """
         return self['snapshots.min_free_space.enabled']
 
@@ -744,8 +745,9 @@ class Profile:  # pylint: disable=too-many-public-methods
 
     @property
     def min_free_inodes_enabled(self) -> bool:
-        """Remove snapshots until \fIprofile<N>.snapshots.min_free_inodes.value\fR
-        #?free inodes in % is reached.
+        """Remove snapshots until
+        \\fIprofile<N>.snapshots.min_free_inodes.value\\fR
+        free inodes in % is reached.
         """
         return self['snapshots.min_free_inodes.enabled']
 
@@ -776,6 +778,7 @@ class Profile:  # pylint: disable=too-many-public-methods
 
     @property
     def keep_named_snapshots(self) -> bool:
+        """Keep snapshots with names during smart_remove."""
         return self.dont_remove_named_snapshots
 
     @keep_named_snapshots.setter
@@ -840,7 +843,8 @@ class Profile:  # pylint: disable=too-many-public-methods
 
     @property
     def notify(self) -> bool:
-        """Display notifications (errors, warnings) through libnotify or DBUS."""
+        """Display notifications (errors, warnings) through libnotify or DBUS.
+        """
         return self['snapshots.notify.enabled']
 
     @notify.setter
@@ -858,7 +862,7 @@ class Profile:  # pylint: disable=too-many-public-methods
 
     @property
     def nice_on_cron(self) -> bool:
-        """Run cronjobs with 'nice \-n19'. This will give Back In Time the
+        """Run cronjobs with nice-Value 19. This will give Back In Time the
         lowest CPU priority to not interrupt any other working process."""
         return self['snapshots.cron.nice']
 
@@ -868,9 +872,9 @@ class Profile:  # pylint: disable=too-many-public-methods
 
     @property
     def ionice_on_cron(self) -> bool:
-        """Run cronjobs with 'ionice \-c2 \-n7'. This will give Back In Time
-        the owest IO bandwidth priority to not interrupt any other working
-        process.
+        """Run cronjobs with 'ionice' and class 2 and level 7. This will give
+        Back In Time the lowest IO bandwidth priority to not interrupt any
+        other working process.
         """
         return self['snapshots.cron.ionice']
 
@@ -880,9 +884,9 @@ class Profile:  # pylint: disable=too-many-public-methods
 
     @property
     def ionice_on_user(self) -> bool:
-        """Run Back In Time with 'ionice \-c2 \-n7' when taking a manual
-        snapshot. This will give Back In Time the lowest IO bandwidth priority
-        to not interrupt any other working process.
+        """Run Back In Time with 'ionice' and class 2 and level 7 when taking
+        a manual snapshot. This will give Back In Time the lowest IO bandwidth
+        priority to not interrupt any other working process.
         """
         return self['snapshots.user_backup.ionice']
 
@@ -892,7 +896,7 @@ class Profile:  # pylint: disable=too-many-public-methods
 
     @property
     def nice_on_remote(self) -> bool:
-        """Run rsync and other commands on remote host with 'nice \-n19'."""
+        """Run rsync and other commands on remote host with 'nice' value 19."""
         return self['snapshots.ssh.nice']
 
     @nice_on_remote.setter
@@ -902,7 +906,7 @@ class Profile:  # pylint: disable=too-many-public-methods
     @property
     def ionice_on_remote(self) -> bool:
         """Run rsync and other commands on remote host with
-        'ionice \-c2 \-n7'."""
+        'ionice' and class 2 and level 7."""
         return self['snapshots.ssh.ionice']
 
     @ionice_on_remote.setter
@@ -1048,8 +1052,7 @@ class Profile:  # pylint: disable=too-many-public-methods
 
     @property
     def rsync_options(self) -> str:
-        """Rsync options. Options must be quoted
-        e.g. \-\-exclude-from="/path/to/my exclude file"."""
+        """Rsync options. Options must be quoted."""
         return self['snapshots.rsync_options.value']
 
     @rsync_options.setter
@@ -1069,7 +1072,7 @@ class Profile:  # pylint: disable=too-many-public-methods
     def ssh_prefix(self) -> str:
         """Prefix to run before every command on remote host. Variables need to
         be escaped with \\\\$FOO. This doesn't touch rsync. So to add a prefix
-        for rsync use \fIprofile<N>.snapshots.rsync_options.value\fR with
+        for rsync use \\fIprofile<N>.snapshots.rsync_options.value\\fR with
         --rsync-path="FOO=bar:\\\\$FOO /usr/bin/rsync"
         """
         return self['snapshots.ssh.prefix.value']
@@ -1128,7 +1131,6 @@ class Profile:  # pylint: disable=too-many-public-methods
     @global_flock.setter
     def global_flock(self, enable: bool) -> None:
         self['global.use_flock'] = enable
-
 
 
 class Konfig(metaclass=singleton.Singleton):
