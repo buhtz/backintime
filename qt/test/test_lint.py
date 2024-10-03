@@ -15,11 +15,7 @@ import pathlib
 import subprocess
 import shutil
 from typing import Iterable
-# try:
-#     import pycodestyle
-#     PYCODESTYLE_AVAILABLE = True
-# except ImportError:
-#     PYCODESTYLE_AVAILABLE = False
+from packaging import version
 
 BASE_REASON = ('Using package {0} is mandatory on TravisCI, on '
                'other systems it runs only if `{0}` is available.')
@@ -35,7 +31,6 @@ FLAKE8_AVAILABLE = shutil.which('flake8') is not None
 ANY_LINTER_AVAILABLE = any((
     PYLINT_AVAILABLE,
     RUFF_AVAILABLE,
-    # PYCODESTYLE_AVAILABLE,
     FLAKE8_AVAILABLE,
 ))
 
@@ -132,6 +127,52 @@ class MirrorMirrorOnTheWall(unittest.TestCase):
     def setUpClass(cls):
         cls.collected_py_files = cls._collect_py_files()
 
+    def test005_ensure_linter_versions(self):
+        """Workaround to ensure the correct linter versions are used.
+
+        For sure there are better ways to solve this. But migration to a
+        standard python package format need to be done first. See #1575.
+        Until then this test will spare some hours of work, e.g. fixing linter
+        errors (from out-dated linters) that are not relevant anymore in
+        modern lintern versions.
+
+        Another location where linter versions are relevant is CONTRIBUTING.md.
+        """
+
+        if PYLINT_AVAILABLE:
+            version_target = version.parse('3.3.0')
+
+            proc = subprocess.run(
+                ['pylint', '--version'],
+                capture_output=True,
+                text=True,
+                check=True)
+
+            version_string = proc.stdout.split('\n')[0].replace('pylint ', '')
+            version_actual = version.parse(version_string)
+
+            self.assertTrue(
+                version_actual >= version_target,
+                f'PyLint version is {version_actual} but need to '
+                f'be {version_target} or higher.')
+
+        if RUFF_AVAILABLE:
+            version_target = version.parse('0.6.0')
+
+            proc = subprocess.run(
+                ['ruff', '--version'],
+                capture_output=True,
+                text=True,
+                check=True)
+
+            version_string = proc.stdout.split('\n')[0].replace('ruff ', '')
+            version_actual = version.parse(version_string)
+
+            self.assertTrue(
+                version_actual >= version_target,
+                f'Ruff version is {version_actual} but need to '
+                f'be {version_target} or higher.')
+
     @unittest.skipUnless(RUFF_AVAILABLE, BASE_REASON.format('ruff'))
     def test010_ruff_default_ruleset(self):
         """Ruff in default mode."""
@@ -210,18 +251,6 @@ class MirrorMirrorOnTheWall(unittest.TestCase):
 
         # any other errors?
         self.assertEqual(proc.stderr, '')
-
-    # @unittest.skipUnless(PYCODESTYLE_AVAILABLE,
-    #                      BASE_REASON.format('pycodestyle'))
-    # def test020_pycodestyle_default_ruleset(self):
-    #     """PEP8 conformance via pycodestyle"""
-
-    #     style = pycodestyle.StyleGuide(quite=True)
-    #     result = style.check_files(full_test_files)
-
-    #     self.assertEqual(result.total_errors, 0,
-    #                      f'pycodestyle found {result.total_errors} code '
-    #                      'style error(s)/warning(s).')
 
     @unittest.skipUnless(PYLINT_AVAILABLE, BASE_REASON.format('PyLint'))
     def test030_pylint_default_ruleset(self):
