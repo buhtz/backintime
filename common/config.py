@@ -7,7 +7,7 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 #
 # This file is part of the program "Back In Time" which is released under GNU
-# General Public License v2 (GPLv2). See file/folder LICENSE or go to
+# General Public License v2 (GPLv2). See LICENSES directory or go to
 # <https://spdx.org/licenses/GPL-2.0-or-later.html>.
 """Configuration handling and logic.
 
@@ -563,7 +563,7 @@ class Config(configfile.ConfigFileWithProfiles):
     def sshMaxArgLength(self, profile_id = None):
         #?Maximum command length of commands run on remote host. This can be tested
         #?for all ssh profiles in the configuration
-        #?with 'python3 /usr/share/backintime/common/sshMaxArg.py LENGTH'.\n
+        #?with 'python3 /usr/share/backintime/common/ssh_max_arg.py LENGTH'.\n
         #?0 = unlimited;0, >700
         value = self.profileIntValue('snapshots.ssh.max_arg_length', 0, profile_id)
         if value and value < 700:
@@ -1383,8 +1383,8 @@ class Config(configfile.ConfigFileWithProfiles):
             return True
         else:
             logger.debug(f'Profile ({profile_id=}) is not configured because '
-                         f'snapshot path is {bool(path)} and/or includes '
-                         f'are {bool(includes)}.', self)
+                         f'snapshot path is "{bool(path)}" and/or includes '
+                         f'are "{bool(includes)}".', self)
             return False
 
     def canBackup(self, profile_id=None):
