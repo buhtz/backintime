@@ -42,10 +42,12 @@ full_test_files = [_base_dir / fp for fp in (
     'aboutdlg.py',
     'encfsmsgbox.py',
     'manageprofiles/combobox.py',
+    'manageprofiles/statebindcheckbox.py',
     'manageprofiles/schedulewidget.py',
     'manageprofiles/sshproxywidget.py',
     'plugins/notifyplugin.py',
     'test/test_lint.py',
+    'usermessagedialog.py',
 )]
 
 # Not all linters do respect PEP8 (e.g. ruff, PyLint)
