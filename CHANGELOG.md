@@ -8,30 +8,100 @@
 ### Fixed
 -->
 
-## [1.4.4-dev] (development of upcoming release)
-
-### Fixed
-
-- Validation of diff command settings in compare snapshots dialog ([#1662](https://github.com/bit-team/backintime/issues/1662)) (@stcksmsh Kosta Vukicevic)
-- Open symlinked folders in file view ([#1476](https://github.com/bit-team/backintime/issues/1476))
-- Respect dark mode using color roles ([#1601](https://github.com/bit-team/backintime/issues/1601))
-- "Highly recommended" exclusion pattern in "Manage Profile" dialog's "Exclude" tab show missings only ([#1620](https://github.com/bit-team/backintime/issues/1620))
-- `make install` ignored $(DEST) in file migration part ([#1630](https://github.com/bit-team/backintime/issues/1630))
+## [1.6.0-dev] (development of upcoming release)
 
 ### Uncategorized
 
-- Build:Activate PyLint error E0401 (import-error)
+- ...
+
+## [1.5.3] (2024-11-13)
+
+### Uncategorized
+
+- Doc:User manual (build with MkDocs) ([#1838](https://github.com/bit-team/backintime/issues/1838)) (Kosta Vukicevic @stcksmsh)
+- Doc:User-callback topic in user manual ([#1659](https://github.com/bit-team/backintime/issues/1659))
+- Breaking Change:Minimal Python version 3.9 required ([#1731](https://github.com/bit-team/backintime/issues/1731))
+- Breaking Change:Auto migration of config version 4 or lower not longer supported ([#1857](https://github.com/bit-team/backintime/issues/1857))
+- Refactor:General tab and its Schedule section
+- Refactor:Own module for Manage Profiles dialog and separate Generals tab code ([#1865](https://github.com/bit-team/backintime/issues/1865))
+- Refactor:Remove class OrderedSet
+- Refactor:Remove os.system() from class Execute
+- Refactor:Systray notifications send utilize DBUS instead of notify-send ([#1156](https://github.com/bit-team/backintime/issues/1156)) (Felix Stupp @Zocker1999NET)
+- Refactor!:Remove unused config field "user_callback.no_logging" ([#1887](https://github.com/bit-team/backintime/issues/1887))
+- Refactor!:Remove eCryptFS check for home folder ([#1855](https://github.com/bit-team/backintime/issues/1855))
+- Dependency:Remove libnotify-bin (notify-send) ([#1156](https://github.com/bit-team/backintime/issues/1156))
+- Dependency:PyFakeFS minimal version 5.6 ([#1911](https://github.com/bit-team/backintime/issues/1911))
+- Build:Replace "pycodestyle" linter with "flake8" ([#1839](https://github.com/bit-team/backintime/issues/1839))
+
+### Added
+
+- Support language Interlingua (Occidental)
+- Warn if destination directory is formatted as NTFS ([#1854](https://github.com/bit-team/backintime/issues/1854)) (David Gibbs @fallingrock)
+- Support fcron ([#610](https://github.com/bit-team/backintime/issues/610))
+- User message about release candidate ([#1906](https://github.com/bit-team/backintime/issues/1906))
+
+### Fixed
+
+- Prevent duplicates in Exclude/Include list of Manage Profiles dialog
+- Fix Qt segmentation fault when canceling out of unconfigured BiT ([#1095](https://github.com/bit-team/backintime/issues/1095)) (Derek Veit @DerekVeit)
+- Correct global flock fallbacks ([#1834](https://github.com/bit-team/backintime/issues/1834)) (Timothy Southwick @NickNackGus)
+- Use SSH key password only if it is valid, otherwise request it from user ([#1852](https://github.com/bit-team/backintime/issues/1852)) (David Wales @daviewales)
+
+## [1.5.2] (2024-08-06)
+
+### Fixed
+
+- Ensure crontab with ending newline ([#781](https://github.com/bit-team/backintime/issues/781))
+
+### Uncategorized
+
+- Fix(translation):Correct corrupt translated strings in Basque, Islandic and Spanish causing application crashes ([#1828](https://github.com/bit-team/backintime/issues/1828))
+- Build(translation):Language helper script processing syntax checks on po-files
+
+## [1.5.1] (2024-07-27)
+
+### Fixed
+
+- Use correct port to ping SSH Proxy ([#1815](https://github.com/bit-team/backintime/issues/1815))
+
+## [1.5.0] (2024-07-26)
+
+### Uncategorized
+
 - Dependency:Migration to PyQt6
+- Breaking Change:EncFS deprecation warning ([#1735](https://github.com/bit-team/backintime/issues/1735), [#1734](https://github.com/bit-team/backintime/issues/1734))
+- Breaking Change:GUI started with --debug does no longer add --debug to the crontab for scheduled profiles. 
+- Removed:Context menu in LogViewDialog ([#1578](https://github.com/bit-team/backintime/issues/1578))
+- Removed:Field "filesystem_mount" and "snapshot_version" in "info" file ([#1684](https://github.com/bit-team/backintime/issues/1684))
+- Refactor:Replace Config.user() with getpass.getuser() ([#1694](https://github.com/bit-team/backintime/issues/1694))
+- Chore!:Remove "debian" folder ([#1548](https://github.com/bit-team/backintime/issues/1548))
+- Build:Enable several PyLint rules ([#1755](https://github.com/bit-team/backintime/issues/1755), [#1766](https://github.com/bit-team/backintime/issues/1766))
+- Build:Add AppStream meta data ([#1642](https://github.com/bit-team/backintime/issues/1642))
 - Build:PyLint unit test is skipped if PyLint isn't installed, but will always run on TravisCI ([#1634](https://github.com/bit-team/backintime/issues/1634))
 - Build:Git commit hash is presevered while "make install" ([#1637](https://github.com/bit-team/backintime/issues/1637))
 - Build:Fix bash-completion symlink creation while installing & adding --diagnostics ([#1615](https://github.com/bit-team/backintime/issues/1615))
-- Build:Activate PyLint error E602 (undefined-variable)
 - Build:TravisCI use PyQt (except arch "ppc64le")
 
 ### Added
 
+- Warn if Cron is not running ([#1747](https://github.com/bit-team/backintime/issues/1747))
+- Profile and GUI allow to activate debug output for scheduled jobs by adding '--debug' to crontab entry ([#1616](https://github.com/bit-team/backintime/issues/1616), contributed by @stcksmsh Kosta Vukicevic)
+- Support SSH proxy (jump) host ([#1688](https://github.com/bit-team/backintime/issues/1688)) (@cgrinham, Christie Grinham)
 - Support rsync '--one-file-system' in Expert Options ([#1598](https://github.com/bit-team/backintime/issues/1598))
 - "*-dev" version strings contain last commit hash ([#1637](https://github.com/bit-team/backintime/issues/1637))
+
+### Fixed
+
+- Global flock fallback to single-user mode if insufficient permissions ([#1743](https://github.com/bit-team/backintime/issues/1743), [#1751](https://github.com/bit-team/backintime/issues/1751))
+- Fix Qt segmentation fault with uninstall ExtraMouseButtonEventFilter when closing main window ([#1095](https://github.com/bit-team/backintime/issues/1095))
+- Names of weekdays and months translated correct ([#1729](https://github.com/bit-team/backintime/issues/1729))
+- Global flock for multiple users ([#1122](https://github.com/bit-team/backintime/issues/1122), [#1676](https://github.com/bit-team/backintime/issues/1676))
+- "Backup folders" list does reflect the selected snapshot ([#1585](https://github.com/bit-team/backintime/issues/1585)) (@rafaelhdr Rafael Hurpia da Rocha)
+- Validation of diff command settings in compare snapshots dialog ([#1662](https://github.com/bit-team/backintime/issues/1662)) (@stcksmsh Kosta Vukicevic)
+- Open symlinked folders in file view ([#1476](https://github.com/bit-team/backintime/issues/1476))
+- Respect dark mode using color roles ([#1601](https://github.com/bit-team/backintime/issues/1601))
+- "Highly recommended" exclusion pattern in "Manage Profile" dialog's "Exclude" tab show missing only ([#1620](https://github.com/bit-team/backintime/issues/1620))
+- `make install` ignored $(DEST) in file migration part ([#1630](https://github.com/bit-team/backintime/issues/1630))
 
 ## [1.4.3] (2024-01-30)
 
@@ -88,6 +158,7 @@
 - Breaking change:Minimal Python version 3.8 required ([#1358](https://github.com/bit-team/backintime/issues/1358)).
 - Removed:Handling and checking of user group "fuse" ([#1472](https://github.com/bit-team/backintime/issues/1472)).
 - Documentation:Removed outdated docbook ([#1345](https://github.com/bit-team/backintime/issues/1345)).
+- Testing:TravisCI now can use dbus
 - Build:Introduced .readthedocs.yaml as asked by ReadTheDocs.org ([#1443](https://github.com/bit-team/backintime/issues/1443)).
 - Dependency:The oxygen icons should be installed with the BiT Qt GUI since they are used as fallback in case of missing icons
 - Translation:Strings to translate now easier to understand for translators ([#1448](https://github.com/bit-team/backintime/issues/1448), [#1457](https://github.com/bit-team/backintime/issues/1457), [#1462](https://github.com/bit-team/backintime/issues/1462), [#1465](https://github.com/bit-team/backintime/issues/1465)).
@@ -1243,7 +1314,11 @@
 
 - This is the first release.
 
-[1.4.4-dev]: https://github.com/bit-team/backintime/releases/tag/v1.4.4-dev
+[1.6.0-dev]: https://github.com/bit-team/backintime/releases/tag/v1.6.0-dev
+[1.5.3]: https://github.com/bit-team/backintime/releases/tag/v1.5.3
+[1.5.2]: https://github.com/bit-team/backintime/releases/tag/v1.5.2
+[1.5.1]: https://github.com/bit-team/backintime/releases/tag/v1.5.1
+[1.5.0]: https://github.com/bit-team/backintime/releases/tag/v1.5.0
 [1.4.3]: https://github.com/bit-team/backintime/releases/tag/v1.4.3
 [1.4.1]: https://github.com/bit-team/backintime/releases/tag/v1.4.1
 [1.4.0]: https://github.com/bit-team/backintime/releases/tag/v1.4.0

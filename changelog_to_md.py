@@ -25,7 +25,7 @@ def main():
 
     for line in all_lines[2:]:
         # print(f'\n\n{result=}')
-        # print(f'Processing line {line}...')
+        # print(f'Processing line {line}…')
         # ignore empty lines
         if not line:
             continue
@@ -148,7 +148,7 @@ def format_links(content):
             new_link = github_link_cache[github_id]
         except KeyError:
             new_link = f'{GITHUB_ISSUE_BASE_URL}{github_id}'
-            print(f'Check link {new_link} ...')
+            print(f'Check link {new_link} …')
 
             # PullRequest?
             if not requests.get(new_link).ok:
