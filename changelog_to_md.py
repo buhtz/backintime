@@ -24,9 +24,6 @@ def main():
         return items
 
     for line in all_lines[2:]:
-        # print(f'\n\n{result=}')
-        # print(f'Processing line {line}…')
-        # ignore empty lines
         if not line:
             continue
 
@@ -172,6 +169,7 @@ def process_items(items):
     rex_suffix = re.compile(r'^\*\s*([^:]+):\s*(.+)')
 
     for i in items:
+
         try:
             suffix, content = rex_suffix.search(i).groups()
         except AttributeError:
@@ -181,7 +179,7 @@ def process_items(items):
         std_suffix = get_std_suffix(suffix)
 
         if std_suffix is None:
-            content = suffix + ':' + content
+            content = suffix + ': ' + content
             std_suffix = 'Uncategorized'
 
         content = format_links(content)
@@ -252,16 +250,6 @@ if __name__ == '__main__':
     raw_result = main()
 
     result = process_raw_results(raw_result)
-
-    # import json
-    # print(json.dumps(result, indent=4))
-
-    # suffixes = []
-    # for r in result:
-    #     suffixes.extend(list(r[2].keys()))
-
-    # suffixes = sorted(set(suffixes))
-    # print(suffixes)
 
     with Path('CHANGELOG.md').open('w', encoding='utf-8') as handle:
         to_markdown(result, handle)

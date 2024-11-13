@@ -18,20 +18,20 @@
 
 ### Uncategorized
 
-- Doc:User manual (build with MkDocs) ([#1838](https://github.com/bit-team/backintime/issues/1838)) (Kosta Vukicevic @stcksmsh)
-- Doc:User-callback topic in user manual ([#1659](https://github.com/bit-team/backintime/issues/1659))
-- Breaking Change:Minimal Python version 3.9 required ([#1731](https://github.com/bit-team/backintime/issues/1731))
-- Breaking Change:Auto migration of config version 4 or lower not longer supported ([#1857](https://github.com/bit-team/backintime/issues/1857))
-- Refactor:General tab and its Schedule section
-- Refactor:Own module for Manage Profiles dialog and separate Generals tab code ([#1865](https://github.com/bit-team/backintime/issues/1865))
-- Refactor:Remove class OrderedSet
-- Refactor:Remove os.system() from class Execute
-- Refactor:Systray notifications send utilize DBUS instead of notify-send ([#1156](https://github.com/bit-team/backintime/issues/1156)) (Felix Stupp @Zocker1999NET)
-- Refactor!:Remove unused config field "user_callback.no_logging" ([#1887](https://github.com/bit-team/backintime/issues/1887))
-- Refactor!:Remove eCryptFS check for home folder ([#1855](https://github.com/bit-team/backintime/issues/1855))
-- Dependency:Remove libnotify-bin (notify-send) ([#1156](https://github.com/bit-team/backintime/issues/1156))
-- Dependency:PyFakeFS minimal version 5.6 ([#1911](https://github.com/bit-team/backintime/issues/1911))
-- Build:Replace "pycodestyle" linter with "flake8" ([#1839](https://github.com/bit-team/backintime/issues/1839))
+- Doc: User manual (build with MkDocs) ([#1838](https://github.com/bit-team/backintime/issues/1838)) (Kosta Vukicevic @stcksmsh)
+- Doc: User-callback topic in user manual ([#1659](https://github.com/bit-team/backintime/issues/1659))
+- Breaking Change: Minimal Python version 3.9 required ([#1731](https://github.com/bit-team/backintime/issues/1731))
+- Breaking Change: Auto migration of config version 4 or lower not longer supported ([#1857](https://github.com/bit-team/backintime/issues/1857))
+- Refactor: General tab and its Schedule section
+- Refactor: Own module for Manage Profiles dialog and separate Generals tab code ([#1865](https://github.com/bit-team/backintime/issues/1865))
+- Refactor: Remove class OrderedSet
+- Refactor: Remove os.system() from class Execute
+- Refactor: Systray notifications send utilize DBUS instead of notify-send ([#1156](https://github.com/bit-team/backintime/issues/1156)) (Felix Stupp @Zocker1999NET)
+- Refactor!: Remove unused config field "user_callback.no_logging" ([#1887](https://github.com/bit-team/backintime/issues/1887))
+- Refactor!: Remove eCryptFS check for home folder ([#1855](https://github.com/bit-team/backintime/issues/1855))
+- Dependency: Remove libnotify-bin (notify-send) ([#1156](https://github.com/bit-team/backintime/issues/1156))
+- Dependency: PyFakeFS minimal version 5.6 ([#1911](https://github.com/bit-team/backintime/issues/1911))
+- Build: Replace "pycodestyle" linter with "flake8" ([#1839](https://github.com/bit-team/backintime/issues/1839))
 
 ### Added
 
@@ -55,8 +55,8 @@
 
 ### Uncategorized
 
-- Fix(translation):Correct corrupt translated strings in Basque, Islandic and Spanish causing application crashes ([#1828](https://github.com/bit-team/backintime/issues/1828))
-- Build(translation):Language helper script processing syntax checks on po-files
+- Fix(translation): Correct corrupt translated strings in Basque, Islandic and Spanish causing application crashes ([#1828](https://github.com/bit-team/backintime/issues/1828))
+- Build(translation): Language helper script processing syntax checks on po-files
 
 ## [1.5.1] (2024-07-27)
 
@@ -68,19 +68,19 @@
 
 ### Uncategorized
 
-- Dependency:Migration to PyQt6
-- Breaking Change:EncFS deprecation warning ([#1735](https://github.com/bit-team/backintime/issues/1735), [#1734](https://github.com/bit-team/backintime/issues/1734))
-- Breaking Change:GUI started with --debug does no longer add --debug to the crontab for scheduled profiles. 
-- Removed:Context menu in LogViewDialog ([#1578](https://github.com/bit-team/backintime/issues/1578))
-- Removed:Field "filesystem_mount" and "snapshot_version" in "info" file ([#1684](https://github.com/bit-team/backintime/issues/1684))
-- Refactor:Replace Config.user() with getpass.getuser() ([#1694](https://github.com/bit-team/backintime/issues/1694))
-- Chore!:Remove "debian" folder ([#1548](https://github.com/bit-team/backintime/issues/1548))
-- Build:Enable several PyLint rules ([#1755](https://github.com/bit-team/backintime/issues/1755), [#1766](https://github.com/bit-team/backintime/issues/1766))
-- Build:Add AppStream meta data ([#1642](https://github.com/bit-team/backintime/issues/1642))
-- Build:PyLint unit test is skipped if PyLint isn't installed, but will always run on TravisCI ([#1634](https://github.com/bit-team/backintime/issues/1634))
-- Build:Git commit hash is presevered while "make install" ([#1637](https://github.com/bit-team/backintime/issues/1637))
-- Build:Fix bash-completion symlink creation while installing & adding --diagnostics ([#1615](https://github.com/bit-team/backintime/issues/1615))
-- Build:TravisCI use PyQt (except arch "ppc64le")
+- Dependency: Migration to PyQt6
+- Breaking Change: EncFS deprecation warning ([#1735](https://github.com/bit-team/backintime/issues/1735), [#1734](https://github.com/bit-team/backintime/issues/1734))
+- Breaking Change: GUI started with --debug does no longer add --debug to the crontab for scheduled profiles. 
+- Removed: Context menu in LogViewDialog ([#1578](https://github.com/bit-team/backintime/issues/1578))
+- Removed: Field "filesystem_mount" and "snapshot_version" in "info" file ([#1684](https://github.com/bit-team/backintime/issues/1684))
+- Refactor: Replace Config.user() with getpass.getuser() ([#1694](https://github.com/bit-team/backintime/issues/1694))
+- Chore!: Remove "debian" folder ([#1548](https://github.com/bit-team/backintime/issues/1548))
+- Build: Enable several PyLint rules ([#1755](https://github.com/bit-team/backintime/issues/1755), [#1766](https://github.com/bit-team/backintime/issues/1766))
+- Build: Add AppStream meta data ([#1642](https://github.com/bit-team/backintime/issues/1642))
+- Build: PyLint unit test is skipped if PyLint isn't installed, but will always run on TravisCI ([#1634](https://github.com/bit-team/backintime/issues/1634))
+- Build: Git commit hash is presevered while "make install" ([#1637](https://github.com/bit-team/backintime/issues/1637))
+- Build: Fix bash-completion symlink creation while installing & adding --diagnostics ([#1615](https://github.com/bit-team/backintime/issues/1615))
+- Build: TravisCI use PyQt (except arch "ppc64le")
 
 ### Added
 
@@ -111,20 +111,20 @@
 
 ### Uncategorized
 
-- Work around:Relax `rsync` exit code 23: Ignore instead of error now (part of [#1587](https://github.com/bit-team/backintime/issues/1587))
-- Feature (experimental):Add new snapshot log filter `rsync transfer failures (experimental)` to find them easier (they are normally not shown as "error").  
-- Improve:Launcher for BiT GUI (root) does not enforce Wayland anymore but uses same settings as for BiT GUI (userland) ([#1350](https://github.com/bit-team/backintime/issues/1350))
-- Change of semantics:BiT running as root never disables suspend during taking a backup ("inhibit suspend") even though this may have worked before in BiT <= v1.4.1 sometimes (required to fix [#1592](https://github.com/bit-team/backintime/issues/1592))
-- Build:Use PyLint in unit testing to catch E1101 (no-member) errors.
-- Build:Activate PyLint warning W1401 (anomalous-backslash-in-string).
-- Build:Add codespell config.
-- Build:Allow manual specification of python executable (--python=PYTHON_PATH) in common/configure and qt/configure
-- Build:All starter scripts do use an absolute path to the python executable by default now via common/configure and qt/configure ([#1574](https://github.com/bit-team/backintime/issues/1574))
-- Build:Install dbus configuration file to /usr/share not /etc ([#1596](https://github.com/bit-team/backintime/issues/1596))
-- Build:`configure` does delete old installed files (`qt4plugin.py` and `net.launchpad.backintime.serviceHelper.conf`) that were renamed or moved in a previous release ([#1596](https://github.com/bit-team/backintime/issues/1596))
-- Translation:Minor modifications in source strings and updating language files.
-- Refactor:Solved circular dependency between tools.py and logger.py to fix [#820](https://github.com/bit-team/backintime/issues/820)
-- Improved:qtsystrayicon.py, qt5_probing.py, usercallbackplugin.py and all parts of app.py 
+- Work around: Relax `rsync` exit code 23: Ignore instead of error now (part of [#1587](https://github.com/bit-team/backintime/issues/1587))
+- Feature (experimental): Add new snapshot log filter `rsync transfer failures (experimental)` to find them easier (they are normally not shown as "error").  
+- Improve: Launcher for BiT GUI (root) does not enforce Wayland anymore but uses same settings as for BiT GUI (userland) ([#1350](https://github.com/bit-team/backintime/issues/1350))
+- Change of semantics: BiT running as root never disables suspend during taking a backup ("inhibit suspend") even though this may have worked before in BiT <= v1.4.1 sometimes (required to fix [#1592](https://github.com/bit-team/backintime/issues/1592))
+- Build: Use PyLint in unit testing to catch E1101 (no-member) errors.
+- Build: Activate PyLint warning W1401 (anomalous-backslash-in-string).
+- Build: Add codespell config.
+- Build: Allow manual specification of python executable (--python=PYTHON_PATH) in common/configure and qt/configure
+- Build: All starter scripts do use an absolute path to the python executable by default now via common/configure and qt/configure ([#1574](https://github.com/bit-team/backintime/issues/1574))
+- Build: Install dbus configuration file to /usr/share not /etc ([#1596](https://github.com/bit-team/backintime/issues/1596))
+- Build: `configure` does delete old installed files (`qt4plugin.py` and `net.launchpad.backintime.serviceHelper.conf`) that were renamed or moved in a previous release ([#1596](https://github.com/bit-team/backintime/issues/1596))
+- Translation: Minor modifications in source strings and updating language files.
+- Refactor: Solved circular dependency between tools.py and logger.py to fix [#820](https://github.com/bit-team/backintime/issues/820)
+- Improved: qtsystrayicon.py, qt5_probing.py, usercallbackplugin.py and all parts of app.py 
 
 ### Fixed
 
@@ -139,9 +139,9 @@
 
 ### Uncategorized
 
-- Dependency:Add "qt translations" to GUI runtime dependencies ([#1538](https://github.com/bit-team/backintime/issues/1538)).
-- Build:Unit tests do generically ignore all instead of well-known warnings now ([#1539](https://github.com/bit-team/backintime/issues/1539)).
-- Build:Warnings about missing Qt translation now are ignored while testing ([#1537](https://github.com/bit-team/backintime/issues/1537)).
+- Dependency: Add "qt translations" to GUI runtime dependencies ([#1538](https://github.com/bit-team/backintime/issues/1538)).
+- Build: Unit tests do generically ignore all instead of well-known warnings now ([#1539](https://github.com/bit-team/backintime/issues/1539)).
+- Build: Warnings about missing Qt translation now are ignored while testing ([#1537](https://github.com/bit-team/backintime/issues/1537)).
 
 ### Fixed
 
@@ -151,22 +151,22 @@
 
 ### Uncategorized
 
-- Project:Renamed branch "master" to "main" and started "gitflow" branching model.
-- Refactor:Renamed qt4plugin.py to systrayiconplugin.py (we are using Qt5 for years now ;-)
-- Refactor:Removed unfinished feature "Full system backup" ([#1526](https://github.com/bit-team/backintime/issues/1526))
-- GUI Change:View last (snapshot) log button in GUI uses "document-open-recent" icon now instead of "document-new" ([#1386](https://github.com/bit-team/backintime/issues/1386))
-- Breaking change:Minimal Python version 3.8 required ([#1358](https://github.com/bit-team/backintime/issues/1358)).
-- Removed:Handling and checking of user group "fuse" ([#1472](https://github.com/bit-team/backintime/issues/1472)).
-- Documentation:Removed outdated docbook ([#1345](https://github.com/bit-team/backintime/issues/1345)).
-- Testing:TravisCI now can use dbus
-- Build:Introduced .readthedocs.yaml as asked by ReadTheDocs.org ([#1443](https://github.com/bit-team/backintime/issues/1443)).
-- Dependency:The oxygen icons should be installed with the BiT Qt GUI since they are used as fallback in case of missing icons
-- Translation:Strings to translate now easier to understand for translators ([#1448](https://github.com/bit-team/backintime/issues/1448), [#1457](https://github.com/bit-team/backintime/issues/1457), [#1462](https://github.com/bit-team/backintime/issues/1462), [#1465](https://github.com/bit-team/backintime/issues/1465)).
-- Translation:Improved completeness of translations and additional modifications of source strings ([#1454](https://github.com/bit-team/backintime/issues/1454), [#1512](https://github.com/bit-team/backintime/issues/1512))
-- Translation:Plural forms support ([#1488](https://github.com/bit-team/backintime/issues/1488)).
-- Removed:Translation in Canadian English, British English and Javanese ([#1455](https://github.com/bit-team/backintime/issues/1455)).
-- Added:Translation in Persian and Vietnamese ([#1460](https://github.com/bit-team/backintime/issues/1460)).
-- Added:Message to users (after 10 starts of BIT Gui) to motivate them contributing translations ([#1473](https://github.com/bit-team/backintime/issues/1473)).
+- Project: Renamed branch "master" to "main" and started "gitflow" branching model.
+- Refactor: Renamed qt4plugin.py to systrayiconplugin.py (we are using Qt5 for years now ;-)
+- Refactor: Removed unfinished feature "Full system backup" ([#1526](https://github.com/bit-team/backintime/issues/1526))
+- GUI Change: View last (snapshot) log button in GUI uses "document-open-recent" icon now instead of "document-new" ([#1386](https://github.com/bit-team/backintime/issues/1386))
+- Breaking change: Minimal Python version 3.8 required ([#1358](https://github.com/bit-team/backintime/issues/1358)).
+- Removed: Handling and checking of user group "fuse" ([#1472](https://github.com/bit-team/backintime/issues/1472)).
+- Documentation: Removed outdated docbook ([#1345](https://github.com/bit-team/backintime/issues/1345)).
+- Testing: TravisCI now can use dbus
+- Build: Introduced .readthedocs.yaml as asked by ReadTheDocs.org ([#1443](https://github.com/bit-team/backintime/issues/1443)).
+- Dependency: The oxygen icons should be installed with the BiT Qt GUI since they are used as fallback in case of missing icons
+- Translation: Strings to translate now easier to understand for translators ([#1448](https://github.com/bit-team/backintime/issues/1448), [#1457](https://github.com/bit-team/backintime/issues/1457), [#1462](https://github.com/bit-team/backintime/issues/1462), [#1465](https://github.com/bit-team/backintime/issues/1465)).
+- Translation: Improved completeness of translations and additional modifications of source strings ([#1454](https://github.com/bit-team/backintime/issues/1454), [#1512](https://github.com/bit-team/backintime/issues/1512))
+- Translation: Plural forms support ([#1488](https://github.com/bit-team/backintime/issues/1488)).
+- Removed: Translation in Canadian English, British English and Javanese ([#1455](https://github.com/bit-team/backintime/issues/1455)).
+- Added: Translation in Persian and Vietnamese ([#1460](https://github.com/bit-team/backintime/issues/1460)).
+- Added: Message to users (after 10 starts of BIT Gui) to motivate them contributing translations ([#1473](https://github.com/bit-team/backintime/issues/1473)).
 
 ### Fixed
 
@@ -203,18 +203,18 @@
 
 ### Uncategorized
 
-- GUI change:Remove Exit button from the toolbar ([#172](https://github.com/bit-team/backintime/issues/172))
-- GUI change:Define accelerator keys for menu bar and tabs, as well as toolbar shortcuts ([#1104](https://github.com/bit-team/backintime/issues/1104))
-- Desktop integration:Update .desktop file to mark Back In Time as a single main window program ([#1258](https://github.com/bit-team/backintime/issues/1258))
-- Documentation update:Correct description of profile<N>.schedule.time in backintime-config manpage ([#1270](https://github.com/bit-team/backintime/issues/1270))
-- Translation update:Brazilian Portuguese ([#1267](https://github.com/bit-team/backintime/issues/1267))
-- Translation update:Italian ([#1110](https://github.com/bit-team/backintime/issues/1110), [#1123](https://github.com/bit-team/backintime/issues/1123))
-- Translation update:French ([#1077](https://github.com/bit-team/backintime/issues/1077))
-- Testing:Fix a test fail when dealing with an empty crontab ([#1181](https://github.com/bit-team/backintime/issues/1181))
-- Testing:Fix a test fail when dealing with an empty config file ([#1305](https://github.com/bit-team/backintime/issues/1305))
-- Testing:Skip "test_quiet_mode" (does not work reliably)
-- Testing:Improve "test_diagnostics_arg" (introduced with [#1100](https://github.com/bit-team/backintime/issues/1100)) to no longer fail 
-- Testing:Numerous fixes and extensions to testing ([#1115](https://github.com/bit-team/backintime/issues/1115), [#1213](https://github.com/bit-team/backintime/issues/1213), [#1279](https://github.com/bit-team/backintime/issues/1279), [#1280](https://github.com/bit-team/backintime/issues/1280), [#1281](https://github.com/bit-team/backintime/issues/1281), [#1285](https://github.com/bit-team/backintime/issues/1285), [#1288](https://github.com/bit-team/backintime/issues/1288), [#1290](https://github.com/bit-team/backintime/issues/1290), [#1293](https://github.com/bit-team/backintime/issues/1293), [#1309](https://github.com/bit-team/backintime/issues/1309), [#1334](https://github.com/bit-team/backintime/issues/1334))
+- GUI change: Remove Exit button from the toolbar ([#172](https://github.com/bit-team/backintime/issues/172))
+- GUI change: Define accelerator keys for menu bar and tabs, as well as toolbar shortcuts ([#1104](https://github.com/bit-team/backintime/issues/1104))
+- Desktop integration: Update .desktop file to mark Back In Time as a single main window program ([#1258](https://github.com/bit-team/backintime/issues/1258))
+- Documentation update: Correct description of profile<N>.schedule.time in backintime-config manpage ([#1270](https://github.com/bit-team/backintime/issues/1270))
+- Translation update: Brazilian Portuguese ([#1267](https://github.com/bit-team/backintime/issues/1267))
+- Translation update: Italian ([#1110](https://github.com/bit-team/backintime/issues/1110), [#1123](https://github.com/bit-team/backintime/issues/1123))
+- Translation update: French ([#1077](https://github.com/bit-team/backintime/issues/1077))
+- Testing: Fix a test fail when dealing with an empty crontab ([#1181](https://github.com/bit-team/backintime/issues/1181))
+- Testing: Fix a test fail when dealing with an empty config file ([#1305](https://github.com/bit-team/backintime/issues/1305))
+- Testing: Skip "test_quiet_mode" (does not work reliably)
+- Testing: Improve "test_diagnostics_arg" (introduced with [#1100](https://github.com/bit-team/backintime/issues/1100)) to no longer fail 
+- Testing: Numerous fixes and extensions to testing ([#1115](https://github.com/bit-team/backintime/issues/1115), [#1213](https://github.com/bit-team/backintime/issues/1213), [#1279](https://github.com/bit-team/backintime/issues/1279), [#1280](https://github.com/bit-team/backintime/issues/1280), [#1281](https://github.com/bit-team/backintime/issues/1281), [#1285](https://github.com/bit-team/backintime/issues/1285), [#1288](https://github.com/bit-team/backintime/issues/1288), [#1290](https://github.com/bit-team/backintime/issues/1290), [#1293](https://github.com/bit-team/backintime/issues/1293), [#1309](https://github.com/bit-team/backintime/issues/1309), [#1334](https://github.com/bit-team/backintime/issues/1334))
 
 ### Fixed
 
@@ -244,12 +244,12 @@
 
 ### Uncategorized
 
-- Merge PR:Fix FileNotFoundError exception in mount.mounted, Thanks tatokis (https://github.com/bit-team/backintime/pull/1157)
-- Merge PR:qt/plugins/notifyplugin: Fix setting self.user, not local variable, Thanks Zocker1999NET (https://github.com/bit-team/backintime/pull/1155)
-- Merge PR:Use Link Color instead of lightGray as not to break theming, Thanks newhinton (https://github.com/bit-team/backintime/pull/1153)
-- Merge PR:Match old and new rsync version format, Thanks TheTimeWalker (https://github.com/bit-team/backintime/pull/1139)
-- Merge PR:'TempPasswordThread' object has no attribute 'isAlive', Thanks FMeinicke (https://github.com/bit-team/backintime/pull/1135)
-- Merge PR:Keep permissions of an existing mountpoint from being overridden, Thanks bentolor (https://github.com/bit-team/backintime/pull/1058)
+- Merge PR: Fix FileNotFoundError exception in mount.mounted, Thanks tatokis (https://github.com/bit-team/backintime/pull/1157)
+- Merge PR: qt/plugins/notifyplugin: Fix setting self.user, not local variable, Thanks Zocker1999NET (https://github.com/bit-team/backintime/pull/1155)
+- Merge PR: Use Link Color instead of lightGray as not to break theming, Thanks newhinton (https://github.com/bit-team/backintime/pull/1153)
+- Merge PR: Match old and new rsync version format, Thanks TheTimeWalker (https://github.com/bit-team/backintime/pull/1139)
+- Merge PR: 'TempPasswordThread' object has no attribute 'isAlive', Thanks FMeinicke (https://github.com/bit-team/backintime/pull/1135)
+- Merge PR: Keep permissions of an existing mountpoint from being overridden, Thanks bentolor (https://github.com/bit-team/backintime/pull/1058)
 
 ### Fixed
 
@@ -319,25 +319,25 @@
 
 ### Uncategorized
 
-- minor changes to allow running BiT inside Docker (https://github.com/bit-team/backintime/pull/959)
-- remove progressbar on systray icon until BiT has it's own icon ([#902](https://github.com/bit-team/backintime/issues/902))
-- clarify 'nocache' option ([#857](https://github.com/bit-team/backintime/issues/857))
-- create a config-backup in root dir if backup is encrypted ([#556](https://github.com/bit-team/backintime/issues/556))
+- minor changes to allow running BiT inside Docker (https: //github.com/bit-team/backintime/pull/959)
+- remove progressbar on systray icon until BiT has it's own icon (https: //github.com/bit-team/backintime/issues/902)
+- clarify 'nocache' option (https: //github.com/bit-team/backintime/issues/857)
+- create a config-backup in root dir if backup is encrypted (https: //github.com/bit-team/backintime/issues/556)
 - remove unused and undocumented userscript plugin
 - add contextmenu for logview dialog which can copy, exclude and decode lines
 - move progressbar under statusbar
-- alleviate default exclude [Tt]rash* ([#759](https://github.com/bit-team/backintime/issues/759))
-- enable high DPI scaling ([#732](https://github.com/bit-team/backintime/issues/732))
-- Smart Remove try to keep healthy snapshots ([#703](https://github.com/bit-team/backintime/issues/703))
-- ask for restore-to path before confirm ([#678](https://github.com/bit-team/backintime/issues/678))
-- fix 'Back in Time (root)' on wayland ([#640](https://github.com/bit-team/backintime/issues/640))
-- sort int values in config numerical instead if alphabetical ([#175](https://github.com/bit-team/backintime/issues/175)#issuecomment-272941811)
-- set timestamp directly after new snapshot ([#584](https://github.com/bit-team/backintime/issues/584))
-- add shortcut CTRL+H for toggle show hidden files to fileselect dialog ([#378](https://github.com/bit-team/backintime/issues/378))
+- alleviate default exclude [Tt]rash* (https: //github.com/bit-team/backintime/issues/759)
+- enable high DPI scaling (https: //github.com/bit-team/backintime/issues/732)
+- Smart Remove try to keep healthy snapshots (https: //github.com/bit-team/backintime/issues/703)
+- ask for restore-to path before confirm (https: //github.com/bit-team/backintime/issues/678)
+- fix 'Back in Time (root)' on wayland (https: //github.com/bit-team/backintime/issues/640)
+- sort int values in config numerical instead if alphabetical (https: //github.com/bit-team/backintime/issues/175#issuecomment-272941811)
+- set timestamp directly after new snapshot (https: //github.com/bit-team/backintime/issues/584)
+- add shortcut CTRL+H for toggle show hidden files to fileselect dialog (https: //github.com/bit-team/backintime/issues/378)
 - add 'Edit user-callback' dialog
-- redesign restore menu ([#661](https://github.com/bit-team/backintime/issues/661))
-- add ability to disable SSH command- and ping-check ([#647](https://github.com/bit-team/backintime/issues/647))
-- enable bwlimit for local profiles ([#646](https://github.com/bit-team/backintime/issues/646))
+- redesign restore menu (https: //github.com/bit-team/backintime/issues/661)
+- add ability to disable SSH command- and ping-check (https: //github.com/bit-team/backintime/issues/647)
+- enable bwlimit for local profiles (https: //github.com/bit-team/backintime/issues/646)
 - import remote host-key into known_hosts from Settings
 - copy public SSH key to remote host from Settings
 - create a new SSH key from Settings
@@ -345,20 +345,20 @@
 - rename paths and methods from *qt4* into *qt*
 - rename executable backintime-qt4 into backintime-qt
 - new config version 6, rename qt4 keys into qt, add new domain for schedule
-- check crontab entries on every GUI startup ([#129](https://github.com/bit-team/backintime/issues/129))
+- check crontab entries on every GUI startup (https: //github.com/bit-team/backintime/issues/129)
 - start a new ssh-agent instance only if necessary
-- add cli command 'shutdown' ([#596](https://github.com/bit-team/backintime/issues/596))
+- add cli command 'shutdown' (https: //github.com/bit-team/backintime/issues/596)
 - add cli command 'smart-remove'
-- make LogView and Settings Dialog non-modal ([#608](https://github.com/bit-team/backintime/issues/608))
-- port to Qt5/pyqt5 ([#518](https://github.com/bit-team/backintime/issues/518))
+- make LogView and Settings Dialog non-modal (https: //github.com/bit-team/backintime/issues/608)
+- port to Qt5/pyqt5 (https: //github.com/bit-team/backintime/issues/518)
 - Recognize changes on previous runs while continuing new snapshots
-- Add pause, resume and stop function for running snapshots ([#474](https://github.com/bit-team/backintime/issues/474), [#195](https://github.com/bit-team/backintime/issues/195))
+- Add pause, resume and stop function for running snapshots (https: //github.com/bit-team/backintime/issues/474, [#195](https://github.com/bit-team/backintime/issues/195))
 - use rsync to save permissions
 - replace os.system calls with subprocess.Popen
 - automatically refresh log view if a snapshot is currently running
 - remove dependency for extended 'find' command on remote host
 - make full-rsync mode default, remove the other mode
-- use rsync to remove snapshots which will give a nice speedup ([#151](https://github.com/bit-team/backintime/issues/151))
+- use rsync to remove snapshots which will give a nice speedup (https: //github.com/bit-team/backintime/issues/151)
 - open temporary local copy of files instead of original backup on double-click in GUI
 - add option to decrypt paths in systray menu with mode ssh-encrypted
 - open current log directly from systray icon during taking a snapshot
@@ -368,7 +368,7 @@
 - add restore option --only-new
 - add button 'Take snapshot with checksums'
 - change default configure option to --no-fuse-group as Ubuntu >= 12.04 don't need fuse group-membership anymore
-- Fix lintian warning:manpage-has-errors-from-man: bad argument name 'P'
+- Fix lintian warning: manpage-has-errors-from-man: bad argument name 'P'
 - Do not print 'SnapshotID' or 'SnapshotPath' if running 'snapshots-list' command (and other) with '--quiet'
 - Remove dependency 'ps'
 - rewrite huge parts of snapshots.py
@@ -445,15 +445,15 @@
 
 ### Uncategorized
 
-- Add Icon 'show-hidden' ([#507](https://github.com/bit-team/backintime/issues/507))
+- Add Icon 'show-hidden' (https: //github.com/bit-team/backintime/issues/507)
 - Add Modify for Full System Backup button to settings page, to change some profile settings
 - add get|set_list_value to configfile
 - subclass ApplicationInstance in GUIApplicationInstance to reduce redundant code
 - speed up app start by adding snapshots to timeline in background thread
-- add warning on failed permission restore ([#58](https://github.com/bit-team/backintime/issues/58))
+- add warning on failed permission restore (https: //github.com/bit-team/backintime/issues/58)
 - add unittest (thanks to Dorian, Alexandre, Aurélien and Gregory from IAGL)
-- continue an unfinished new_snapshot if possible ([#400](https://github.com/bit-team/backintime/issues/400))
-- Add Nautilus-like shortcuts for navigating in file browser ([#483](https://github.com/bit-team/backintime/issues/483))
+- continue an unfinished new_snapshot if possible (https: //github.com/bit-team/backintime/issues/400)
+- Add Nautilus-like shortcuts for navigating in file browser (https: //github.com/bit-team/backintime/issues/483)
 - speed up mounting of SSH+encrypted profiles
 - Move source code and bug tracking to GitHub
 
@@ -479,23 +479,23 @@
 
 ### Uncategorized
 
-- show current app name and profile ID in syslog ([Launchpad#906213](https://bugs.launchpad.net/backintime/+bug/906213))
-- Show 'Profiles' dropdown only in 'Last Log Viewer', add 'Snapshots' dropdown in 'Snapshot Log Viewer' ([Launchpad#1478219](https://bugs.launchpad.net/backintime/+bug/1478219))
+- show current app name and profile ID in syslog (https: //launchpad.net/bugs/906213)
+- Show 'Profiles' dropdown only in 'Last Log Viewer', add 'Snapshots' dropdown in 'Snapshot Log Viewer' (https: //launchpad.net/bugs/1478219)
 - do not restore permission if they are identical with current permissions
-- security issue:do not run user-callback in a shell
+- security issue: do not run user-callback in a shell
 - add option to not log user-callback output
 - Fix lintian warning dbus-policy-without-send-destination
 - apply timestamps-in-gzip.patch from Debian backintime/1.1.6-1 package
-- run multiple smart-remove jobs in one screen session ([Launchpad#1487781](https://bugs.launchpad.net/backintime/+bug/1487781))
+- run multiple smart-remove jobs in one screen session (https: //launchpad.net/bugs/1487781)
 - add error messages if PID file creation fail
 - Add Warning about unsupported filesystems
 - use native Python code to check mountpoint
-- Add expert option for stdout and stderr redirection in cronjobs (https://answers.launchpad.net/questions/270105)
+- Add expert option for stdout and stderr redirection in cronjobs (https: //answers.launchpad.net/questions/270105)
 - remove shebang in common/askpass.py and common/create-manpage-backintime-config.py
 - Fix bash-complete
-- show 'man backintime' on Help; remove link to backintime.le-web.org ([Launchpad#1475995](https://bugs.launchpad.net/backintime/+bug/1475995))
+- show 'man backintime' on Help; remove link to backintime.le-web.org (https: //launchpad.net/bugs/1475995)
 - add --debug argument
-- add --local-backup, --no-local-backup and --delete option to restore on command-line ([Launchpad#1467239](https://bugs.launchpad.net/backintime/+bug/1467239))
+- add --local-backup, --no-local-backup and --delete option to restore on command-line (https: //launchpad.net/bugs/1467239)
 - add 'backup on restore' option to confirm dialog
 - add check-config command for command-line
 - rewrite command-line argument parsing. Now using argparse
@@ -508,9 +508,9 @@
 - show Profile name in systrayicon menu
 - make own Exceptions a childclass from BackInTimeException
 - remove consolekit from dependencies
-- Specifying the SSH private key whenever ssh is called ([Launchpad#1433682](https://bugs.launchpad.net/backintime/+bug/1433682))
-- add to in-/exclude directly from mainwindow ([Launchpad#1454856](https://bugs.launchpad.net/backintime/+bug/1454856))
-- add option to run Smart Remove in background on remote host ([Launchpad#1457210](https://bugs.launchpad.net/backintime/+bug/1457210))
+- Specifying the SSH private key whenever ssh is called (https: //launchpad.net/bugs/1433682)
+- add to in-/exclude directly from mainwindow (https: //launchpad.net/bugs/1454856)
+- add option to run Smart Remove in background on remote host (https: //launchpad.net/bugs/1457210)
 - Use current profile when starting GUI from Systray
 
 ### Fixed
@@ -529,15 +529,15 @@
 
 ### Uncategorized
 
-- add option to keep new snapshot with 'full rsync mode' regardless of changes ([Launchpad#1434722](https://bugs.launchpad.net/backintime/+bug/1434722))
-- remove base64 encoding for passwords as it doesn't add any security but broke the password process ([Launchpad#1431305](https://bugs.launchpad.net/backintime/+bug/1431305))
-- add confirm dialog before restoring ([Launchpad#438079](https://bugs.launchpad.net/backintime/+bug/438079))
+- add option to keep new snapshot with 'full rsync mode' regardless of changes (https: //launchpad.net/bugs/1434722)
+- remove base64 encoding for passwords as it doesn't add any security but broke the password process (https: //launchpad.net/bugs/1431305)
+- add confirm dialog before restoring (https: //launchpad.net/bugs/438079)
 - add option to run only one snapshot at a time
-- cache uuid in config so it doesn't fail if the device isn't plugged in ([Launchpad#1426881](https://bugs.launchpad.net/backintime/+bug/1426881))
+- cache uuid in config so it doesn't fail if the device isn't plugged in (https: //launchpad.net/bugs/1426881)
 - add warning about wrong Python version in configure
-- prevent snapshots from being removed with restore and delete; show warning if restore and delete filesystem root (https://answers.launchpad.net/questions/262837)
+- prevent snapshots from being removed with restore and delete; show warning if restore and delete filesystem root (https: //answers.launchpad.net/questions/262837)
 - add bash-completion
-- use 'crontab' instead of 'crontab -' to read from stdin ([Launchpad#1419466](https://bugs.launchpad.net/backintime/+bug/1419466))
+- use 'crontab' instead of 'crontab -' to read from stdin (https: //launchpad.net/bugs/1419466)
 
 ### Fixed
 
@@ -566,26 +566,26 @@
 
 - add tooltips for rsync options
 - make only one debian/control
-- multiselect files to restore ([Launchpad#1135886](https://bugs.launchpad.net/backintime/+bug/1135886))
-- force run manual snapshots on battery ([Launchpad#861553](https://bugs.launchpad.net/backintime/+bug/861553))
+- multiselect files to restore (https: //launchpad.net/bugs/1135886)
+- force run manual snapshots on battery (https: //launchpad.net/bugs/861553)
 - backup encfs config to local config folder
 - apply 'install-docs-move.patch' from Debian package by Jonathan Wiltshire
-- add restore option to delete new files during restore ([Launchpad#1371951](https://bugs.launchpad.net/backintime/+bug/1371951))
+- add restore option to delete new files during restore (https: //launchpad.net/bugs/1371951)
 - use flock to prevent two instances running at the same time
-- restore config dialog added ([Launchpad#480391](https://bugs.launchpad.net/backintime/+bug/480391))
+- restore config dialog added (https: //launchpad.net/bugs/480391)
 - inhibit suspend/hibernate while take_snapshot or restore
 - use more reliable code for get_user
 - implement anacrons functions inside BIT => more flexible schedules and no new timestamp if there was an error
 - automatically run in background if started with 'backintime --backup-job'
-- fix typos and style warnings in manpages reported by Lintian (https://lintian.debian.org/full/jmw@debian.org.html#backintime_1.0.34-0.1)
-- add exclude files by size ([Launchpad#823719](https://bugs.launchpad.net/backintime/+bug/823719))
+- fix typos and style warnings in manpages reported by Lintian (https: //lintian.debian.org/full/jmw@debian.org.html#backintime_1.0.34-0.1)
+- add exclude files by size (https: //launchpad.net/bugs/823719)
 - remove 'Auto Host/User/Profile-ID' as this is more confusing than helping
-- optional run 'rsync' with 'nocache' ([Launchpad#1344528](https://bugs.launchpad.net/backintime/+bug/1344528))
+- optional run 'rsync' with 'nocache' (https: //launchpad.net/bugs/1344528)
 - mark invalid exclude pattern with mode ssh-encrypted
 - make Settingsdialog tabs scrollable
-- remove colon (:) restriction in exclude pattern
+- remove colon (: ) restriction in exclude pattern
 - prevent starting new snapshot if restore is running
-- add top-level directory for tarball ([Launchpad#1359076](https://bugs.launchpad.net/backintime/+bug/1359076))
+- add top-level directory for tarball (https: //launchpad.net/bugs/1359076)
 - add more user-callback events (on App start and exit, on mount and unmount)
 - add context menu to files view
 - remove snapshots from commandline
@@ -596,19 +596,19 @@
 - add ProgressBar for rsync
 - add progress for smart-remove
 - remove old status-bar message after a snapshot crashed.
-- ask to include symlinks target instead link ([Launchpad#1117709](https://bugs.launchpad.net/backintime/+bug/1117709))
+- ask to include symlinks target instead link (https: //launchpad.net/bugs/1117709)
 - port to Python 3.x
-- returncode >0 if there was an error ([Launchpad#1040995](https://bugs.launchpad.net/backintime/+bug/1040995))
+- returncode >0 if there was an error (https: //launchpad.net/bugs/1040995)
 - Enable user-callback script to cancel a backup by returning a non-zero exit code.
 - merge backintime-notify into backintime-qt4
 - add --gksu/--gksudo arg to qt4/configure
-- remember last path for each profile ([Launchpad#1254870](https://bugs.launchpad.net/backintime/+bug/1254870))
-- sort include and exclude list ([Launchpad#1193149](https://bugs.launchpad.net/backintime/+bug/1193149))
+- remember last path for each profile (https: //bugs.launchpad.net/bugs/1254870)
+- sort include and exclude list (https: //bugs.launchpad.net/bugs/1193149)
 - Timeline show tooltip 'Last check'
-- show hidden files in FileDialog ([Launchpad#995925](https://bugs.launchpad.net/backintime/+bug/995925))
-- add button text for all buttons ([Launchpad#992020](https://bugs.launchpad.net/backintime/+bug/992020))
-- add shortcuts ([Launchpad#686694](https://bugs.launchpad.net/backintime/+bug/686694))
-- add menubar ([Launchpad#528851](https://bugs.launchpad.net/backintime/+bug/528851))
+- show hidden files in FileDialog (https: //bugs.launchpad.net/backintime/+bug/995925)
+- add button text for all buttons (https: //bugs.launchpad.net/backintime/+bug/992020)
+- add shortcuts (https: //bugs.launchpad.net/backintime/+bug/686694)
+- add menubar (https: //bugs.launchpad.net/backintime/+bug/528851)
 - port KDE4 GUI to pure Qt4 to replace both KDE4 and Gnome GUI
 
 ### Fixed
@@ -622,8 +622,8 @@
 
 ### Uncategorized
 
-- use fingerprint to check if ssh key was unlocked correctly (https://answers.launchpad.net/questions/256408)
-- add fallback method to get UUID (https://answers.launchpad.net/questions/254140)
+- use fingerprint to check if ssh key was unlocked correctly (https: //answers.launchpad.net/questions/256408)
+- add fallback method to get UUID (https: //answers.launchpad.net/questions/254140)
 
 ### Fixed
 
@@ -646,8 +646,8 @@
 
 ### Uncategorized
 
-- remove UbuntuOne from exclude ([Launchpad#1340131](https://bugs.launchpad.net/backintime/+bug/1340131))
-- Gray out 'Add Profile' if 'Main Profile' isn't configured yet ([Launchpad#1335545](https://bugs.launchpad.net/backintime/+bug/1335545))
+- remove UbuntuOne from exclude (https: //bugs.launchpad.net/bugs/1340131)
+- Gray out 'Add Profile' if 'Main Profile' isn't configured yet (https: //bugs.launchpad.net/bugs/1335545)
 - Don't check for fuse group-membership if group doesn't exist
 - disable keyring for root
 
@@ -663,7 +663,7 @@
 
 ### Uncategorized
 
-- sync/flush all disks before shutdown ([Launchpad#1261031](https://bugs.launchpad.net/backintime/+bug/1261031))
+- sync/flush all disks before shutdown (https: //bugs.launchpad.net/bugs/1261031)
 
 ### Fixed
 
@@ -680,12 +680,12 @@
 ### Uncategorized
 
 - scheduled and manual snapshots use --config
-- make configure scripts portable ([Launchpad#377429](https://bugs.launchpad.net/backintime/+bug/377429))
-- add symlink last_snapshot ([Launchpad#787118](https://bugs.launchpad.net/backintime/+bug/787118))
+- make configure scripts portable (https: //bugs.launchpad.net/backintime/+bug/377429)
+- add symlink last_snapshot (https: //bugs.launchpad.net/backintime/+bug/787118)
 - add virtual package backintime-kde for PPA
 - Fix multiple errors in PPA build process; reorganize updateversion.sh
-- add option to run rsync with 'nice' or 'ionice' on remote host ([Launchpad#1240301](https://bugs.launchpad.net/backintime/+bug/1240301))
-- add Shutdown button to shutdown system after snapshot has finished ([Launchpad#838742](https://bugs.launchpad.net/backintime/+bug/838742))
+- add option to run rsync with 'nice' or 'ionice' on remote host (https: //bugs.launchpad.net/backintime/+bug/1240301)
+- add Shutdown button to shutdown system after snapshot has finished (https: //bugs.launchpad.net/backintime/+bug/838742)
 - wrap long lines for syslog
 
 ### Fixed
@@ -702,8 +702,8 @@
 - remove config on 'apt-get purge'
 - add more options for configure scripts; update README
 - add udev schedule (run BIT as soon as the drive is connected)
-- add '--checksum' commandline option ([Launchpad#886021](https://bugs.launchpad.net/backintime/+bug/886021))
-- multi selection for include and exclude list ([Launchpad#660753](https://bugs.launchpad.net/backintime/+bug/660753))
+- add '--checksum' commandline option (https: //bugs.launchpad.net/backintime/+bug/886021)
+- multi selection for include and exclude list (https: //bugs.launchpad.net/backintime/+bug/660753)
 
 ### Fixed
 
@@ -721,12 +721,12 @@
 
 ### Uncategorized
 
-- add feature:keep min free inodes
-- roll back commit 836.1.5 (check free-space on ssh remote host):statvfs DOES work over sshfs. But not with quite outdated sshd
+- add feature: keep min free inodes
+- roll back commit 836.1.5 (check free-space on ssh remote host): statvfs DOES work over sshfs. But not with quite outdated sshd
 - add daily anacron schedule
 - add delete button and 'list only equal' in Snapshot dialog; multiSelect in snapshot list
 - add manpage backintime-config and config-examples
-- add feature:restore from command line; add option --config
+- add feature: restore from command line; add option --config
 - use 'ps ax' to check if 'backintime --pw-cache' is still running
 - mount after locking, unmount before unlocking in take_snapshot
 - add option --bwlimit for rsync
@@ -734,8 +734,8 @@
 - deactivate 'Save Password' if no keyring is available
 - use Password-cache for user-input too
 - handle two Passwords
-- add 'SSH encrypted':mount / with encfs reverse and sync encrypted with rsync. EXPERIMENTAL!
-- add 'Local encrypted':mount encfs
+- add 'SSH encrypted': mount / with encfs reverse and sync encrypted with rsync. EXPERIMENTAL!
+- add 'Local encrypted': mount encfs
 
 ### Fixed
 
@@ -755,7 +755,7 @@
 - 'Save Password' default off to avoid problems with existing profiles
 - if restore uid/gid failed try to restore at least gid
 - SSH need to store permissions in separate file with "Full rsync mode" because remote user might not be able to store ownership
-- switch to 'find -exec cmd {} +' ([Launchpad#1157639](https://bugs.launchpad.net/backintime/+bug/1157639))
+- switch to 'find -exec cmd {} +' (https: //bugs.launchpad.net/backintime/+bug/1157639)
 - change all indent tabs to 4 spaces
 
 ### Fixed
@@ -791,7 +791,7 @@
 
 ### Uncategorized
 
-- Fix packages:man & translations
+- Fix packages: man & translations
 - Map multiple arguments for gettext so they can be rearranged by translators
 
 ### Fixed
@@ -804,7 +804,7 @@
 
 ### Uncategorized
 
-- Fix a package dependency problem ... this time for good ([Launchpad#1077446](https://bugs.launchpad.net/backintime/+bug/1077446))
+- Fix a package dependency problem ... this time for good (https: //bugs.launchpad.net/backintime/+bug/1077446)
 
 ## [1.0.14] (2012-11-09)
 
@@ -816,9 +816,9 @@
 
 ### Uncategorized
 
-- Add links to:website, documentation, report a bug, answers, faq
+- Add links to: website, documentation, report a bug, answers, faq
 - Use libnotify for gnome/kde4 notifications instead of gnome specific libraries
-- Add more schedule options:every 30 min, every 2 hours, every 4 hours, every 6 hours & every 12 hours
+- Add more schedule options: every 30 min, every 2 hours, every 4 hours, every 6 hours & every 12 hours
 - Add generic mount-framework
 - Add mode 'SSH' for backups on remote host using ssh protocol.
 
@@ -853,16 +853,16 @@
 
 ### Uncategorized
 
-- Smart remove:configurable options ([Launchpad#406765](https://bugs.launchpad.net/backintime/+bug/406765))
+- Smart remove: configurable options ([Launchpad#406765](https://bugs.launchpad.net/backintime/+bug/406765))
 
 ## [1.0.4] (2010-10-28)
 
 ### Uncategorized
 
-- SettingsDialog:show highly recommended excludes
-- Option to use checksum to detect changes ([Launchpad#666964](https://bugs.launchpad.net/backintime/+bug/666964))
-- Option to select log verbosity ([Launchpad#664423](https://bugs.launchpad.net/backintime/+bug/664423))
-- Gnome:use gloobus-preview if installed
+- SettingsDialog: show highly recommended excludes
+- Option to use checksum to detect changes (https: //bugs.launchpad.net/backintime/+bug/666964)
+- Option to select log verbosity (https: //bugs.launchpad.net/backintime/+bug/664423)
+- Gnome: use gloobus-preview if installed
 
 ### Fixed
 
@@ -879,44 +879,44 @@
 
 ### Uncategorized
 
-- add '.dropbox*' to default exclude patterns ([Launchpad#628172](https://bugs.launchpad.net/backintime/+bug/628172))
-- add option to take a snapshot at every boot ([Launchpad#621810](https://bugs.launchpad.net/backintime/+bug/621810))
+- add '.dropbox*' to default exclude patterns (https: //bugs.launchpad.net/backintime/+bug/628172)
+- add option to take a snapshot at every boot (https: //bugs.launchpad.net/backintime/+bug/621810)
 - fix xattr
-- add continue on errors ([Launchpad#616299](https://bugs.launchpad.net/backintime/+bug/616299))
-- add expert options:copy unsafe links & copy links
+- add continue on errors (https: //bugs.launchpad.net/backintime/+bug/616299)
+- add expert options: copy unsafe links & copy links
 - "user-callback" replace "user.callback" and receive profile information
-- documentation:on-line only (easier to maintain)
+- documentation: on-line only (easier to maintain)
 - add error log and error log view dialog (Gnome & KDE4)
-- merge with:lp:~dave2010/backintime/minor-edits
-- merge with:lp:~mcfonty/backintime/unique-snapshots-view
+- merge with: lp:~dave2010/backintime/minor-edits
+- merge with: lp:~mcfonty/backintime/unique-snapshots-view
 - reduce memory usage during compare with previous snapshot process
-- custom backup hour (for daily backups or mode):[Launchpad#507451](https://bugs.launchpad.net/backintime/+bug/507451)
-- smart remove was slightly changed ([Launchpad#502435](https://bugs.launchpad.net/backintime/+bug/502435))
+- custom backup hour (for daily backups or mode): [Launchpad#507451](https://bugs.launchpad.net/backintime/+bug/507451)
+- smart remove was slightly changed (https: //bugs.launchpad.net/backintime/+bug/502435)
 - make backup on restore optional
 - add ionice support for user/cron backup process
-- fix bug that could cause "ghost" folders in snapshots (LP:406092)
-- fix bug that converted / into // ([Launchpad#455149](https://bugs.launchpad.net/backintime/+bug/455149))
-- remove "schedule per included directory" (profiles do that) (+ bug [Launchpad#412470](https://bugs.launchpad.net/backintime/+bug/412470))
-- fig bug:[Launchpad#489380](https://bugs.launchpad.net/backintime/+bug/489380)
+- fix bug that could cause "ghost" folders in snapshots (LP: 406092)
+- fix bug that converted / into // (LP: [Launchpad#455149](https://bugs.launchpad.net/backintime/+bug/455149))
+- remove "schedule per included directory" (profiles do that) (+ bug LP: [Launchpad#412470](https://bugs.launchpad.net/backintime/+bug/412470))
+- fig bug: [Launchpad#489380](https://bugs.launchpad.net/backintime/+bug/489380)
 - update Slovak translation (Tomáš Vadina <kyberdev@gmail.com>)
 - multiple profiles support
-- GNOME:fix notification
+- GNOME: fix notification
 - backintime snapshot folder is restructured to ../backintime/machine/user/profile_id/
 - added the possibility to include other snapshot folders within a profile, it can only read those, there is not a GUI implementation yet
 - added a tag suffix to the snapshot_id, to avoid double snapshot_ids
-- added a desktop file for kdesu and a test if kdesu or kdesudo should be used ([Launchpad#389988](https://bugs.launchpad.net/backintime/+bug/389988))
-- added expert option to disable snapshots when on battery ([Launchpad#388178](https://bugs.launchpad.net/backintime/+bug/388178))
-- fix bug handling big files by the GNOME GUI ([Launchpad#409130](https://bugs.launchpad.net/backintime/+bug/409130))
-- fix bug in handling of & characters by GNOME GUI ([Launchpad#415848](https://bugs.launchpad.net/backintime/+bug/415848))
-- fix a security bug in chmods before snapshot removal ([Launchpad#419774](https://bugs.launchpad.net/backintime/+bug/419774))
-- snapshots are stored entirely read-only ([Launchpad#386275](https://bugs.launchpad.net/backintime/+bug/386275))
-- fix exclude patterns in KDE4 ([Launchpad#432537](https://bugs.launchpad.net/backintime/+bug/432537))
-- fix opening german files with external applications in KDE ([Launchpad#404652](https://bugs.launchpad.net/backintime/+bug/404652))
-- changed default exclude patterns to caches, thumbnails, trashbins, and backups ([Launchpad#422132](https://bugs.launchpad.net/backintime/+bug/422132))
-- write access to snapshot folder is checked & change to snapshot version 2 ([Launchpad#423086](https://bugs.launchpad.net/backintime/+bug/423086))
-- fix small bugs (a.o. [Launchpad#474307](https://bugs.launchpad.net/backintime/+bug/474307))
-- Used a more standard crontab syntax ([Launchpad#409783](https://bugs.launchpad.net/backintime/+bug/409783))
-- Stop the "Over zealous removal of crontab entries" ([Launchpad#451811](https://bugs.launchpad.net/backintime/+bug/451811))
+- added a desktop file for kdesu and a test if kdesu or kdesudo should be used (LP: [Launchpad#389988](https://bugs.launchpad.net/backintime/+bug/389988))
+- added expert option to disable snapshots when on battery (LP: [Launchpad#388178](https://bugs.launchpad.net/backintime/+bug/388178))
+- fix bug handling big files by the GNOME GUI (LP: [Launchpad#409130](https://bugs.launchpad.net/backintime/+bug/409130))
+- fix bug in handling of & characters by GNOME GUI (LP: [Launchpad#415848](https://bugs.launchpad.net/backintime/+bug/415848))
+- fix a security bug in chmods before snapshot removal (LP: [Launchpad#419774](https://bugs.launchpad.net/backintime/+bug/419774))
+- snapshots are stored entirely read-only (LP: [Launchpad#386275](https://bugs.launchpad.net/backintime/+bug/386275))
+- fix exclude patterns in KDE4 (LP: [Launchpad#432537](https://bugs.launchpad.net/backintime/+bug/432537))
+- fix opening german files with external applications in KDE (LP: [Launchpad#404652](https://bugs.launchpad.net/backintime/+bug/404652))
+- changed default exclude patterns to caches, thumbnails, trashbins, and backups (LP: [Launchpad#422132](https://bugs.launchpad.net/backintime/+bug/422132))
+- write access to snapshot folder is checked & change to snapshot version 2 (LP: [Launchpad#423086](https://bugs.launchpad.net/backintime/+bug/423086))
+- fix small bugs (a.o. LP: [Launchpad#474307](https://bugs.launchpad.net/backintime/+bug/474307))
+- Used a more standard crontab syntax (LP: [Launchpad#409783](https://bugs.launchpad.net/backintime/+bug/409783))
+- Stop the "Over zealous removal of crontab entries" (LP: [Launchpad#451811](https://bugs.launchpad.net/backintime/+bug/451811))
 
 ### Fixed
 
@@ -950,12 +950,12 @@
 ### Uncategorized
 
 - update translations from Launchpad
-- Fix a bug in smart-remove algorithm ([Launchpad#376104](https://bugs.launchpad.net/backintime/+bug/376104))
+- Fix a bug in smart-remove algorithm (https: //bugs.launchpad.net/backintime/+bug/376104)
 - update German translation (Michael Wiedmann <mw@miwie.in-berlin.de>)
 - add '--no-check' option to configure scripts
 - use only 'folder' term (more consistent with GNOME/KDE)
-- add 'expert option':enable/disable nice for cron jobs
-- GNOME & KDE4:refresh snapshots button force files view to update too
+- add 'expert option': enable/disable nice for cron jobs
+- GNOME & KDE4: refresh snapshots button force files view to update too
 - you can include a backup parent directory (backup directory will auto-exclude itself)
 - fix some small bugs
 
@@ -969,14 +969,14 @@
 ### Uncategorized
 
 - update translations
-- KDE4:fix python string <=> QString problems
-- KDE4 FilesView/SnapshotsDialog:ctrl-click just select (don't execute)
-- KDE4:fix crush after "take snapshot" process ([Launchpad#366241](https://bugs.launchpad.net/backintime/+bug/366241))
+- KDE4: fix python string <=> QString problems
+- KDE4 FilesView/SnapshotsDialog: ctrl-click just select (don't execute)
+- KDE4: fix crush after "take snapshot" process ([Launchpad#366241](https://bugs.launchpad.net/backintime/+bug/366241))
 - store basic permission in a special file so it can restore them correctly (event from NTFS)
 - add config version
 - implement Gnome/KDE4 systray icons and user.callback as plugins
-- reorganize code:common/GNOME/KDE4
-- GNOME:break the big glade file in multiple file
+- reorganize code: common/GNOME/KDE4
+- GNOME: break the big glade file in multiple file
 - backintime is no longer aware of 'backintime-gnome' and 'backintime-kde4'  
 
 ## [0.9.22.1] (2009-04-27)
@@ -990,24 +990,24 @@
 ### Uncategorized
 
 - update translations from Launchpad
-- KDE4:fix some translation problems
+- KDE4: fix some translation problems
 - remove --safe-links for save/restore (this means copy symlinks as symlinks)
 - update German translation (Michael Wiedmann <mw@miwie.in-berlin.de>)
 - create directory now use python os.makedirs (replace use of mkdir command)
-- KDE4:fix a crush related to QString - python string conversion
-- GNOME & KDE4 SettingsDialog:if schedule automatic backups per directory is set, global schedule is hidden
-- GNOME FilesView:thread "*~" files (backup files) as hidden files
-- GNOME:use gtk-preferences icon for SettingsDialog (replace gtk-execute icon)
-- expert option:$XDG_CONFIG_HOME/backintime/user.callback (if exists) is called a different steps 
-- add more command line options:--snapshots-list, --snapshots-list-path, --last-snapshot, --last-snapshot-path
-- follow FreeDesktop directories specs: 
-- new install system:use more common steps (./configure; make; sudo make install)
+- KDE4: fix a crush related to QString - python string conversion
+- GNOME & KDE4 SettingsDialog: if schedule automatic backups per directory is set, global schedule is hidden
+- GNOME FilesView: thread "*~" files (backup files) as hidden files
+- GNOME: use gtk-preferences icon for SettingsDialog (replace gtk-execute icon)
+- expert option: $XDG_CONFIG_HOME/backintime/user.callback (if exists) is called a different steps 
+- add more command line options: --snapshots-list, --snapshots-list-path, --last-snapshot, --last-snapshot-path
+- follow FreeDesktop directories specs:  
+- new install system: use more common steps (./configure; make; sudo make install)
 
 ## [0.9.20] (2009-04-06)
 
 ### Uncategorized
 
-- smart remove:fix an important bug and make it more verbose in syslog
+- smart remove: fix an important bug and make it more verbose in syslog
 - update Spanish translation (Francisco Manuel García Claramonte <franciscomanuel.garcia@hispalinux.es>)
 
 ## [0.9.18] (2009-04-02)
@@ -1018,20 +1018,20 @@
 - update Slovak translation (Tomáš Vadina <kyberdev@gmail.com>)
 - update French translation (Michel Corps <mahikeulbody@gmail.com>)
 - update German translation (Michael Wiedmann <mw@miwie.in-berlin.de>)
-- GNOME bugfix:fix a crush in files view for files with special characters (ex: "a%20b")
-- GNOME SettingsDialog bugfix:if snapshots path is a new created folder, snapshots navigation (files view) don't work
+- GNOME bugfix: fix a crush in files view for files with special characters (ex: "a%20b")
+- GNOME SettingsDialog bugfix: if snapshots path is a new created folder, snapshots navigation (files view) don't work
 - update doc
-- GNOME & KDE4 MainWindow:Rename "Places" list with "Snapshots"
-- GNOME SettingsDialog bugfix:modify something, then press cancel. If you reopen the dialog it show wrong values (the ones before cancel)
-- GNOME & KDE4:add root mode menu entries (use gksu for gnome and kdesudo for kde)
-- GNOME & KDE4:MainWindow - Files view: if the current directory don't exists in current snapshot display a message
-- SettingDialog:add an expert option to enable to schedule automatic backups per directory
-- SettingDialog:schedule automatic backups - if the application can't find crontab it show an error
-- SettingDialog:if the application can't write in snapshots directory there should be an error message
+- GNOME & KDE4 MainWindow: Rename "Places" list with "Snapshots"
+- GNOME SettingsDialog bugfix: modify something, then press cancel. If you reopen the dialog it show wrong values (the ones before cancel)
+- GNOME & KDE4: add root mode menu entries (use gksu for gnome and kdesudo for kde)
+- GNOME & KDE4: MainWindow - Files view: if the current directory don't exists in current snapshot display a message
+- SettingDialog: add an expert option to enable to schedule automatic backups per directory
+- SettingDialog: schedule automatic backups - if the application can't find crontab it show an error
+- SettingDialog: if the application can't write in snapshots directory there should be an error message
 - add Polish translation (Paweł Hołuj <pholuj@gmail.com>)
 - add cron in common package dependencies
-- GNOME & KDE4:rework settings dialog
-- SettingDialog:add an option to enable/disable notifications
+- GNOME & KDE4: rework settings dialog
+- SettingDialog: add an option to enable/disable notifications
 
 ## [0.9.16.1] (2009-03-16)
 
@@ -1050,12 +1050,12 @@
 - update German translation (Michael Wiedmann <mw@miwie.in-berlin.de>)
 - update Slovenian translation (Vanja Cvelbar <cvelbar@gmail.com>)
 - don't show the snapshot that is being taken in snapshots list
-- GNOME & KDE4:when the application starts and snapshots directory don't exists show a messagebox
+- GNOME & KDE4: when the application starts and snapshots directory don't exists show a messagebox
 - give more information for 'take snapshot' progress (to prove that is not blocked)
-- MainWindow:rename 'Timeline' column with 'Snapshots'
+- MainWindow: rename 'Timeline' column with 'Snapshots'
 - when it tries to take a snapshot if the snapshots directory don't exists  
-- GNOME & KDE4:add notify if the snapshots directory don't exists
-- KDE4:rework MainWindow
+- GNOME & KDE4: add notify if the snapshots directory don't exists
+- KDE4: rework MainWindow
 
 ## [0.9.14] (2009-03-05)
 
@@ -1065,9 +1065,9 @@
 - update Swedish translation (Niklas Grahn <terra.unknown@yahoo.com>)
 - update Spanish translation (Francisco Manuel García Claramonte <franciscomanuel.garcia@hispalinux.es>)
 - update French translation (Michel Corps <mahikeulbody@gmail.com>)
-- GNOME & KDE4:rework MainWindow
-- GNOME & KDE4:rework SettingsDialog
-- GNOME & KDE4:add "smart" remove
+- GNOME & KDE4: rework MainWindow
+- GNOME & KDE4: rework SettingsDialog
+- GNOME & KDE4: add "smart" remove
 
 ## [0.9.12] (2009-02-28)
 
@@ -1078,7 +1078,7 @@
 
 ### Uncategorized
 
-- KDE4:add help
+- KDE4: add help
 - add Slovenian translation (Vanja Cvelbar <cvelbar@gmail.com>)
 
 ## [0.9.10] (2009-02-24)
@@ -1086,7 +1086,7 @@
 ### Uncategorized
 
 - add Swedish translation (Niklas Grahn <terra.unknown@yahoo.com>)
-- KDE4:drop and drop from backintime files view to any file manager
+- KDE4: drop and drop from backintime files view to any file manager
 
 ### Fixed
 
@@ -1098,10 +1098,10 @@
 
 - update Spanish translation (Francisco Manuel García Claramonte <franciscomanuel.garcia@hispalinux.es>)
 - unsafe links are ignored (that means that a link to a file/directory outside of include directories are ignored)
-- KDE4:add copy to clipboard
-- KDE4:sort files by name, size or date
-- cron 5/10 minutes:replace multiple lines with a single crontab line using divide (*/5 or */10)
-- cron:when called from cron redirect output (stdout & stderr) to /dev/null
+- KDE4: add copy to clipboard
+- KDE4: sort files by name, size or date
+- cron 5/10 minutes: replace multiple lines with a single crontab line using divide (*/5 or */10)
+- cron: when called from cron redirect output (stdout & stderr) to /dev/null
 
 ### Fixed
 
@@ -1113,18 +1113,18 @@
 
 - update Spanish translation (Francisco Manuel García Claramonte <franciscomanuel.garcia@hispalinux.es>)
 - update German translation (Michael Wiedmann <mw@miwie.in-berlin.de>)
-- GNOME:update docbook
-- KDE4:add snapshots dialog
-- GNOME & KDE4:add update snapshots button
-- GNOME:handle special folders icons (home, desktop)
+- GNOME: update docbook
+- KDE4: add snapshots dialog
+- GNOME & KDE4: add update snapshots button
+- GNOME: handle special folders icons (home, desktop)
 
 ## [0.9.4] (2009-01-30)
 
 ### Uncategorized
 
 - update German translation (Michael Wiedmann <mw@miwie.in-berlin.de>)
-- gnome:better handling of 'take snapshot' status icon
-- KDE4 (>= 4.1):first version (not finished)
+- gnome: better handling of 'take snapshot' status icon
+- KDE4 (>= 4.1): first version (not finished)
 - update man
 
 ## [0.9.2] (2009-01-16)
@@ -1164,7 +1164,7 @@
 
 ### Uncategorized
 
-- getmessages.sh:ignore "gtk-" items (this are gtk stock item ids and should not be changed)
+- getmessages.sh: ignore "gtk-" items (this are gtk stock item ids and should not be changed)
 
 ## [0.8.18] (2008-12-17)
 
@@ -1178,7 +1178,7 @@
 
 ### Uncategorized
 
-- add Drag & Drop from MainWindow:FileView/SnapshotsDialog to Nautilus
+- add Drag & Drop from MainWindow: FileView/SnapshotsDialog to Nautilus
 - update German translation (Michael Wiedmann <mw@miwie.in-berlin.de>)
 
 ## [0.8.14] (2008-12-07)
@@ -1187,7 +1187,7 @@
 
 - add more command line parameters ( --version, --snapshots, --help )
 - fix a crush for getting info on dead symbolic links
-- when taking a new backup based on the previous one don't copy the previous extra info (ex:name)
+- when taking a new backup based on the previous one don't copy the previous extra info (ex: name)
 - copy unsafe links when taking a snapshot
 
 ## [0.8.12] (2008-12-01)
@@ -1198,14 +1198,14 @@
 - add SnapshotNameDialog
 - add Name/Remove snapshot in main toolbar
 - change the way it detects if the mainwindow is the active window (no dialogs)
-- toolbars:show icons only
+- toolbars: show icons only
 - update Spanish translation (Francisco Manuel García Claramonte <franciscomanuel.garcia@hispalinux.es>)
 
 ## [0.8.10] (2008-11-22)
 
 ### Uncategorized
 
-- SnapshotsDialog:add right-click popup-menu and a toolbar with copy & restore buttons
+- SnapshotsDialog: add right-click popup-menu and a toolbar with copy & restore buttons
 - use a more robust backup lock file
 - log using syslog
 - fix a small bug in copy to clipboard
@@ -1215,7 +1215,7 @@
 
 ### Uncategorized
 
-- SnapshotsDialog:add diff
+- SnapshotsDialog: add diff
 - update Spanish translation (Francisco Manuel García Claramonte <franciscomanuel.garcia@hispalinux.es>)
 
 ## [0.8.6] (2008-11-17)
@@ -1229,7 +1229,7 @@
 
 ### Uncategorized
 
-- add right-click menu in files list:open (using gnome-open), copy (you can paste in Nautilus), restore (for snapshots only)
+- add right-click menu in files list: open (using gnome-open), copy (you can paste in Nautilus), restore (for snapshots only)
 - add Copy toolbar button for files list
 
 ## [0.8.1] (2008-11-10)
@@ -1244,8 +1244,8 @@
 
 - don't show backup files (*~)
 - add backup files to default exclude patterns (*~)
-- makedeb.sh:make a single package with all languages included
-- install.sh:install all languages
+- makedeb.sh: make a single package with all languages included
+- install.sh: install all languages
 - add English manual (man)
 - add English help (docbook)
 - add help button in main toolbar
