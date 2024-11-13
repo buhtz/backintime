@@ -1,21 +1,16 @@
-# Back In Time
-# Copyright (C) 2008-2022 Oprea Dan, Bart de Koning, Richard Bailey,
-# Germar Reitze, Taylor Raack
+# SPDX-FileCopyrightText: © 2008-2022 Oprea Dan
+# SPDX-FileCopyrightText: © 2008-2022 Bart de Koning
+# SPDX-FileCopyrightText: © 2008-2022 Richard Bailey
+# SPDX-FileCopyrightText: © 2008-2022 Germar Reitze
+# SPDX-FileCopyrightText: © 2008-2022 Taylor Raack
+# SPDX-FileCopyrightText: © 2024 Christian Buhtz <c.buhtz@posteo.jp>
 #
-# This program is free software; you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation; either version 2 of the License, or
-# (at your option) any later version.
+# SPDX-License-Identifier: GPL-2.0-or-later
 #
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License along
-# with this program; if not, write to the Free Software Foundation,Inc.,
-# 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-
+# This file is part of the program "Back In Time" which is released under GNU
+# General Public License v2 (GPLv2). See file/folder LICENSE or go to
+# <https://spdx.org/licenses/GPL-2.0-or-later.html>.
+"""Tests about the tools module."""
 import os
 import sys
 import subprocess
@@ -25,19 +20,17 @@ import gzip
 import stat
 import signal
 import unittest
+from datetime import datetime
+from time import sleep
 from unittest.mock import patch
-import uuid
 from copy import deepcopy
 from tempfile import NamedTemporaryFile, TemporaryDirectory
-from datetime import datetime
-from test import generic
-from time import sleep
 import pyfakefs.fake_filesystem_unittest as pyfakefs_ut
-
+from test import generic
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 import tools
-import config
 import configfile
+from bitbase import TimeUnit
 
 # chroot jails used for building may have no UUID devices (because of tmpfs)
 # we need to skip tests that require UUIDs
@@ -83,11 +76,11 @@ class TestTools(generic.TestCase):
     """
 
     def setUp(self):
-        super(TestTools, self).setUp()
+        super().setUp()
         self.subproc = None
 
     def tearDown(self):
-        super(TestTools, self).tearDown()
+        super().tearDown()
         self._kill_process()
 
     def _create_process(self, *args):
@@ -102,7 +95,7 @@ class TestTools(generic.TestCase):
         if self.subproc:
             self.subproc.kill()
             self.subproc.wait()
-            self.subproc = None
+        self.subproc = None
 
     def test_sharePath(self):
         share = tools.sharePath()
@@ -418,21 +411,6 @@ class TestTools(generic.TestCase):
         self.assertEqual(procArgs[1], '/proc')
         self.assertEqual(procArgs[2], 'proc')
 
-    @unittest.skipIf(not DISK_BY_UUID_AVAILABLE and not UDEVADM_HAS_UUID,
-                     'No UUIDs available on this system.')
-    def test_filesystemMountInfo(self):
-        """
-        Basic sanity checks on returned structure
-        """
-        mounts = tools.filesystemMountInfo()
-        self.assertIsInstance(mounts, dict)
-        self.assertGreater(len(mounts.items()), 0)
-        self.assertIn('/', mounts)
-        self.assertIn('original_uuid', mounts.get('/'))
-
-    def test_syncfs(self):
-        self.assertTrue(tools.syncfs())
-
     def test_isRoot(self):
         self.assertIsInstance(tools.isRoot(), bool)
 
@@ -484,25 +462,6 @@ class TestTools(generic.TestCase):
             self.assertTrue(s.replace(' ', '').isdigit())
             self.assertEqual(len(s), 13)
 
-    @unittest.skipIf(not tools.checkCommand('crontab'),
-                     "'crontab' not found.")
-    def test_readWriteCrontab(self):
-        now = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-        oldCrontab = tools.readCrontab()
-        self.assertIsInstance(oldCrontab, list)
-
-        testLine = '#BackInTime Unittest from {}. Test probably failed. ' \
-                   'You can remove this line.'.format(now)
-        self.assertTrue(tools.writeCrontab(oldCrontab + [testLine, ]))
-
-        newCrontab = tools.readCrontab()
-        self.assertIn(testLine, newCrontab)
-        self.assertEqual(len(newCrontab), len(oldCrontab) + 1)
-
-        self.assertTrue(tools.writeCrontab(oldCrontab))
-        if oldCrontab:
-            self.assertListEqual(oldCrontab, tools.readCrontab())
-
     def test_splitCommands(self):
         ret = list(tools.splitCommands(['echo foo;'],
                                        head='echo start;',
@@ -536,38 +495,70 @@ class TestTools(generic.TestCase):
             ret[0],
             'echo start;echo foo;echo foo;echo foo;echo end')
 
-    def test_isIPv6Address(self):
-        self.assertTrue(tools.isIPv6Address('fd00:0::5'))
-        self.assertTrue(tools.isIPv6Address('2001:db8:0:8d3:0:8a2e:70:7344'))
-        self.assertFalse(tools.isIPv6Address('foo.bar'))
-        self.assertFalse(tools.isIPv6Address('192.168.1.1'))
-        self.assertFalse(tools.isIPv6Address('fd00'))
 
-    def test_excapeIPv6Address(self):
-        self.assertEqual(tools.escapeIPv6Address('fd00:0::5'), '[fd00:0::5]')
-        self.assertEqual(
-            tools.escapeIPv6Address('2001:db8:0:8d3:0:8a2e:70:7344'),
-            '[2001:db8:0:8d3:0:8a2e:70:7344]')
-        self.assertEqual(tools.escapeIPv6Address('foo.bar'), 'foo.bar')
-        self.assertEqual(tools.escapeIPv6Address('192.168.1.1'), '192.168.1.1')
-        self.assertEqual(tools.escapeIPv6Address('fd00'), 'fd00')
+class EscapeIPv6(generic.TestCase):
+    def test_escaped(self):
+        values_and_expected = (
+            ('fd00:0::5', '[fd00:0::5]'),
+            (
+                '2001:db8:0:8d3:0:8a2e:70:7344',
+                '[2001:db8:0:8d3:0:8a2e:70:7344]'
+            ),
+            ('::', '[::]'),
+            ('::1', '[::1]'),
+            ('::ffff:192.0.2.128', '[::ffff:192.0.2.128]'),
+            ('fe80::1', '[fe80::1]'),
+        )
+
+        for val, exp in values_and_expected:
+            with self.subTest(val=val, exp=exp):
+                self.assertEqual(tools.escapeIPv6Address(val), exp)
+
+    def test_passed(self):
+        test_values = (
+            '192.168.1.1',
+            '172.17.1.133',
+            '255.255.255.255',
+            '169.254.0.1',
+        )
+
+        for val in test_values:
+            with self.subTest(val=val):
+                # IPv4 addresses are not escaped
+                self.assertEqual(tools.escapeIPv6Address(val), val)
+
+    def test_invalid(self):
+        """Invalid IP addresses and hostnames"""
+        test_values = (
+            'foo.bar',
+            'fd00',
+            '2001:0db8:::0000:0000:8a2e:0370:7334',
+            ':2001:0db8:85a3:0000:0000:8a2e:0370:7334',
+            '2001:0gb8:85a3:0000:0000:8a2e:0370:7334',
+            '2001:0db8:85a3:0000:0000:8a2e:0370:7334:abcd',
+            'localhost',
+        )
+
+        for val in test_values:
+            with self.subTest(val=val):
+                self.assertEqual(tools.escapeIPv6Address(val), val)
 
 
-class TestToolsEnviron(generic.TestCase):
+class Environ(generic.TestCase):
     """???
     """
 
     def __init__(self, *args, **kwargs):
-        super(TestToolsEnviron, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         self.env = deepcopy(os.environ)
 
     def setUp(self):
-        super(TestToolsEnviron, self).setUp()
+        super().setUp()
         self.temp_file = '/tmp/temp.txt'
         os.environ = deepcopy(self.env)
 
     def tearDown(self):
-        super(TestToolsEnviron, self).tearDown()
+        super().tearDown()
         if os.path.exists(self.temp_file):
             os.remove(self.temp_file)
         os.environ = deepcopy(self.env)
@@ -631,137 +622,7 @@ class TestToolsEnviron(generic.TestCase):
                 self.assertEqual(test_env.strValue(k), str(i), msg)
 
 
-class TestToolsUniquenessSet(generic.TestCase):
-    # TODO: add test for follow_symlink
-    def test_checkUnique(self):
-        with TemporaryDirectory() as d:
-            for i in range(1, 5):
-                os.mkdir(os.path.join(d, str(i)))
-            t1 = os.path.join(d, '1', 'foo')
-            t2 = os.path.join(d, '2', 'foo')
-            t3 = os.path.join(d, '3', 'foo')
-            t4 = os.path.join(d, '4', 'foo')
-
-            for i in (t1, t2):
-                with open(i, 'wt') as f:
-                    f.write('bar')
-            for i in (t3, t4):
-                with open(i, 'wt') as f:
-                    f.write('42')
-
-            # fix timestamps because otherwise test will fail on slow machines
-            obj = os.stat(t1)
-            os.utime(t2, times=(obj.st_atime, obj.st_mtime))
-            obj = os.stat(t3)
-            os.utime(t4, times=(obj.st_atime, obj.st_mtime))
-
-            # same size and mtime
-            uniqueness = tools.UniquenessSet(dc=False,
-                                             follow_symlink=False,
-                                             list_equal_to='')
-            self.assertTrue(uniqueness.check(t1))
-            self.assertFalse(uniqueness.check(t2))
-            self.assertTrue(uniqueness.check(t3))
-            self.assertFalse(uniqueness.check(t4))
-
-            os.utime(t1, times=(0, 0))
-            os.utime(t3, times=(0, 0))
-
-            # same size different mtime
-            uniqueness = tools.UniquenessSet(dc=False,
-                                             follow_symlink=False,
-                                             list_equal_to='')
-            self.assertTrue(uniqueness.check(t1))
-            self.assertTrue(uniqueness.check(t2))
-            self.assertTrue(uniqueness.check(t3))
-            self.assertTrue(uniqueness.check(t4))
-
-            # same size different mtime use deep_check
-            uniqueness = tools.UniquenessSet(dc=True,
-                                             follow_symlink=False,
-                                             list_equal_to='')
-            self.assertTrue(uniqueness.check(t1))
-            self.assertFalse(uniqueness.check(t2))
-            self.assertTrue(uniqueness.check(t3))
-            self.assertFalse(uniqueness.check(t4))
-
-    def test_checkUnique_hardlinks(self):
-        with TemporaryDirectory() as d:
-            for i in range(1, 5):
-                os.mkdir(os.path.join(d, str(i)))
-            t1 = os.path.join(d, '1', 'foo')
-            t2 = os.path.join(d, '2', 'foo')
-            t3 = os.path.join(d, '3', 'foo')
-            t4 = os.path.join(d, '4', 'foo')
-
-            with open(t1, 'wt') as f:
-                f.write('bar')
-            os.link(t1, t2)
-            self.assertEqual(os.stat(t1).st_ino, os.stat(t2).st_ino)
-
-            with open(t3, 'wt') as f:
-                f.write('42')
-            os.link(t3, t4)
-            self.assertEqual(os.stat(t3).st_ino, os.stat(t4).st_ino)
-
-            uniqueness = tools.UniquenessSet(dc=True,
-                                             follow_symlink=False,
-                                             list_equal_to='')
-            self.assertTrue(uniqueness.check(t1))
-            self.assertFalse(uniqueness.check(t2))
-            self.assertTrue(uniqueness.check(t3))
-            self.assertFalse(uniqueness.check(t4))
-
-    def test_checkEqual(self):
-        with TemporaryDirectory() as d:
-            for i in range(1, 5):
-                os.mkdir(os.path.join(d, str(i)))
-            t1 = os.path.join(d, '1', 'foo')
-            t2 = os.path.join(d, '2', 'foo')
-            t3 = os.path.join(d, '3', 'foo')
-            t4 = os.path.join(d, '4', 'foo')
-
-            for i in (t1, t2):
-                with open(i, 'wt') as f:
-                    f.write('bar')
-            for i in (t3, t4):
-                with open(i, 'wt') as f:
-                    f.write('42')
-
-            # fix timestamps because otherwise test will fail on slow machines
-            obj = os.stat(t1)
-            os.utime(t2, times=(obj.st_atime, obj.st_mtime))
-            obj = os.stat(t3)
-            os.utime(t4, times=(obj.st_atime, obj.st_mtime))
-
-            # same size and mtime
-            uniqueness = tools.UniquenessSet(dc=False,
-                                             follow_symlink=False,
-                                             list_equal_to=t1)
-            self.assertTrue(uniqueness.check(t1))
-            self.assertTrue(uniqueness.check(t2))
-            self.assertFalse(uniqueness.check(t3))
-
-            os.utime(t1, times=(0, 0))
-
-            # same size different mtime
-            uniqueness = tools.UniquenessSet(dc=False,
-                                             follow_symlink=False,
-                                             list_equal_to=t1)
-            self.assertTrue(uniqueness.check(t1))
-            self.assertFalse(uniqueness.check(t2))
-            self.assertFalse(uniqueness.check(t3))
-
-            # same size different mtime use deep_check
-            uniqueness = tools.UniquenessSet(dc=True,
-                                             follow_symlink=False,
-                                             list_equal_to=t1)
-            self.assertTrue(uniqueness.check(t1))
-            self.assertTrue(uniqueness.check(t2))
-            self.assertFalse(uniqueness.check(t3))
-
-
-class TestToolsExecuteSubprocess(generic.TestCase):
+class ExecuteSubprocess(generic.TestCase):
     # new method with subprocess
     def test_returncode(self):
         self.assertEqual(tools.Execute(['true']).run(), 0)
@@ -791,36 +652,6 @@ class TestToolsExecuteSubprocess(generic.TestCase):
         self.assertTrue(proc.pausable)
 
 
-class TestToolsExecuteOsSystem(generic.TestCase):
-    # old method with os.system
-    def test_returncode(self):
-        self.assertEqual(tools.Execute('true').run(), 0)
-        self.assertEqual(tools.Execute('false').run(), 256)
-
-    def test_callback(self):
-        c = lambda x, y: self.callback(self.assertEqual, x, 'foo')
-        tools.Execute('echo foo', callback=c).run()
-        self.assertTrue(self.run)
-        self.run = False
-
-        # give extra user_data for callback
-        c = lambda x, y: self.callback(self.assertEqual, x, y)
-        tools.Execute('echo foo', callback=c, user_data='foo').run()
-        self.assertTrue(self.run)
-        self.run = False
-
-        # no output
-        c = lambda x, y: self.callback(self.fail,
-                                       'callback was called unexpectedly')
-        tools.Execute('true', callback=c).run()
-        self.assertFalse(self.run)
-        self.run = False
-
-    def test_pausable(self):
-        proc = tools.Execute('true')
-        self.assertFalse(proc.pausable)
-
-
 class Tools_FakeFS(pyfakefs_ut.TestCase):
     """Tests using a fake filesystem."""
 
@@ -828,7 +659,7 @@ class Tools_FakeFS(pyfakefs_ut.TestCase):
         self.setUpPyfakefs(allow_root_user=False)
 
     def test_git_repo_info_none(self):
-        """Acutally not a git repo"""
+        """Actually not a git repo"""
 
         self.assertEqual(tools.get_git_repository_info(), None)
 
@@ -859,3 +690,137 @@ class Tools_FakeFS(pyfakefs_ut.TestCase):
                 'branch': 'fix/foobar'
             }
         )
+
+
+class ValidateSnapshotsPath(generic.TestCaseCfg):
+    def test_writes(self):
+        with TemporaryDirectory() as dirpath:
+            ret = tools.validate_and_prepare_snapshots_path(
+                path=dirpath,
+                host_user_profile=self.cfg.hostUserProfile(),
+                mode=self.cfg.snapshotsMode(),
+                copy_links=self.cfg.copyLinks(),
+                error_handler=self.cfg.notifyError)
+            self.assertTrue(ret)
+
+    def test_fails_on_ro(self):
+        with TemporaryDirectory() as dirpath:
+            # set directory to read only
+            ro_dir_stats = stat.S_IRUSR | stat.S_IRGRP | stat.S_IROTH
+            with generic.mockPermissions(dirpath, ro_dir_stats):
+                ret = tools.validate_and_prepare_snapshots_path(
+                    path=dirpath,
+                    host_user_profile=self.cfg.hostUserProfile(),
+                    mode=self.cfg.snapshotsMode(),
+                    copy_links=self.cfg.copyLinks(),
+                    error_handler=self.cfg.notifyError)
+                self.assertFalse(ret)
+
+    @patch('os.chmod')
+    def test_permission_fail(self, mock_chmod):
+        mock_chmod.side_effect = PermissionError()
+        with TemporaryDirectory() as dirpath:
+            ret = tools.validate_and_prepare_snapshots_path(
+                path=dirpath,
+                host_user_profile=self.cfg.hostUserProfile(),
+                mode=self.cfg.snapshotsMode(),
+                copy_links=self.cfg.copyLinks(),
+                error_handler=self.cfg.notifyError)
+            self.assertTrue(ret)
+
+
+@patch(f'{tools.__name__}.datetime', wraps=datetime)
+class OlderThan(unittest.TestCase):
+
+    def test_hours_not_older(self, mock_dt):
+        """Exact two hours
+
+        Keep in mind: 20:23:00 is NOT two hours older than 18:23:00. But
+        20:23:01 IS OLDER than two hours.
+        """
+        # year, month, day, hour=0, minute=0, second=0, microsecond=0
+        birth = datetime(1982, 8, 6, 18, 23, 0, 0)
+
+        # exact two hours
+        mock_dt.now.return_value = datetime(1982, 8, 6, 20, 23, 0, 0)
+
+        self.assertFalse(tools.older_than(birth, 2, TimeUnit.HOUR))
+
+    def test_hours_older(self, mock_dt):
+        """Two hours plus one ms"""
+        birth = datetime(1982, 8, 6, 18, 23, 0, 0)
+
+        # two hours + 1 ms
+        mock_dt.now.return_value = datetime(1982, 8, 6, 20, 23, 0, 1)
+
+        self.assertTrue(tools.older_than(birth, 2, TimeUnit.HOUR))
+
+    def test_days_not_older(self, mock_dt):
+        """Two days"""
+        birth = datetime(1982, 8, 6, 18, 23, 0, 0)
+        mock_dt.now.return_value = datetime(1982, 8, 8, 18, 23, 0, 0)
+
+        self.assertFalse(tools.older_than(birth, 2, TimeUnit.DAY))
+
+    def test_days_older(self, mock_dt):
+        """Two days plus one ms"""
+        birth = datetime(1982, 8, 6, 18, 23, 0, 0)
+        mock_dt.now.return_value = datetime(1982, 8, 8, 18, 23, 0, 1)
+
+        self.assertTrue(tools.older_than(birth, 2, TimeUnit.DAY))
+
+    def test_week_not_older(self, mock_dt):
+        """Two weeks"""
+        birth = datetime(1982, 8, 6, 18, 23, 0, 0)
+        mock_dt.now.return_value = datetime(1982, 8, 20, 18, 23, 0, 0)
+
+        self.assertFalse(tools.older_than(birth, 2, TimeUnit.WEEK))
+
+    def test_week_older(self, mock_dt):
+        """Two weeks plus one ms"""
+        birth = datetime(1982, 8, 6, 18, 23, 0, 0)
+        mock_dt.now.return_value = datetime(1982, 8, 20, 18, 23, 0, 1)
+
+        self.assertTrue(tools.older_than(birth, 2, TimeUnit.WEEK))
+
+    def test_month_not_older(self, mock_dt):
+        """Two months."""
+        birth = datetime(1982, 8, 6, 18, 23, 0, 0)
+        mock_dt.now.return_value = datetime(1982, 10, 6, 18, 23, 0, 0)
+
+        self.assertFalse(tools.older_than(birth, 2, TimeUnit.MONTH))
+
+    def test_month_older(self, mock_dt):
+        """Two months plus one ms."""
+        birth = datetime(1982, 8, 6, 18, 23, 0, 0)
+        mock_dt.now.return_value = datetime(1982, 10, 6, 18, 23, 0, 1)
+
+        self.assertTrue(tools.older_than(birth, 2, TimeUnit.MONTH))
+
+    def test_month_31th(self, mock_dt):
+        """From May with 31th as last day to September with 30th as last day."""
+        birth = datetime(1982, 5, 31, 18, 23, 0, 0)
+        mock_dt.now.return_value = datetime(1982, 9, 30, 18, 23, 0, 0)
+
+        self.assertFalse(tools.older_than(birth, 4, TimeUnit.MONTH))
+
+    def test_month_31th_plus_ms(self, mock_dt):
+        """Plus one ms"""
+        birth = datetime(1982, 5, 31, 18, 23, 0, 0)
+        mock_dt.now.return_value = datetime(1982, 9, 30, 18, 23, 0, 1)
+
+        self.assertTrue(tools.older_than(birth, 4, TimeUnit.MONTH))
+
+    def test_month_next_year(self, mock_dt):
+        """Into next year with 7 months."""
+        birth = datetime(1982, 8, 6, 18, 23, 0, 0)
+        mock_dt.now.return_value = datetime(1983, 3, 6, 18, 23, 0, 0)
+
+        self.assertFalse(tools.older_than(birth, 7, TimeUnit.MONTH))
+
+    def test_month_next_year_plus_ms(self, mock_dt):
+        """Into next year with 7 months plus 1 ms."""
+        birth = datetime(1982, 8, 6, 18, 23, 0, 0)
+        mock_dt.now.return_value = datetime(1983, 3, 6, 18, 23, 0, 1)
+
+        self.assertTrue(tools.older_than(birth, 7, TimeUnit.MONTH))

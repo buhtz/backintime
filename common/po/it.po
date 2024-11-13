@@ -7,143 +7,104 @@ msgid ""
 msgstr ""
 "Project-Id-Version: backintime\n"
 "Report-Msgid-Bugs-To: https://github.com/bit-team/backintime\n"
-"POT-Creation-Date: 2024-01-30 10:08+0100\n"
-"PO-Revision-Date: 2023-12-05 15:54+0000\n"
-"Last-Translator: ctrlaltca <ctrlaltca@gmail.com>\n"
+"POT-Creation-Date: 2024-11-13 09:21+0100\n"
+"PO-Revision-Date: 2024-11-09 10:46+0000\n"
+"Last-Translator: smart2128 <smart2128@users.noreply.translate.codeberg.org>\n"
 "Language-Team: Italian <https://translate.codeberg.org/projects/backintime/common/it/>\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.2.1\n"
+"X-Generator: Weblate 5.8.1\n"
 "X-Launchpad-Export-Date: 2022-11-06 19:32+0000\n"
 
-#: common/config.py:50 qt/settingsdialog.py:151 qt/settingsdialog.py:526
+#: common/config.py:37 common/tools.py:79 qt/encfsmsgbox.py:24
+#: qt/manageprofiles/tab_general.py:577 qt/messagebox.py:86
 msgid "Warning"
 msgstr "Attenzione"
 
-#: common/config.py:146 common/config.py:289
+#: common/config.py:141 common/config.py:251
 msgid "Main profile"
 msgstr "Profilo principale"
 
-#: common/config.py:299 common/config.py:304
+#: common/config.py:258
+msgid "Local (EncFS encrypted)"
+msgstr "Locale (cifratura EncFS)"
+
+#: common/config.py:259
+msgid "SSH (EncFS encrypted)"
+msgstr "SSH (cifratura EncFS)"
+
+#: common/config.py:270
 msgid "Local"
 msgstr "Locale"
 
-#: common/config.py:301 common/config.py:311 qt/settingsdialog.py:1946
+#: common/config.py:272
+msgid "SSH"
+msgstr "SSH"
+
+#: common/config.py:272 common/config.py:282
+#: qt/manageprofiles/tab_general.py:632
 msgid "SSH private key"
 msgstr "Chiave privata SSH"
 
-#: common/config.py:304
-msgid "encrypted"
-msgstr "cifrato"
+#: common/config.py:275
+msgid "Local encrypted"
+msgstr "Locale cifrato"
 
-#: common/config.py:305 common/config.py:312
+#: common/config.py:276 common/config.py:283
 msgid "Encryption"
 msgstr "Cifratura"
 
-#: common/config.py:310
+#: common/config.py:281
 msgid "SSH encrypted"
 msgstr "SSH con cifratura"
 
-#: common/config.py:317
+#: common/config.py:288
 msgid "Default"
 msgstr "Predefinito"
 
-#: common/config.py:348 common/config.py:360 common/config.py:377
-#: common/config.py:388
+#: common/config.py:319 common/config.py:331 common/config.py:349
+#: common/config.py:361
 #, python-brace-format
 msgid "Profile: \"{name}\""
 msgstr "Profilo: \"{name}\""
 
-#: common/config.py:349
-msgid "Snapshots folder is not valid!"
-msgstr "Cartella delle istantanee non valida!"
+#: common/config.py:320
+msgid "Snapshots directory is not valid."
+msgstr "Cartella delle istantanee non valida."
 
-#: common/config.py:361
-msgid "You must select at least one folder to back up!"
-msgstr "Scegliere almeno una cartella per il backup!"
+#: common/config.py:332
+msgid "At least one directory must be selected for backup."
+msgstr "Selezionare almeno una cartella per il backup."
 
-#: common/config.py:378
-msgid "Backup folder cannot be included."
-msgstr "La cartella di backup non può essere inclusa."
+#: common/config.py:350
+msgid "The directory cannot be included in the backup."
+msgstr "La cartella non può essere inclusa nel backup."
 
-#: common/config.py:390
-msgid "Backup sub-folder cannot be included."
-msgstr "La sotto-cartella di backup non può essere inclusa."
+#: common/config.py:363
+msgid "The sub-directories cannot be included in the backup."
+msgstr "Le sotto-cartelle non possono essere incluse nel backup."
 
-#: common/config.py:448
-#, python-brace-format
-msgid "Invalid option. {path} is not a folder."
-msgstr "Opzione non valida. {path} non è una cartella."
-
-#: common/config.py:457
-msgid "Host/User/Profile-ID must not be empty."
-msgstr "Host/Utente/Profilo non possono essere vuoti."
-
-#: common/config.py:467 common/config.py:514
-#, python-brace-format
-msgid ""
-"Can't write to: {path}\n"
-"Are you sure you have write access?"
-msgstr ""
-"Impossibile scrivere su: {path}\n"
-"Sei sicuro di avere i permessi in scrittura?"
-
-#: common/config.py:484
-#, python-brace-format
-msgid ""
-"Destination filesystem for {path} is formatted with FAT which doesn't "
-"support hard-links. Please use a native Linux filesystem."
-msgstr ""
-"Il filesystem di destinazione per '{path}' è formattato con FAT che non "
-"supporta hard-link. Si prega di usare un filesystem Linux nativo."
-
-#: common/config.py:493
-#, python-brace-format
-msgid ""
-"Destination filesystem for {path} is an SMB-mounted share. Please make sure "
-"the remote SMB server supports symlinks or activate {copyLinks} in "
-"{expertOptions}."
-msgstr ""
-"Il filesystem di destinazione per '{path}' è una condivisione montata su "
-"SMB. Per favore assicurati che il server SMB remoto supporti i collegamenti "
-"simbolici o attiva '{copyLinks}' in '{expertOptions}'."
-
-#: common/config.py:497 qt/settingsdialog.py:1004
-msgid "Copy links (dereference symbolic links)"
-msgstr "Copia collegamenti (segue i collegamenti simbolici)"
-
-#: common/config.py:498
-msgid "Expert Options"
-msgstr "Opzioni per esperti"
-
-#: common/config.py:502
-#, python-brace-format
-msgid ""
-"Destination filesystem for {path} is an sshfs-mounted share. sshfs doesn't "
-"support hard-links. Please use mode 'SSH' instead."
-msgstr ""
-"Il filesystem di destinazione per '{path}' è una condivisione montata su "
-"sshfs. sshfs non supporta i collegamenti fisici. Utilizza invece la modalità"
-" 'SSH'."
-
-#: common/config.py:1598
-msgid ""
-"Can't find crontab.\n"
-"Are you sure cron is installed?\n"
-"If not you should disable all automatic backups."
-msgstr ""
-"Impossibile trovare crontab.\n"
-"Sei sicuro che cron sia installato?\n"
-"Se non lo è, disattivare tutti i backup automatici."
-
-#: common/config.py:1604
+#: common/config.py:1483
 msgid "Failed to write new crontab."
 msgstr "Impossibile scrivere nuovi crontab."
 
-#: common/config.py:1707
+#: common/config.py:1491
+msgid ""
+"Cron is not running despite the crontab command being available. Scheduled "
+"backup jobs will not run. Cron might be installed but not enabled. Try the "
+"command \"systemctl enable cron\" or consult the support channels of your "
+"GNU/Linux distribution."
+msgstr ""
+"Cron non è in esecuzione nonostante il comando crontab sia disponibile. I "
+"backup pianificati non saranno eseguiti. Cron potrebbe essere installato, ma"
+" non abilitato. Prova ad eseguire il comando \"systemctl enable cron\" o "
+"richiedi assistenza tramite i canali di supporto della tua distribuzione "
+"GNU/Linux."
+
+#: common/config.py:1571
 #, python-brace-format
 msgid ""
 "Could not install Udev rule for profile {profile_id}. DBus Service "
@@ -152,12 +113,12 @@ msgstr ""
 "Impossibile installare la regola di Udev per il profilo {profile_id}. Il "
 "servizio DBus '{dbus_interface}' non era disponibile"
 
-#: common/config.py:1722
+#: common/config.py:1586
 #, python-brace-format
-msgid "Schedule udev doesn't work with mode {mode}"
+msgid "Udev schedule doesn't work with mode {mode}"
 msgstr "La pianificazione udev non funziona con la modalità {mode}"
 
-#: common/config.py:1733
+#: common/config.py:1597
 #, python-brace-format
 msgid "Couldn't find UUID for {path}"
 msgstr "Impossibile trovare UUID per \"{path}\""
@@ -170,212 +131,208 @@ msgstr "Salvataggio della configurazione fallito"
 msgid "Failed to load config"
 msgstr "Impossibile caricare la configurazione"
 
-#: common/configfile.py:691 common/configfile.py:790
+#: common/configfile.py:690 common/configfile.py:789
 #, python-brace-format
 msgid "Profile \"{name}\" already exists."
 msgstr "Il profilo \"{name}\" esiste già."
 
-#: common/configfile.py:736
+#: common/configfile.py:735
 msgid "The last profile cannot be removed."
 msgstr "L'ultimo profilo non può essere rimosso."
 
-#: common/encfstools.py:92
+#: common/encfstools.py:81
 #, python-brace-format
-msgid "Can't mount '{command}'"
-msgstr "Non posso montare '{command}'"
+msgid "Unable to mount '{command}'"
+msgstr "Impossibile montare '{command}'"
+
+#: common/encfstools.py:131
+msgid "Configuration for the encrypted directory not found."
+msgstr "Configurazione per la cartella cifrata non trovata."
 
 #: common/encfstools.py:139
-msgid "Config for encrypted folder not found."
-msgstr "Configurazione per cartella cifrata non trovata."
+msgid "Create a new encrypted directory?"
+msgstr "Vuoi creare una nuova cartella cifrata?"
 
-#: common/encfstools.py:147
-msgid "Create a new encrypted folder?"
-msgstr "Creare una nuova cartella cifrata?"
-
-#: common/encfstools.py:151
+#: common/encfstools.py:143
 msgid "Cancel"
 msgstr "Annulla"
 
-#: common/encfstools.py:156
-msgid "Please confirm password"
-msgstr "Per favore conferma la password"
+#: common/encfstools.py:148
+msgid "Please confirm the password."
+msgstr "Conferma la password."
 
-#: common/encfstools.py:160
+#: common/encfstools.py:152
 msgid "Password doesn't match."
 msgstr "La password non corrisponde."
 
-#: common/encfstools.py:178
-msgid ""
-"encfs version 1.7.2 and before has a bug with option --reverse. Please "
-"update encfs."
-msgstr ""
-"la versione di encfs 1.7.2 e precedenti ha un bug con l'opzione --reverse. "
-"Per favore aggiorna encfs."
-
-#: common/encfstools.py:516 common/snapshots.py:914
+#: common/encfstools.py:510 common/snapshots.py:1028
 msgid "Take snapshot"
-msgstr "Prendi istantanea"
+msgstr "Crea istantanea"
 
-#: common/mount.py:608
+#: common/mount.py:621
 #, python-brace-format
-msgid "Can't unmount {mountprocess} from {mountpoint}."
+msgid "Unable to unmount {mountprocess} from {mountpoint}."
 msgstr "Impossibile smontare {mountprocess} da {mountpoint}."
 
-#: common/mount.py:695
-msgid "{} not found. Please install e.g. {}"
-msgstr "{} non trovato. Si prega di installare ad es. {}"
-
-#: common/mount.py:716
-msgid "Mountpoint {} not empty."
-msgstr "In punto di montaggio {} non è vuoto."
-
-#: common/password.py:240
+#: common/mount.py:708
 #, python-brace-format
-msgid "Profile '{profile}': Enter password for {mode}: "
-msgstr "Profilo '{profile}': Inserisci la password per {mode}: "
+msgid "{command} not found. Please install it (e.g. via \"{installcommand}\")"
+msgstr ""
+"{command} non trovato. Si prega di installarlo (usando ad es. "
+"{installcommand}\")"
 
-#: common/snapshots.py:342 common/snapshots.py:593
+#: common/mount.py:732
+#, python-brace-format
+msgid "Mountpoint {mntpoint} not empty."
+msgstr "Il punto di montaggio {mntpoint} non è vuoto."
+
+#: common/password.py:287
+#, python-brace-format
+msgid "Enter password for {mode} profile \"{profile}\":"
+msgstr "Inserire la password per il profilo {mode} \"{profile}\":"
+
+#: common/snapshots.py:357 common/snapshots.py:608
 msgid "FAILED"
 msgstr "FALLITO"
 
-#: common/snapshots.py:539 common/snapshots.py:601
+#: common/snapshots.py:554 common/snapshots.py:616
 msgid "Restore permissions"
 msgstr "Ripristina permessi"
 
-#: common/snapshots.py:596 qt/app.py:287 qt/app.py:915 qt/app.py:950
-#: qt/qtsystrayicon.py:80
+#: common/snapshots.py:611 qt/app.py:290 qt/app.py:1021 qt/app.py:1056
+#: qt/qtsystrayicon.py:81
 msgid "Done"
 msgstr "Fatto"
 
-#: common/snapshots.py:708
+#: common/snapshots.py:731
 msgid "Deferring backup while on battery"
 msgstr "Backup posticipato durante funzionamento a batteria"
 
-#: common/snapshots.py:770
+#: common/snapshots.py:829
 msgid ""
-"Can't find snapshots folder.\n"
+"Can't find snapshots directory.\n"
 "If it is on a removable drive please plug it in."
 msgstr ""
 "Impossibile trovare la cartella delle istantanee.\n"
-"Se si tratta di un disco rimovibile si prega di collegarlo."
+"Se si tratta di un disco rimovibile, collegalo."
 
-#: common/snapshots.py:772
+#: common/snapshots.py:833
 #, python-format
 msgid "Waiting %s second."
 msgid_plural "Waiting %s seconds."
 msgstr[0] "Aspettando %s secondo."
 msgstr[1] "Aspettando %s secondi."
 
-#: common/snapshots.py:809
+#: common/snapshots.py:901
 #, python-brace-format
 msgid "Failed to take snapshot {snapshot_id}."
 msgstr "Creazione dell'istantanea {snapshot_id} fallita."
 
-#: common/snapshots.py:826
-msgid "Finalizing"
-msgstr "Finalizzazione"
+#: common/snapshots.py:932
+msgid "Please be patient. Finalizing…"
+msgstr "Un po' di pazienza. Si sta terminando…"
 
-#: common/snapshots.py:949
-msgid "Can't create folder"
-msgstr "Impossibile creare la cartella"
+#: common/snapshots.py:1063
+msgid "Can't create directory."
+msgstr "Impossibile creare la cartella."
 
-#: common/snapshots.py:966
+#: common/snapshots.py:1080
 msgid "Saving config file…"
 msgstr "Salvataggio file di configurazione…"
 
-#: common/snapshots.py:1042
+#: common/snapshots.py:1161
 msgid "Saving permissions…"
 msgstr "Salvataggio permessi…"
 
-#: common/snapshots.py:1150
+#: common/snapshots.py:1273
 #, python-brace-format
-msgid "Found leftover {snapshot_id} which can be continued."
-msgstr "Trovate rimanenze di '{snapshot_id}' che può essere continuata."
+msgid "Found leftover snapshot {snapshot_id} that can be continued."
+msgstr "Trovato lo snaphot {snapshot_id} rimanente che può essere continuato."
 
-#: common/snapshots.py:1169
+#: common/snapshots.py:1297
 #, python-brace-format
-msgid "Removing leftover {snapshot_id} folder from last run"
+msgid "Removing leftover {snapshot_id} directory from last run"
 msgstr ""
-"Rimozione della cartella '{snapshot_id}' rimanente dall'ultima esecuzione"
+"Rimozione della cartella {snapshot_id} rimanente dall'ultima esecuzione"
 
-#: common/snapshots.py:1179
-msgid "Can't remove folder"
-msgstr "Impossibile eliminare la cartella"
+#: common/snapshots.py:1307
+msgid "Can't remove directory"
+msgstr "Impossibile rimuovere la cartella"
 
-#: common/snapshots.py:1222
+#: common/snapshots.py:1361
 msgid "Taking snapshot"
 msgstr "Generazione dell'istantanea"
 
-#: common/snapshots.py:1254
+#: common/snapshots.py:1412
 msgid "Success"
 msgstr "Successo"
 
-#: common/snapshots.py:1255
+#: common/snapshots.py:1415
 msgid "Partial transfer due to error"
-msgstr ""
+msgstr "Trasferimento parziale a causa di un errore"
 
-#: common/snapshots.py:1256
+#: common/snapshots.py:1416
 msgid "Partial transfer due to vanished source files (see 'man rsync')"
 msgstr ""
 "Trasferimento parziale perché i file di origine sono spariti (vedi 'man "
 "rsync')"
 
-#: common/snapshots.py:1259
+#: common/snapshots.py:1420
 #, python-brace-format
 msgid "'rsync' ended with exit code {exit_code}"
 msgstr "'rsync' terminato con codice di uscita {exit_code}"
 
-#: common/snapshots.py:1268
+#: common/snapshots.py:1433
 msgid "See 'man rsync' for more details"
 msgstr "Vedi 'man rsync' per ulteriori dettagli"
 
-#: common/snapshots.py:1272
+#: common/snapshots.py:1440
 msgid ""
 "Negative rsync exit codes are signal numbers, see 'kill -l' and 'man kill'"
 msgstr ""
 "I codici di ritorno negativi di rsync sono numeri di segnale, vedi 'kill -l'"
 " e 'man kill'"
 
-#: common/snapshots.py:1287
+#: common/snapshots.py:1461
 msgid "Nothing changed, no new snapshot necessary"
 msgstr "Nulla è cambiato, nessuna nuova istantanea necessaria"
 
-#: common/snapshots.py:1318
+#: common/snapshots.py:1505
 #, python-brace-format
-msgid "Can't rename {new_path} to {path}"
-msgstr "Non posso rinominare {new_path} in {path}"
+msgid "Unable to rename {new_path} to {path}."
+msgstr "Non posso rinominare {new_path} in {path}."
 
-#: common/snapshots.py:1636 common/snapshots.py:1688
-msgid "Smart remove"
+#: common/snapshots.py:1823 common/snapshots.py:1875
+msgid "Smart removal"
 msgstr "Rimozione intelligente"
 
-#: common/snapshots.py:1663
+#: common/snapshots.py:1850
 msgid "Removing old snapshots"
 msgstr "Rimozione vecchie istantanee"
 
-#: common/snapshots.py:1698
+#: common/snapshots.py:1885
 msgid "Trying to keep min free space"
 msgstr "Tentativo di mantenere lo spazio libero minimo"
 
-#: common/snapshots.py:1737
+#: common/snapshots.py:1924
 #, python-brace-format
 msgid "Trying to keep min {perc} free inodes"
 msgstr "Tentativo di mantenere almeno il {perc} di inode liberi"
 
-#: common/snapshots.py:2821 qt/app.py:1616
+#: common/snapshots.py:3040 qt/app.py:1773
 msgid "Now"
 msgstr "Adesso"
 
-#: common/sshtools.py:215
+#: common/sshtools.py:240
 #, python-brace-format
-msgid "Can't mount {sshfs}"
-msgstr "Non riesco a montare {sshfs}"
+msgid "Unable to mount {sshfs}"
+msgstr "Impossibile montare {sshfs}"
 
-#: common/sshtools.py:275
-msgid "ssh-agent not found. Please make sure it is installed."
-msgstr "Non trovo ssh-agent. Accertati che sia installato."
+#: common/sshtools.py:308
+msgid "ssh-agent not found. Please ensure it is installed."
+msgstr "ssh-agent non trovato. Accertati che sia installato."
 
-#: common/sshtools.py:418
+#: common/sshtools.py:478
 msgid ""
 "Could not unlock ssh private key. Wrong password or password not available "
 "for cron."
@@ -383,57 +340,137 @@ msgstr ""
 "Non ho potuto sbloccare la chiave privata ssh. Password errata o non "
 "disponibile per cron."
 
-#: common/sshtools.py:506
+#: common/sshtools.py:567
 #, python-brace-format
 msgid "Cipher {cipher} failed for {host}."
 msgstr "Cifratura {cipher} fallita per {host}."
 
-#: common/sshtools.py:653
+#: common/sshtools.py:714
 msgid "Remote path exists but is not a directory."
 msgstr "Il percorso remoto esiste ma non è una cartella."
 
-#: common/sshtools.py:658
+#: common/sshtools.py:719
 msgid "Remote path is not writable."
 msgstr "Il percorso remoto non è scrivibile."
 
-#: common/sshtools.py:663
+#: common/sshtools.py:724
 msgid "Remote path is not executable."
 msgstr "Il percorso remoto non è eseguibile."
 
-#: common/sshtools.py:668
+#: common/sshtools.py:729
 msgid "Couldn't create remote path."
 msgstr "Non ho potuto creare il percorso remoto."
 
-#: common/sshtools.py:948
+#: common/sshtools.py:1016
 #, python-brace-format
 msgid "Remote host {host} doesn't support {command}"
 msgstr "L'host remoto {host} non supporta {command}"
 
-#: common/sshtools.py:952 common/sshtools.py:961
+#: common/sshtools.py:1020 common/sshtools.py:1029
 msgid "Look at 'man backintime' for further instructions"
 msgstr "Guarda 'man backintime' per ulteriori istruzioni"
 
-#: common/sshtools.py:956
+#: common/sshtools.py:1024
 #, python-brace-format
 msgid "Check commands on host {host} returned unknown error"
 msgstr ""
 "Il controllo dei comandi sull'host {host} ha restituito un errore "
 "sconosciuto"
 
-#: common/sshtools.py:977
+#: common/sshtools.py:1045
 #, python-brace-format
 msgid "Remote host {host} doesn't support hardlinks"
 msgstr "L'host remoto {host} non supporta gli hard link"
 
-#: common/sshtools.py:1060
+#: common/sshtools.py:1199
 #, python-brace-format
-msgid "Copy public ssh-key \"{pubkey}\" to remote host \"{host}\""
-msgstr "Copia la chiave ssh pubblica \"{pubkey}\" sull'host remoto \"{host}\""
+msgid "Copy public ssh-key \"{pubkey}\" to remote host \"{host}\"."
+msgstr "Copia la chiave ssh pubblica \"{pubkey}\" sull'host remoto \"{host}\"."
 
-#: common/sshtools.py:1062
+#: common/sshtools.py:1201
 #, python-brace-format
-msgid "Please enter password for \"{user}\""
-msgstr "Inserire la password per \"{user}\""
+msgid "Please enter a password for \"{user}\"."
+msgstr "Inserire la password per \"{user}\"."
+
+#: common/tools.py:392
+#, python-brace-format
+msgid ""
+"The destination filesystem for {path} is formatted with NTFS, which has "
+"known incompatibilities with Unix-style filesystems."
+msgstr ""
+"Il filesystem di destinazione per '{path}' è formattato con NTFS, che ha "
+"delle incompatibilità note con i filesystem derivati da Unix."
+
+#: common/tools.py:424
+#, python-brace-format
+msgid "{path} is not a valid directory."
+msgstr "{path} non è una cartella valida."
+
+#: common/tools.py:438
+msgid "Creation of following directory failed:"
+msgstr "La creazione della seguente cartella non è riuscita:"
+
+#: common/tools.py:440 common/tools.py:536
+msgid "Write access may be restricted."
+msgstr "L'accesso in scrittura potrebbe essere limitato."
+
+#: common/tools.py:480
+#, python-brace-format
+msgid ""
+"Destination filesystem for {path} is formatted with FAT which doesn't "
+"support hard-links. Please use a native GNU/Linux filesystem."
+msgstr ""
+"Il filesystem di destinazione per '{path}' è formattato con FAT che non "
+"supporta hard link. Utilizza un filesystem GNU/Linux nativo."
+
+#: common/tools.py:491
+#, python-brace-format
+msgid ""
+"Destination filesystem for {path} is a share mounted via SMB. Please make "
+"sure the remote SMB server supports symlinks or activate \"{copyLinks}\" in "
+"\"{expertOptions}\"."
+msgstr ""
+"Il filesystem di destinazione per {path} è una condivisione montata tramite "
+"SMB. Assicurati che il server SMB remoto supporti i collegamenti simbolici o"
+" attiva \"{copyLinks}\" in \"{expertOptions}\"."
+
+#: common/tools.py:495 qt/manageprofiles/tab_expert_options.py:253
+msgid "Copy links (dereference symbolic links)"
+msgstr "Copia collegamenti (segue i collegamenti simbolici)"
+
+#: common/tools.py:496
+msgid "Expert Options"
+msgstr "Opzioni per esperti"
+
+#: common/tools.py:500
+#, python-brace-format
+msgid ""
+"Destination filesystem for {path} is a share mounted via sshfs. Sshfs "
+"doesn't support hard-links. Please use mode \"SSH\" instead."
+msgstr ""
+"Il filesystem di destinazione per {path} è una condivisione montata tramite "
+"sshfs. Sshfs non supporta gli hard link. Utilizza invece la modalità "
+"\"SSH\"."
+
+#: common/tools.py:534
+msgid "File creation failed in this directory:"
+msgstr "La creazione del file in questa cartella non è riuscita:"
+
+#: qt/aboutdlg.py:37 qt/app.py:578
+msgid "About"
+msgstr "Informazioni"
+
+#: qt/aboutdlg.py:61 qt/aboutdlg.py:99
+msgid "Authors"
+msgstr "Autori"
+
+#: qt/aboutdlg.py:62 qt/aboutdlg.py:105
+msgid "Translations"
+msgstr "Traduzioni"
+
+#: qt/aboutdlg.py:63 qt/aboutdlg.py:111
+msgid "License"
+msgstr "Licenza"
 
 #: qt/app.py:167
 msgid "Shortcuts"
@@ -441,265 +478,298 @@ msgstr "Collegamenti"
 
 #: qt/app.py:187
 msgid ""
-"This folder doesn't exist\n"
+"This directory doesn't exist\n"
 "in the current selected snapshot."
 msgstr ""
 "Questa cartella non esiste\n"
-"nell'istantanea selezionata al momento."
+"nell'istantanea attualmente selezionata."
 
-#: qt/app.py:252
+#: qt/app.py:255
 msgid "Add to Include"
 msgstr "Aggiungi alle inclusioni"
 
-#: qt/app.py:254 qt/logviewdialog.py:186
+#: qt/app.py:257
 msgid "Add to Exclude"
 msgstr "Aggiungi alle esclusioni"
 
-#: qt/app.py:339
+#: qt/app.py:342
 #, python-brace-format
 msgid ""
-"{appName} is not configured. Would you like to restore a previous "
-"configuration?"
+"{app_name} appears to be running for the first time as no configuration is "
+"found."
 msgstr ""
-"{appName} non è configurato. Vuoi ripristinare una configurazione "
-"precedente?"
+"{app_name} sembra essere stato avviato per la prima volta in quanto non è "
+"stata trovata una configurazione."
 
-#: qt/app.py:368
+#: qt/app.py:347
 msgid ""
-"Can't find snapshots folder.\n"
-"If it is on a removable drive please plug it in and then press OK."
+"Import an existing configuration (from a backup target directory or another "
+"computer)?"
 msgstr ""
-"Impossibile trovare la cartella delle istantanee.\n"
-"Se si tratta di un disco rimovibile, collegarlo e premere OK."
+"Vuoi importare una configurazione esistente (da una cartella di destinazione"
+" del backup o da un altro computer)?"
 
-#: qt/app.py:453
+#: qt/app.py:374
+msgid "Can't find snapshots directory."
+msgstr "Impossibile trovare la cartella delle istantanee."
+
+#: qt/app.py:375
+msgid "If it is on a removable drive please plug it in and then press OK."
+msgstr "Se si trova su un disco rimovibile, collegarlo e premere OK."
+
+#: qt/app.py:487
 msgid "Take a snapshot"
-msgstr "Prendi istantanea"
+msgstr "Crea un'istantanea"
 
-#: qt/app.py:455
+#: qt/app.py:489
 msgid "Use modification time & size for file change detection."
 msgstr ""
 "Usa la dimensione e l'ora di modifica dei file per riconoscere i file "
 "cambiati."
 
-#: qt/app.py:458
+#: qt/app.py:492
 msgid "Take a snapshot (checksum mode)"
-msgstr "Prendi istantanea (usando i checksums)"
+msgstr "Crea un'istantanea (usando i checksum)"
 
-#: qt/app.py:460
+#: qt/app.py:494
 msgid "Use checksums for file change detection."
 msgstr "Usa il checksum per rilevare i cambiamenti."
 
-#: qt/app.py:463 qt/qtsystrayicon.py:85
+#: qt/app.py:497 qt/qtsystrayicon.py:86
 msgid "Pause snapshot process"
 msgstr "Metti in pausa il processo di istantanea"
 
-#: qt/app.py:468 qt/qtsystrayicon.py:89
+#: qt/app.py:502 qt/qtsystrayicon.py:90
 msgid "Resume snapshot process"
 msgstr "Riprendi il processo di istantanea"
 
-#: qt/app.py:472 qt/qtsystrayicon.py:94
+#: qt/app.py:506 qt/qtsystrayicon.py:95
 msgid "Stop snapshot process"
 msgstr "Interrompi il processo di istantanea"
 
-#: qt/app.py:476
+#: qt/app.py:510
 msgid "Refresh snapshot list"
 msgstr "Aggiorna lista istantanee"
 
-#: qt/app.py:480
+#: qt/app.py:514
 msgid "Name snapshot"
 msgstr "Nome Istantanea"
 
-#: qt/app.py:484
+#: qt/app.py:518
 msgid "Remove snapshot"
 msgstr "Rimuovi istantanea"
 
-#: qt/app.py:488
+#: qt/app.py:522
 msgid "View snapshot log"
 msgstr "Visualizza registro istantanea"
 
-#: qt/app.py:492
+#: qt/app.py:526
 msgid "View last log"
 msgstr "Visualizza ultimo registro"
 
-#: qt/app.py:496
+#: qt/app.py:530
 msgid "Manage profiles…"
 msgstr "Gestione profili…"
 
-#: qt/app.py:500
+#: qt/app.py:534
 msgid "Shutdown"
 msgstr "Spegnimento"
 
-#: qt/app.py:502
+#: qt/app.py:536
 msgid "Shut down system after snapshot has finished."
 msgstr "Arresta il sistema quando l'istantanea è terminata."
 
-#: qt/app.py:504
+#: qt/app.py:538
 msgid "Setup language…"
 msgstr "Imposta lingua…"
 
-#: qt/app.py:508
+#: qt/app.py:542
 msgid "Exit"
 msgstr "Esci"
 
-#: qt/app.py:512
+#: qt/app.py:546
 msgid "Help"
 msgstr "Aiuto"
 
-#: qt/app.py:516
+#: qt/app.py:550
 msgid "Profiles config file"
 msgstr "File di configurazione profili"
 
-#: qt/app.py:519 qt/languagedialog.py:219
+#: qt/app.py:553 qt/app.py:1997
 msgid "Website"
 msgstr "Sito web"
 
-#: qt/app.py:522 qt/app.py:1261
+#: qt/app.py:556 qt/app.py:1399
 msgid "Changelog"
 msgstr "Registro dei cambiamenti"
 
-#: qt/app.py:525
+#: qt/app.py:559
 msgid "FAQ"
 msgstr "Domande frequenti"
 
-#: qt/app.py:528
+#: qt/app.py:562
 msgid "Ask a question"
 msgstr "Fai una domanda"
 
-#: qt/app.py:531
+#: qt/app.py:565
 msgid "Report a bug"
 msgstr "Segnala un bug"
 
-#: qt/app.py:534
+#: qt/app.py:568
 msgid "Translation"
 msgstr "Traduzione"
 
-#: qt/app.py:537 qt/app.py:1834
-msgid "About"
-msgstr "Informazioni"
+#: qt/app.py:570
+msgid "Shows the message about participation in translation again."
+msgstr "Mostra nuovamente il messaggio sulla partecipazione alla traduzione."
 
-#: qt/app.py:540 qt/restoredialog.py:47 qt/settingsdialog.py:2212
-#: qt/snapshotsdialog.py:140 qt/snapshotsdialog.py:145
+#: qt/app.py:574
+msgid "Encryption Transition (EncFS)"
+msgstr "Transizione della cifratura (EncFS)"
+
+#: qt/app.py:576
+msgid "Shows the message about EncFS removal again."
+msgstr "Mostra nuovamente il messaggio sulla rimozione della cifratura EncFS."
+
+#: qt/app.py:581 qt/restoredialog.py:46 qt/snapshotsdialog.py:164
+#: qt/snapshotsdialog.py:169
 msgid "Restore"
 msgstr "Ripristina"
 
-#: qt/app.py:542
-msgid "Restore the selected files or folders to the original destination."
+#: qt/app.py:583
+msgid "Restore the selected files or directories to the original destination."
 msgstr ""
 "Ripristina i file o le cartelle selezionati nella destinazione originale."
 
-#: qt/app.py:545 qt/app.py:1421 qt/app.py:1453 qt/snapshotsdialog.py:142
+#: qt/app.py:586 qt/app.py:1576 qt/app.py:1608 qt/snapshotsdialog.py:166
 msgid "Restore to …"
 msgstr "Ripristina su…"
 
-#: qt/app.py:547
-msgid "Restore the selected files or folders to a new destination."
+#: qt/app.py:588
+msgid "Restore the selected files or directories to a new destination."
 msgstr ""
 "Ripristina i file o le cartelle selezionati in una nuova destinazione."
 
-#: qt/app.py:552
+#: qt/app.py:594
 msgid ""
-"Restore the currently shown folder and all its contents to the original "
+"Restore the currently shown directory and all its contents to the original "
 "destination."
 msgstr ""
 "Ripristina la cartella attualmente mostrata e tutto il suo contenuto nella "
 "destinazione originale."
 
-#: qt/app.py:557
+#: qt/app.py:600
 msgid ""
-"Restore the currently shown folder and all its contents to a new "
+"Restore the currently shown directory and all its contents to a new "
 "destination."
 msgstr ""
 "Ripristina la cartella attualmente mostrata e tutto il suo contenuto in una "
 "nuova destinazione."
 
-#: qt/app.py:560
+#: qt/app.py:603
 msgid "Up"
 msgstr "Su"
 
-#: qt/app.py:563 qt/settingsdialog.py:2168
+#: qt/app.py:606 qt/restoreconfigdialog.py:90
 msgid "Show hidden files"
 msgstr "Mostra i file nascosti"
 
-#: qt/app.py:566
+#: qt/app.py:609
 msgid "Compare snapshots…"
 msgstr "Confronta istantanee…"
 
-#: qt/app.py:627
+#: qt/app.py:639 qt/app.py:2067
+msgid "Release Candidate"
+msgstr "Release Candidate"
+
+#: qt/app.py:642
+msgid "Shows the message about this Release Candidate again."
+msgstr ""
+"Mostra nuovamente il messaggio su questa versione candidata al rilascio."
+
+#: qt/app.py:678
+msgid "Back In &Time"
+msgstr "Back In &Time"
+
+#: qt/app.py:683
 msgid "&Backup"
 msgstr "&Backup"
 
-#: qt/app.py:638
+#: qt/app.py:694
 msgid "&Restore"
 msgstr "&Ripristina"
 
-#: qt/app.py:644
+#: qt/app.py:700
 msgid "&Help"
 msgstr "&Aiuto"
 
-#: qt/app.py:761
+#: qt/app.py:839
 msgid ""
-"If you close this window Back In Time will not be able to shut down your system when the snapshot has finished.\n"
-"Do you really want to close?"
+"If you close this window, Back In Time will not be able to shut down your "
+"system when the snapshot is finished."
 msgstr ""
-"Se chiudi questa finestra Back In Time non sarà in grado di arrestare il sistema al termine dell'istantanea.\n"
-"Vuoi veramente chiuderla?"
+"Se chiudi questa finestra Back In Time non sarà in grado di arrestare il "
+"sistema al termine dell'istantanea."
 
-#: qt/app.py:905
+#: qt/app.py:842
+msgid "Do you really want to close it?"
+msgstr "Vuoi veramente chiuderla?"
+
+#: qt/app.py:1011
 msgid "Working:"
 msgstr "Lavoro in corso:"
 
-#: qt/app.py:953
+#: qt/app.py:1059
 msgid "Done, no backup needed"
 msgstr "Fatto, nessun backup necessario"
 
-#: qt/app.py:962
+#: qt/app.py:1068
 msgid "Working"
 msgstr "Lavoro in corso"
 
-#: qt/app.py:971 qt/messagebox.py:76
+#: qt/app.py:1077 qt/messagebox.py:93
 msgid "Error"
 msgstr "Errore"
 
-#: qt/app.py:994 qt/qtsystrayicon.py:202
+#: qt/app.py:1100
 msgid "Sent"
 msgstr "Inviati"
 
-#: qt/app.py:995 qt/qtsystrayicon.py:203
+#: qt/app.py:1101
 msgid "Speed"
 msgstr "Velocità"
 
-#: qt/app.py:996 qt/qtsystrayicon.py:204
+#: qt/app.py:1102
 msgid "ETA"
 msgstr "Tempo rimanente stimato"
 
-#: qt/app.py:1050
+#: qt/app.py:1164
 msgid "Global"
 msgstr "Globale"
 
-#: qt/app.py:1051
+#: qt/app.py:1165
 msgid "Root"
 msgstr "Root"
 
-#: qt/app.py:1052
+#: qt/app.py:1166
 msgid "Home"
 msgstr "Home"
 
-#: qt/app.py:1067
-msgid "Backup folders"
+#: qt/app.py:1194
+msgid "Backup directories"
 msgstr "Cartelle di backup"
 
-#: qt/app.py:1155
+#: qt/app.py:1290
 msgid "Snapshot Name"
 msgstr "Nome istantanea"
 
-#: qt/app.py:1202
+#: qt/app.py:1337
 msgid "Are you sure you want to remove this snapshot?"
 msgid_plural "Are you sure you want to remove these snapshots?"
 msgstr[0] "Sei sicuro di voler rimuovere questa istantanea?"
 msgstr[1] "Sei sicuro di voler rimuovere queste istantanee?"
 
-#: qt/app.py:1294
+#: qt/app.py:1432
 #, python-brace-format
 msgid ""
 "Create backup copies with trailing {suffix}\n"
@@ -708,16 +778,18 @@ msgstr ""
 "Crea copie di backup aggiungendo {suffix}\n"
 "prima di sovrascrivere o rimuovere elementi locali."
 
-#: qt/app.py:1300 qt/settingsdialog.py:774
+#: qt/app.py:1440
 #, python-brace-format
 msgid ""
-"Newer versions of files will be renamed with trailing {suffix} before restoring.\n"
-"If you don't need them anymore you can remove them with {cmd}"
+"Newer versions of files will be renamed with trailing {suffix} before "
+"restoring. If you don't need them anymore you can remove them with the "
+"following command:"
 msgstr ""
-"Le versioni nuove dei file verranno rinominate con il suffisso {suffix} prima del ripristino.\n"
-"Se non ne hai più bisogno, puoi rimuoverle con {cmd}"
+"Le nuove versioni dei file saranno rinominate con il suffisso {suffix} prima"
+" del ripristino. Se non ne hai più bisogno, puoi rimuoverle con il comando "
+"seguente:"
 
-#: qt/app.py:1314
+#: qt/app.py:1456
 msgid ""
 "Only restore elements which do not exist or\n"
 "are newer than those in destination.\n"
@@ -727,114 +799,71 @@ msgstr ""
 "sono più recenti di quelli di destinazione.\n"
 "Utilizza l'opzione \"rsync --update\"."
 
-#: qt/app.py:1347
-msgid "Remove newer elements in original folder."
+#: qt/app.py:1491
+msgid "Remove newer elements in original directory."
 msgstr "Rimuovi gli elementi più recenti nella cartella originale."
 
-#: qt/app.py:1348
+#: qt/app.py:1494
 msgid ""
-"Restore selected files or folders to the original destination and\n"
-"delete files or folders which are not in the snapshot.\n"
-"Be extremely careful because this will\n"
-"delete files and folders which were\n"
-"excluded during taking the snapshot."
+"Restore selected files or directories to the original destination and delete"
+" files or directories which are not in the snapshot. Be extremely careful "
+"because this will delete files and directories which were excluded during "
+"taking the snapshot."
 msgstr ""
-"Ripristina i file o le cartelle selezionati nella destinazione originale e\n"
-"elimina i file / le cartelle che non sono nell'istantanea.\n"
-"Fai molta attenzione perché questo\n"
-"cancellerà i file / le cartelle che sono stati\n"
+"Ripristina i file o le cartelle selezionati nella destinazione originale ed "
+"elimina i file e le cartelle che non sono nell'istantanea. Fai molta "
+"attenzione perché questo eliminerà i file e le cartelle che sono stati "
 "esclusi durante l'acquisizione dell'istantanea."
 
-#: qt/app.py:1361
-#, python-brace-format
-msgid ""
-"Do you really want to restore this element into the new folder\n"
-"{path}?"
+#: qt/app.py:1506
+msgid "Do you really want to restore this element into the new directory?"
 msgid_plural ""
-"Do you really want to restore these elements into the new folder\n"
-"{path}?"
-msgstr[0] ""
-"Vuoi veramente ripristinare questo elemento nella nuova cartella\n"
-"{path}?"
-msgstr[1] ""
-"Vuoi veramente ripristinare questi elementi nella nuova cartella\n"
-"{path}?"
+"Do you really want to restore these elements into the new directory?"
+msgstr[0] "Vuoi veramente ripristinare questo elemento nella nuova cartella?"
+msgstr[1] "Vuoi veramente ripristinare questi elementi nella nuova cartella?"
 
-#: qt/app.py:1370
+#: qt/app.py:1516
 msgid "Do you really want to restore this element?"
 msgid_plural "Do you really want to restore these elements?"
 msgstr[0] "Vuoi veramente ripristinare questo elemento?"
 msgstr[1] "Vuoi veramente ripristinare questi elementi?"
 
-#: qt/app.py:1385
+#: qt/app.py:1535
 #, python-brace-format
 msgid "Are you sure you want to remove all newer files in {path}?"
 msgstr "Sei sicuro di voler rimuovere tutti i file più recenti in '{path}'?"
 
-#: qt/app.py:1388
+#: qt/app.py:1538
 msgid ""
-"Are you sure you want to remove all newer files in your original folder?"
+"Are you sure you want to remove all newer files in your original directory?"
 msgstr ""
-"Sei sicuro di voler rimuovere tutti i file più nuovi nella tua cartella "
+"Sei sicuro di voler rimuovere tutti i file più recenti nella tua cartella "
 "originale?"
 
-#: qt/app.py:1393
+#: qt/app.py:1544
+#, python-brace-format
 msgid ""
-"WARNING: Deleting files in filesystem root could break your whole system!"
+"{BOLD}Warning{BOLDEND}: Deleting files in the filesystem root could break "
+"your entire system."
 msgstr ""
-"ATTENZIONE: cancellare i file nella radice del filesystem potrebbe "
-"danneggiare l'intero sistema!"
+"{BOLD}Attenzione{BOLDEND}: Cancellare i file nella radice del filesystem "
+"potrebbe danneggiare l'intero sistema."
 
-#: qt/app.py:1623
+#: qt/app.py:1780
 msgid "Snapshot"
 msgstr "Istantanea"
 
-#: qt/app.py:1660
+#: qt/app.py:1817
 #, python-brace-format
 msgid "Restore {path}"
 msgstr "Ripristina {path}"
 
-#: qt/app.py:1662
+#: qt/app.py:1819
 #, python-brace-format
 msgid "Restore {path} to …"
 msgstr "Ripristina {path} su…"
 
-#: qt/app.py:1819
-msgid "The language settings take effect only after restarting Back In Time."
-msgstr ""
-"Le impostazioni della lingua avranno effetto solo dopo aver riavviato Back "
-"In Time."
-
-#: qt/app.py:1859 qt/app.py:1876
-msgid "Authors"
-msgstr "Autori"
-
-#: qt/app.py:1860 qt/app.py:1879
-msgid "Translations"
-msgstr "Traduzioni"
-
-#: qt/app.py:1861 qt/app.py:1882
-msgid "License"
-msgstr "Licenza"
-
-#: qt/languagedialog.py:29
-msgid "Setup language"
-msgstr "Imposta lingua"
-
-#: qt/languagedialog.py:87
-msgid "System default"
-msgstr "Default del sistema"
-
-#: qt/languagedialog.py:94
-msgid "Use operating systems language."
-msgstr "Usa la lingua del sistema operativo."
-
-#: qt/languagedialog.py:146
-#, python-brace-format
-msgid "Translated: {percent}"
-msgstr "Tradotto: {percent}"
-
-#: qt/languagedialog.py:184
+#: qt/app.py:1963
 #, python-brace-format
 msgid ""
 "Hello\n"
@@ -848,742 +877,345 @@ msgstr ""
 "Hai usato Back In Time in lingua {language} un po' di volte.\n"
 "La traduzione della versione di Back In Time installata in {language} è completa al {perc}. Indipendentemente dal tuo livello tecnico, puoi contribuire alla traduzione e migliorare così Back In Time.\n"
 "Visita {translation_platform_url} per contribuire. Per avere altre informazioni, puoi visitare {back_in_time_project_website}.\n"
-"Ci scusiamo per l'interruzione, questo messaggio non verrà mostrato nuovamente ma rimane disponibile per consultazione nel menu Aiuto.\n"
-"Il team Back In Time"
+"Ci scusiamo per l'interruzione, questo messaggio non sarà mostrato nuovamente, ma rimane disponibile per consultazione nel menu Aiuto.\n"
+"La squadra di Back In Time"
 
-#: qt/languagedialog.py:216
+#: qt/app.py:1992
 msgid "translation platform"
 msgstr "piattaforma di traduzione"
 
-#: qt/languagedialog.py:232
+#: qt/app.py:2011
 msgid "Your translation"
 msgstr "La tua traduzione"
 
-#: qt/logviewdialog.py:62
+#: qt/app.py:2023
+#, python-brace-format
+msgid "Email to {link_and_label}."
+msgstr "Email a {link_and_label}."
+
+#: qt/app.py:2026
+#, python-brace-format
+msgid "Mailing list {link_and_label}"
+msgstr "Mailing list {link_and_label}"
+
+#: qt/app.py:2030
+#, python-brace-format
+msgid "{link_and_label} on the project website."
+msgstr "{link_and_label} sul sito web del progetto."
+
+#: qt/app.py:2033
+msgid "Open an issue"
+msgstr "Apri una segnalazione"
+
+#: qt/app.py:2034
+msgid "Alternatively, you can use another channel of your choice."
+msgstr "In alternativa, puoi usare un altro canale a tua scelta."
+
+#: qt/app.py:2039
+#, python-brace-format
+msgid ""
+"This version of Back In Time is a Release Candidate and is primarily intended for stability testing in preparation for the next official release.\n"
+"No user data or telemetry is collected. However, the Back In Time team is very interested in knowing if the Release Candidate is being used and if it is worth continuing to provide such pre-release versions.\n"
+"Therefore, the team kindly asks for a short feedback on whether you have tested this version, even if you didn’t encounter any issues. Even a quick test run of a few minutes would help us a lot.\n"
+"The following contact options are available:\n"
+"{contact_list}\n"
+"In this version, this message won't be shown again but can be accessed anytime through the help menu.\n"
+"Thank you for your support and for helping us improve Back In Time!\n"
+"Your Back In Time Team"
+msgstr ""
+"Questa versione di Back In Time è una Release Candidate ed è principalmente destinata ai test di stabilità in preparazione della prossima versione ufficiale.\n"
+"Non vengono raccolti dati utente o telemetria. Tuttavia, la squadra di Back In Time è molto interessata a sapere se la Release Candidate è in uso e se vale la pena continuare a fornire tali versioni pre-rilascio.\n"
+"Pertanto, la squadra chiede gentilmente un breve riscontro sul fatto che tu abbia testato questa versione, anche se non hai sperimentato alcun problema. Anche un rapido test di pochi minuti ci aiuterebbe molto.\n"
+"Sono disponibili le seguenti opzioni di contatto:\n"
+"{contact_list}\n"
+"In questa versione, questo messaggio non sarà più visualizzato, ma è possibile accedervi in qualsiasi momento tramite il menu di aiuto.\n"
+"Grazie per il tuo supporto e per averci aiutato a migliorare Back In Time!\n"
+"La tua squadra di Back In Time"
+
+#: qt/app.py:2090
+msgid "The language settings take effect only after restarting Back In Time."
+msgstr ""
+"Le impostazioni della lingua avranno effetto solo dopo aver riavviato Back "
+"In Time."
+
+#: qt/encfsmsgbox.py:42
+msgid ""
+"Support for EncFS will be discontinued in the foreseeable future. It is not "
+"recommended to use that mode for a profile furthermore."
+msgstr ""
+"Il supporto a EncFS sarà rimosso nel prossimo futuro. Si sconsiglia di usare"
+" ulteriormente questa modalità per un profilo."
+
+#: qt/encfsmsgbox.py:46 qt/encfsmsgbox.py:75
+#: qt/manageprofiles/tab_general.py:585
+msgid "whitepaper"
+msgstr "documento"
+
+#: qt/encfsmsgbox.py:48
+#, python-brace-format
+msgid ""
+"A decision on a replacement for continued support of encrypted backups is "
+"still pending, depending on project resources and contributor availability. "
+"More details are available in this {whitepaper}."
+msgstr ""
+"Si è ancora in attesa di una decisione per la sostituzione del supporto ai "
+"backup cifrati, in base alle risorse del progetto e alla disponibilità dei "
+"contributori. Maggiori dettagli in questo {whitepaper}."
+
+#: qt/encfsmsgbox.py:66
+msgid ""
+"The support for encrypted snapshot profiles is undergoing significant "
+"changes, and EncFS will be removed in the foreseeable future."
+msgstr ""
+"Il supporto ai profili con istantanee cifrate è sottoposto a modifiche "
+"significative e EncFS sarà rimosso nel prossimo futuro."
+
+#: qt/encfsmsgbox.py:77
+msgid "The following profile(s) use encryption with EncFS:"
+msgstr "I seguenti profili usano la cifratura con EncFS:"
+
+#: qt/encfsmsgbox.py:79
+#, python-brace-format
+msgid ""
+"A decision on a replacement for continued support of encrypted backups is "
+"still pending, depending on project resources and contributor availability. "
+"Users are invited to join this discussion. Updated details on the next steps"
+" are available in this {whitepaper}."
+msgstr ""
+"Si è ancora in attesa di una decisione per la sostituzione del supporto ai "
+"backup cifrati, in base alle risorse del progetto e alla disponibilità dei "
+"contributori. Gli utenti sono invitati a partecipare a questa discussione. "
+"Dettagli aggiornati sui prossimi passi sono disponibili in questo "
+"{whitepaper}."
+
+#: qt/encfsmsgbox.py:85
+msgid ""
+"This message will not be shown again. This dialog is available at any time "
+"via the help menu."
+msgstr ""
+"Questo messaggio non sarà più visualizzato. Questa finestra di dialogo è "
+"visualizzabile in ogni momento tramite il menù di aiuto."
+
+#: qt/encfsmsgbox.py:87
+msgid "Your Back In Time Team"
+msgstr "Il tuo team Back In Time"
+
+#: qt/languagedialog.py:35
+msgid "Setup language"
+msgstr "Imposta lingua"
+
+#: qt/languagedialog.py:97
+msgid "System default"
+msgstr "Default del sistema"
+
+#: qt/languagedialog.py:107
+msgid "Use operating systems language."
+msgstr "Usa la lingua del sistema operativo."
+
+#: qt/languagedialog.py:157
+#, python-brace-format
+msgid "Translated: {percent}"
+msgstr "Tradotto: {percent}"
+
+#: qt/logviewdialog.py:67
 msgid "Last Log View"
 msgstr "Visualizzazione Ultimo Registro"
 
-#: qt/logviewdialog.py:64
+#: qt/logviewdialog.py:69
 msgid "Snapshot Log View"
 msgstr "Visualizza il registro dell'istantanea"
 
-#: qt/logviewdialog.py:72 qt/qtsystrayicon.py:76 qt/settingsdialog.py:95
-#: qt/settingsdialog.py:330 qt/settingsdialog.py:2309
-msgid "Profile"
-msgstr "Profilo"
+#: qt/logviewdialog.py:77 qt/manageprofiles/__init__.py:70
+#: qt/manageprofiles/tab_general.py:262 qt/restoreconfigdialog.py:269
+msgid "Profile:"
+msgstr "Profilo:"
 
-#: qt/logviewdialog.py:80 qt/qttools.py:347 qt/snapshotsdialog.py:99
-msgid "Snapshots"
-msgstr "Istantanee"
+#: qt/logviewdialog.py:85
+msgid "Snapshots:"
+msgstr "Istantanee:"
 
-#: qt/logviewdialog.py:94
-msgid "Filter"
-msgstr "Filtro"
+#: qt/logviewdialog.py:100
+msgid "Filter:"
+msgstr "Filtro:"
 
-#: qt/logviewdialog.py:100 qt/settingsdialog.py:815
+#: qt/logviewdialog.py:106 qt/manageprofiles/tab_options.py:133
 msgid "All"
 msgstr "Tutti"
 
-#: qt/logviewdialog.py:106 qt/logviewdialog.py:109 qt/settingsdialog.py:814
+#: qt/logviewdialog.py:112 qt/logviewdialog.py:115
+#: qt/manageprofiles/tab_options.py:132
 msgid "Changes"
 msgstr "Cambiamenti"
 
-#: qt/logviewdialog.py:106 qt/logviewdialog.py:108 qt/settingsdialog.py:811
-#: qt/settingsdialog.py:814
+#: qt/logviewdialog.py:112 qt/logviewdialog.py:114
+#: qt/manageprofiles/tab_options.py:131 qt/manageprofiles/tab_options.py:132
 msgid "Errors"
 msgstr "Errori"
 
-#: qt/logviewdialog.py:110 qt/messagebox.py:71
+#: qt/logviewdialog.py:116 qt/messagebox.py:69
 msgid "Information"
-msgstr "Informazione"
+msgid_plural "Information"
+msgstr[0] "Informazione"
+msgstr[1] "Informazioni"
 
-#: qt/logviewdialog.py:111
+#: qt/logviewdialog.py:118
 msgid "rsync transfer failures (experimental)"
-msgstr ""
+msgstr "errori trasferimento rsync (sperimentale)"
 
-#: qt/logviewdialog.py:121
+#: qt/logviewdialog.py:129
 msgid "[E] Error, [I] Information, [C] Change"
 msgstr "[E] Errore, [I] Informazione, [C] Cambiamento"
 
-#: qt/logviewdialog.py:124 qt/qtsystrayicon.py:98
+#: qt/logviewdialog.py:132 qt/qtsystrayicon.py:99
 msgid "decode paths"
 msgstr "decodifica i percorsi"
 
-#: qt/logviewdialog.py:182
-msgid "Copy"
-msgstr "Copia"
-
-#: qt/logviewdialog.py:190
-msgid "Decode"
-msgstr "Decodifica"
-
-#: qt/logviewdialog.py:212
-msgid "Do you want to exclude this?"
-msgstr "Vuoi escluderlo?"
-
-#: qt/messagebox.py:82 qt/messagebox.py:90
-msgid "Question"
-msgstr "Domanda"
-
-#: qt/qtsystrayicon.py:103
-msgid "View Last Log"
-msgstr "Visualizza ultimo log"
-
-#: qt/qtsystrayicon.py:107
-#, python-brace-format
-msgid "Start {appname}"
-msgstr "Avvia {appname}"
-
-#: qt/qtsystrayicon.py:169
-msgid "Working…"
-msgstr "Lavoro in corso…"
-
-#: qt/qttools.py:370
-msgid "Today"
-msgstr "Oggi"
-
-#: qt/qttools.py:377
-msgid "Yesterday"
-msgstr "Ieri"
-
-#: qt/qttools.py:386
-msgid "This week"
-msgstr "Questa settimana"
-
-#: qt/qttools.py:393
-msgid "Last week"
-msgstr "Scorsa settimana"
-
-#: qt/qttools.py:539
-msgid "This is NOT a snapshot but a live view of your local files"
-msgstr ""
-"Questa NON è un'istantanea, bensì una vista attuale dei tuoi file locali"
-
-#: qt/qttools.py:544
-#, python-brace-format
-msgid "Last check {time}"
-msgstr "Ultimo controllo {time}"
-
-#: qt/restoredialog.py:60
-msgid "Show full Log"
-msgstr "Mostra il registro completo"
-
-#: qt/settingsdialog.py:87
+#: qt/manageprofiles/__init__.py:62
 msgid "Manage profiles"
 msgstr "Gestione profili"
 
-#: qt/settingsdialog.py:104
+#: qt/manageprofiles/__init__.py:79
 msgid "Edit"
 msgstr "Modifica"
 
-#: qt/settingsdialog.py:108 qt/settingsdialog.py:566
+#: qt/manageprofiles/__init__.py:83 qt/manageprofiles/__init__.py:198
 msgid "Add"
 msgstr "Aggiungi"
 
-#: qt/settingsdialog.py:112 qt/settingsdialog.py:515 qt/settingsdialog.py:584
+#: qt/manageprofiles/__init__.py:87 qt/manageprofiles/__init__.py:145
+#: qt/manageprofiles/__init__.py:216
 msgid "Remove"
 msgstr "Rimuovi"
 
-#: qt/settingsdialog.py:127
+#: qt/manageprofiles/__init__.py:108
 msgid "&General"
 msgstr "&Generale"
 
-#: qt/settingsdialog.py:137 qt/settingsdialog.py:2311
-msgid "Mode"
-msgstr "Modalità"
-
-#: qt/settingsdialog.py:152
-#, python-brace-format
-msgid ""
-"{app} uses EncFS for encryption. A recent security audit revealed several "
-"possible attack vectors for this. Please take a look at \"A NOTE ON "
-"SECURITY\" in \"man backintime\"."
-msgstr ""
-"{app} utilizza EncFS per la crittografia. Una recente revisione di sicurezza"
-" ha rivelato numerosi possibili vettori d'attacco in questa configurazione. "
-"Per favore consulta la sezione 'A NOTE ON SECURITY' in 'man backintime'."
-
-#: qt/settingsdialog.py:163 qt/settingsdialog.py:1922
-msgid "Where to save snapshots"
-msgstr "Dove salvare le istantanee"
-
-#: qt/settingsdialog.py:179
-msgid "Folder"
-msgstr "Cartella"
-
-#: qt/settingsdialog.py:187
-msgid "SSH Settings"
-msgstr "Impostazioni di SSH"
-
-#: qt/settingsdialog.py:199 qt/settingsdialog.py:318
-msgid "Host"
-msgstr "Host"
-
-#: qt/settingsdialog.py:204
-msgid "Port"
-msgstr "Porta"
-
-#: qt/settingsdialog.py:209 qt/settingsdialog.py:324
-msgid "User"
-msgstr "Utente"
-
-#: qt/settingsdialog.py:214
-msgid "Path"
-msgstr "Percorso"
-
-#: qt/settingsdialog.py:220
-msgid "Cipher"
-msgstr "Cifratura"
-
-#: qt/settingsdialog.py:226
-msgid "Private Key"
-msgstr "Chiave privata"
-
-#: qt/settingsdialog.py:236
-msgid "Choose an existing private key file (normally named \"id_rsa\")"
-msgstr ""
-"Seleziona un file di chiave privata esistente (di solito chiamato "
-"\"id_rsa\")"
-
-#: qt/settingsdialog.py:246
-msgid ""
-"Create a new SSH key without password (not allowed if a private key file is "
-"already selected)"
-msgstr ""
-"Crea una nuova chiave SSH senza password (non permesso se è già stato "
-"selezionato un file di chiave privata)"
-
-#: qt/settingsdialog.py:266 qt/settingsdialog.py:275 qt/settingsdialog.py:281
-msgid "Password"
-msgstr "Password"
-
-#: qt/settingsdialog.py:287
-msgid "Save Password to Keyring"
-msgstr "Salva la password nel gestore delle password"
-
-#: qt/settingsdialog.py:291
-msgid "Cache Password for Cron (Security issue: root can read password)"
-msgstr ""
-"Salva la password per Cron (problema di sicurezza: l'utente root può leggere"
-" la password)"
-
-#: qt/settingsdialog.py:306
-msgid "Advanced"
-msgstr "Avanzate"
-
-#: qt/settingsdialog.py:336
-msgid "Full snapshot path"
-msgstr "Percorso completo per le istantanee"
-
-#: qt/settingsdialog.py:343
-msgid "Schedule"
-msgstr "Pianificazione"
-
-#: qt/settingsdialog.py:355
-msgid "Disabled"
-msgstr "Disabilitato"
-
-#: qt/settingsdialog.py:356
-msgid "At every boot/reboot"
-msgstr "Ad ogni avvio/riavvio"
-
-#: qt/settingsdialog.py:358 qt/settingsdialog.py:360 qt/settingsdialog.py:362
-#, python-brace-format
-msgid "Every {n} minute"
-msgid_plural "Every {n} minutes"
-msgstr[0] "Ogni minuto"
-msgstr[1] "Ogni {n} minuti"
-
-#: qt/settingsdialog.py:363
-msgid "Every hour"
-msgstr "Ogni ora"
-
-#: qt/settingsdialog.py:365 qt/settingsdialog.py:367 qt/settingsdialog.py:369
-#: qt/settingsdialog.py:371
-#, python-brace-format
-msgid "Every {n} hour"
-msgid_plural "Every {n} hours"
-msgstr[0] "Ogni {n} ora"
-msgstr[1] "Ogni {n} ore"
-
-#: qt/settingsdialog.py:372
-msgid "Custom hours"
-msgstr "Orario personalizzato"
-
-#: qt/settingsdialog.py:373
-msgid "Every day"
-msgstr "Ogni giorno"
-
-#: qt/settingsdialog.py:374
-msgid "Repeatedly (anacron)"
-msgstr "Ripetutamente (anacron)"
-
-#: qt/settingsdialog.py:375
-msgid "When drive gets connected (udev)"
-msgstr "Quando il drive viene connesso (udev)"
-
-#: qt/settingsdialog.py:376
-msgid "Every week"
-msgstr "Ogni settimana"
-
-#: qt/settingsdialog.py:377
-msgid "Every month"
-msgstr "Ogni mese"
-
-#: qt/settingsdialog.py:378
-msgid "Every year"
-msgstr "Ogni anno"
-
-#: qt/settingsdialog.py:383
-msgid "Day"
-msgstr "Giorno"
-
-#: qt/settingsdialog.py:394
-msgid "Weekday"
-msgstr "Giorno della settimana"
-
-#: qt/settingsdialog.py:409
-msgid "Hour"
-msgstr "Ora"
-
-#: qt/settingsdialog.py:424
-msgid "Hours"
-msgstr "Ore"
-
-#: qt/settingsdialog.py:435
-msgid ""
-"Run Back In Time repeatedly. This is useful if the computer is not running "
-"regularly."
-msgstr ""
-"Avvia Back In Time ripetutamente. È utile se il computer non viene avviato "
-"regolarmente."
-
-#: qt/settingsdialog.py:442
-msgid "Every"
-msgstr "Ogni"
-
-#: qt/settingsdialog.py:456
-msgid "Hour(s)"
-msgstr "Ora(e)"
-
-#: qt/settingsdialog.py:457 qt/settingsdialog.py:634
-msgid "Day(s)"
-msgstr "Giorno(i)"
-
-#: qt/settingsdialog.py:458 qt/settingsdialog.py:635
-msgid "Week(s)"
-msgstr "Settimana(e)"
-
-#: qt/settingsdialog.py:459
-msgid "Month(s)"
-msgstr "Mese(i)"
-
-#: qt/settingsdialog.py:469
-msgid ""
-"Run Back In Time as soon as the drive is connected (only once every X days).\n"
-"You will be prompted for your sudo password."
-msgstr ""
-"Avvia Back In Time non appena il dispositivo viene collegato (solo una volta ogni X giorni).\n"
-"Ti verrà richiesta la tua password di sudo."
-
-#: qt/settingsdialog.py:484
+#: qt/manageprofiles/__init__.py:112
 msgid "&Include"
 msgstr "&Includi"
 
-#: qt/settingsdialog.py:491
-msgid "Include files and folders"
+#: qt/manageprofiles/__init__.py:120
+msgid "Include files and directories"
 msgstr "Includi file e cartelle"
 
-#: qt/settingsdialog.py:507 qt/settingsdialog.py:570
+#: qt/manageprofiles/__init__.py:137 qt/manageprofiles/__init__.py:202
 msgid "Add file"
 msgstr "Aggiungi file"
 
-#: qt/settingsdialog.py:511 qt/settingsdialog.py:574
-msgid "Add folder"
+#: qt/manageprofiles/__init__.py:141 qt/manageprofiles/__init__.py:206
+msgid "Add directory"
 msgstr "Aggiungi cartella"
 
-#: qt/settingsdialog.py:521
+#: qt/manageprofiles/__init__.py:151
 msgid "&Exclude"
 msgstr "&Escludi"
 
-#: qt/settingsdialog.py:528
+#: qt/manageprofiles/__init__.py:155
 #, python-brace-format
 msgid ""
-"Wildcards ({example1}) will be ignored with mode 'SSH encrypted'.\n"
-"Only single or double asterisks are allowed ({example2})"
+"{BOLD}Info{ENDBOLD}: In 'SSH encrypted' mode, only single or double "
+"asterisks are functional (e.g. {example2}). Other types of wildcards and "
+"patterns will be ignored (e.g. {example1}). Filenames are unpredictable in "
+"this mode due to encryption by EncFS."
 msgstr ""
-"Le wildcard ({example1}) verranno ignorate nella modalità 'SSH cifrato'.\n"
-"Sono ammessi solo asterischi singoli o doppi ({example2})"
+"{BOLD}Info{ENDBOLD}: nella modalità 'SSH cifrato' funzionano solo gli "
+"asterischi singoli e doppi (es. {example2}). Gli altri tipi di caratteri "
+"jolly e pattern saranno ignorati (es. {example1}). In questa modalità i nomi"
+" di file non sono prevedibili a causa della cifratura di EncFS."
 
-#: qt/settingsdialog.py:543
-msgid "Exclude patterns, files or folders"
-msgstr "Esclusione pattern, file o cartelle"
+#: qt/manageprofiles/__init__.py:178
+msgid "Exclude patterns, files or directories"
+msgstr "Escludi pattern, file o cartelle"
 
-#: qt/settingsdialog.py:556
-msgid "Highly recommended"
-msgstr "Fortemente raccomandato"
-
-#: qt/settingsdialog.py:579
+#: qt/manageprofiles/__init__.py:211
 msgid "Add default"
 msgstr "Aggiungi predefiniti"
 
-#: qt/settingsdialog.py:592
-msgid "Exclude files bigger than: "
-msgstr "Escludi file più grandi di: "
+#: qt/manageprofiles/__init__.py:224
+msgid "Exclude files bigger than:"
+msgstr "Escludi file più grandi di:"
 
-#: qt/settingsdialog.py:594
-#, python-format
+#: qt/manageprofiles/__init__.py:228
+#, python-brace-format
+msgid "Exclude files bigger than value in {size_unit}."
+msgstr "Escludi file più grandi del valore in {size_unit}."
+
+#: qt/manageprofiles/__init__.py:230
 msgid ""
-"Exclude files bigger than value in %(prefix)s.\n"
-"With 'Full rsync mode' disabled this will only affect new files\n"
-"because for rsync this is a transfer option, not an exclude option.\n"
-"So big files that have been backed up before will remain in snapshots\n"
-"even if they have changed."
+"With 'Full rsync mode' disabled, this will only impact new files since for "
+"rsync, this is a transfer option, not an exclusion option. Therefore, large "
+"files that have been backed up previously will persist in snapshots even if "
+"they have been modified."
 msgstr ""
-"Escludi file più grandi del valore in %(prefix)s.\n"
-"Se la 'Modalità rsync completo' è disabilitata, avrà effetto solo sui nuovi file\n"
-"perché rsync la tratta come un'opzione di trasferimento, non di esclusione.\n"
-"Per questo motivo i file copiati in precedenza rimarranno nelle istantanee\n"
-"anche se sono cambiati."
+"Se la 'Modalità rsync completo' è disabilitata, questo avrà effetto solo sui"
+" nuovi file, perché rsync la tratta come un'opzione di trasferimento, non di"
+" esclusione. Per questo motivo i file già sottoposti a backup in precedenza "
+"rimarranno nelle istantanee anche se sono stati modificati."
 
-#: qt/settingsdialog.py:616
+#: qt/manageprofiles/__init__.py:249
 msgid "&Auto-remove"
 msgstr "Rimozione &automatica"
 
-#: qt/settingsdialog.py:622
-msgid "Older than"
-msgstr "Più vecchi di"
-
-#: qt/settingsdialog.py:636
-msgid "Year(s)"
-msgstr "Anno(i)"
-
-#: qt/settingsdialog.py:644
-msgid "If free space is less than"
-msgstr "Se lo spazio libero è minore di"
-
-#: qt/settingsdialog.py:664
-msgid "If free inodes is less than"
-msgstr "Se gli inode liberi sono meno del"
-
-#: qt/settingsdialog.py:678
-msgid "Smart remove:"
-msgstr "Rimozione intelligente:"
-
-#: qt/settingsdialog.py:689
-msgid "Run in background on remote host."
-msgstr "Esegui in sottofondo sull'host remoto."
-
-#: qt/settingsdialog.py:690
-msgid "EXPERIMENTAL"
-msgstr "SPERIMENTALE"
-
-#: qt/settingsdialog.py:696
-msgid "Keep all snapshots for the last"
-msgstr "Mantieni tutte le istantanee degli ultimi"
-
-#: qt/settingsdialog.py:700 qt/settingsdialog.py:707
-msgid "day(s)."
-msgstr "giorno/i."
-
-#: qt/settingsdialog.py:703
-msgid "Keep one snapshot per day for the last"
-msgstr "Mantieni un'istantanea al giorno per gli ultimi"
-
-#: qt/settingsdialog.py:710
-msgid "Keep one snapshot per week for the last"
-msgstr "Mantieni un'istantanea alla settimana per le ultime"
-
-#: qt/settingsdialog.py:714
-msgid "week(s)."
-msgstr "settimana/e."
-
-#: qt/settingsdialog.py:717
-msgid "Keep one snapshot per month for the last"
-msgstr "Mantieni un'istantanea al mese per gli ultimi"
-
-#: qt/settingsdialog.py:721
-msgid "month(s)."
-msgstr "mese/i."
-
-#: qt/settingsdialog.py:724
-msgid "Keep one snapshot per year for all years."
-msgstr "Mantieni un'istantanea all'anno per tutti gli anni."
-
-#: qt/settingsdialog.py:733
-msgid "Don't remove named snapshots."
-msgstr "Non rimuovere le istantanee a cui è stato assegnato un nome."
-
-#: qt/settingsdialog.py:745
+#: qt/manageprofiles/__init__.py:253
 msgid "&Options"
 msgstr "&Opzioni"
 
-#: qt/settingsdialog.py:750
-msgid "Enable notifications"
-msgstr "Attiva le notifiche"
-
-#: qt/settingsdialog.py:754
-msgid "Disable snapshots when on battery"
-msgstr "Disabilita le istantanee quando si usa la batteria"
-
-#: qt/settingsdialog.py:758
-msgid "Power status not available from system"
-msgstr "Impossibile stabilire la modalità di alimentazione"
-
-#: qt/settingsdialog.py:761
-msgid "Run only one snapshot at a time"
-msgstr "Esegui solo un'istantanea alla volta"
-
-#: qt/settingsdialog.py:763
-msgid ""
-"Other snapshots will be blocked until the current snapshot is done.\n"
-"This is a global option. So it will affect all profiles for this user.\n"
-"But you need to activate this for all other users, too."
-msgstr ""
-"Le altre istantanee verranno bloccate finché l'istantanea corrente non sarà terminata.\n"
-"Questa è un'opzione globale, pertanto avrà effetto su tutti i profili di questo utente.\n"
-"Tuttavia devi attivare quest'opzione anche per gli altri utenti."
-
-#: qt/settingsdialog.py:772
-msgid "Backup replaced files on restore"
-msgstr "Esegui il backup dei file sostituiti durante il ripristino"
-
-#: qt/settingsdialog.py:785
-msgid "Continue on errors (keep incomplete snapshots)"
-msgstr "Continua in caso di errore (mantiene un'istantanea incompleta)"
-
-#: qt/settingsdialog.py:789
-msgid "Use checksum to detect changes"
-msgstr "Usa il checksum per riconoscere i cambiamenti"
-
-#: qt/settingsdialog.py:793
-msgid "Take a new snapshot whether there were changes or not."
-msgstr ""
-"Prendi un'istantanea anche se non ci sono modifiche rispetto alla "
-"precedente."
-
-#: qt/settingsdialog.py:800
-msgid "Log Level"
-msgstr "Livello dei log"
-
-#: qt/settingsdialog.py:805
-msgid "None"
-msgstr "Nulla"
-
-#: qt/settingsdialog.py:825
+#: qt/manageprofiles/__init__.py:257
 msgid "E&xpert Options"
 msgstr "Op&zioni per esperti"
 
-#: qt/settingsdialog.py:830
-msgid ""
-"Caution: Change these options only if you really know what you are doing."
-msgstr ""
-"Attenzione: Cambiare queste opzioni solo se si sa cosa si sta facendo."
-
-#: qt/settingsdialog.py:835 qt/settingsdialog.py:851 qt/settingsdialog.py:873
-#, python-brace-format
-msgid "Run 'rsync' with '{cmd}':"
-msgstr "Esegui 'rsync' con '{cmd}':"
-
-#: qt/settingsdialog.py:842 qt/settingsdialog.py:858
-msgid "as cron job"
-msgstr "come cron job"
-
-#: qt/settingsdialog.py:847 qt/settingsdialog.py:868 qt/settingsdialog.py:889
-msgid "on remote host"
-msgstr "sull'host remoto"
-
-#: qt/settingsdialog.py:863
-msgid "when taking a manual snapshot"
-msgstr "quando si prende un'istantanea manuale"
-
-#: qt/settingsdialog.py:876
-msgid "(Please install 'nocache' to enable this option)"
-msgstr "(Per favore installa 'nocache' per abilitare questa opzione)"
-
-#: qt/settingsdialog.py:883
-msgid "on local machine"
-msgstr "sulla macchina locale"
-
-#: qt/settingsdialog.py:894
-msgid "Redirect stdout to /dev/null in cronjobs."
-msgstr "Redirigi stdout verso /dev/null nei cronjob."
-
-#: qt/settingsdialog.py:903
-msgid "Redirect stderr to /dev/null in cronjobs."
-msgstr "Redirigi stderr verso /dev/null nei cronjob."
-
-#: qt/settingsdialog.py:915
-msgid "Limit rsync bandwidth usage"
-msgstr "Limita la banda utilizzata da rsync"
-
-#: qt/settingsdialog.py:918
-msgid "KB/sec"
-msgstr "KB/s"
-
-#: qt/settingsdialog.py:956
-msgid "Preserve ACL"
-msgstr "Preserva ACL"
-
-#: qt/settingsdialog.py:971
-msgid "Preserve extended attributes (xattr)"
-msgstr "Preserva attributi estesi (xattr)"
-
-#: qt/settingsdialog.py:991
-msgid "Copy unsafe links (works only with absolute links)"
-msgstr ""
-"Copia collegamenti non sicuri (funziona solo con collegamenti assoluti)"
-
-#: qt/settingsdialog.py:1024
-#, python-brace-format
-msgid "Options must be quoted e.g. {example}."
-msgstr "Le opzioni devono essere racchiuse tra virgolette, es. {example}."
-
-#: qt/settingsdialog.py:1027
-msgid "Paste additional options to rsync"
-msgstr "Passa opzioni addizionali ad rsync"
-
-#: qt/settingsdialog.py:1042
-#, python-format
-msgid ""
-"Prefix to run before every command on remote host.\n"
-"Variables need to be escaped with \\$FOO.\n"
-"This doesn't touch rsync. So to add a prefix\n"
-"for rsync use \"%(cbRsyncOptions)s\" with\n"
-"%(rsync_options_value)s\n"
-"\n"
-"%(default)s: %(def_value)s"
-msgstr ""
-"Prefisso da eseguire prima di ogni comando sull'host remoto.\n"
-"Le variabili necessitano di escaping con \\$FOO.\n"
-"Questo non tocca rsync. Quindi per aggiungere un prefisso\n"
-"per rsync usa \"%(cbRsyncOptions)s\" con\n"
-"%(rsync_options_value)s\n"
-"\n"
-"%(default)s: %(def_value)s"
-
-#: qt/settingsdialog.py:1050 qt/settingsdialog.py:2069
-msgid "default"
-msgstr "default"
-
-#: qt/settingsdialog.py:1052
-msgid "Add prefix to SSH commands"
-msgstr "Aggiungi prefisso ai comandi SSH"
-
-#: qt/settingsdialog.py:1065
-msgid "Check if remote host is online"
-msgstr "Controlla se l'host remoto è online"
-
-#: qt/settingsdialog.py:1067
-msgid ""
-"Warning: if disabled and the remote host\n"
-"is not available, this could lead to some\n"
-"weird errors."
-msgstr ""
-"Attenzione: se disabilitato e l'host remoto\n"
-"non è disponibile, questo potrebbe portare ad alcuni\n"
-"errori strani."
-
-#: qt/settingsdialog.py:1071
-msgid "Check if remote host supports all necessary commands"
-msgstr "Controlla se l'host remoto supporta tutti i comandi necessari"
-
-#: qt/settingsdialog.py:1073
-msgid ""
-"Warning: if disabled and the remote host\n"
-"does not support all necessary commands,\n"
-"this could lead to some weird errors."
-msgstr ""
-"Attenzione: se disabilitato e l'host remoto\n"
-"non supporta tutti i comandi necessari,\n"
-"questo potrebbe portare ad alcuni strani errori."
-
-#: qt/settingsdialog.py:1089
+#: qt/manageprofiles/__init__.py:264
 msgid "Restore Config"
 msgstr "Ripristina configurazione"
 
-#: qt/settingsdialog.py:1091
+#: qt/manageprofiles/__init__.py:266
 msgid "Edit user-callback"
 msgstr "Modifica callback utente"
 
-#: qt/settingsdialog.py:1109
+#: qt/manageprofiles/__init__.py:284
 msgid "New profile"
 msgstr "Nuovo profilo"
 
-#: qt/settingsdialog.py:1126
+#: qt/manageprofiles/__init__.py:301
 msgid "Rename profile"
 msgstr "Rinomina profilo"
 
-#: qt/settingsdialog.py:1142
+#: qt/manageprofiles/__init__.py:317
 #, python-brace-format
 msgid "Are you sure you want to delete the profile \"{name}\"?"
 msgstr "Sei sicuro di voler eliminare il profilo \"{name}\" ?"
 
-#: qt/settingsdialog.py:1416
-msgid ""
-"Custom hours can only be a comma separated list of hours (e.g. 8,12,18,23) "
-"or */3 for periodic backups every 3 hours."
-msgstr ""
-"L'orario personalizzato può essere solo un elenco di ore separate da virgola"
-" (es. 8,12,18,23) oppure */3 per backup periodici ogni 3 ore."
-
-#: qt/settingsdialog.py:1458
-msgid ""
-"You did not choose a private key file for SSH.\n"
-"Would you like to generate a new password-less public/private key pair?"
-msgstr ""
-"Non hai scelto un file di chiave privata per SSH.\n"
-"Vorresti generare una nuova coppia di chiavi pubblica / privata senza password?"
-
-#: qt/settingsdialog.py:1469
-#, python-brace-format
-msgid "Private key file \"{file}\" does not exist."
-msgstr "Il file chiave privata \"{file}\" non esiste."
-
-#: qt/settingsdialog.py:1621
-msgid ""
-"Would you like to copy your public SSH key to the\n"
-"remote host to enable password-less login?"
-msgstr ""
-"Vuoi copiare la tua chiave SSH pubblica sull'\n"
-"host remoto per abilitare il login senza password?"
-
-#: qt/settingsdialog.py:1649
+#: qt/manageprofiles/__init__.py:364
 #, python-brace-format
 msgid ""
-"The authenticity of host {host} can't be established.\n"
-"\n"
-"{keytype} key fingerprint is:"
+"{BOLD}Highly recommended{ENDBOLD}: (All recommendations already included.)"
 msgstr ""
-"L'autenticità dell'host \"{host}\" non può essere stabilita.\n"
-"\n"
-"L'impronta digitale della chiave {keytype} è:"
+"{BOLD}Fortemente raccomandato{ENDBOLD}: (Tutte le raccomandazioni già "
+"incluse.)"
 
-#: qt/settingsdialog.py:1659
-msgid ""
-"Please verify this fingerprint! Would you like to add it to your "
-"'known_hosts' file?"
-msgstr ""
-"Si prega di verificare questa impronta digitale! Vorresti aggiungerla al tuo"
-" file 'known_hosts'?"
+#: qt/manageprofiles/__init__.py:369
+#, python-brace-format
+msgid "{BOLD}Highly recommended{ENDBOLD}: {files}"
+msgstr "{BOLD}Fortemente raccomandato{ENDBOLD}: {files}"
 
-#: qt/settingsdialog.py:1822
+#: qt/manageprofiles/__init__.py:598
 msgid "Exclude pattern"
 msgstr "Pattern di esclusione"
 
-#: qt/settingsdialog.py:1835
+#: qt/manageprofiles/__init__.py:611
 msgid "Exclude file"
 msgstr "Escludi file"
 
-#: qt/settingsdialog.py:1839
-msgid "Exclude folder"
+#: qt/manageprofiles/__init__.py:615
+msgid "Exclude directory"
 msgstr "Escludi cartella"
 
-#: qt/settingsdialog.py:1863
+#: qt/manageprofiles/__init__.py:639
 msgid "Include file"
 msgstr "Includi file"
 
-#: qt/settingsdialog.py:1872 qt/settingsdialog.py:1902
+#: qt/manageprofiles/__init__.py:648 qt/manageprofiles/__init__.py:678
 #, python-brace-format
 msgid ""
 "\"{path}\" is a symlink. The linked target will not be backed up until you include it, too.\n"
@@ -1592,366 +1224,900 @@ msgstr ""
 "\"{path}\" è un link simbolico. La destinazione del link non sarà copiata nel backup se non la includerai esplicitamente.\n"
 "Vuoi piuttosto includere la destinazione del link simbolico?"
 
-#: qt/settingsdialog.py:1893
-msgid "Include folder"
+#: qt/manageprofiles/__init__.py:669
+msgid "Include directory"
 msgstr "Includi cartella"
 
-#: qt/settingsdialog.py:1930
-msgid "Are you sure you want to change snapshots folder?"
-msgstr "Sei sicuro di voler cambiare la cartella delle istantanee?"
+#: qt/manageprofiles/__init__.py:728
+msgid ""
+"Disabled because this pattern is not functional in mode 'SSH encrypted'."
+msgstr ""
+"Disabilitato perché questo pattern non è funzionante in modalità 'SSH "
+"cifrato'."
 
-#: qt/settingsdialog.py:1955
+#: qt/manageprofiles/schedulewidget.py:37
+msgid "Schedule"
+msgstr "Pianificazione"
+
+#: qt/manageprofiles/schedulewidget.py:63
+msgid "Day:"
+msgstr "Giorno:"
+
+#: qt/manageprofiles/schedulewidget.py:68
+msgid "Weekday:"
+msgstr "Giorno della settimana:"
+
+#: qt/manageprofiles/schedulewidget.py:73
+msgid "Time:"
+msgstr "Tempo:"
+
+#: qt/manageprofiles/schedulewidget.py:78
+msgid "Hours:"
+msgstr "Ore:"
+
+#: qt/manageprofiles/schedulewidget.py:82
+msgid ""
+"Run Back In Time as soon as the drive is connected (only once every X days)."
+" You will be prompted for your sudo password."
+msgstr ""
+"Avvia Back In Time non appena il dispositivo viene collegato (solo una volta"
+" ogni X giorni). Ti verrà richiesta la password di sudo."
+
+#: qt/manageprofiles/schedulewidget.py:87
+msgid ""
+"Run Back In Time repeatedly. This is useful if the computer is not running "
+"regularly."
+msgstr ""
+"Avvia Back In Time ripetutamente. È utile se il computer non viene avviato "
+"regolarmente."
+
+#: qt/manageprofiles/schedulewidget.py:99
+msgid "Every:"
+msgstr "Ogni:"
+
+#: qt/manageprofiles/schedulewidget.py:103
+msgid "Enable logging of debug messages"
+msgstr "Abilita registrazione dei messaggi di debug"
+
+#: qt/manageprofiles/schedulewidget.py:107
+msgid "Writes debug-level messages into the system log via \"--debug\"."
+msgstr "Scrive i messaggi di debug nel registro di sistema tramite \"--debug\"."
+
+#: qt/manageprofiles/schedulewidget.py:109
+msgid ""
+"Caution: Only use this temporarily for diagnostics, as it generates a large "
+"amount of output."
+msgstr ""
+"Attenzione: da usare solo temporaneamente per diagnostica, in quanto genera "
+"una grande quantità di messaggi."
+
+#: qt/manageprofiles/schedulewidget.py:131
+msgid "Disabled"
+msgstr "Disabilitato"
+
+#: qt/manageprofiles/schedulewidget.py:132
+msgid "At every boot/reboot"
+msgstr "Ad ogni avvio/riavvio"
+
+#: qt/manageprofiles/schedulewidget.py:134
+#: qt/manageprofiles/schedulewidget.py:136
+#: qt/manageprofiles/schedulewidget.py:138
 #, python-brace-format
-msgid "Failed to create new SSH key in {path}"
-msgstr "Impossibile creare una nuova chiave SSH in {path}"
+msgid "Every {n} minute"
+msgid_plural "Every {n} minutes"
+msgstr[0] "Ogni minuto"
+msgstr[1] "Ogni {n} minuti"
 
-#: qt/settingsdialog.py:2014
-msgid "Full snapshot path: "
-msgstr "Percorso completo per le istantanee: "
+#: qt/manageprofiles/schedulewidget.py:140
+#, python-brace-format
+msgid "Every hour"
+msgid_plural "Every {n} hours"
+msgstr[0] "Ogni ora"
+msgstr[1] "Ogni {n} ore"
 
-#: qt/settingsdialog.py:2064
-msgid "enabled"
-msgstr "abilitato"
+#: qt/manageprofiles/schedulewidget.py:142
+#: qt/manageprofiles/schedulewidget.py:144
+#: qt/manageprofiles/schedulewidget.py:146
+#: qt/manageprofiles/schedulewidget.py:148
+#, python-brace-format
+msgid "Every {n} hour"
+msgid_plural "Every {n} hours"
+msgstr[0] "Ogni {n} ora"
+msgstr[1] "Ogni {n} ore"
 
-#: qt/settingsdialog.py:2067
+#: qt/manageprofiles/schedulewidget.py:149
+msgid "Custom hours"
+msgstr "Orario personalizzato"
+
+#: qt/manageprofiles/schedulewidget.py:150
+msgid "Every day"
+msgstr "Ogni giorno"
+
+#: qt/manageprofiles/schedulewidget.py:151
+msgid "Repeatedly (anacron)"
+msgstr "Ripetutamente (anacron)"
+
+#: qt/manageprofiles/schedulewidget.py:152
+msgid "When drive gets connected (udev)"
+msgstr "Quando il drive viene connesso (udev)"
+
+#: qt/manageprofiles/schedulewidget.py:153
+msgid "Every week"
+msgstr "Ogni settimana"
+
+#: qt/manageprofiles/schedulewidget.py:154
+msgid "Every month"
+msgstr "Ogni mese"
+
+#: qt/manageprofiles/schedulewidget.py:155
+msgid "Every year"
+msgstr "Ogni anno"
+
+#: qt/manageprofiles/schedulewidget.py:204
+msgid "Hour(s)"
+msgstr "Ora(e)"
+
+#: qt/manageprofiles/schedulewidget.py:205
+#: qt/manageprofiles/tab_auto_remove.py:41
+msgid "Day(s)"
+msgstr "Giorno(i)"
+
+#: qt/manageprofiles/schedulewidget.py:206
+#: qt/manageprofiles/tab_auto_remove.py:42
+msgid "Week(s)"
+msgstr "Settimana(e)"
+
+#: qt/manageprofiles/schedulewidget.py:207
+msgid "Month(s)"
+msgstr "Mese(i)"
+
+#: qt/manageprofiles/schedulewidget.py:295
+msgid ""
+"Custom hours can only be a comma separated list of hours (e.g. 8,12,18,23) "
+"or */3 for periodic backups every 3 hours."
+msgstr ""
+"L'orario personalizzato può essere solo un elenco di ore separate da virgola"
+" (es. 8,12,18,23) oppure */3 per backup periodici ogni 3 ore."
+
+#: qt/manageprofiles/sshproxywidget.py:47
+msgid "SSH Proxy"
+msgstr "Proxy SSH"
+
+#: qt/manageprofiles/sshproxywidget.py:54 qt/manageprofiles/tab_general.py:112
+#: qt/manageprofiles/tab_general.py:250
+msgid "Host:"
+msgstr "Host:"
+
+#: qt/manageprofiles/sshproxywidget.py:58 qt/manageprofiles/tab_general.py:117
+msgid "Port:"
+msgstr "Porta:"
+
+#: qt/manageprofiles/sshproxywidget.py:62 qt/manageprofiles/tab_general.py:122
+#: qt/manageprofiles/tab_general.py:256
+msgid "User:"
+msgstr "Utente:"
+
+#: qt/manageprofiles/sshproxywidget.py:71
+msgid ""
+"Connect to the target host via this proxy (also known as a jump host). See "
+"\"-J\" in the \"ssh\" command documentation or \"ProxyJump\" in "
+"\"ssh_config\" man page for details."
+msgstr ""
+"Connetti all'host destinazione attraverso questo proxy (conosciuto anche "
+"come jump host). Per dettagli consulta \"-J\" nella documentazione del "
+"comando \"ssh\" o \"ProxyJump\" nella pagina del manuale."
+
+#: qt/manageprofiles/tab_auto_remove.py:43
+msgid "Year(s)"
+msgstr "Anno(i)"
+
+#: qt/manageprofiles/tab_auto_remove.py:47
+msgid "Older than:"
+msgstr "Più vecchi di:"
+
+#: qt/manageprofiles/tab_auto_remove.py:63
+msgid "If free space is less than:"
+msgstr "Se lo spazio libero è minore di:"
+
+#: qt/manageprofiles/tab_auto_remove.py:68
+msgid "If free inodes is less than:"
+msgstr "Se gli inode liberi sono meno del:"
+
+#: qt/manageprofiles/tab_auto_remove.py:94
+msgid "Smart removal:"
+msgstr "Rimozione intelligente:"
+
+#: qt/manageprofiles/tab_auto_remove.py:103
+msgid "Run in background on remote host."
+msgstr "Esegui in sottofondo sull'host remoto."
+
+#: qt/manageprofiles/tab_auto_remove.py:107
+msgid ""
+"The smart remove procedure will run directly on the remote machine, not "
+"locally. The commands \"bash\", \"screen\", and \"flock\" must be installed "
+"and available on the remote machine."
+msgstr ""
+"La procedura di rimozione intelligente sarà eseguita direttamente nella "
+"macchina remota, non localmente. I comandi \"bash\", \"screen\" e \"flock\" "
+"devono essere installati e disponibili sulla macchina remota."
+
+#: qt/manageprofiles/tab_auto_remove.py:111
+msgid "If selected, Back In Time will first test the remote machine."
+msgstr ""
+"Se selezionato, Back In Time effettuerà innanzi tutto un test della macchina"
+" remota."
+
+#: qt/manageprofiles/tab_auto_remove.py:118
+msgid "Keep all snapshots for the last"
+msgstr "Mantieni tutte le istantanee degli ultimi"
+
+#: qt/manageprofiles/tab_auto_remove.py:122
+#: qt/manageprofiles/tab_auto_remove.py:129
+msgid "day(s)."
+msgstr "giorno/i."
+
+#: qt/manageprofiles/tab_auto_remove.py:125
+msgid "Keep one snapshot per day for the last"
+msgstr "Mantieni un'istantanea al giorno per gli ultimi"
+
+#: qt/manageprofiles/tab_auto_remove.py:132
+msgid "Keep one snapshot per week for the last"
+msgstr "Mantieni un'istantanea alla settimana per le ultime"
+
+#: qt/manageprofiles/tab_auto_remove.py:136
+msgid "week(s)."
+msgstr "settimana/e."
+
+#: qt/manageprofiles/tab_auto_remove.py:139
+msgid "Keep one snapshot per month for the last"
+msgstr "Mantieni un'istantanea al mese per gli ultimi"
+
+#: qt/manageprofiles/tab_auto_remove.py:143
+msgid "month(s)."
+msgstr "mese/i."
+
+#: qt/manageprofiles/tab_auto_remove.py:146
+msgid "Keep one snapshot per year for all years."
+msgstr "Mantieni un'istantanea all'anno per tutti gli anni."
+
+#: qt/manageprofiles/tab_auto_remove.py:151
+msgid "Keep named snapshots."
+msgstr "Mantieni le istantanee con un nome."
+
+#: qt/manageprofiles/tab_auto_remove.py:153
+msgid ""
+"Snapshots that, in addition to the usual timestamp, have been given a name "
+"will not be deleted."
+msgstr ""
+"Le istantanee che, in aggiunta al consueto timestamp, hanno ricevuto un nome"
+" non saranno cancellate."
+
+#: qt/manageprofiles/tab_expert_options.py:39
+msgid "Caution:"
+msgstr "Attenzione:"
+
+#: qt/manageprofiles/tab_expert_options.py:40
+msgid ""
+"These options are for advanced configurations. Modify only if fully aware of"
+" their implications."
+msgstr ""
+"Queste opzioni sono pensate per le configurazioni avanzate. Modificale solo "
+"sei pienamente consapevole delle loro implicazioni."
+
+#: qt/manageprofiles/tab_expert_options.py:47
+#: qt/manageprofiles/tab_expert_options.py:67
+#: qt/manageprofiles/tab_expert_options.py:92
+#, python-brace-format
+msgid "Run 'rsync' with '{cmd}':"
+msgstr "Esegui 'rsync' con '{cmd}':"
+
+#: qt/manageprofiles/tab_expert_options.py:54
+#: qt/manageprofiles/tab_expert_options.py:73
+msgid "as cron job"
+msgstr "come cron job"
+
+#: qt/manageprofiles/tab_expert_options.py:60
+#: qt/manageprofiles/tab_expert_options.py:85
+#: qt/manageprofiles/tab_expert_options.py:116
+msgid "on remote host"
+msgstr "sull'host remoto"
+
+#: qt/manageprofiles/tab_expert_options.py:79
+msgid "when taking a manual snapshot"
+msgstr "quando si prende un'istantanea manuale"
+
+#: qt/manageprofiles/tab_expert_options.py:103
+msgid "Please install 'nocache' to enable this option."
+msgstr "Installa 'nocache' per abilitare questa opzione."
+
+#: qt/manageprofiles/tab_expert_options.py:109
+msgid "on local machine"
+msgstr "sulla macchina locale"
+
+#: qt/manageprofiles/tab_expert_options.py:123
+msgid "Redirect stdout to /dev/null in cronjobs."
+msgstr "Redirigi stdout verso /dev/null nei cronjob."
+
+#: qt/manageprofiles/tab_expert_options.py:129
+msgid ""
+"Cron will automatically send an email with attached output of cronjobs if an"
+" MTA is installed."
+msgstr ""
+"Cron invierà automaticamente una email con allegato il registro dei cronjob "
+"se un MTA è installato."
+
+#: qt/manageprofiles/tab_expert_options.py:135
+msgid "Redirect stderr to /dev/null in cronjobs."
+msgstr "Redirigi stderr verso /dev/null nei cronjob."
+
+#: qt/manageprofiles/tab_expert_options.py:141
+msgid ""
+"Cron will automatically send an email with attached errors of cronjobs if an"
+" MTA is installed."
+msgstr ""
+"Cron invierà automaticamente una email con allegato il registro errori dei "
+"cronjob se un MTA è installato."
+
+#: qt/manageprofiles/tab_expert_options.py:151
+msgid "KB/sec"
+msgstr "KB/s"
+
+#: qt/manageprofiles/tab_expert_options.py:156
+msgid "Limit rsync bandwidth usage:"
+msgstr "Limita la banda utilizzata da rsync:"
+
+#: qt/manageprofiles/tab_expert_options.py:197
+msgid "Preserve ACL"
+msgstr "Preserva ACL"
+
+#: qt/manageprofiles/tab_expert_options.py:215
+msgid "Preserve extended attributes (xattr)"
+msgstr "Preserva attributi estesi (xattr)"
+
+#: qt/manageprofiles/tab_expert_options.py:238
+msgid "Copy unsafe links (works only with absolute links)"
+msgstr ""
+"Copia collegamenti non sicuri (funziona solo con collegamenti assoluti)"
+
+#: qt/manageprofiles/tab_expert_options.py:274
+msgid "Restrict to one file system"
+msgstr "Limita a un file system"
+
+#: qt/manageprofiles/tab_expert_options.py:292
+#, python-brace-format
+msgid "Options must be quoted e.g. {example}."
+msgstr "Le opzioni devono essere racchiuse tra virgolette, es. {example}."
+
+#: qt/manageprofiles/tab_expert_options.py:301
+msgid "Paste additional options to rsync"
+msgstr "Passa opzioni aggiuntive a rsync"
+
+#: qt/manageprofiles/tab_expert_options.py:309
+msgid "Prefix to run before every command on remote host."
+msgstr "Prefisso da eseguire prima di ciascun comando sull'host remoto."
+
+#: qt/manageprofiles/tab_expert_options.py:310
+#, python-brace-format
+msgid ""
+"Variables need to be escaped with \\$FOO. This doesn't touch rsync. So to "
+"add a prefix for rsync use \"{example_value}\" with {rsync_options_value}."
+msgstr ""
+"Le variabili necessitano di escaping con \\$FOO. Questo non riguarda rsync. "
+"Quindi per aggiungere un prefisso per rsync usa \"{example_value}\" con "
+"{rsync_options_value}."
+
+#: qt/manageprofiles/tab_expert_options.py:318
+msgid "default"
+msgstr "default"
+
+#: qt/manageprofiles/tab_expert_options.py:324
+msgid "Add prefix to SSH commands"
+msgstr "Aggiungi prefisso ai comandi SSH"
+
+#: qt/manageprofiles/tab_expert_options.py:334
+msgid "Check if remote host is online"
+msgstr "Controlla se l'host remoto è online"
+
+#: qt/manageprofiles/tab_expert_options.py:337
+msgid ""
+"Warning: If disabled and the remote host is not available, this could lead "
+"to some weird errors."
+msgstr ""
+"Attenzione: se disabilitato e l'host remoto non è disponibile, questo "
+"potrebbe portare ad alcuni errori strani."
+
+#: qt/manageprofiles/tab_expert_options.py:341
+msgid "Check if remote host supports all necessary commands."
+msgstr "Controlla se l'host remoto supporta tutti i comandi necessari."
+
+#: qt/manageprofiles/tab_expert_options.py:344
+msgid ""
+"Warning: If disabled and the remote host does not support all necessary "
+"commands, this could lead to some weird errors."
+msgstr ""
+"Attenzione: se disabilitato e l'host remoto non supporta tutti i comandi "
+"necessari, questo potrebbe portare ad alcuni strani errori."
+
+#: qt/manageprofiles/tab_expert_options.py:359
+msgid "(default: {})"
+msgstr "(predefinito: {})"
+
+#: qt/manageprofiles/tab_expert_options.py:360
 msgid "disabled"
 msgstr "disabilitato"
 
-#: qt/settingsdialog.py:2112
-msgid "Restore Settings"
-msgstr "Ripristina impostazioni"
+#: qt/manageprofiles/tab_expert_options.py:360
+msgid "enabled"
+msgstr "abilitato"
 
-#: qt/settingsdialog.py:2125
+#: qt/manageprofiles/tab_general.py:62 qt/restoreconfigdialog.py:271
+msgid "Mode:"
+msgstr "Modalità:"
+
+#: qt/manageprofiles/tab_general.py:73 qt/manageprofiles/tab_general.py:604
+msgid "Where to save snapshots"
+msgstr "Dove salvare le istantanee"
+
+#: qt/manageprofiles/tab_general.py:91
+msgid "Directory"
+msgstr "Cartella"
+
+#: qt/manageprofiles/tab_general.py:100
+msgid "SSH Settings"
+msgstr "Impostazioni di SSH"
+
+#: qt/manageprofiles/tab_general.py:127
+msgid "Path:"
+msgstr "Percorso:"
+
+#: qt/manageprofiles/tab_general.py:133
+msgid "Cipher:"
+msgstr "Cifratura:"
+
+#: qt/manageprofiles/tab_general.py:138
+msgid "Private Key:"
+msgstr "Chiave privata:"
+
+#: qt/manageprofiles/tab_general.py:149
+msgid ""
+"Choose an existing private key file (normally named \"id_ed25519\" and in "
+"older setups \"id_rsa\")."
+msgstr ""
+"Seleziona un file di chiave privata esistente (di solito chiamato "
+"\"id_ed25519\" e nelle vecchie installazioni \"id_rsa\")."
+
+#: qt/manageprofiles/tab_general.py:161
+msgid ""
+"Create a new SSH key without password (not allowed if a private key file is "
+"already selected)."
+msgstr ""
+"Crea una nuova chiave SSH senza password (non permesso se è già stato "
+"selezionato un file di chiave privata)."
+
+#: qt/manageprofiles/tab_general.py:197 qt/manageprofiles/tab_general.py:204
+#: qt/manageprofiles/tab_general.py:208
+msgid "Password"
+msgstr "Password"
+
+#: qt/manageprofiles/tab_general.py:218
+msgid "Save Password to Keyring"
+msgstr "Salva la password nel gestore delle password"
+
+#: qt/manageprofiles/tab_general.py:222
+msgid "Cache Password for Cron (Security issue: root can read password)"
+msgstr ""
+"Salva la password per Cron (problema di sicurezza: l'utente root può leggere"
+" la password)"
+
+#: qt/manageprofiles/tab_general.py:238
+msgid "Advanced"
+msgstr "Avanzate"
+
+#: qt/manageprofiles/tab_general.py:268 qt/manageprofiles/tab_general.py:660
+msgid "Full snapshot path:"
+msgstr "Percorso completo per le istantanee:"
+
+#: qt/manageprofiles/tab_general.py:391
+msgid "You did not choose a private key file for SSH."
+msgstr "Non hai scelto un file di chiave privata per SSH."
+
+#: qt/manageprofiles/tab_general.py:392
+msgid ""
+"Would you like to generate a new password-less public/private key pair?"
+msgstr ""
+"Vorresti generare una nuova coppia di chiavi pubblica/privata senza "
+"password?"
+
+#: qt/manageprofiles/tab_general.py:403
+#, python-brace-format
+msgid "Private key file \"{file}\" does not exist."
+msgstr "Il file chiave privata \"{file}\" non esiste."
+
+#: qt/manageprofiles/tab_general.py:488
+msgid ""
+"Would you like to copy your public SSH key to the remote host to enable "
+"password-less login?"
+msgstr ""
+"Vuoi copiare la tua chiave SSH pubblica sull'host remoto per abilitare il "
+"login senza password?"
+
+#: qt/manageprofiles/tab_general.py:522
+#, python-brace-format
+msgid "The authenticity of host {host} can't be established."
+msgstr "L'autenticità dell'host \"{host}\" non può essere stabilita."
+
+#: qt/manageprofiles/tab_general.py:525
+#, python-brace-format
+msgid "{keytype} key fingerprint is:"
+msgstr "L'impronta digitale della chiave {keytype} è:"
+
+#: qt/manageprofiles/tab_general.py:533
+msgid ""
+"Please verify this fingerprint. Would you like to add it to your "
+"'known_hosts' file?"
+msgstr ""
+"Si prega di verificare questa impronta digitale. Vorresti aggiungerla al tuo"
+" file 'known_hosts'?"
+
+#: qt/manageprofiles/tab_general.py:578
 #, python-brace-format
 msgid ""
-"Please navigate to the snapshot from which you want to restore {appName}'s configuration. The path may look like:\n"
-"{samplePath}\n"
-"\n"
-"If your snapshots are on a remote drive or if they are encrypted you need to manually mount them first. If you use Mode SSH you also may need to set up public key login to the remote host.\n"
-"Take a look at 'man backintime'."
+"Support for EncFS will be discontinued in the foreseeable future. A decision"
+" on a replacement for continued support of encrypted backups is still "
+"pending, depending on project resources and contributor availability. More "
+"details are available in this {whitepaper}."
 msgstr ""
-"Per favore localizza l'istantanea dalla quale vuoi ripristinare la configurazione di {appName}. Il percorso potrebbe assomigliare a:\n"
-"{samplePath}\n"
-"\n"
-"Se le tue istantanee sono su un'unità remota o se sono cifrate, devi prima montarle manualmente. Se usi la modalità SSH, potresti anche aver bisogno di configurare l'accesso all'host remoto mediante chiave pubblica.\n"
-"Dai un'occhiata a: 'man backintime'."
+"Il supporto a EncFS sarà interrotto nel prossimo futuro.Si è ancora in "
+"attesa di una decisione per la sostituzione del supporto ai backup cifrati, "
+"in base alle risorse del progetto e alla disponibilità dei contributori. "
+"Maggiori dettagli in questo {whitepaper}."
 
-#: qt/settingsdialog.py:2187 qt/settingsdialog.py:2252
+#: qt/manageprofiles/tab_general.py:611
+msgid "Are you sure you want to change snapshots directory?"
+msgstr "Sei sicuro di voler cambiare la cartella delle istantanee?"
+
+#: qt/manageprofiles/tab_general.py:648
+#, python-brace-format
+msgid "Failed to create new SSH key in {path}."
+msgstr "Impossibile creare una nuova chiave SSH in {path}."
+
+#: qt/manageprofiles/tab_options.py:37
+msgid "Enable notifications"
+msgstr "Attiva le notifiche"
+
+#: qt/manageprofiles/tab_options.py:41
+msgid "Disable snapshots when on battery"
+msgstr "Disabilita le istantanee quando usi la batteria"
+
+#: qt/manageprofiles/tab_options.py:47
+msgid "Power status not available from system"
+msgstr "Impossibile stabilire la modalità di alimentazione"
+
+#: qt/manageprofiles/tab_options.py:49
+msgid "Run only one snapshot at a time"
+msgstr "Esegui solo un'istantanea alla volta"
+
+#: qt/manageprofiles/tab_options.py:53
+msgid ""
+"Other snapshots will be blocked until the current snapshot is done. This is "
+"a global option. So it will affect all profiles for this user. But you need "
+"to activate this for all other users, too."
+msgstr ""
+"Le altre istantanee saranno bloccate finché l'istantanea attuale non sarà "
+"completata. Questa è un'opzione globale, pertanto avrà effetto su tutti i "
+"profili di questo utente. Tuttavia devi attivare quest'opzione anche per gli"
+" altri utenti."
+
+#: qt/manageprofiles/tab_options.py:60
+msgid "Backup replaced files on restore"
+msgstr "Esegui il backup dei file sostituiti durante il ripristino"
+
+#: qt/manageprofiles/tab_options.py:64
+#, python-brace-format
+msgid ""
+"Newer versions of files will be renamed with trailing {suffix} before "
+"restoring. If you don't need them anymore you can remove them with {cmd}"
+msgstr ""
+"Le nuove versioni dei file saranno rinominate con il suffisso {suffix} prima"
+" del ripristino. Se non ne hai più bisogno, puoi rimuoverle con {cmd}"
+
+#: qt/manageprofiles/tab_options.py:75
+msgid "Continue on errors (keep incomplete snapshots)"
+msgstr "Continua in caso di errore (mantiene un'istantanea incompleta)"
+
+#: qt/manageprofiles/tab_options.py:79
+msgid "Use checksum to detect changes"
+msgstr "Usa il checksum per riconoscere i cambiamenti"
+
+#: qt/manageprofiles/tab_options.py:83
+msgid "Take a new snapshot whether there were changes or not."
+msgstr ""
+"Crea un'istantanea anche se non ci sono modifiche rispetto alla precedente."
+
+#: qt/manageprofiles/tab_options.py:90
+msgid "Log Level:"
+msgstr "Livello di log:"
+
+#: qt/manageprofiles/tab_options.py:130
+msgid "None"
+msgstr "Nulla"
+
+#: qt/messagebox.py:102 qt/messagebox.py:112
+msgid "Question"
+msgstr "Domanda"
+
+#: qt/qtsystrayicon.py:77
+#, python-brace-format
+msgid "Profile: {profile_name}"
+msgstr "Profilo: {profile_name}"
+
+#: qt/qtsystrayicon.py:104
+msgid "View Last Log"
+msgstr "Visualizza ultimo log"
+
+#: qt/qtsystrayicon.py:108
+#, python-brace-format
+msgid "Start {appname}"
+msgstr "Avvia {appname}"
+
+#: qt/qtsystrayicon.py:174
+msgid "Working…"
+msgstr "Lavoro in corso…"
+
+#: qt/qtsystrayicon.py:205
+msgid "Sent:"
+msgstr "Inviati:"
+
+#: qt/qtsystrayicon.py:206
+msgid "Speed:"
+msgstr "Velocità:"
+
+#: qt/qtsystrayicon.py:207
+msgid "ETA:"
+msgstr "ETA:"
+
+#: qt/qttools.py:405 qt/snapshotsdialog.py:123
+msgid "Snapshots"
+msgstr "Istantanee"
+
+#: qt/qttools.py:428
+msgid "Today"
+msgstr "Oggi"
+
+#: qt/qttools.py:435
+msgid "Yesterday"
+msgstr "Ieri"
+
+#: qt/qttools.py:444
+msgid "This week"
+msgstr "Questa settimana"
+
+#: qt/qttools.py:451
+msgid "Last week"
+msgstr "Scorsa settimana"
+
+#: qt/qttools.py:597
+msgid "This is NOT a snapshot but a live view of your local files"
+msgstr ""
+"Questa NON è un'istantanea, bensì una vista attuale dei tuoi file locali"
+
+#: qt/qttools.py:602
+#, python-brace-format
+msgid "Last check {time}"
+msgstr "Ultimo controllo {time}"
+
+#: qt/restoreconfigdialog.py:55
+msgid "Import configuration"
+msgstr "Importa configurazione"
+
+#: qt/restoreconfigdialog.py:111 qt/restoreconfigdialog.py:207
 msgid "No config found"
 msgstr "Configurazione non trovata"
 
-#: qt/settingsdialog.py:2459
-msgid "user-callback script has no shebang (#!/bin/sh) line."
-msgstr "lo script di callback utente non ha una linea shebang (#!/bin/sh)."
+#: qt/restoreconfigdialog.py:136
+msgid "Import"
+msgstr "Importa"
 
-#: qt/settingsdialog.py:2466
-msgid "Shebang in user-callback script is not executable."
-msgstr "Lo shebang nello script di callback dell'utente non è eseguibile."
+#: qt/restoreconfigdialog.py:164
+#, python-brace-format
+msgid ""
+"Select the snapshot directory from which the configuration file should be "
+"imported. The path may look like: {samplePath}"
+msgstr ""
+"Seleziona la cartella delle istantanee da cui importare la configurazione. "
+"Il percorso potrebbe somigliare a: {samplePath}"
+
+#: qt/restoreconfigdialog.py:169
+msgid ""
+"If the directory is located on an external or remote drive, it must be "
+"manually mounted beforehand."
+msgstr ""
+"Se la cartella si trova su un disco esterno o remoto, deve essere prima "
+"montato manualmente."
+
+#: qt/restoredialog.py:59
+msgid "Show full Log"
+msgstr "Mostra il registro completo"
 
 #: qt/snapshotsdialog.py:51
 msgid "Options about comparing snapshots"
 msgstr "Opzioni relative al confronto tra istantanee"
 
 #: qt/snapshotsdialog.py:58
-msgid "Command"
-msgstr "Comando"
+msgid "Command:"
+msgstr "Comando:"
 
 #: qt/snapshotsdialog.py:62
-msgid "Parameters"
-msgstr "Parametri"
+msgid "Parameters:"
+msgstr "Parametri:"
 
-#: qt/snapshotsdialog.py:66
+#: qt/snapshotsdialog.py:67
 msgid "Use %1 and %2 for path parameters"
 msgstr "Usa %1 e %2 come parametri del percorso"
 
-#: qt/snapshotsdialog.py:110
+#: qt/snapshotsdialog.py:84
+msgid "Please set a diff command or press Cancel."
+msgstr "Si prega di impostare un comando diff o premere Annulla."
+
+#: qt/snapshotsdialog.py:90
+#, python-brace-format
+msgid ""
+"The command \"{cmd}\" cannot be found on this system. Please try something "
+"else or press Cancel."
+msgstr ""
+"Il comando \"{cmd}\" non è stato trovato nel sistema. Si prega di provarne "
+"un altro o premere Annulla."
+
+#: qt/snapshotsdialog.py:98
+#, python-brace-format
+msgid "No parameters set for the diff command. Using default value \"{params}\"."
+msgstr ""
+"Nessun parametro impostato per il comando diff. Uso il valore predefinito "
+"\"{params}\"."
+
+#: qt/snapshotsdialog.py:134
 msgid "Differing snapshots only"
 msgstr "Solo istantanee diverse"
 
-#: qt/snapshotsdialog.py:118
-msgid "List only equal snapshots to: "
-msgstr "Mostra solo istantanee uguali a: "
+#: qt/snapshotsdialog.py:142
+msgid "List only snapshots that are equal to:"
+msgstr "Mostra solo istantanee uguali a:"
 
-#: qt/snapshotsdialog.py:129
+#: qt/snapshotsdialog.py:153
 msgid "Deep check (more accurate, but slow)"
 msgstr "Controllo approfondito (più accurato ma più lento)"
 
-#: qt/snapshotsdialog.py:150
+#: qt/snapshotsdialog.py:174
 msgid "Delete"
 msgstr "Elimina"
 
-#: qt/snapshotsdialog.py:154
+#: qt/snapshotsdialog.py:178
 msgid "Select All"
 msgstr "Seleziona tutte"
 
-#: qt/snapshotsdialog.py:167
+#: qt/snapshotsdialog.py:191
 msgid "Compare"
 msgstr "Confronta"
 
-#: qt/snapshotsdialog.py:178
+#: qt/snapshotsdialog.py:203
 msgid "Go To"
 msgstr "Vai a"
 
-#: qt/snapshotsdialog.py:179
+#: qt/snapshotsdialog.py:204
 msgid "Options"
 msgstr "Opzioni"
 
-#: qt/snapshotsdialog.py:330
+#: qt/snapshotsdialog.py:361
 msgid "You can't compare a snapshot to itself."
 msgstr "Non è possibile confrontare un'istantanea con se stessa."
 
-#: qt/snapshotsdialog.py:338
-msgid "Command not found"
-msgstr "Comando non trovato"
-
-#: qt/snapshotsdialog.py:369
+#: qt/snapshotsdialog.py:404
 #, python-brace-format
 msgid "Do you really want to delete {file} in snapshot {snapshot_id}?"
 msgstr "Vuoi veramente cancellare \"{file}\" nell'istantanea \"{snapshot_id}\"?"
 
-#: qt/snapshotsdialog.py:375
+#: qt/snapshotsdialog.py:410
 #, python-brace-format
 msgid "Do you really want to delete {file} in {count} snapshots?"
 msgstr "Vuoi veramente cancellare \"{file}\" in {count} istantanee?"
 
-#: qt/snapshotsdialog.py:380
-msgid "This cannot be revoked!"
-msgstr "Questa operazione è irreversibile!"
+#: qt/snapshotsdialog.py:414
+msgid "WARNING: This cannot be revoked."
+msgstr "ATTENZIONE: Questa operazione è irreversibile."
 
-#: qt/snapshotsdialog.py:380
-msgid "WARNING"
-msgstr "ATTENZIONE"
-
-#: qt/snapshotsdialog.py:396
+#: qt/snapshotsdialog.py:432
 #, python-brace-format
 msgid "Exclude {path} from future snapshots?"
 msgstr "Escludere \"{path}\" dalle istantanee future?"
 
-#~ msgid " and add your user to group 'fuse'"
-#~ msgstr " ed aggiungi il tuo utente al gruppo 'fuse'"
-
-#, python-format
-#~ msgid ""
-#~ "\"%s\" is a symlink. The linked target will not be backed up until you include it, too.\n"
-#~ "Would you like to include the symlinks target instead?"
-#~ msgstr ""
-#~ "\"%s\" è un link simbolico. La destinazione del link non sarà copiata nel backup fintantoché non la includerai esplicitamente.\n"
-#~ "Vuoi piuttosto includere la destinazione del link simbolico?"
-
-#~ msgid ""
-#~ "### This log has been decoded with automatic search pattern\n"
-#~ "### If some paths are not decoded you can manually decode them with:\n"
-#~ msgstr ""
-#~ "### Questo log è stato decodificato con un percorso di ricerca automatico\n"
-#~ "### Se alcuni percorsi non sono decodificati, puoi decodificarli manualmente con:\n"
-
-#, python-format
-#~ msgid ""
-#~ "%(user)s is not member of group 'fuse'.\n"
-#~ " Run 'sudo adduser %(user)s fuse'. To apply changes logout and login again.\n"
-#~ "Look at 'man backintime' for further instructions."
-#~ msgstr ""
-#~ "Esegui 'sudo adduser %(user)s fuse'. Per applicare le modifiche, disconnettersi e accedere di nuovo.\n"
-#~ "Guarda 'manuale di backintime' per ulteriori istruzioni.%(user)s non è un membro del gruppo'fuse'.\n"
-#~ "Esegui 'sudo adduser %(user)s fuse'. Per applicare le modifiche, fai logout e di nuovo login.\n"
-#~ "Guarda 'man backintime' per ulteriori istruzioni."
-
-#, python-format
-#~ msgid "%s not found in ssh_known_hosts."
-#~ msgstr "%s non trovato in ssh_known_hosts."
-
 #, fuzzy
-#~ msgid "&Snapshot"
-#~ msgstr "Istantanea"
-
-#, fuzzy
-#~ msgid "&View"
-#~ msgstr "Visualizza"
-
-#~ msgid "..."
-#~ msgstr "..."
-
-#~ msgid "3DES-CBC"
-#~ msgstr "3DES-CBC"
-
-#~ msgid "AES128-CBC"
-#~ msgstr "AES128-CBC"
-
-#~ msgid "AES128-CTR"
-#~ msgstr "AES128-CTR"
-
-#~ msgid "AES192-CBC"
-#~ msgstr "AES192-CBC"
-
-#~ msgid "AES192-CTR"
-#~ msgstr "AES192-CTR"
-
-#~ msgid "AES256-CBC"
-#~ msgstr "AES256-CBC"
-
-#~ msgid "AES256-CTR"
-#~ msgstr "AES256-CTR"
-
-#~ msgid "ARCFOUR"
-#~ msgstr "ARCFOUR"
-
-#~ msgid "ARCFOUR128"
-#~ msgstr "ARCFOUR128"
-
-#~ msgid "ARCFOUR256"
-#~ msgstr "ARCFOUR256"
-
-#~ msgid "Blowfish-CBC"
-#~ msgstr "Blowfish-CBC"
-
-#~ msgid "Cast128-CBC"
-#~ msgstr "Cast128-CBC"
-
-#~ msgid "Changes & Errors"
-#~ msgstr "Modifica & Errori"
-
-#~ msgid "Config File Help"
-#~ msgstr "Guida al file di configurazione"
-
-#~ msgid "Create a new SSH key without Password."
-#~ msgstr "Crea una nuova chiave SSH senza password."
-
-#~ msgid "Diff"
-#~ msgstr "Diff"
-
-#~ msgid "Diff Options"
-#~ msgstr "Opzioni Diff"
-
-#~ msgid "Error:"
-#~ msgstr "Errore:"
-
-#~ msgid "Every 10 minutes"
-#~ msgstr "Ogni 10 minuti"
-
-#~ msgid "Every 12 hours"
-#~ msgstr "Ogni 12 ore"
-
-#~ msgid "Every 30 minutes"
-#~ msgstr "Ogni 30 minuti"
-
-#~ msgid "Every 4 hours"
-#~ msgstr "Ogni 4 ore"
-
-#~ msgid "Every 5 minutes"
-#~ msgstr "Ogni 5 minuti"
-
-#~ msgid "Every 6 hours"
-#~ msgstr "Ogni 6 ore"
+#~ msgid "Backup directory cannot be included."
+#~ msgstr "La cartella di backup non può essere inclusa."
 
 #~ msgid ""
-#~ "Full system backup can only create a snapshot to be restored to the same physical disk(s) with the same disk partitioning as from the source; restoring to new physical disks or the same disks with different partitioning will yield a potentially broken and unusable system.\n"
-#~ "\n"
-#~ "Full system backup will override some settings that may have been customized. Continue?"
+#~ "Can't find crontab. Are you sure cron is installed? If not you should "
+#~ "disable all automatic backups."
 #~ msgstr ""
-#~ "Il backup del sistema completo può solo creare un'istantanea da ripristinare sullo stessodisco (i) fisico (i) con lo stesso partizionamento del disco come dalla sorgente;Ripristino su nuovi dischi fisici o sugli stessi dischi con diversi il partizionamento produrrà un sistema potenzialmente rotto e inutilizzabile\n"
-#~ "\n"
-#~ "Il backup del sistema completo sovrascriverà alcune impostazioni che potrebbero essere state personalizzate. Continuare?"
-
-#, python-format
-#~ msgid ""
-#~ "Hash collision occurred in hash_id %s. Incrementing global value "
-#~ "hash_collision and try again."
-#~ msgstr ""
-#~ "Collisione creata in hash_id %s. Incrementail valore globale hash_collision "
-#~ "e prova di nuovo"
-
-#~ msgid "Key File"
-#~ msgstr "File chiave"
-
-#~ msgid "List only different snapshots"
-#~ msgstr "Elenca solo istantanee differenti"
-
-#~ msgid "Local encrypted"
-#~ msgstr "Cifratura locale"
-
-#~ msgid "Modify for Full System Backup"
-#~ msgstr "Modifica per il backup del sistema completo"
-
-#~ msgid "Mountprocess lock timeout"
-#~ msgstr "Timeout blocco processo di montaggio"
-
-#, python-format
-#~ msgid ""
-#~ "Password-less authentication for %(user)s@%(host)s failed. Look at 'man "
-#~ "backintime' for further instructions."
-#~ msgstr ""
-#~ "Autenticazione senza password per %(user)s@%(host)s fallita. Guarda il 'man "
-#~ "backintime' per ulteriori istruzioni."
-
-#, python-format
-#~ msgid "Ping %s failed. Host is down or wrong address."
-#~ msgstr ""
-#~ "Il ping verso %s è fallito. L'host non funziona o l'indirizzo è sbagliato."
-
-#, fuzzy, python-brace-format
-#~ msgid "Profile: {name}"
-#~ msgstr "Profilo: \"{name}\""
-
-#, python-format
-#~ msgid "Restore '%s'"
-#~ msgstr "Ripristina '%s'"
-
-#, python-format
-#~ msgid "Restore '%s' to ..."
-#~ msgstr "Riporta '%s' a..."
-
-#, fuzzy, python-brace-format
-#~ msgid ""
-#~ "Restore selected file or folder.\n"
-#~ "If this button is grayed out this is most likely because \"{now}\" is selected in left hand snapshots list."
-#~ msgstr ""
-#~ "Ripristina il file o la cartella selezionato/a.\n"
-#~ "Se il pulsante è disabilitato molto probabilmente è perché \"{now}\" è selezionato nell'elenco delle istantanee sulla sinistra."
-
-#~ msgid "Run 'ionice':"
-#~ msgstr "Esegui 'ionice':"
-
-#~ msgid "Run 'nice':"
-#~ msgstr "Esegui 'nice':"
-
-#, fuzzy
-#~ msgid "Run 'rsync' with 'ionice':"
-#~ msgstr "Esegui 'rsync' con 'nocache':"
-
-#~ msgid "Run 'rsync' with 'nocache':"
-#~ msgstr "Esegui 'rsync' con 'nocache':"
-
-#~ msgid "SSH"
-#~ msgstr "SSH"
-
-#~ msgid "Settings"
-#~ msgstr "Impostazioni"
-
-#, python-format
-#~ msgid "Snapshot: %s"
-#~ msgstr "Istantanea: %s"
-
-#~ msgid "View the current disk contents"
-#~ msgstr "Visualizza il contenuto attuale del disco"
+#~ "Impossibile trovare crontab. Sei sicuro che cron sia installato? Se non lo è"
+#~ " dovresti disattivare tutti i backup automatici."
 
 #, python-brace-format
-#~ msgid "View the snapshot made at {timestamp}"
-#~ msgstr "Visualizza l'istantanea fatta il {timestamp}"
+#~ msgid ""
+#~ "Can't write to: {path}\n"
+#~ "Are you sure you have write access?"
+#~ msgstr ""
+#~ "Impossibile scrivere su: {path}\n"
+#~ "Sei sicuro di avere i permessi in scrittura?"
 
-#~ msgid "WITH ERRORS !"
-#~ msgstr "CON ERRORI !"
-
-#~ msgid "Working..."
-#~ msgstr "Lavoro in corso..."
-
-#, fuzzy
-#~ msgid "You can't include backup folder!"
-#~ msgstr "Impossibile includere la cartella di backup !"
-
-#, fuzzy
-#~ msgid "You can't include backup sub-folder!"
-#~ msgstr "Impossibile includere una sottocartella di backup !"
+#~ msgid ""
+#~ "Caution: Change these options only if you really know what you are doing."
+#~ msgstr ""
+#~ "Attenzione: Cambiare queste opzioni solo se si sa cosa si sta facendo."
 
 #, fuzzy
-#~ msgid "You can't remove the last profile!"
-#~ msgstr "Non si può rimuovere l'ultimo profilo !"
+#~ msgid "Copy links (resolve symbolic links)"
+#~ msgstr "Copia collegamenti (segue i collegamenti simbolici)"
+
+#~ msgid "EXPERIMENTAL"
+#~ msgstr "SPERIMENTALE"
+
+#~ msgid "Finalizing"
+#~ msgstr "Finalizzazione"
+
+#~ msgid "Folder"
+#~ msgstr "Cartella"
+
+#~ msgid "Full snapshot path"
+#~ msgstr "Percorso completo per le istantanee"
+
+#~ msgid "Host/User/Profile-ID must not be empty."
+#~ msgstr "Host/Utente/Profilo non possono essere vuoti."
+
+#~ msgid "Hour:"
+#~ msgstr "Ora:"
+
+#, python-brace-format
+#~ msgid "Invalid option. {path} is not a folder."
+#~ msgstr "Opzione non valida. {path} non è una cartella."
+
+#~ msgid "Is this the backup destination to be used?"
+#~ msgstr "E' questa la destinazione di backup da utilizzare?"
+
+#~ msgid "Mode"
+#~ msgstr "Modalità"
+
+#~ msgid "Profile"
+#~ msgstr "Profilo"
+
+#, python-brace-format
+#~ msgid "Profile '{profile}': Enter password for {mode}: "
+#~ msgstr "Profilo '{profile}': Inserisci la password per {mode}: "
+
+#~ msgid "Shebang in user-callback script is not executable."
+#~ msgstr "Lo shebang nello script di callback dell'utente non è eseguibile."
+
+#~ msgid "WARNING"
+#~ msgstr "ATTENZIONE"
+
+#~ msgid "You must select at least one folder to back up!"
+#~ msgstr "Scegliere almeno una cartella per il backup!"
+
+#~ msgid ""
+#~ "encfs version 1.7.2 and before has a bug with option --reverse. Please "
+#~ "update encfs."
+#~ msgstr ""
+#~ "la versione di encfs 1.7.2 e precedenti ha un bug con l'opzione --reverse. "
+#~ "Per favore aggiorna encfs."
+
+#~ msgid "user-callback script has no shebang (#!/bin/sh) line."
+#~ msgstr "lo script di callback utente non ha una linea shebang (#!/bin/sh)."
+
+#, python-brace-format
+#~ msgid ""
+#~ "{app} uses EncFS for encryption. A recent security audit revealed several "
+#~ "possible attack vectors for this. Please take a look at \"A NOTE ON "
+#~ "SECURITY\" in \"man backintime\"."
+#~ msgstr ""
+#~ "{app} utilizza EncFS per la crittografia. Una recente revisione di sicurezza"
+#~ " ha rivelato numerosi possibili vettori d'attacco in questa configurazione. "
+#~ "Per favore consulta la sezione 'A NOTE ON SECURITY' in 'man backintime'."

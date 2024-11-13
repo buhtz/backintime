@@ -1,22 +1,17 @@
+# SPDX-FileCopyrightText: © 2008-2022 Oprea Dan
+# SPDX-FileCopyrightText: © 2008-2022 Bart de Koning
+# SPDX-FileCopyrightText: © 2008-2022 Richard Bailey
+# SPDX-FileCopyrightText: © 2008-2022 Germar Reitze
+# SPDX-FileCopyrightText: © 2008-2022 Taylor Raack
+# SPDX-FileCopyrightText: © 2024 Christian Buhtz <c.buhtz@posteo.jp>
+#
+# SPDX-License-Identifier: GPL-2.0-or-later
+#
+# This file is part of the program "Back In Time" which is released under GNU
+# General Public License v2 (GPLv2). See LICENSES directory or go to
+# <https://spdx.org/licenses/GPL-2.0-or-later.html>.
 """Collection of helper functions not fitting to other modules.
 """
-# Back In Time
-# Copyright (C) 2008-2022 Oprea Dan, Bart de Koning, Richard Bailey,
-# Germar Reitze, Taylor Raack
-#
-# This program is free software; you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation; either version 2 of the License, or
-# (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License along
-# with this program; if not, write to the Free Software Foundation, Inc.,
-# 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 import os
 import sys
 import pathlib
@@ -26,19 +21,14 @@ import signal
 import re
 import errno
 import gzip
-import tempfile
+import locale
 import gettext
-try:
-    from collections.abc import MutableSet
-except ImportError:
-    from collections import MutableSet
 import hashlib
 import ipaddress
-import atexit
-from datetime import datetime
+from datetime import datetime, timedelta
 from packaging.version import Version
-from time import sleep
-
+from typing import Union
+from bitbase import TimeUnit
 import logger
 
 # Try to import keyring
@@ -79,9 +69,16 @@ except ImportError:
 
 import configfile
 import bcolors
-from applicationinstance import ApplicationInstance
 from exceptions import Timeout, InvalidChar, InvalidCmd, LimitExceeded, PermissionDeniedByPolicy
 import languages
+
+# Workaround:
+# While unittesting and without regular invocation of BIT the GNU gettext
+# class-based API isn't setup yet.
+try:
+    _('Warning')
+except NameError:
+    _ = lambda val: val
 
 DISK_BY_UUID = '/dev/disk/by-uuid'
 
@@ -89,18 +86,21 @@ DISK_BY_UUID = '/dev/disk/by-uuid'
 # | Handling paths  |
 # |-----------------|
 
+
 def sharePath():
     """Get path where Back In Time is installed.
 
-    This is similar to $XDG_DATA_DIRS (XDG Base Directory Specification).
-    If running from source return default ``/usr/share``.
+    This is similar to ``XDG_DATA_DIRS``. If running from source return
+    default ``/usr/share``.
+
+    Share path like: ::
+
+        /usr/share
+        /usr/local/share
+        /opt/usr/share
 
     Returns:
-        str: share path like::
-
-                    /usr/share
-                    /usr/local/share
-                    /opt/usr/share
+        str: Share path.
     """
     share = os.path.abspath(
         os.path.join(__file__, os.pardir, os.pardir, os.pardir)
@@ -111,18 +111,17 @@ def sharePath():
 
     return '/usr/share'
 
+
 def backintimePath(*path):
     """
-    Get path inside 'backintime' install folder.
+    Get path inside ``backintime`` install folder.
 
     Args:
-        *path (str):    paths that should be joined to 'backintime'
+        *path (str): Paths that should be joined to ``backintime``.
 
     Returns:
-        str:            'backintime' child path like::
-
-                            /usr/share/backintime/common
-                            /usr/share/backintime/qt
+        str: Child path of ``backintime`` child path e.g.
+            ``/usr/share/backintime/common``or ``/usr/share/backintime/qt``.
     """
     return os.path.abspath(os.path.join(__file__, os.pardir, os.pardir, *path))
 
@@ -234,7 +233,56 @@ def initiate_translation(language_code):
     )
     translation.install(names=['ngettext'])
 
-    return _determine_current_used_language_code(translation, language_code)
+    used_code = _determine_current_used_language_code(
+        translation, language_code)
+
+    set_lc_time_by_language_code(used_code)
+
+    return used_code
+
+
+def set_lc_time_by_language_code(language_code: str):
+    """Set ``LC_TIME`` based on a specific language code.
+
+    Args:
+        language_code(str): A language code consisting of two letters.
+
+    The reason is to display correctly translated weekday and months
+    names. Python's :mod:`datetime` module, as well
+    ``PyQt6.QtCore.QDate``, use :mod:`locale` to determine the
+    correct translation. The module :mod:`gettext` and
+    ``PyQt6.QtCore.QTranslator`` is not involved so their setup does
+    not take effect.
+
+    Be aware that a language code (e.g. ``de``) is not the same as a locale code
+    (e.g. ``de_DE.UTF-8``). This function attempts to determine the latter based
+    on the language code. A warning is logged if it is not possible.
+    """
+
+    # Determine the normalized locale code (e.g. "de_DE.UTF-8") by
+    # language code (e.g. "de").
+
+    # "de" -> "de_DE.ISO8859-1" -> "de_DE"
+    code = locale.normalize(language_code).split('.')[0]
+
+    try:
+        # "de_DE" -> "de_DE.UTF-8"
+        code = code + '.' + locale.getencoding()
+    except AttributeError:  # Python 3.10 or older
+        code = code + '.' + locale.getpreferredencoding()
+
+    try:
+        # logger.debug(f'Try to set locale.LC_TIME to "{code}" based on '
+        #              f'language code "{language_code}".')
+        locale.setlocale(locale.LC_TIME, code)
+
+    except locale.Error:
+        logger.warning(
+            f'Determined normalized locale code "{code}" (from language code '
+            f'"{language_code}") not available (or invalid). The code will be '
+            'ignored. This might lead to unusual display of dates and '
+            'timestamps, but it does not affect the functionality of the '
+            f'application. Used locale is "{locale.getlocale()}".')
 
 
 def get_available_language_codes():
@@ -316,7 +364,8 @@ def get_language_names(language_code):
     return result
 
 
-def get_native_language_and_completeness(language_code):
+def get_native_language_and_completeness(language_code: str
+                                         ) -> tuple[str, int]:
     """Return the language name in its native flavor and the completeness of
     its translation in percent.
 
@@ -331,6 +380,166 @@ def get_native_language_and_completeness(language_code):
     completeness = languages.completeness[language_code]
 
     return (name, completeness)
+
+# |---------------------------------------|
+# | Snapshot handling                     |
+# |                                       |
+# | Candidates for refactoring and moving |
+# | into better suited modules/classes    |
+# |---------------------------------------|
+
+NTFS_FILESYSTEM_WARNING = _(
+    'The destination filesystem for {path} is formatted with NTFS, which has '
+    'known incompatibilities with Unix-style filesystems.')
+
+
+def validate_and_prepare_snapshots_path(
+        path: Union[str, pathlib.Path],
+        host_user_profile: tuple[str, str, str],
+        mode: str,
+        copy_links: bool,
+        error_handler: callable) -> bool:
+    """Check if the given path is valid for being a snapshot path.
+
+    It is checked if it is a folder, if it is writable, if the filesystem is
+    supported and several other things.
+
+    Dev note  (buhtz, 2024-09): That code is a good candidate to get moved
+        into a class or module.
+
+    Args:
+        path: The path to validate as a snapshot path.
+        host_user_profile: I three item list containing the values for 'host',
+            'user' and 'profile' used as additional components for the
+            snapshots path.
+        mode: The profiles mode.
+        copy_links: The copy links value.
+        error_handler: Handle function receiving error messages.
+
+    Returns: Success (`True`) or failure (`False`).
+    """
+    path = pathlib.Path(path)
+
+    if not path.is_dir():
+        error_handler(_('{path} is not a valid directory.')
+                      .format(path=path))
+        return False
+
+    # build full path
+    # <path>/backintime/<host>/<user>/<profile_id>
+    full_path = pathlib.Path(path, 'backintime', *host_user_profile)
+
+    # create full_path
+    try:
+        full_path.mkdir(mode=0o777, parents=True, exist_ok=True)
+
+    except PermissionError:
+        error_handler('\n'.join([
+            _('Creation of following directory failed:'),
+            str(full_path),
+            _('Write access may be restricted.')]))
+        return False
+
+    # Test filesystem
+    rc, msg = is_filesystem_valid(
+        full_path, path, mode, copy_links)
+    if msg:
+        error_handler(msg)
+    if rc is False:
+        return False
+
+    # Test write access for the folder
+    rc, msg = is_writeable(full_path)
+    if msg:
+        error_handler(msg)
+    if rc is False:
+        return False
+
+    return True
+
+
+def is_filesystem_valid(full_path, msg_path, mode, copy_links):
+    """
+    Args:
+        full_path: The path to validate.
+        msg_path: The path used for display in error messages.
+        mode: Snapshot profile mode.
+        copy_links: Snapshot profiles copy links setting.
+
+    Returns:
+        (bool, str): A boolean value indicating success or failure and a
+            msg string.
+
+    """
+    fs = filesystem(full_path if isinstance(full_path, str) else str(full_path))
+
+    msg = None
+
+    if fs == 'vfat':
+        msg = _(
+            "Destination filesystem for {path} is formatted with FAT "
+            "which doesn't support hard-links. "
+            "Please use a native GNU/Linux filesystem.").format(path=msg_path)
+
+        return False, msg
+
+    elif fs.startswith('ntfs'):
+        msg = NTFS_FILESYSTEM_WARNING.format(path=msg_path)
+
+    elif fs == 'cifs' and not copy_links:
+        msg = _(
+            'Destination filesystem for {path} is a share mounted via SMB. '
+            'Please make sure the remote SMB server supports symlinks or '
+            'activate "{copyLinks}" in "{expertOptions}".') \
+            .format(path=msg_path,
+                    copyLinks=_('Copy links (dereference symbolic links)'),
+                    expertOptions=_('Expert Options'))
+
+    elif fs == 'fuse.sshfs' and mode not in ('ssh', 'ssh_encfs'):
+        msg = _(
+            "Destination filesystem for {path} is a share mounted via sshfs. "
+            "Sshfs doesn't support hard-links. "
+            'Please use mode "SSH" instead.').format(path=msg_path)
+
+        return False, msg
+
+    return True, msg
+
+
+def is_writeable(folder):
+    """Test write access for the folder.
+
+    Args:
+        folder: The folder to check.
+
+    Returns:
+        (bool, str): A boolean value indicating success or failure and a
+            msg string.
+    """
+
+    folder = pathlib.Path(folder)
+
+    check_path = folder / 'check'
+
+    try:
+        check_path.mkdir(
+            # Do not create parent folders
+            parents=False,
+            # Raise error if exists
+            exist_ok=False
+        )
+
+    except PermissionError:
+        msg = '\n'.join([
+            _('File creation failed in this directory:'),
+            str(folder),
+            _('Write access may be restricted.')])
+        return False, msg
+
+    else:
+        check_path.rmdir()
+
+    return True, None
 
 
 # |------------------------------------|
@@ -349,17 +558,24 @@ def registerBackintimePath(*path):
         would need this to actually import :py:mod:`tools`.
     """
     path = backintimePath(*path)
-    if not path in sys.path:
+
+    if path not in sys.path:
         sys.path.insert(0, path)
 
+
 def runningFromSource():
-    """
-    Check if BackInTime is running from source (without installing).
+    """Check if BackInTime is running from source (without installing).
+
+    Dev notes by buhtz (2024-04): This function is dangerous and will give a
+    false-negative in fake filesystems (e.g. PyFakeFS). The function should
+    not exist. Beside unit tests it is used only two times. Remove it until
+    migration to pyproject.toml based project packaging (#1575).
 
     Returns:
-        bool:   ``True`` if BackInTime is running from source
+        bool: ``True`` if BackInTime is running from source.
     """
     return os.path.isfile(backintimePath('common', 'backintime'))
+
 
 def addSourceToPathEnviron():
     """
@@ -368,7 +584,8 @@ def addSourceToPathEnviron():
     source = backintimePath('common')
     path = os.getenv('PATH')
     if path and source not in path.split(':'):
-        os.environ['PATH'] = '%s:%s' %(source, path)
+        os.environ['PATH'] = '%s:%s' % (source, path)
+
 
 def get_git_repository_info(path=None, hash_length=None):
     """Return the current branch and last commit hash.
@@ -456,6 +673,7 @@ def readFile(path, default=None):
 
     return ret_val
 
+
 def readFileLines(path, default = None):
     """
     Read the file in ``path`` or its '.gz' compressed variant and return its
@@ -484,15 +702,68 @@ def readFileLines(path, default = None):
 
     return ret_val
 
-def checkCommand(cmd):
-    """
-    Check if command ``cmd`` is a file in 'PATH' environ.
+
+def older_than(dt: datetime, value: int, unit: TimeUnit) -> bool:
+    """Return ``True`` if ``dt`` is older than ``value`` months, weeks, days or
+    hours compared to the current time (`datetime.now()`).
+
+    The resolution used is on microseconds level. Months are calculated based
+    on calendar.
 
     Args:
-        cmd (str):  command
+        dt: Timestamp to be compared with on microsecond level.
+        value: Number of units.
+        unit: Specify to treat ``value`` as hours, days, weeks or months.
+
+    Return:
+        ``True`` if older, otherwise ``False``.
+    """
+    if not isinstance(unit, TimeUnit):
+        unit = TimeUnit(unit)
+
+    now = datetime.now()
+
+    if unit is TimeUnit.HOUR:
+        return dt < now - timedelta(hours=value)
+
+    if unit is TimeUnit.DAY:
+        return dt < now - timedelta(days=value)
+
+    if unit is TimeUnit.WEEK:
+        return dt < now - timedelta(weeks=value)
+
+    if unit is TimeUnit.MONTH:
+        # Calculate months based on calendar because timedelta do not support
+        # months.
+        compare_month = (dt.month + value - 1) % 12 + 1
+        compare_year = dt.year + (dt.month + value - 1) // 12
+        # make sure that day exist in the month
+        last_day_dt \
+            = datetime(compare_year, compare_month + 1, 1) - timedelta(days=1)
+        compare_day = min(dt.day, last_day_dt.day)
+
+        compare_dt = datetime(
+            compare_year, compare_month, compare_day,
+            now.hour, now.minute, now.microsecond)
+
+        return now < compare_dt
+
+    # Dev note (buhtz, 2024-09): This code branch already existed in the
+    # original code (but silent, without throwing an exception). Even if it may
+    # seem (nearly) pointless, it will be kept for now to ensure that it is
+    # never executed.
+    raise RuntimeError(f'Unexpected situation. {dt=} {value=} {unit=} '
+                       'Please report it via a bug ticket.')
+
+
+def checkCommand(cmd):
+    """Check if command ``cmd`` is a file in 'PATH' environment.
+
+    Args:
+        cmd (str): The command.
 
     Returns:
-        bool:       ``True`` if command ``cmd`` is in 'PATH' environ
+        bool: ``True`` if ``cmd`` is in 'PATH' environment otherwise ``False``.
     """
     cmd = cmd.strip()
 
@@ -501,30 +772,41 @@ def checkCommand(cmd):
 
     if os.path.isfile(cmd):
         return True
-    return not which(cmd) is None
+
+    return which(cmd) is not None
+
 
 def which(cmd):
-    """
-    Get the fullpath of executable command ``cmd``. Works like
-    command-line 'which' command.
+    """Get the fullpath of executable command ``cmd``.
+
+    Works like command-line 'which' command.
+
+    Dev note by buhtz (2024-04): Give false-negative results in fake
+    filesystems. Quit often use in the whole code base. But not sure why
+    can we replace it with "which" from shell?
 
     Args:
-        cmd (str):  command
+        cmd (str): The command.
 
     Returns:
-        str:        fullpath of command ``cmd`` or ``None`` if command is
-                    not available
+        str: Fullpath of command ``cmd`` or ``None`` if command is not
+             available.
     """
     pathenv = os.getenv('PATH', '')
-    path = pathenv.split(":")
+    path = pathenv.split(':')
     common = backintimePath('common')
+
     if runningFromSource() and common not in path:
         path.insert(0, common)
+
     for directory in path:
         fullpath = os.path.join(directory, cmd)
+
         if os.path.isfile(fullpath) and os.access(fullpath, os.X_OK):
             return fullpath
+
     return None
+
 
 def makeDirs(path):
     """
@@ -542,15 +824,19 @@ def makeDirs(path):
 
     if os.path.isdir(path):
         return True
+
     else:
+
         try:
             os.makedirs(path)
         except Exception as e:
             logger.error("Failed to make dirs '%s': %s"
-                         %(path, str(e)), traceDepth = 1)
+                         % (path, str(e)), traceDepth=1)
+
     return os.path.isdir(path)
 
-def mkdir(path, mode = 0o755, enforce_permissions = True):
+
+def mkdir(path, mode=0o755, enforce_permissions=True):
     """
     Create directory ``path``.
 
@@ -567,14 +853,18 @@ def mkdir(path, mode = 0o755, enforce_permissions = True):
                 os.chmod(path, mode)
         except:
             return False
+
         return True
+
     else:
         os.mkdir(path, mode)
+
         if mode & 0o002 == 0o002:
-            #make file world (other) writable was requested
-            #debian and ubuntu won't set o+w with os.mkdir
-            #this will fix it
+            # make file world (other) writable was requested
+            # debian and ubuntu won't set o+w with os.mkdir
+            # this will fix it
             os.chmod(path, mode)
+
     return os.path.isdir(path)
 
 
@@ -1087,6 +1377,9 @@ def checkCronPattern(s):
 
     Returns:
         bool:       ``True`` if ``s`` is a valid cron pattern
+
+    Dev note: Schedule for removal. See comment in
+    `config.Config.saveProfile()`.
     """
     if s.find(' ') >= 0:
         return False
@@ -1105,31 +1398,6 @@ def checkCronPattern(s):
     except ValueError:
         return False
 
-#TODO: check if this is still necessary
-def checkHomeEncrypt():
-    """
-    Return ``True`` if users home is encrypted
-    """
-    home = os.path.expanduser('~')
-    if not os.path.ismount(home):
-        return False
-    if checkCommand('ecryptfs-verify'):
-        try:
-            subprocess.check_call(['ecryptfs-verify', '--home'],
-                                    stdout=subprocess.DEVNULL,
-                                    stderr=subprocess.DEVNULL)
-        except subprocess.CalledProcessError:
-            pass
-        else:
-            return True
-    if checkCommand('encfs'):
-        proc = subprocess.Popen(['mount'], stdout=subprocess.PIPE, universal_newlines = True)
-        mount = proc.communicate()[0]
-        r = re.compile('^encfs on %s type fuse' % home)
-        for line in mount.split('\n'):
-            if r.match(line):
-                return True
-    return False
 
 def envLoad(f):
     """
@@ -1148,7 +1416,8 @@ def envLoad(f):
             continue
         if not key in list(env.keys()):
             os.environ[key] = value
-    del(env_file)
+    del env_file
+
 
 def envSave(f):
     """
@@ -1169,6 +1438,7 @@ def envSave(f):
 
     env_file.save(f)
 
+
 def keyringSupported():
     """
     Checks if a keyring (supported by BiT) is available
@@ -1187,7 +1457,8 @@ def keyringSupported():
     except:
         pass
 
-    logger.debug(f"Keyring config file folder: {keyring_config_file_folder}")
+    logger.debug(
+        f"Keyring config file directory: {keyring_config_file_folder}")
 
     # Determine the currently active backend
     try:
@@ -1202,6 +1473,7 @@ def keyringSupported():
         displayName = str(keyring.get_keyring())  # technical class name!
 
     logger.debug("Available keyring backends:")
+
     try:
         for b in backend.get_all_keyring():
             logger.debug(b)
@@ -1233,8 +1505,11 @@ def keyringSupported():
         (keyring.backends, ('chainer', 'ChainerBackend')),
     ]
 
+    not_found_metaclasses = []
+
     for backend_package, backends in backends_to_check:
         result = backend_package  # e.g. keyring.backends
+
 
         try:
             # Load the backend step-by-step.
@@ -1245,16 +1520,19 @@ def keyringSupported():
                 result = getattr(result, b)
 
         except AttributeError as err:
-            # Debug message if backend is not available.
-            logger.debug('Metaclass {}.{} not found: {}'
-                         .format(backend_package.__name__,
-                                 '.'.join(backends),
-                                 repr(err)))
+            # # Debug message if backend is not available.
+            # logger.debug('Metaclass {}.{} not found: {}'
+            #              .format(backend_package.__name__,
+            #                      '.'.join(backends),
+            #                      repr(err)))
+            not_found_metaclasses.append('{}.{}'.format(
+                backend_package.__name__, '.'.join(backends)))
 
         else:
             # Remember the backend class (not an instance) as available.
             available_backends.append(result)
 
+    logger.debug(f'Not found Metaclasses: {not_found_metaclasses}')
     logger.debug("Available supported backends: " + repr(available_backends))
 
     if available_backends and isinstance(keyring.get_keyring(), tuple(available_backends)):
@@ -1275,11 +1553,13 @@ def password(*args):
         return keyring.get_password(*args)
     return None
 
+
 def setPassword(*args):
 
     if is_keyring_available:
         return keyring.set_password(*args)
     return False
+
 
 def mountpoint(path):
     """
@@ -1317,6 +1597,7 @@ def decodeOctalEscape(s):
     def repl(m):
         return chr(int(m.group(1), 8))
     return re.sub(r'\\(\d{3})', repl, s)
+
 
 def mountArgs(path):
     """
@@ -1528,32 +1809,6 @@ def uuidFromPath(path):
     return uuidFromDev(device(path))
 
 
-def filesystemMountInfo():
-    """
-    Get a dict of mount point string -> dict of filesystem info for
-    entire system.
-
-    Returns:
-        dict:   {MOUNTPOINT: {'original_uuid': UUID}}
-    """
-    # There may be multiple mount points inside of the root (/) mount, so
-    # iterate over mtab to find all non-special mounts.
-    with open('/etc/mtab', 'r') as mounts:
-        return {items[1]: {'original_uuid': uuidFromDev(items[0])} for items in
-                [mount_line.strip('\n').split(' ')[:2] for mount_line in mounts]
-                if uuidFromDev(items[0]) != None}
-
-
-def syncfs():
-    """
-    Sync any data buffered in memory to disk.
-
-    Returns:
-        bool:   ``True`` if successful
-    """
-    if checkCommand('sync'):
-        return(Execute(['sync']).run() == 0)
-
 def isRoot():
     """
     Check if we are root.
@@ -1600,49 +1855,60 @@ def patternHasNotEncryptableWildcard(pattern):
         return True
     return False
 
-BIT_TIME_FORMAT = '%Y%m%d %H%M'
-ANACRON_TIME_FORMAT = '%Y%m%d'
 
 def readTimeStamp(fname):
     """
     Read date string from file ``fname`` and try to return datetime.
 
     Args:
-        fname (str):        full path to timestamp file
+        fname (str): Full path to timestamp file.
 
     Returns:
-        datetime.datetime:  date from timestamp file
+        datetime.datetime: Timestamp object.
     """
+
     if not os.path.exists(fname):
-        logger.debug("no timestamp in '%(file)s'" %
-                     {'file': fname})
+        logger.debug(f"No timestamp file '{fname}'")
         return
+
     with open(fname, 'r') as f:
         s = f.read().strip('\n')
-    for i in (ANACRON_TIME_FORMAT, BIT_TIME_FORMAT):
+
+    time_formats = (
+        '%Y%m%d %H%M',  # BIT like
+        '%Y%m%d',  # Anacron like
+    )
+
+    for form in time_formats:
+
         try:
-            stamp = datetime.strptime(s, i)
-            logger.debug("read timestamp '%(time)s' from file '%(file)s'" %
-                         {'time': stamp,
-                          'file': fname})
-            return stamp
+            stamp = datetime.strptime(s, form)
+
         except ValueError:
+            # invalid format
+            # next iteration
             pass
 
+        else:
+            # valid time stamp
+            logger.debug(f"Read timestamp '{stamp}' from file '{fname}'")
+
+            return stamp
+
+
 def writeTimeStamp(fname):
-    """
-    Write current date and time into file ``fname``.
+    """Write current date and time into file ``fname``.
 
     Args:
-        fname (str):        full path to timestamp file
+        fname (str): Full path to timestamp file.
     """
-    now = datetime.now().strftime(BIT_TIME_FORMAT)
-    logger.debug("write timestamp '%(time)s' into file '%(file)s'" %
-                 {'time': now,
-                  'file': fname})
+    now = datetime.now().strftime('%Y%m%d %H%M')
+    logger.debug(f"Write timestamp '{now}' into file '{fname}'")
     makeDirs(os.path.dirname(fname))
+
     with open(fname, 'w') as f:
         f.write(now)
+
 
 INHIBIT_LOGGING_OUT = 1
 INHIBIT_USER_SWITCHING = 2
@@ -1735,71 +2001,6 @@ def unInhibitSuspend(cookie, bus, dbus_props):
         logger.warning('Release inhibit Suspend failed.')
         return (cookie, bus, dbus_props)
 
-def readCrontab():
-    """
-    Read users crontab.
-
-    Returns:
-        list:   crontab lines
-    """
-    cmd = ['crontab', '-l']
-    if not checkCommand(cmd[0]):
-        logger.debug('crontab not found.')
-        return []
-    else:
-        proc = subprocess.Popen(cmd,
-                                stdout = subprocess.PIPE,
-                                stderr = subprocess.PIPE,
-                                universal_newlines = True)
-        out, err = proc.communicate()
-        if proc.returncode or err:
-            logger.error('Failed to get crontab lines: %s, %s'
-                         %(proc.returncode, err))
-            return []
-        else:
-            crontab = [x.strip() for x in out.strip('\n').split('\n')]
-            if crontab == ['']:  # Fixes issue #1181 (line count of empty crontab was 1 instead of 0)
-                crontab = []
-            logger.debug('Read %s lines from user crontab'
-                         %len(crontab))
-            return crontab
-
-def writeCrontab(lines):
-    """
-    Write to users crontab.
-
-    Note:
-        This will overwrite the whole crontab. So to keep the old crontab and
-        only add new entries you need to read it first with
-        :py:func:`tools.readCrontab`, append new entries to the list and write
-        it back.
-
-    Args:
-        lines (:py:class:`list`, :py:class:`tuple`):
-                    lines that should be written to crontab
-
-    Returns:
-        bool:       ``True`` if successful
-    """
-    assert isinstance(lines, (list, tuple)), 'lines is not list or tuple type: %s' % lines
-    with tempfile.NamedTemporaryFile(mode = 'wt') as f:
-        f.write('\n'.join(lines))
-        f.write('\n\n')
-        f.flush()
-        cmd = ['crontab', f.name]
-        proc = subprocess.Popen(cmd,
-                                stdout = subprocess.DEVNULL,
-                                stderr = subprocess.PIPE,
-                                universal_newlines = True)
-        out, err = proc.communicate()
-    if proc.returncode or err:
-        logger.error('Failed to write lines to crontab: %s, %s'
-                     %(proc.returncode, err))
-        return False
-    else:
-        logger.debug('Wrote %s lines to user crontab'
-                     %len(lines))
-        return True
 
 def splitCommands(cmds, head = '', tail = '', maxLength = 0):
     """
@@ -1829,35 +2030,29 @@ def splitCommands(cmds, head = '', tail = '', maxLength = 0):
         s += tail
         yield s
 
-def isIPv6Address(address):
-    """
-    Check if ``address`` is a valid IPv6 address.
-
-    Args:
-        address (str):  address that should get tested
-
-    Returns:
-        bool:           True if ``address`` is a valid IPv6 address
-    """
-    try:
-        return isinstance(ipaddress.IPv6Address(address), ipaddress.IPv6Address)
-    except:
-        return False
 
 def escapeIPv6Address(address):
-    """
-    Escape IPv6 Addresses with square brackets ``[]``.
+    """Escape IP addresses with square brackets ``[]`` if they are IPv6.
+
+    If it is an IPv4 address or a hostname (lettersonly) nothing is changed.
 
     Args:
-        address (str):  address that should be escaped
+        address (str): IP-Address to escape if needed.
 
     Returns:
-        str:            ``address`` in square brackets
+        str: The address, escaped if it is IPv6.
     """
-    if isIPv6Address(address):
-        return '[{}]'.format(address)
-    else:
+    try:
+        ip = ipaddress.ip_address(address)
+    except ValueError:
+        # invalid IP, e.g. a hostname
         return address
+
+    if ip.version == 6:
+        return f'[{address}]'
+
+    return address
+
 
 def camelCase(s):
     """
@@ -1871,214 +2066,87 @@ def camelCase(s):
     """
     return ''.join([x.capitalize() for x in s.split('_')])
 
-def fdDup(old, new_fd, mode = 'w'):
-    """
-    Duplicate file descriptor `old` to `new_fd` and closing the latter first.
-    Used to redirect stdin, stdout and stderr from daemonized threads.
 
-    Args:
-        old (str):                  Path to the old file (e.g. /dev/stdout)
-        new_fd (_io.TextIOWrapper): file object for the new file
-        mode (str):                 mode in which the old file should be opened
-    """
-    try:
-        fd = open(old, mode)
-        os.dup2(fd.fileno(), new_fd.fileno())
-    except OSError as e:
-        logger.debug('Failed to redirect {}: {}'.format(old, str(e)))
+class Alarm:
+    """Establish a callback function that is called after a timeout using
+    SIGALRM signal.
 
-class UniquenessSet:
+    If no callback is specified a `exception.Timeout` will be raised instead.
+    The implementation uses a SIGALRM signal. Attention: Do not call code in
+    the callback that does not support multi-threading (reentrance) or you may
+    cause non-deterministic "random" RuntimeErrors (RTE).
     """
-    Check for uniqueness or equality of files.
 
-    Args:
-        dc (bool):              if ``True`` use deep check which will compare
-                                files md5sums if they are of same size but no
-                                hardlinks (don't have the same inode).
-                                If ``False`` use files size and mtime
-        follow_symlink (bool):  if ``True`` check symlinks target instead of the
-                                link
-        list_equal_to (str):    full path to file. If not empty only return
-                                equal files to the given path instead of
-                                unique files.
-    """
-    def __init__(self, dc = False, follow_symlink = False, list_equal_to = ''):
-        self.deep_check = dc
-        self.follow_sym = follow_symlink
-        self._uniq_dict = {}      # if not self._uniq_dict[size] -> size already checked with md5sum
-        self._size_inode = set()  # if (size,inode) in self._size_inode -> path is a hlink
-        self.list_equal_to = list_equal_to
-        if list_equal_to:
-            st = os.stat(list_equal_to)
-            if self.deep_check:
-                self.reference = (st.st_size, md5sum(list_equal_to))
-            else:
-                self.reference = (st.st_size, int(st.st_mtime))
-
-    def check(self, input_path):
-        """
-        Check file ``input_path`` for either uniqueness or equality
-        (depending on ``list_equal_to`` from constructor).
+    def __init__(self, callback=None, overwrite=True):
+        """Create a new alarm instance.
 
         Args:
-            input_path (str):   full path to file
-
-        Returns:
-            bool:               ``True`` if file is unique and ``list_equal_to``
-                                is empty.
-                                Or ``True`` if file is equal to file in
-                                ``list_equal_to``
-        """
-        # follow symlinks ?
-        path = input_path
-        if self.follow_sym and os.path.islink(input_path):
-            path = os.readlink(input_path)
-
-        if self.list_equal_to:
-            return self.checkEqual(path)
-        else:
-            return self.checkUnique(path)
-
-    def checkUnique(self, path):
-        """
-        Check file ``path`` for uniqueness and store a unique key for ``path``.
-
-        Args:
-            path (str): full path to file
-
-        Returns:
-            bool:       ``True`` if file is unique
-        """
-        # check
-        if self.deep_check:
-            dum = os.stat(path)
-            size,inode  = dum.st_size, dum.st_ino
-            # is it a hlink ?
-            if (size, inode) in self._size_inode:
-                logger.debug("[deep test]: skip, it's a duplicate (size, inode)", self)
-                return False
-            self._size_inode.add((size,inode))
-            if size not in self._uniq_dict:
-                # first item of that size
-                unique_key = size
-                logger.debug("[deep test]: store current size?", self)
-            else:
-                prev = self._uniq_dict[size]
-                if prev:
-                    # store md5sum instead of previously stored size
-                    md5sum_prev = md5sum(prev)
-                    self._uniq_dict[size] = None
-                    self._uniq_dict[md5sum_prev] = prev
-                    logger.debug("[deep test]: size duplicate, remove the size, store prev md5sum", self)
-                unique_key = md5sum(path)
-                logger.debug("[deep test]: store current md5sum?", self)
-        else:
-            # store a tuple of (size, modification time)
-            obj  = os.stat(path)
-            unique_key = (obj.st_size, int(obj.st_mtime))
-        # store if not already present, then return True
-        if unique_key not in self._uniq_dict:
-            logger.debug(" >> ok, store!", self)
-            self._uniq_dict[unique_key] = path
-            return True
-        logger.debug(" >> skip (it's a duplicate)", self)
-        return False
-
-    def checkEqual(self, path):
-        """
-        Check if ``path`` is equal to the file in ``list_equal_to`` from
-        constructor.
-
-        Args:
-            path (str): full path to file
-
-        Returns:
-            bool:       ``True`` if file is equal
-        """
-        st = os.stat(path)
-        if self.deep_check:
-            if self.reference[0] == st.st_size:
-                return self.reference[1] == md5sum(path)
-            return False
-        else:
-            return self.reference == (st.st_size, int(st.st_mtime))
-
-class Alarm(object):
-    """
-    Establish a callback function that is called after a timeout.
-
-    The implementation uses a SIGALRM signal so
-    do not call code in the callback that does not support multi-threading
-    (reentrance) or you may cause non-deterministic "random" RTEs.
-    """
-    def __init__(self, callback = None, overwrite = True):
-        """
-        Create a new alarm instance
-
-        Args:
-            callback: Function to call when the timer ran down
-                      (ensure calling only reentrant code).
-                      Use ``None`` to throw a ``Timeout`` exception instead.
-            overwrite: Is it allowed to (re)start the timer
-                       even though the current timer is still running
-                       ("ticking"):
-                       ``True`` cancels the current timer (if active)
-                                and restarts with the new timeout.
-                       ``False` silently ignores the start request
-                                if the current timer is still "ticking"
+            callback (callable): Function to call when the timer ran down
+                (ensure calling only reentrant code). Use ``None`` to throw a
+                `exceptions.Timeout` exception instead.
+            overwrite (bool): Is it allowed to (re)start the timer even though
+                the current timer is still running ("ticking"). ``True``
+                cancels the current timer (if active) and restarts with the new
+                timeout. ``False`` silently ignores the start request if the
+                current timer is still "ticking"
         """
         self.callback = callback
         self.ticking = False
         self.overwrite = overwrite
 
     def start(self, timeout):
-        """
-        Start the timer (which calls the handler function
+        """Start the timer (which calls the handler function
         when the timer ran down).
 
-        The start is silently ignored if the current timer is still
-        ticking and the the attribute ``overwrite`` is ``False``.
+        If `self.overwrite` is ``False`` and the current timer is still ticking
+        the start is silently ignored.
 
         Args:
-            timeout: timer count down in seconds
+            timeout: Timer count down in seconds.
         """
         if self.ticking and not self.overwrite:
             return
+
         try:
-            # Warning: This code may cause non-deterministic RTEs
+            # Warning: This code may cause non-deterministic RunTimeError
             #          if the handler function calls code that does
             #          not support reentrance (see e.g. issue #1003).
             signal.signal(signal.SIGALRM, self.handler)
             signal.alarm(timeout)
         except ValueError:
+            # Why???
             pass
+
         self.ticking = True
 
     def stop(self):
-        """
-        Stop timer before it comes to an end
-        """
+        """Stop timer before it comes to an end."""
         try:
             signal.alarm(0)
             self.ticking = False
+
+        # TODO: What to catch?
         except:
             pass
 
     def handler(self, signum, frame):
-        """
-        This method is called after the timer ran down to zero
+        """This method is called after the timer ran down to zero
         and calls the callback function of the alarm instance.
 
         Raises:
-            Timeout: If no callback function was set for the alarm instance
+            `exceptions.Timeout`: If no callback function was set for the alarm
+                instance.
         """
         self.ticking = False
+
         if self.callback is None:
             raise Timeout()
+
         else:
             self.callback()
 
-class ShutDown(object):
+
+class ShutDown:
     """
     Shutdown the system after the current snapshot has finished.
     This should work for KDE, Gnome, Unity, Cinnamon, XFCE, Mate and E17.
@@ -2196,7 +2264,7 @@ class ShutDown(object):
                 sessionbus = dbus.SessionBus()
             systembus  = dbus.SystemBus()
         except:
-            return((None, None))
+            return (None, None)
         des = list(self.DBUS_SHUTDOWN.keys())
         des.sort()
         for de in des:
@@ -2210,23 +2278,23 @@ class ShutDown(object):
                     bus = systembus
                 interface = bus.get_object(dbus_props['service'], dbus_props['objectPath'])
                 proxy = interface.get_dbus_method(dbus_props['method'], dbus_props['interface'])
-                return((proxy, dbus_props['arguments']))
+                return (proxy, dbus_props['arguments'])
             except dbus.exceptions.DBusException:
                 continue
-        return((None, None))
+        return (None, None)
 
     def canShutdown(self):
         """
         Indicate if a valid dbus service is available to shutdown system.
         """
-        return(not self.proxy is None or self.is_root)
+        return not self.proxy is None or self.is_root
 
     def askBeforeQuit(self):
         """
         Indicate if ShutDown is ready to fire and so the application
         shouldn't be closed.
         """
-        return(self.activate_shutdown and not self.started)
+        return self.activate_shutdown and not self.started
 
     def shutdown(self):
         """
@@ -2234,23 +2302,21 @@ class ShutDown(object):
         call the dbus proxy to start the shutdown.
         """
         if not self.activate_shutdown:
-            return(False)
+            return False
 
         if self.is_root:
-            syncfs()
             self.started = True
             proc = subprocess.Popen(['shutdown', '-h', 'now'])
             proc.communicate()
             return proc.returncode
 
         if self.proxy is None:
-            return(False)
+            return False
 
         else:
-            syncfs()
             self.started = True
 
-            return(self.proxy(*self.args))
+            return self.proxy(*self.args)
 
     def unity7(self):
         """
@@ -2268,7 +2334,7 @@ class ShutDown(object):
         return m and Version(m.group(1)) >= Version('7.0') and processExists('unity-panel-service')
 
 
-class SetupUdev(object):
+class SetupUdev:
     """
     Setup Udev rules for starting BackInTime when a drive get connected.
     This is done by serviceHelper.py script (included in backintime-qt)
@@ -2278,14 +2344,18 @@ class SetupUdev(object):
     OBJECT = '/UdevRules'
     INTERFACE = 'net.launchpad.backintime.serviceHelper.UdevRules'
     MEMBERS = ('addRule', 'save', 'delete')
+
     def __init__(self):
         if dbus is None:
             self.isReady = False
+
             return
+
         try:
             bus = dbus.SystemBus()
             conn = bus.get_object(SetupUdev.CONNECTION, SetupUdev.OBJECT)
             self.iface = dbus.Interface(conn, SetupUdev.INTERFACE)
+
         except dbus.exceptions.DBusException as e:
             # Only DBusExceptions are  handled to do a "graceful recovery"
             # by working without a serviceHelper D-Bus connection...
@@ -2294,56 +2364,69 @@ class SetupUdev(object):
             # if e._dbus_error_name in ('org.freedesktop.DBus.Error.NameHasNoOwner',
             #                           'org.freedesktop.DBus.Error.ServiceUnknown',
             #                           'org.freedesktop.DBus.Error.FileNotFound'):
-            logger.warning("Failed to connect to Udev serviceHelper daemon via D-Bus: " + e.get_dbus_name())
-            logger.warning("D-Bus message: " + e.get_dbus_message())
-            logger.warning("Udev-based profiles cannot be changed or checked due to Udev serviceHelper connection failure")
+            logger.warning('Failed to connect to Udev serviceHelper daemon '
+                           'via D-Bus: ' + e.get_dbus_name())
+            logger.warning('D-Bus message: ' + e.get_dbus_message())
+            logger.warning('Udev-based profiles cannot be changed or checked '
+                           'due to Udev serviceHelper connection failure')
             conn = None
+
             # else:
             #     raise
+
         self.isReady = bool(conn)
 
     def addRule(self, cmd, uuid):
-        """
-        Prepare rules in serviceHelper.py
+        """Prepare rules in serviceHelper.py
         """
         if not self.isReady:
             return
+
         try:
             return self.iface.addRule(cmd, uuid)
-        except dbus.exceptions.DBusException as e:
-            if e._dbus_error_name == 'net.launchpad.backintime.InvalidChar':
-                raise InvalidChar(str(e))
-            elif e._dbus_error_name == 'net.launchpad.backintime.InvalidCmd':
-                raise InvalidCmd(str(e))
-            elif e._dbus_error_name == 'net.launchpad.backintime.LimitExceeded':
-                raise LimitExceeded(str(e))
+
+        except dbus.exceptions.DBusException as exc:
+            if exc._dbus_error_name == 'net.launchpad.backintime.InvalidChar':
+                raise InvalidChar(str(exc)) from exc
+
+            elif exc._dbus_error_name == 'net.launchpad.backintime.InvalidCmd':
+                raise InvalidCmd(str(exc)) from exc
+
+            elif exc._dbus_error_name == 'net.launchpad.backintime.LimitExceeded':
+                raise LimitExceeded(str(exc))  from exc
+
             else:
                 raise
 
     def save(self):
-        """
-        Save rules with serviceHelper.py after authentication
+        """Save rules with serviceHelper.py after authentication.
+
         If no rules where added before this will delete current rule.
         """
         if not self.isReady:
             return
+
         try:
             return self.iface.save()
-        except dbus.exceptions.DBusException as e:
-            if e._dbus_error_name == 'com.ubuntu.DeviceDriver.PermissionDeniedByPolicy':
-                raise PermissionDeniedByPolicy(str(e))
+
+        except dbus.exceptions.DBusException as err:
+
+            if err._dbus_error_name == 'com.ubuntu.DeviceDriver.PermissionDeniedByPolicy':
+                raise PermissionDeniedByPolicy(str(err)) from err
+
             else:
-                raise
+                raise err
 
     def clean(self):
-        """
-        Clean up remote cache
+        """Clean up remote cache.
         """
         if not self.isReady:
             return
+
         self.iface.clean()
 
-class PathHistory(object):
+
+class PathHistory:
     def __init__(self, path):
         self.history = [path,]
         self.index = 0
@@ -2377,106 +2460,40 @@ class PathHistory(object):
         self.history = [path,]
         self.index = 0
 
-class OrderedSet(MutableSet):
-    """
-    OrderedSet from Python recipe
-    http://code.activestate.com/recipes/576694/
-    """
-    def __init__(self, iterable=None):
-        self.end = end = []
-        end += [None, end, end]         # sentinel node for doubly linked list
-        self.map = {}                   # key --> [key, prev, next]
-        if iterable is not None:
-            self |= iterable
 
-    def __len__(self):
-        return len(self.map)
-
-    def __contains__(self, key):
-        return key in self.map
-
-    def add(self, key):
-        if key not in self.map:
-            end = self.end
-            curr = end[1]
-            curr[2] = end[1] = self.map[key] = [key, curr, end]
-
-    def discard(self, key):
-        if key in self.map:
-            key, prev, next = self.map.pop(key)
-            prev[2] = next
-            next[1] = prev
-
-    def __iter__(self):
-        end = self.end
-        curr = end[2]
-        while curr is not end:
-            yield curr[0]
-            curr = curr[2]
-
-    def __reversed__(self):
-        end = self.end
-        curr = end[1]
-        while curr is not end:
-            yield curr[0]
-            curr = curr[1]
-
-    def pop(self, last=True):
-        if not self:
-            raise KeyError('set is empty')
-        key = self.end[1][0] if last else self.end[2][0]
-        self.discard(key)
-        return key
-
-    def __repr__(self):
-        if not self:
-            return '%s()' % (self.__class__.__name__,)
-        return '%s(%r)' % (self.__class__.__name__, list(self))
-
-    def __eq__(self, other):
-        if isinstance(other, OrderedSet):
-            return len(self) == len(other) and list(self) == list(other)
-        return set(self) == set(other)
-
-class Execute(object):
-    """
-    Execute external commands and handle its output.
+class Execute:
+    """Execute external commands and handle its output.
 
     Args:
-
-        cmd (:py:class:`str` or :py:class:`list`):
-                            command with arguments that should be called.
-                            Depending on if this is :py:class:`str` or
-                            :py:class:`list` instance the command will be called
-                            by either :py:func:`os.system` (deprecated) or
-                            :py:class:`subprocess.Popen`
-        callback (method):  function which will handle output returned by
-                            command (e.g. to extract errors)
-        user_data:          extra arguments which will be forwarded to
-                            ``callback`` function (e.g. a tuple - which is
-                            passed by reference in Python - to "return"
-                            results of the callback function as side effect).
-        filters (tuple):    Tuple of functions used to filter messages before
-                            sending them to the ``callback`` function
-        parent (instance):  instance of the calling method used only to proper
-                            format log messages
-        conv_str (bool):    convert output to :py:class:`str` if True or keep it
-                            as :py:class:`bytes` if False
-        join_stderr (bool): join stderr to stdout
+        cmd (list): Command with arguments that should be called.
+            The command will be called by  :py:class:`subprocess.Popen`.
+        callback (method): Function which will handle output returned by
+            command (e.g. to extract errors).
+        user_data: Extra arguments which will be forwarded to ``callback``
+            function (e.g. a ``tuple`` - which is passed by reference in
+            Python - to "return" results of the callback function as side
+            effect).
+        filters (tuple): Tuple of functions used to filter messages before
+            sending them to the ``callback`` function.
+        parent (instance): Instance of the calling method used only to proper
+            format log messages.
+        conv_str (bool): Convert output to :py:class:`str` if ``True`` or keep
+            it as :py:class:`bytes` if ``False``.
+        join_stderr (bool): Join ``stderr`` to ``stdout``.
 
     Note:
-        Signals SIGTSTP ("keyboard stop") and SIGCONT send to Python
-        main process will be forwarded to the command.
-        SIGHUP will kill the process.
+        Signals ``SIGTSTP`` ("keyboard stop") and ``SIGCONT`` send to Python
+        main process will be forwarded to the command. ``SIGHUP`` will kill
+        the process.
     """
     def __init__(self,
                  cmd,
-                 callback = None,
-                 user_data = None,
-                 filters = (),
-                 parent = None,
-                 conv_str = True,
-                 join_stderr = True):
+                 callback=None,
+                 user_data=None,
+                 filters=(),
+                 parent=None,
+                 conv_str=True,
+                 join_stderr=True):
         self.cmd = cmd
         self.callback = callback
         self.user_data = user_data
@@ -2484,362 +2501,142 @@ class Execute(object):
         self.currentProc = None
         self.conv_str = conv_str
         self.join_stderr = join_stderr
-        # we need to forward parent to have the correct class name in debug log
-        if parent:
-            self.parent = parent
-        else:
-            self.parent = self
+        # Need to forward parent to have the correct class name in debug log.
+        self.parent = parent if parent else self
 
-        if isinstance(self.cmd, list):
-            self.pausable = True
-            self.printable_cmd = ' '.join(self.cmd)
-            logger.debug('Call command "%s"' %self.printable_cmd, self.parent, 2)
-        else:
-            self.pausable = False
-            self.printable_cmd = self.cmd
-            logger.warning('Call command with old os.system method "%s"' %self.printable_cmd, self.parent, 2)
+        # Dev note (buhtz, 2024-07): Previous version was calling os.system()
+        # if cmd was a string instead of a list of strings. This is not secure
+        # and to my knowledge and research also not used anymore in BIT.
+        # It is my assumption that the RuntimeError will never be raised. But
+        # let's keep it for some versions to be sure.
+        if not isinstance(self.cmd, list):
+            raise RuntimeError(
+                'Command is a string but should be a list of strings. This '
+                'method is not supported anymore since version 1.5.0. The '
+                'current situation is unexpected. Please open a bug report '
+                'at https://github.com/bit-team/backintime/issues/new/choose '
+                'or report to the projects mailing list '
+                '<bit-dev-join@python.org>.')
+
+        self.pausable = True
+        self.printable_cmd = ' '.join(self.cmd)
+        logger.debug(f'Call command "{self.printable_cmd}"', self.parent, 2)
 
     def run(self):
-        """
-        Start the command.
+        """Run the command using ``subprocess.Popen``.
 
         Returns:
-            int:    return code from the command
+            int: Code from the command.
         """
         ret_val = 0
         out = ''
 
-        # backwards compatibility with old os.system and os.popen calls
-        # TODO Is this still required as the minimal Python version is 3.10++ now?
-        # TODO Which Python versions are considered as "old" here?
-        if isinstance(self.cmd, str):
-            logger.deprecated(self)
-            if self.callback is None:
-                ret_val = os.system(self.cmd)
-            else:
-                pipe = os.popen(self.cmd, 'r')
+        try:
+            # register signals for pause, resume and kill
+            # Forward these signals (sent to the "backintime" process
+            # normally) to the child process ("rsync" normally).
+            # Note: SIGSTOP (unblockable stop) cannot be forwarded because
+            # it cannot be caught in a signal handler!
+            signal.signal(signal.SIGTSTP, self.pause)
+            signal.signal(signal.SIGCONT, self.resume)
+            signal.signal(signal.SIGHUP, self.kill)
 
-                while True:
-                    line = tempFailureRetry(pipe.readline)
-                    if not line:
-                        break
-                    line = line.strip()
-                    for f in self.filters:
-                        line = f(line)
-                    if not line:
-                        continue
-                    self.callback(line, self.user_data)
+        except ValueError:
+            # signal only work in qt main thread
+            # TODO What does this imply?
+            pass
 
-                ret_val = pipe.close()
-                if ret_val is None:
-                    ret_val = 0
+        stderr = subprocess.STDOUT if self.join_stderr else subprocess.DEVNULL
 
-        # new and preferred method using subprocess.Popen
-        # TODO Which minimal Python version is required to be considered as "new"?
-        elif isinstance(self.cmd, (list, tuple)):
-            try:
-                # register signals for pause, resume and kill
-                # Forward these signals (sent to the "backintime" process
-                # normally) to the child process ("rsync" normally).
-                # Note: SIGSTOP (unblockable stop) cannot be forwarded because
-                # it cannot be caught in a signal handler!
-                signal.signal(signal.SIGTSTP, self.pause)
-                signal.signal(signal.SIGCONT, self.resume)
-                signal.signal(signal.SIGHUP, self.kill)
-            except ValueError:
-                # signal only work in qt main thread
-                # TODO What does this imply?
-                pass
+        logger.debug(f"Starting command '{self.printable_cmd}'")
 
-            if self.join_stderr:
-                stderr = subprocess.STDOUT
-            else:
-                stderr = subprocess.DEVNULL
+        self.currentProc = subprocess.Popen(
+            self.cmd, stdout=subprocess.PIPE, stderr=stderr)
 
-            logger.debug(f"Starting command '{self.printable_cmd[:min(16, len(self.printable_cmd))]}...'")
+        # # TEST code for developers to simulate a killed rsync process
+        # if self.printable_cmd.startswith("rsync --recursive"):
+        #     self.currentProc.terminate()  # signal 15 (SIGTERM) like "killall" and "kill" do by default
+        #     # self.currentProc.send_signal(signal.SIGHUP)  # signal 1
+        #     # self.currentProc.kill()  # signal 9
+        #     logger.error("rsync killed for testing purposes during development")
 
-            self.currentProc = subprocess.Popen(self.cmd,
-                                                stdout = subprocess.PIPE,
-                                                stderr = stderr)
+        if self.callback:
 
-            # # TEST code for developers to simulate a killed rsync process
-            # if self.printable_cmd.startswith("rsync --recursive"):
-            #     self.currentProc.terminate()  # signal 15 (SIGTERM) like "killall" and "kill" do by default
-            #     # self.currentProc.send_signal(signal.SIGHUP)  # signal 1
-            #     # self.currentProc.kill()  # signal 9
-            #     logger.error("rsync killed for testing purposes during development")
+            for line in self.currentProc.stdout:
 
-            if self.callback:
-                for line in self.currentProc.stdout:
-                    if self.conv_str:
-                        line = line.decode().rstrip('\n')
-                    else:
-                        line = line.rstrip(b'\n')
-                    for f in self.filters:
-                        line = f(line)
-                    if not line:
-                        continue
-                    self.callback(line, self.user_data)
+                if self.conv_str:
+                    line = line.decode().rstrip('\n')
+                else:
+                    line = line.rstrip(b'\n')
 
-            # We use communicate() instead of wait() to avoid a deadlock
-            # when stdout=PIPE and/or stderr=PIPE and the child process
-            # generates enough output to pipe that it blocks waiting for
-            # free buffer. See also:
-            # https://docs.python.org/3.10/library/subprocess.html#subprocess.Popen.wait
-            out = self.currentProc.communicate()[0]
-            # TODO Why is "out" empty instead of containing all stdout?
-            #      Most probably because Popen was called with a PIPE as stdout
-            #      to directly process each stdout line by calling the callback...
+                for f in self.filters:
+                    line = f(line)
 
-            ret_val = self.currentProc.returncode
-            # TODO ret_val is sometimes 0 instead of e.g. 23 for rsync. Why?
+                if not line:
+                    continue
 
-            try:
-                # reset signal handler to their default
-                signal.signal(signal.SIGTSTP, signal.SIG_DFL)
-                signal.signal(signal.SIGCONT, signal.SIG_DFL)
-                signal.signal(signal.SIGHUP, signal.SIG_DFL)
-            except ValueError:
-                # signal only work in qt main thread
-                # TODO What does this imply?
-                pass
+                self.callback(line, self.user_data)
 
-        if ret_val != 0:
-            msg = 'Command "%s" returns %s%s%s' %(self.printable_cmd, bcolors.WARNING, ret_val, bcolors.ENDC)
+        # We use communicate() instead of wait() to avoid a deadlock
+        # when stdout=PIPE and/or stderr=PIPE and the child process
+        # generates enough output to pipe that it blocks waiting for
+        # free buffer. See also:
+        # https://docs.python.org/3.10/library/subprocess.html#subprocess.Popen.wait
+        out = self.currentProc.communicate()[0]
+
+        # TODO Why is "out" empty instead of containing all stdout?
+        #      Most probably because Popen was called with a PIPE as stdout
+        #      to directly process each stdout line by calling the callback...
+
+        ret_val = self.currentProc.returncode
+        # TODO ret_val is sometimes 0 instead of e.g. 23 for rsync. Why?
+
+        try:
+            # reset signal handler to their default
+            signal.signal(signal.SIGTSTP, signal.SIG_DFL)
+            signal.signal(signal.SIGCONT, signal.SIG_DFL)
+            signal.signal(signal.SIGHUP, signal.SIG_DFL)
+        except ValueError:
+            # signal only work in qt main thread
+            # TODO What does this imply?
+            pass
+
+        if ret_val == 0:
+            msg = f'Command "{self.printable_cmd[:16]}" returns {ret_val}'
             if out:
-                msg += ' | %s' %out.decode().strip('\n')
-            logger.warning(msg, self.parent, 2)
-        else:
-            msg = 'Command "%s..." returns %s' %(self.printable_cmd[:min(16, len(self.printable_cmd))], ret_val)
-            if out:
-                msg += ': %s' %out.decode().strip('\n')
+                msg += ': ' + out.decode().strip('\n')
             logger.debug(msg, self.parent, 2)
+
+        else:
+            msg = f'Command "{self.printable_cmd}" ' \
+                  f'returns {bcolors.WARNING}{ret_val}{bcolors.ENDC}'
+            if out:
+                msg += ' | ' + out.decode().strip('\n')
+            logger.warning(msg, self.parent, 2)
 
         return ret_val
 
     def pause(self, signum, frame):
-        """
-        Slot which will send ``SIGSTOP`` to the command. Is connected to
+        """Slot which will send ``SIGSTOP`` to the command. Is connected to
         signal ``SIGTSTP``.
         """
         if self.pausable and self.currentProc:
-            logger.info('Pause process "%s"' %self.printable_cmd, self.parent, 2)
+            logger.info(
+                f'Pause process "{self.printable_cmd}"', self.parent, 2)
             return self.currentProc.send_signal(signal.SIGSTOP)
 
     def resume(self, signum, frame):
-        """
-        Slot which will send ``SIGCONT`` to the command. Is connected to
+        """Slot which will send ``SIGCONT`` to the command. Is connected to
         signal ``SIGCONT``.
         """
         if self.pausable and self.currentProc:
-            logger.info('Resume process "%s"' %self.printable_cmd, self.parent, 2)
+            logger.info(
+                f'Resume process "{self.printable_cmd}"', self.parent, 2)
             return self.currentProc.send_signal(signal.SIGCONT)
 
     def kill(self, signum, frame):
-        """
-        Slot which will kill the command. Is connected to signal ``SIGHUP``.
+        """Slot which will kill the command. Is connected to signal ``SIGHUP``.
         """
         if self.pausable and self.currentProc:
-            logger.info('Kill process "%s"' %self.printable_cmd, self.parent, 2)
+            logger.info(f'Kill process "{self.printable_cmd}"', self.parent, 2)
             return self.currentProc.kill()
-
-class Daemon:
-    """
-    A generic daemon class.
-
-    Usage: subclass the Daemon class and override the run() method
-
-    Daemon Copyright by Sander Marechal
-    License CC BY-SA 3.0
-    http://www.jejik.com/articles/2007/02/a_simple_unix_linux_daemon_in_python/
-    """
-    def __init__(self, pidfile = None, stdin='/dev/null', stdout='/dev/stdout', stderr='/dev/null', umask = 0o022):
-        self.stdin = stdin
-        self.stdout = stdout
-        self.stderr = stderr
-        self.pidfile = pidfile
-        self.umask = umask
-        if pidfile:
-            self.appInstance = ApplicationInstance(pidfile, autoExit = False, flock = False)
-
-    def daemonize(self):
-        """
-        "Converts" the current process into a daemon
-        (= process running in the background)
-        and sends a SIGTERM signal to the current process.
-        This is done via the UNIX double-fork magic, see Stevens'
-        "Advanced Programming in the UNIX Environment" for details (ISBN 0201563177)
-        and this explanation: https://stackoverflow.com/a/6011298
-        """
-        try:
-            pid = os.fork()
-            logger.debug('first fork pid: {}'.format(pid), self)
-            if pid > 0:
-                # exit first parent
-                sys.exit(0)
-        except OSError as e:
-            logger.error("fork #1 failed: %d (%s)" % (e.errno, str(e)), self)
-            sys.exit(1)
-
-        # decouple from parent environment
-        logger.debug('decouple from parent environment', self)
-        os.chdir("/")
-        os.setsid()
-        os.umask(self.umask)
-
-        # do second fork
-        try:
-            pid = os.fork()
-            logger.debug('second fork pid: {}'.format(pid), self)
-            if pid > 0:
-                # exit from second parent
-                sys.exit(0)
-        except OSError as e:
-            logger.error("fork #2 failed: %d (%s)" % (e.errno, str(e)), self)
-            sys.exit(1)
-
-        # redirect standard file descriptors
-        logger.debug('redirect standard file descriptors', self)
-
-        sys.stdout.flush()
-        sys.stderr.flush()
-        fdDup(self.stdin, sys.stdin, 'r')
-        fdDup(self.stdout, sys.stdout, 'w')
-        fdDup(self.stderr, sys.stderr, 'w')
-
-        signal.signal(signal.SIGTERM, self.cleanupHandler)
-
-        if self.pidfile:
-            atexit.register(self.appInstance.exitApplication)
-            # write pidfile
-            logger.debug('write pidfile', self)
-            self.appInstance.startApplication()
-
-    def cleanupHandler(self, signum, frame):
-        if self.pidfile:
-            self.appInstance.exitApplication()
-        sys.exit(0)
-
-    def start(self):
-        """
-        Start the daemon
-        """
-        # Check for a pidfile to see if the daemon already runs
-        if self.pidfile and not self.appInstance.check():
-            message = "pidfile %s already exists. Daemon already running?\n"
-            logger.error(message % self.pidfile, self)
-            sys.exit(1)
-
-        # Start the daemon
-        self.daemonize()
-        self.run()
-
-    def stop(self):
-        """
-        Stop the daemon
-        """
-        if not self.pidfile:
-            logger.debug("Unattended daemon can't be stopped. No PID file", self)
-            return
-
-        # Get the pid from the pidfile
-        pid, procname = self.appInstance.readPidFile()
-
-        if not pid:
-            message = "pidfile %s does not exist. Daemon not running?\n"
-            logger.error(message % self.pidfile, self)
-            return # not an error in a restart
-
-        # Try killing the daemon process
-        try:
-            while True:
-                os.kill(pid, signal.SIGTERM)
-                sleep(0.1)
-        except OSError as err:
-            if err.errno == errno.ESRCH:
-                #no such process
-                self.appInstance.exitApplication()
-            else:
-                logger.error(str(err), self)
-                sys.exit(1)
-
-    def restart(self):
-        """
-        Restart the daemon
-        """
-        self.stop()
-        self.start()
-
-    def reload(self):
-        """
-        send SIGHUP signal to process
-        """
-        if not self.pidfile:
-            logger.debug("Unattended daemon can't be reloaded. No PID file", self)
-            return
-
-        # Get the pid from the pidfile
-        pid, procname = self.appInstance.readPidFile()
-
-        if not pid:
-            message = "pidfile %s does not exist. Daemon not running?\n"
-            logger.error(message % self.pidfile, self)
-            return
-
-        # Try killing the daemon process
-        try:
-            os.kill(pid, signal.SIGHUP)
-        except OSError as err:
-            if err.errno == errno.ESRCH:
-                #no such process
-                self.appInstance.exitApplication()
-            else:
-                sys.stderr.write(str(err))
-                sys.exit(1)
-
-    def status(self):
-        """
-        return status
-        """
-        if not self.pidfile:
-            logger.debug("Unattended daemon can't be checked. No PID file", self)
-            return
-        return not self.appInstance.check()
-
-    def run(self):
-        """
-        You should override this method when you subclass Daemon. It will be called after the process has been
-        daemonized by start() or restart().
-        """
-        pass
-
-# def __logKeyringWarning():
-#
-#     from time import sleep
-#     sleep(0.1)
-#     # TODO This function may not be thread-safe
-#     logger.warning('import keyring failed')
-#
-#
-#
-# if is_keyring_available:
-#
-#     # delay warning to give logger some time to import
-#
-#     # Jan 4, 2024 aryoda:
-#     # This is an assumed work-around for #820 (unhandled exception: NoneType)
-#     # but does not seem to fix the problem.
-#     # So I have refactored the possible name shadowing of "keyring"
-#     # as described in
-#     # https://github.com/bit-team/backintime/issues/820#issuecomment-1472971734
-#     # and left this code unchanged to wait for user feed-back if it works now.
-#     # If the error still occurs I would move the log output call
-#     # to the client of this module so that it is certain to assume it is
-#     # correctly initialized.
-#     # Maybe use backintime.py and app.py for logging...
-#     # (don't call tools.keyringSupported() for that because
-#     # it produces too much debug logging output whenever it is called
-#     # but just query tools.is_keyring_available.
-#     from threading import Thread
-#     thread = Thread(target=__logKeyringWarning, args=())
-#     thread.start()

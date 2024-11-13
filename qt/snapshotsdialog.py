@@ -55,11 +55,11 @@ class DiffOptionsDialog(QDialog):
         cmd = self.config.strValue('qt.diff.cmd', DIFF_CMD)
         params = self.config.strValue('qt.diff.params', DIFF_PARAMS)
 
-        self.mainLayout.addWidget(QLabel(_('Command') + ':'), 0, 0)
+        self.mainLayout.addWidget(QLabel(_('Command:')), 0, 0)
         self.editCmd = QLineEdit(cmd, self)
         self.mainLayout.addWidget(self.editCmd, 0, 1)
 
-        self.mainLayout.addWidget(QLabel(_('Parameters') + ':'), 1, 0)
+        self.mainLayout.addWidget(QLabel(_('Parameters:')), 1, 0)
         self.editParams = QLineEdit(params, self)
         self.mainLayout.addWidget(self.editParams, 1, 1)
 
@@ -87,7 +87,7 @@ class DiffOptionsDialog(QDialog):
         # Command exists?
         if tools.checkCommand(cmd) == False:
             messagebox.info(_(
-                'The command "{cmd}" can not be found on this system. Please '
+                'The command "{cmd}" cannot be found on this system. Please '
                 'try something else or press Cancel.').format(cmd=cmd))
             return
 
@@ -139,7 +139,7 @@ class SnapshotsDialog(QDialog):
         layout = QHBoxLayout()
         self.mainLayout.addLayout(layout)
         self.cbOnlyEqualSnapshots = QCheckBox(
-            _('List only equal snapshots to: '), self)
+            _('List only snapshots that are equal to:'), self)
         self.cbOnlyEqualSnapshots.stateChanged.connect(
             self.cbOnlyEqualSnapshotsChanged)
         layout.addWidget(self.cbOnlyEqualSnapshots)
@@ -240,15 +240,21 @@ class SnapshotsDialog(QDialog):
         self.comboDiff.clear()
 
         equal_to_sid = self.comboEqualTo.currentSnapshotID()
+
         if self.cbOnlyEqualSnapshots.isChecked() and equal_to_sid:
             equal_to = equal_to_sid.pathBackup(self.path)
         else:
             equal_to = False
-        snapshotsFiltered = self.snapshots.filter(self.sid, self.path,
-                                self.snapshotsList,
-                                self.cbOnlyDifferentSnapshots.isChecked(),
-                                self.cbDeepCheck.isChecked(),
-                                equal_to)
+
+        snapshotsFiltered = self.snapshots.filter(
+            base_sid=self.sid,
+            base_path=self.path,
+            snapshotsList=self.snapshotsList,
+            list_diff_only=self.cbOnlyDifferentSnapshots.isChecked(),
+            flag_deep_check=self.cbDeepCheck.isChecked(),
+            list_equal_to=equal_to
+        )
+
         for sid in snapshotsFiltered:
             self.addSnapshot(sid)
 
@@ -405,8 +411,7 @@ class SnapshotsDialog(QDialog):
                     'snapshots?').format(
                         file=f'"{self.path}"', count=len(items))
 
-        msg = '{}\n{}: {}'.format(
-            msg, _('WARNING'), _('This cannot be revoked!'))
+        msg = _('WARNING: This cannot be revoked.')
 
         answer = messagebox.warningYesNo(self, msg)
         if answer == QMessageBox.StandardButton.Yes:

@@ -1,4 +1,23 @@
 #!/bin/sh
+# SPDX-FileCopyrightText: © 2009 Oprea Dan
+# SPDX-FileCopyrightText: © 2013 Germar Reitze
+# SPDX-FileCopyrightText: © 2022 Jürgen Altfeld
+# SPDX-FileCopyrightText: © 2022 Christian Buhtz <c.buhtz@posteo.jp>
+# SPDX-FileCopyrightText: © 2023 Kian-Meng Ang
+# SPDX-FileCopyrightText: © 2023 Fabio Fantoni
+# SPDX-FileCopyrightText: © 2024 Tejas Guruswamy
+#
+# SPDX-License-Identifier: CC0-1.0
+#
+# This file is released under Creative Commons Zero 1.0 (CC0-1.0) and part of
+# the program "Back In Time". The program as a whole is released under GNU
+# General Public License v2 or any later version (GPL-2.0-or-later).
+# See LICENSES directory or
+# go to <https://spdx.org/licenses/CC0-1.0.html>
+# and <https://spdx.org/licenses/GPL-2.0-or-later.html>.
+#
+# This is the configuration file for the Read the Docs service.
+# See https://docs.readthedocs.io/en/stable/config-file/v2.html for details.
 
 #clean up
 if [ -e Makefile ]; then
@@ -162,6 +181,8 @@ addUninstallDir          "/share/backintime/qt/__pycache__"
 addUninstallFile "*.pyc" "/share/backintime/qt/__pycache__"
 addInstallDir            "/share/backintime/qt"
 addInstallFiles "*.py"   "/share/backintime/qt"
+addInstallDir            "/share/backintime/qt/manageprofiles"
+addInstallFiles "manageprofiles/*.py"   "/share/backintime/qt/manageprofiles"
 addNewline
 
 addComment "plugin"
@@ -201,10 +222,10 @@ addNewline
 
 addComment "documentation"
 addInstallDir                        "/share/doc/backintime-qt"
-addInstallFile "../debian/copyright" "/share/doc/backintime-qt"
 addInstallFile "../AUTHORS"          "/share/doc/backintime-qt"
 addInstallFile "../LICENSE"          "/share/doc/backintime-qt"
 addInstallFile "../README.md"        "/share/doc/backintime-qt"
+addInstallFile "../FAQ.md"        "/share/doc/backintime-qt"
 addInstallFile "../TRANSLATIONS"     "/share/doc/backintime-qt"
 addInstallFile "../CHANGES"          "/share/doc/backintime-qt"
 addNewline
@@ -255,7 +276,7 @@ for i in "${UNINSTALL_FILES}" "${UNINSTALL_DIRS}"; do
 done
 
 # check python version
-PYTHON_VERSION_REQUIRED="3.8"
+PYTHON_VERSION_REQUIRED="3.9"
 PYTHON_VERSION_CURRENT=$(${PYTHON} --version | tr --delete 'Python ')
 
 # Credits: https://unix.stackexchange.com/a/285928/136851

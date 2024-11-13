@@ -1,21 +1,13 @@
-#    Back In Time
-#    Copyright (C) 2008-2022 Oprea Dan, Bart de Koning, Richard Bailey, Germar
-#    Reitze
+# SPDX-FileCopyrightText: © 2008-2022 Oprea Dan
+# SPDX-FileCopyrightText: © 2008-2022 Bart de Koning
+# SPDX-FileCopyrightText: © 2008-2022 Richard Bailey
+# SPDX-FileCopyrightText: © 2008-2022 Germar Reitze
 #
-#    This program is free software; you can redistribute it and/or modify
-#    it under the terms of the GNU General Public License as published by
-#    the Free Software Foundation; either version 2 of the License, or
-#    (at your option) any later version.
+# SPDX-License-Identifier: GPL-2.0-or-later
 #
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU General Public License for more details.
-#
-#    You should have received a copy of the GNU General Public License along
-#    with this program; if not, write to the Free Software Foundation, Inc.,
-#    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-
+# This file is part of the program "Back In Time" which is released under GNU
+# General Public License v2 (GPLv2). See LICENSES directory or go to
+# <https://spdx.org/licenses/GPL-2.0-or-later.html>.
 """Some helper functions and additional classes in context of Qt.
 
     - Helpers for Qt Fonts.
@@ -30,14 +22,29 @@
 """
 import os
 import sys
-
+import textwrap
+from typing import Union, Iterable
 from PyQt6.QtGui import (QAction, QFont, QPalette, QIcon)
-from PyQt6.QtCore import (QDir, Qt, pyqtSlot, pyqtSignal, QModelIndex,
-                          QTranslator, QLocale, QLibraryInfo,
+from PyQt6.QtCore import (QDir,
+                          Qt,
+                          pyqtSlot,
+                          pyqtSignal,
+                          QModelIndex,
+                          QTranslator,
+                          QLocale,
+                          QLibraryInfo,
                           QT_VERSION_STR)
-from PyQt6.QtWidgets import (QFileDialog, QAbstractItemView, QListView,
-                             QTreeView, QDialog, QApplication, QStyleFactory,
-                             QTreeWidget, QTreeWidgetItem, QComboBox,
+from PyQt6.QtWidgets import (QWidget,
+                             QFileDialog,
+                             QAbstractItemView,
+                             QListView,
+                             QTreeView,
+                             QDialog,
+                             QApplication,
+                             QStyleFactory,
+                             QTreeWidget,
+                             QTreeWidgetItem,
+                             QComboBox,
                              QSystemTrayIcon)
 from datetime import (datetime, date, timedelta)
 from calendar import monthrange
@@ -48,6 +55,7 @@ registerBackintimePath('common')
 import snapshots  # noqa: E402
 import tools  # noqa: E402
 import logger  # noqa: E402
+import version
 
 
 # |---------------|
@@ -81,7 +89,7 @@ def can_render(string, widget):
         widget(QWidget): The widget which font is used.
 
     Returns:
-        (bool) True if the widgets font contain all givin characters.
+        (bool) True if the widgets font contain all given characters.
     """
     fm = widget.fontMetrics()
 
@@ -94,21 +102,54 @@ def can_render(string, widget):
     return True
 
 
+# |--------------------------------|
+# | Widget modification & creation |
+# |--------------------------------|
+
+def set_wrapped_tooltip(widget: QWidget,
+                        tooltip: Union[str, Iterable[str]],
+                        wrap_length: int=72):
+    """Add a tooltip to the widget but insert line breaks when appropriated.
+
+    If a list of strings is provided, each string is wrapped individually and
+    then joined with a line break.
+
+    Args:
+        widget: The widget to which a tooltip should be added.
+        tooltip: The tooltip as string or iterable of strings.
+        wrap_length: Every line is at most this lengths.
+    """
+    # Always use tuple or list
+    if isinstance(tooltip, str):
+        tooltip = (tooltip, )
+
+    result = []
+    for paragraph in tooltip:
+        result.append('\n'.join(
+            textwrap.wrap(paragraph, wrap_length)
+        ))
+
+    widget.setToolTip('\n'.join(result))
+
+
+
+def update_combo_profiles(config, combo_profiles, current_profile_id):
+    """
+    Updates the combo box with profiles.
+
+    :param config: Configuration object with access to profile data.
+    :param combo_profiles: The combo box widget to be updated.
+    :param current_profile_id: The ID of the current profile to be selected.
+    """
+    profiles = config.profilesSortedByName()
+    for profile_id in profiles:
+        combo_profiles.addProfileID(profile_id)
+        if profile_id == current_profile_id:
+            combo_profiles.setCurrentProfileID(profile_id)
+
 # |---------------------|
 # | Misc / Uncatgorized |
 # |---------------------|
-
-
-def equalIndent(*args):
-    width = 0
-
-    for widget in args:
-        widget.setMinimumWidth(0)
-        width = max(width, widget.sizeHint().width())
-
-    if len(args) > 1:
-        for widget in args:
-            widget.setMinimumWidth(width)
 
 
 class FileDialogShowHidden(QFileDialog):
@@ -233,8 +274,8 @@ def createQApplication(app_name='Back In Time'):
     try:
         # The platform name indicates eg. wayland vs. X11, see also:
         # https://doc.qt.io/qt-5/qguiapplication.html#platformName-prop
-        # For more details see our X11/Wayland/Qt documentation the doc-dev
-        # folder
+        # For more details see our X11/Wayland/Qt documentation in the
+        # directory doc/maintain
         qt_platform_name = qapp.platformName()
         logger.debug(f"QT QPA platform plugin: {qt_platform_name}")
         logger.debug(
@@ -260,6 +301,11 @@ def createQApplication(app_name='Back In Time'):
     except Exception as e:
         logger.debug(
             f"Error reading QT QPA platform plugin or style: {repr(e)}")
+
+    # Release Candidate indicator
+    if version.is_release_candidate():
+        app_name = f'{app_name} -- RELEASE CANDIDATE -- ' \
+                   f'({version.__version__})'
 
     qapp.setApplicationName(app_name)
 
@@ -323,6 +369,8 @@ def initiate_translator(language_code: str) -> QTranslator:
             'PyQt was not able to install a translator for language code '
             f'"{language_code}". Deactivate translation and falling back to '
             'the source language (English).')
+
+    tools.set_lc_time_by_language_code(language_code)
 
     return translator
 
@@ -656,4 +704,3 @@ class ProfileCombo(SortedComboBox):
             if self.itemData(i) == profileID:
                 self.setCurrentIndex(i)
                 break
-

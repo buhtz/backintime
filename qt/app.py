@@ -1,20 +1,14 @@
-# Back In Time
-# Copyright (C) 2008-2022 Oprea Dan, Bart de Koning, Richard Bailey,
-# Germar Reitze
+# SPDX-FileCopyrightText: © 2008-2022 Oprea Dan
+# SPDX-FileCopyrightText: © 2008-2022 Bart de Koning
+# SPDX-FileCopyrightText: © 2008-2022 Richard Bailey
+# SPDX-FileCopyrightText: © 2008-2022 Germar Reitze
+# SPDX-FileCopyrightText: © 2024 Christian Buhtz <c.buhtz@posteo.jp>
 #
-# This program is free software; you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation; either version 2 of the License, or
-# (at your option) any later version.
+# SPDX-License-Identifier: GPL-2.0-or-later
 #
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License along
-# with this program; if not, write to the Free Software Foundation, Inc.,
-# 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+# This file is part of the program "Back In Time" which is released under GNU
+# General Public License v2 (GPLv2). See LICENSES directory or go to
+# <https://spdx.org/licenses/GPL-2.0-or-later.html>.
 import os
 import sys
 
@@ -46,13 +40,13 @@ import snapshots
 import guiapplicationinstance
 import mount
 import progress
+import encfsmsgbox
 from exceptions import MountException
 
 from PyQt6.QtGui import (QAction,
                          QShortcut,
                          QDesktopServices,
                          QPalette,
-                         QColor,
                          QIcon,
                          QFileSystemModel)
 from PyQt6.QtWidgets import (QWidget,
@@ -69,7 +63,6 @@ from PyQt6.QtWidgets import (QWidget,
                              QAbstractItemView,
                              QStyledItemDelegate,
                              QVBoxLayout,
-                             QHBoxLayout,
                              QStackedLayout,
                              QSplitter,
                              QGroupBox,
@@ -79,7 +72,6 @@ from PyQt6.QtWidgets import (QWidget,
                              QMessageBox,
                              QInputDialog,
                              QDialog,
-                             QDialogButtonBox,
                              QApplication,
                              )
 from PyQt6.QtCore import (Qt,
@@ -92,17 +84,18 @@ from PyQt6.QtCore import (Qt,
                           QEvent,
                           QSortFilterProxyModel,
                           QDir,
-                          QSize,
-                          QUrl,
-                          pyqtRemoveInputHook,
-                          )
-import settingsdialog
+                          QUrl)
+from manageprofiles import SettingsDialog
 import snapshotsdialog
 import logviewdialog
 from restoredialog import RestoreDialog
+from restoreconfigdialog import RestoreConfigDialog
 import languagedialog
 import messagebox
 from aboutdlg import AboutDlg
+import qttools
+from usermessagedialog import UserMessageDialog
+import version
 
 
 class MainWindow(QMainWindow):
@@ -191,7 +184,8 @@ class MainWindow(QMainWindow):
 
         # folder don't exist label
         self.lblFolderDontExists = QLabel(
-            _("This folder doesn't exist\nin the current selected snapshot."),
+            _("This directory doesn't exist\n"
+              "in the current selected snapshot."),
             self)
         qttools.setFontBold(self.lblFolderDontExists)
         self.lblFolderDontExists.setFrameShadow(QFrame.Shadow.Sunken)
@@ -342,18 +336,21 @@ class MainWindow(QMainWindow):
             self.filesView.header().resizeSection(1, filesViewColumnSizeWidth)
             self.filesView.header().resizeSection(2, filesViewColumnDateWidth)
 
-        # force settingdialog if it is not configured
+        # Force dialog to import old configuration
         if not config.isConfigured():
             message = _(
-                '{appName} is not configured. Would you like '
-                'to restore a previous configuration?') \
-                .format(appName=self.config.APP_NAME)
-
+                '{app_name} appears to be running for the first time as no '
+                'configuration is found.'
+            ).format(app_name=self.config.APP_NAME)
+            message = f'{message}\n\n'
+            message = message + _(
+                'Import an existing configuration (from a backup target '
+                'directory or another computer)?')
             answer = messagebox.warningYesNo(self, message)
             if answer == QMessageBox.StandardButton.Yes:
-                settingsdialog.RestoreConfigDialog(self).exec()
+                RestoreConfigDialog(self).exec()
 
-            settingsdialog.SettingsDialog(self).exec()
+            SettingsDialog(self).exec()
 
         if not config.isConfigured():
             return
@@ -374,9 +371,10 @@ class MainWindow(QMainWindow):
             self.config.setCurrentHashId(hash_id)
 
         if not config.canBackup(profile_id):
-            messagebox.critical(self, _(
-                "Can't find snapshots folder.\nIf it is on a removable "
-                "drive please plug it in and then press OK."))
+            msg = _("Can't find snapshots directory.") + '\n' \
+                + _('If it is on a removable drive please plug it in and then '
+                    'press OK.')
+            messagebox.critical(self, msg)
 
         self.filesViewProxyModel.layoutChanged.connect(self.dirListerCompleted)
 
@@ -424,6 +422,29 @@ class MainWindow(QMainWindow):
         # countdown a dialog with a text about contributing to translating
         # BIT is presented to the users.
         self.config.decrement_manual_starts_countdown()
+
+        # If the encfs-deprecation warning was never shown before
+        if self.config.boolValue('internal.msg_shown_encfs') == False:
+
+            # Are there profiles using EncFS?
+            encfs_profiles = []
+            for pid in self.config.profiles():
+                if 'encfs' in self.config.snapshotsMode(pid):
+                    encfs_profiles.append(
+                        f'{self.config.profileName(pid)} ({pid})')
+
+            # EncFS deprecation warning (#1734, #1735)
+            if encfs_profiles:
+                dlg = encfsmsgbox.EncfsExistsWarning(self, encfs_profiles)
+                dlg.exec()
+                self.config.setBoolValue('internal.msg_shown_encfs', True)
+
+        # Release Candidate
+        if version.is_release_candidate():
+            last_vers = self.config.strValue('internal.msg_rc')
+            if last_vers != version.__version__:
+                self.config.setStrValue('internal.msg_rc', version.__version__)
+                self._open_release_candidate_dialog()
 
     @property
     def showHiddenFiles(self):
@@ -514,7 +535,7 @@ class MainWindow(QMainWindow):
                 None, None,
                 _('Shut down system after snapshot has finished.')),
             'act_setup_language': (
-                None, _('Setup language…'),
+                icon.LANGUAGE, _('Setup language…'),
                 self.slot_setup_language, None,
                 None),
             'act_quit': (
@@ -544,30 +565,39 @@ class MainWindow(QMainWindow):
                 icon.BUG, _('Report a bug'),
                 self.btnReportBugClicked, None, None),
             'act_help_translation': (
-                None, _('Translation'),
-                self.slot_help_translation, None, None),
+                icon.LANGUAGE, _('Translation'),
+                self.slot_help_translation, None,
+                _('Shows the message about participation '
+                  'in translation again.')),
+            'act_help_encryption': (
+                icon.ENCRYPT,
+                _('Encryption Transition (EncFS)'),
+                self.slot_help_encryption, None,
+                _('Shows the message about EncFS removal again.')),
             'act_help_about': (
                 icon.ABOUT, _('About'),
                 self.btnAboutClicked, None, None),
             'act_restore': (
                 icon.RESTORE, _('Restore'),
                 self.restoreThis, None,
-                _('Restore the selected files or folders to the '
+                _('Restore the selected files or directories to the '
                   'original destination.')),
             'act_restore_to': (
                 icon.RESTORE_TO, _('Restore to …'),
                 self.restoreThisTo, None,
-                _('Restore the selected files or folders to a '
+                _('Restore the selected files or directories to a '
                   'new destination.')),
             'act_restore_parent': (
-                icon.RESTORE, 'RESTORE PARENT (DEBUG)',
+                icon.RESTORE,
+                None,  # text label is set elsewhere
                 self.restoreParent, None,
-                _('Restore the currently shown folder and all its contents '
+                _('Restore the currently shown directory and all its contents '
                   'to the original destination.')),
             'act_restore_parent_to': (
-                icon.RESTORE_TO, 'RESTORE PARENT TO (DEBUG)',
+                icon.RESTORE_TO,
+                None,  # text label is set elsewhere
                 self.restoreParentTo, None,
-                _('Restore the currently shown folder and all its contents '
+                _('Restore the currently shown directory and all its contents '
                   'to a new destination.')),
             'act_folder_up': (
                 icon.UP, _('Up'),
@@ -602,6 +632,16 @@ class MainWindow(QMainWindow):
             # populate the action to "self"
             setattr(self, attr, action)
 
+        # Release Candidate ?
+        self.act_help_release_candidate = None
+        if version.is_release_candidate():
+            # pylint: disable=undefined-variable
+            action = QAction(icon.QUESTION, _('Release Candidate'), self)
+            action.triggered.connect(self.slot_help_release_candidate)
+            action.setToolTip(
+                _('Shows the message about this Release Candidate again.'))
+            self.act_help_release_candidate = action
+
         # Fine tuning
         self.act_shutdown.toggled.connect(self.btnShutdownToggled)
         self.act_shutdown.setCheckable(True)
@@ -632,7 +672,10 @@ class MainWindow(QMainWindow):
         """Create the menubar and connect it to actions."""
 
         menu_dict = {
-            'Back In &Time': (
+            # The application name itself shouldn't be translated but the
+            # shortcut indicator (marked with &) should be translated and
+            # decided by the translator.
+            _('Back In &Time'): (
                 self.act_setup_language,
                 self.act_shutdown,
                 self.act_quit,
@@ -663,6 +706,7 @@ class MainWindow(QMainWindow):
                 self.act_help_question,
                 self.act_help_bugreport,
                 self.act_help_translation,
+                self.act_help_encryption,
                 self.act_help_about,
             )
         }
@@ -687,6 +731,9 @@ class MainWindow(QMainWindow):
         help = self.menuBar().actions()[-1].menu()
         help.insertSeparator(self.act_help_website)
         help.insertSeparator(self.act_help_about)
+        if self.act_help_release_candidate:
+            help.addSeparator()
+            help.addAction(self.act_help_release_candidate)
         restore = self.act_restore_menu.menu()
         restore.insertSeparator(self.act_restore_parent)
         restore.setToolTipsVisible(True)
@@ -789,9 +836,10 @@ class MainWindow(QMainWindow):
 
     def closeEvent(self, event):
         if self.shutdown.askBeforeQuit():
-            msg = _('If you close this window Back In Time will not be able '
-                    'to shut down your system when the snapshot has finished.'
-                    '\nDo you really want to close?')
+            msg = _('If you close this window, Back In Time will not be able '
+                    'to shut down your system when the snapshot is finished.')
+            msg = msg + '\n'
+            msg = msg + _('Do you really want to close it?')
             answer = messagebox.warningYesNo(self, msg)
             if answer != QMessageBox.StandardButton.Yes:
                 return event.ignore()
@@ -851,12 +899,8 @@ class MainWindow(QMainWindow):
 
         self.comboProfiles.clear()
 
+        qttools.update_combo_profiles(self.config, self.comboProfiles, self.config.currentProfile())
         profiles = self.config.profilesSortedByName()
-
-        for profile_id in profiles:
-            self.comboProfiles.addProfileID(profile_id)
-            if profile_id == self.config.currentProfile():
-                self.comboProfiles.setCurrentProfileID(profile_id)
 
         self.comboProfilesAction.setVisible(len(profiles) > 1)
 
@@ -869,6 +913,15 @@ class MainWindow(QMainWindow):
         self.updatePlaces()
         self.updateFilesView(0)
 
+        # EncFS deprecation warning (see #1734)
+        current_mode = self.config.snapshotsMode(self.config.currentProfile())
+        if current_mode in ('local_encfs', 'ssh_encfs'):
+            # Show the profile specific warning dialog only once per profile.
+            if self.config.profileBoolValue('msg_shown_encfs') is False:
+                self.config.setProfileBoolValue('msg_shown_encfs', True)
+                dlg = encfsmsgbox.EncfsCreateWarning(self)
+                dlg.exec()
+
     def comboProfileChanged(self, index):
         if self.disableProfileChanged:
             return
@@ -876,27 +929,37 @@ class MainWindow(QMainWindow):
         profile_id = self.comboProfiles.currentProfileID()
         if not profile_id:
             return
+
         old_profile_id = self.config.currentProfile()
+
         if profile_id != old_profile_id:
             self.remount(profile_id, old_profile_id)
             self.config.setCurrentProfile(profile_id)
 
-            self.config.setProfileIntValue('qt.places.SortColumn',
-                                           self.places.header().sortIndicatorSection(),
-                                           old_profile_id)
-            self.config.setProfileIntValue('qt.places.SortOrder',
-                                           self.places.header().sortIndicatorOrder(),
-                                           old_profile_id)
+            self.config.setProfileIntValue(
+                'qt.places.SortColumn',
+                self.places.header().sortIndicatorSection(),
+                old_profile_id)
+            self.config.setProfileIntValue(
+                'qt.places.SortOrder',
+                self.places.header().sortIndicatorOrder(),
+                old_profile_id)
+
             self.placesSortLoop[old_profile_id] = False
             self.places.header().setSortIndicator(
-                int(self.config.profileIntValue('qt.places.SortColumn', 1, profile_id)),
-                Qt.SortOrder(self.config.profileIntValue('qt.places.SortOrder',
-                                                         Qt.SortOrder.AscendingOrder,
-                                                         profile_id))
+                int(self.config.profileIntValue(
+                    'qt.places.SortColumn', 1, profile_id)),
+                Qt.SortOrder(self.config.profileIntValue(
+                    'qt.places.SortOrder',
+                    Qt.SortOrder.AscendingOrder,
+                    profile_id))
             )
 
-            self.config.setProfileStrValue('qt.last_path', self.path, old_profile_id)
-            path = self.config.profileStrValue('qt.last_path', self.path, profile_id)
+            self.config.setProfileStrValue(
+                'qt.last_path', self.path, old_profile_id)
+            path = self.config.profileStrValue(
+                'qt.last_path', self.path, profile_id)
+
             if not path == self.path:
                 self.path = path
                 self.path_history.reset(self.path)
@@ -1102,27 +1165,36 @@ class MainWindow(QMainWindow):
         self.addPlace(_('Root'), '/', 'computer')
         self.addPlace(_('Home'), os.path.expanduser('~'), 'user-home')
 
-        # add backup folders
-        include_folders = self.config.include()
+        # "Now" or a specific snapshot selected?
+        if self.sid.isRoot:
+            # Use snapshots profiles list of include files and folders
+            include_entries = self.config.include()
 
-        if include_folders:
-            folders = []
-            for item in include_folders:
-                if item[1] == 0:
-                    folders.append(item[0])
+        else:
+            # Determine folders from the snapshot itself
+            base = os.path.expanduser('~')
+            if not os.path.isdir(self.sid.pathBackup(base)):
+                # Folder not mounted. We can skip for the next updatePlaces()
+                return
+            folders = [i.name for i in os.scandir(self.sid.pathBackup(base)) if i.is_dir()]
+            include_entries = [(os.path.join(base, f), 0) for f in folders]
 
-            if folders:
-                sortColumn = self.places.header().sortIndicatorSection()
-                sortOrder = self.places.header().sortIndicatorOrder()
+        # Use folders only (if 2nd tuple entry is 0)
+        only_folders = filter(lambda entry: entry[1] == 0, include_entries)
+        include_folders = [item[0] for item in only_folders]
 
-                if not sortColumn:
-                    folders.sort(
-                        key=lambda v: (v.upper(), v[0].islower()),
-                        reverse=sortOrder == Qt.SortOrder.DescendingOrder)
+        if not include_folders:
+            return
 
-                self.addPlace(_('Backup folders'), '', '')
-                for folder in folders:
-                    self.addPlace(folder, folder, 'document-save')
+        if not self.places.header().sortIndicatorSection():
+            indic = self.places.header().sortIndicatorOrder()
+            reverse = True if indic == Qt.SortOrder.DescendingOrder else False
+            include_folders = sorted(include_folders, reverse=reverse)
+
+        self.addPlace(_('Backup directories'), '', '')
+
+        for folder in include_folders:
+            self.addPlace(folder, folder, 'document-save')
 
     def sortPlaces(self, newColumn, newOrder, force = False):
         profile_id = self.config.currentProfile()
@@ -1166,17 +1238,20 @@ class MainWindow(QMainWindow):
             return
 
         self.sid = sid
+        self.updatePlaces()
         self.updateFilesView(2)
 
-    def updateTimeLine(self, refreshSnapshotsList = True):
+    def updateTimeLine(self, refreshSnapshotsList=True):
         self.timeLine.clear()
         self.timeLine.addRoot(snapshots.RootSnapshot(self.config))
+
         if refreshSnapshotsList:
             self.snapshotsList = []
             thread = FillTimeLineThread(self)
             thread.addSnapshot.connect(self.timeLine.addSnapshot)
             thread.finished.connect(self.timeLine.checkSelection)
             thread.start()
+
         else:
             for sid in self.snapshotsList:
                 item = self.timeLine.addSnapshot(sid)
@@ -1284,7 +1359,7 @@ class MainWindow(QMainWindow):
 
     def btnSettingsClicked(self):
         with self.suspendMouseButtonNavigation():
-            settingsdialog.SettingsDialog(self).show()
+            SettingsDialog(self).show()
 
     def btnShutdownToggled(self, checked):
         self.shutdown.activate_shutdown = checked
@@ -1359,14 +1434,18 @@ class MainWindow(QMainWindow):
                 suffix=self.snapshots.backupSuffix()))
 
         cb.setChecked(self.config.backupOnRestore())
-        cb.setToolTip(_(
-            "Newer versions of files will be renamed with trailing "
-            "{suffix} before restoring.\n"
-            "If you don't need them anymore you can remove them with {cmd}")
-            .format(suffix=self.snapshots.backupSuffix(),
-                    cmd='find ./ -name "*{suffix}" -delete'
-                        .format(suffix=self.snapshots.backupSuffix()))
-        )
+        qttools.set_wrapped_tooltip(
+            cb,
+            [
+                _("Newer versions of files will be renamed with trailing "
+                  "{suffix} before restoring. If you don't need them anymore "
+                  "you can remove them with the following command:").format(
+                      suffix=self.snapshots.backupSuffix()),
+                'find ./ -name "*{suffix}" -delete'.format(
+                    suffix=self.snapshots.backupSuffix())
+            ]
+        ),
+
         return {
             'widget': cb,
             'retFunc': cb.isChecked,
@@ -1377,27 +1456,29 @@ class MainWindow(QMainWindow):
         cb = QCheckBox(_('Only restore elements which do not exist or\n'
                          'are newer than those in destination.\n'
                          'Using "rsync --update" option.'))
-        cb.setToolTip("""From 'man rsync':
-
-This forces rsync to skip any files which exist on the
-destination and have a modified time that is newer than
-the source file. (If an existing destination file has a
-modification time equal to the source file’s, it will be
-updated if the sizes are different.)
-
-Note that this does not affect the copying of dirs,
-symlinks, or other special files. Also, a difference of
-file format between the sender and receiver is always
-considered to be important enough for an update, no
-matter what date is on the objects. In other words, if
-the source has a directory where the destination has a
-file, the transfer would occur regardless of the
-timestamps.
-
-This option is a transfer rule, not an exclude, so it
-doesn’t affect the data that goes into the file-lists,
-and thus it doesn’t affect deletions. It just limits the
-files that the receiver requests to be transferred.""")
+        qttools.set_wrapped_tooltip(
+            cb,
+            ["From 'man rsync':",
+             "",
+             "This forces rsync to skip any files which exist on the "
+             "destination and have a modified time that is newer than the "
+             "source file. (If an existing destination file has a "
+             "modification time equal to the source file’s, it will be "
+             "updated if the sizes are different.)",
+             "",
+             "Note that this does not affect the copying of dirs, symlinks, "
+             "or other special files. Also, a difference of file format "
+             "between the sender and receiver is always considered to be "
+             "important enough for an update, no matter what date is on the "
+             "objects. In other words, if the source has a directory where "
+             "the destination has a file, the transfer would occur regardless "
+             "of the timestamps.",
+             "",
+             "This option is a transfer rule, not an exclude, so it doesn’t "
+             "affect the data that goes into the file-lists, and thus it "
+             "doesn’t affect deletions. It just limits the files that the "
+             "receiver requests to be transferred."]
+        )
         return {'widget': cb, 'retFunc': cb.isChecked, 'id': 'only_new'}
 
     def listRestorePaths(self, paths):
@@ -1407,26 +1488,28 @@ files that the receiver requests to be transferred.""")
         return {'widget': fileList, 'retFunc': None}
 
     def deleteOnRestore(self):
-        cb = QCheckBox(_('Remove newer elements in original folder.'))
-        cb.setToolTip(_('Restore selected files or folders '
-                        'to the original destination and\n'
-                        'delete files or folders which are '
-                        'not in the snapshot.\n'
-                        'Be extremely careful because this will\n'
-                        'delete files and folders which were\n'
-                        'excluded during taking the snapshot.'))
+        cb = QCheckBox(_('Remove newer elements in original directory.'))
+        qttools.set_wrapped_tooltip(
+            cb,
+            _('Restore selected files or directories to the original '
+              'destination and delete files or directories which are not in '
+              'the snapshot. Be extremely careful because this will delete '
+              'files and directories which were excluded during taking the '
+              'snapshot.')
+        )
         return {'widget': cb, 'retFunc': cb.isChecked, 'id': 'delete'}
 
-    def confirmRestore(self, paths, restoreTo = None):
+    def confirmRestore(self, paths, restoreTo=None):
         if restoreTo:
             msg = ngettext(
                 # singular
                 'Do you really want to restore this element into the '
-                'new folder\n{path}?',
+                'new directory?',
                 # plural
                 'Do you really want to restore these elements into the '
-                'new folder\n{path}?',
-                len(paths)).format(path=restoreTo)
+                'new directory?',
+                len(paths))
+            msg = f'{msg}\n{restoreTo}'
         else:
             msg = ngettext(
                 # singular
@@ -1435,26 +1518,33 @@ files that the receiver requests to be transferred.""")
                 'Do you really want to restore these elements?',
                 len(paths))
 
-        confirm, opt = messagebox.warningYesNoOptions(self,
-                                                      msg,
-                                                      (self.listRestorePaths(paths),
-                                                       self.backupOnRestore(),
-                                                       self.restoreOnlyNew(),
-                                                       self.deleteOnRestore()))
+        confirm, opt = messagebox.warningYesNoOptions(
+            self,
+            msg,
+            (
+                self.listRestorePaths(paths),
+                self.backupOnRestore(),
+                self.restoreOnlyNew(),
+                self.deleteOnRestore()
+            )
+        )
         return (confirm, opt)
 
-    def confirmDelete(self, warnRoot = False, restoreTo = None):
+    def confirmDelete(self, warnRoot=False, restoreTo=None):
         if restoreTo:
             msg = _('Are you sure you want to remove all newer files '
                     'in {path}?').format(path=restoreTo)
         else:
             msg = _('Are you sure you want to remove all newer files in your '
-                    'original folder?')
+                    'original directory?')
+
         if warnRoot:
-            msg = '{}\n\n{}'.format(
-                msg,
-                _('WARNING: Deleting files in filesystem root could break '
-                  'your whole system!'))
+            msg = f'<p>{msg}</p><p>'
+            msg = msg + _(
+                '{BOLD}Warning{BOLDEND}: Deleting files in the filesystem '
+                'root could break your entire system.').format(
+                    BOLD='<strong>', BOLDEND='</strong>')
+            msg = msg + '</p>'
 
         answer = messagebox.warningYesNo(self, msg)
 
@@ -1755,7 +1845,9 @@ files that the receiver requests to be transferred.""")
         self.act_restore_to.setEnabled(enable)
 
     def dirListerCompleted(self):
-        has_files = (self.filesViewProxyModel.rowCount(self.filesView.rootIndex()) > 0)
+        row_count = self.filesViewProxyModel.rowCount(
+            self.filesView.rootIndex())
+        has_files = row_count > 0
 
         # update restore button state
         enable = not self.sid.isRoot and has_files
@@ -1862,8 +1954,120 @@ files that the receiver requests to be transferred.""")
         if perc > cutoff:
             return
 
-        dlg = languagedialog.ApproachTranslatorDialog(self, name, perc)
+        def _complete_text(language: str, percent: int) -> str:
+            # (2023-08): Move to packages meta-data (pyproject.toml).
+            _URL_PLATFORM = 'https://translate.codeberg.org/engage/backintime'
+            _URL_PROJECT = 'https://github.com/bit-team/backintime'
+
+            txt = _(
+                'Hello'
+                '\n'
+                'You have used Back In Time in the {language} '
+                'language a few times by now.'
+                '\n'
+                'The translation of your installed version of Back In Time '
+                'into {language} is {perc} complete. Regardless of your '
+                'level of technical expertise, you can contribute to the '
+                'translation and thus Back In Time itself.'
+                '\n'
+                'Please visit the {translation_platform_url} if you wish '
+                'to contribute. For further assistance and questions, '
+                'please visit the {back_in_time_project_website}.'
+                '\n'
+                'We apologize for the interruption, and this message '
+                'will not be shown again. This dialog is available at '
+                'any time via the help menu.'
+                '\n'
+                'Your Back In Time Team'
+            )
+
+            # Wrap paragraphs in <p> tags.
+            result = ''
+            for t in txt.split('\n'):
+                result = f'{result}<p>{t}</p>'
+
+            # Insert data in placeholder variables.
+            platform_url \
+                = f'<a href="{_URL_PLATFORM}">' \
+                + _('translation platform') \
+                + '</a>'
+
+            project_url \
+                = f'<a href="{_URL_PROJECT}">Back In Time ' \
+                + _('Website') \
+                + ' </a>'
+
+            result = result.format(
+                language=f'<strong>{language}</strong>',
+                perc=f'<strong>{percent} %</strong>',
+                translation_platform_url=platform_url,
+                back_in_time_project_website=project_url
+            )
+
+            return result
+
+        dlg = UserMessageDialog(
+            parent=self,
+            title=_('Your translation'),
+            full_label=_complete_text(name, perc))
         dlg.exec()
+
+    def _open_release_candidate_dialog(self):
+        html_contact_list = (
+            '<ul>'
+            '<li>{email}</li>'
+            '<li>{mailinglist}</li>'
+            '<li>{issue}</li>'
+            '<li>{alternative}</li>'
+            '</ul>').format(
+                email=_('Email to {link_and_label}.').format(
+                    link_and_label='<a href="mailto:backintime@tuta.io">'
+                                   'backintime@tuta.io</a>'),
+                mailinglist=_('Mailing list {link_and_label}').format(
+                    link_and_label='<a href="https://mail.python.org/mailman3/'
+                                   'lists/bit-dev.python.org/">'
+                                   'bit-dev@python.org</a>'),
+                issue=_('{link_and_label} on the project website.').format(
+                    link_and_label='<a href="https://github.com/bit-team/'
+                                   'backintime/issues/new">{open_issue}</a>').format(
+                                       open_issue=_('Open an issue')),
+                alternative=_('Alternatively, you can use another channel '
+                              'of your choice.')
+            )
+
+        rc_message = _(
+            'This version of Back In Time is a Release Candidate and is '
+            'primarily intended for stability testing in preparation for the '
+            'next official release.'
+            '\n'
+            'No user data or telemetry is collected. However, the Back In '
+            'Time team is very interested in knowing if the Release Candidate '
+            'is being used and if it is worth continuing to provide such '
+            'pre-release versions.'
+            '\n'
+            'Therefore, the team kindly asks for a short feedback on whether '
+            'you have tested this version, even if you didn’t encounter any '
+            'issues. Even a quick test run of a few minutes would help us a '
+            'lot.'
+            '\n'
+            'The following contact options are available:'
+            '\n'
+            '{contact_list}'
+            '\n'
+            "In this version, this message won't be shown again but can be "
+            'accessed anytime through the help menu.'
+            '\n'
+            'Thank you for your support and for helping us improve '
+            'Back In Time!'
+            '\n'
+            'Your Back In Time Team').format(contact_list=html_contact_list)
+
+        dlg = UserMessageDialog(
+            parent=self,
+            title=_('Release Candidate'),
+            full_label=rc_message)
+        dlg.exec()
+
 
     # |-------|
     # | Slots |
@@ -1889,6 +2093,13 @@ files that the receiver requests to be transferred.""")
 
     def slot_help_translation(self):
         self._open_approach_translator_dialog()
+
+    def slot_help_release_candidate(self):
+        self._open_release_candidate_dialog()
+
+    def slot_help_encryption(self):
+        dlg = encfsmsgbox.EncfsExistsWarning(self, ['(not determined)'])
+        dlg.exec()
 
 
 class ExtraMouseButtonEventFilter(QObject):
@@ -1953,11 +2164,13 @@ class RemoveSnapshotThread(QThread):
         if self.config.inhibitCookie:
             self.config.inhibitCookie = tools.unInhibitSuspend(*self.config.inhibitCookie)
 
+
 class FillTimeLineThread(QThread):
     """
     add snapshot IDs to timeline in background
     """
     addSnapshot = pyqtSignal(snapshots.SID)
+
     def __init__(self, parent):
         self.parent = parent
         self.config = parent.config
@@ -1970,10 +2183,12 @@ class FillTimeLineThread(QThread):
 
         self.parent.snapshotsList.sort()
 
+
 class SetupCron(QThread):
     """
     Check crontab entries on startup.
     """
+
     def __init__(self, parent):
         self.config = parent.config
         super(SetupCron, self).__init__(parent)
@@ -1981,23 +2196,17 @@ class SetupCron(QThread):
     def run(self):
         self.config.setupCron()
 
-def debugTrace():
-    """
-    Set a tracepoint in the Python debugger that works with Qt
-    """
-    from pdb import set_trace
-    pyqtRemoveInputHook()
-    set_trace()
 
 if __name__ == '__main__':
     cfg = backintime.startApp('backintime-qt')
 
     raiseCmd = ''
     if len(sys.argv) > 1:
-        raiseCmd = '\n'.join(sys.argv[1 :])
+        raiseCmd = '\n'.join(sys.argv[1:])
 
-    appInstance = guiapplicationinstance.GUIApplicationInstance(cfg.appInstanceFile(), raiseCmd)
-    cfg.PLUGIN_MANAGER.load(cfg = cfg)
+    appInstance = guiapplicationinstance.GUIApplicationInstance(
+        cfg.appInstanceFile(), raiseCmd)
+    cfg.PLUGIN_MANAGER.load(cfg=cfg)
     cfg.PLUGIN_MANAGER.appStart()
 
     logger.openlog()
@@ -2011,6 +2220,8 @@ if __name__ == '__main__':
         cfg.xWindowId = mainWindow.winId()
         mainWindow.show()
         qapp.exec()
+
+    mainWindow.qapp.removeEventFilter(mainWindow.mouseButtonEventFilter)
 
     cfg.PLUGIN_MANAGER.appExit()
     appInstance.exitApplication()

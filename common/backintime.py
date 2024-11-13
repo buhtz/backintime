@@ -195,7 +195,7 @@ def createParsers(app_name = 'backintime'):
     #define main argument parser
     parser = argparse.ArgumentParser(prog = app_name,
                                      parents = [commonArgsParser],
-                                     description = '%(app)s - a simple backup tool for Linux.'
+                                     description = '%(app)s - a simple backup tool for GNU/Linux.'
                                                    % {'app': config.Config.APP_NAME},
                                      epilog = "For backwards compatibility commands can also be used with trailing '--'. "
                                               "All listed arguments will work with all commands. Some commands have extra arguments. "
@@ -375,7 +375,7 @@ def createParsers(app_name = 'backintime'):
                                                  type = str,
                                                  action = 'store',
                                                  nargs = '?',
-                                                 help = 'Restore file or folder WHAT.')
+                                                 help = 'Restore file or directory WHAT.')
 
     restoreCP.add_argument                      ('WHERE',
                                                  type = str,
@@ -422,7 +422,7 @@ def createParsers(app_name = 'backintime'):
 
     command = 'smart-remove'
     nargs = 0
-    description = 'Remove snapshots based on "Smart Remove" pattern.'
+    description = 'Remove snapshots based on "Smart Removal" pattern.'
     smartRemoveCP =        subparsers.add_parser(command,
                                                  epilog = epilogCommon,
                                                  help = description,
@@ -484,12 +484,14 @@ def createParsers(app_name = 'backintime'):
             arg = '-%s' % alias
         else:
             arg = '--%s' % alias
-        group.add_argument(arg,
-                           nargs = nargs,
-                           action = PseudoAliasAction,
-                           help = argparse.SUPPRESS)
 
-def startApp(app_name = 'backintime'):
+        group.add_argument(arg,
+                           nargs=nargs,
+                           action=PseudoAliasAction,
+                           help=argparse.SUPPRESS)
+
+
+def startApp(app_name='backintime'):
     """
     Start the requested command or return config if there was no command
     in arguments.
@@ -507,21 +509,24 @@ def startApp(app_name = 'backintime'):
     args = argParse(None)
 
     # Name, Version, As Root, OS
-    diag = collect_minimal_diagnostics()
-    logger.debug(
-        f'{diag["backintime"]} {list(diag["host-setup"]["OS"].values())}')
+    msg = ''
+    for key, val in collect_minimal_diagnostics().items():
+        msg = f'{msg}; {key}: {val}'
+    logger.debug(msg[2:])
 
     # Add source path to $PATH environ if running from source
     if tools.runningFromSource():
         tools.addSourceToPathEnviron()
 
     # Warn about sudo
-    if tools.usingSudo() and os.getenv('BIT_SUDO_WARNING_PRINTED', 'false') == 'false':
+    if (tools.usingSudo()
+            and os.getenv('BIT_SUDO_WARNING_PRINTED', 'false') == 'false'):
+
         os.putenv('BIT_SUDO_WARNING_PRINTED', 'true')
-        logger.warning("It looks like you're using 'sudo' to start %(app)s. "
-                       "This will cause some trouble. Please use either 'sudo -i %(app_name)s' "
-                       "or 'pkexec %(app_name)s'."
-                       %{'app_name': app_name, 'app': config.Config.APP_NAME})
+        logger.warning(
+            "It looks like you're using 'sudo' to start "
+            f"{config.Config.APP_NAME}. This will cause some trouble. "
+            f"Please use either 'sudo -i {app_name}' or 'pkexec {app_name}'.")
 
     # Call commands
     if 'func' in dir(args):
@@ -530,7 +535,9 @@ def startApp(app_name = 'backintime'):
     else:
         setQuiet(args)
         printHeader()
+
         return getConfig(args, False)
+
 
 def argParse(args):
     """
@@ -605,8 +612,8 @@ def argParse(args):
         for key
         in filter(lambda key: args_dict[key] is not None, args_dict)
     }
-    logger.debug(f'Used argument(s): {used_args}')
-    logger.debug(f'Unknown argument(s): {unknownArgs}')
+
+    logger.debug(f'Argument(s) used: {used_args}')
 
     # Report unknown arguments but not if we run aliasParser next because we
     # will parse again in there.
@@ -688,25 +695,32 @@ def getConfig(args, check = True):
                         2 if ``check`` is ``True`` and config is not configured
     """
     cfg = config.Config(config_path = args.config, data_path = args.share_path)
-    logger.debug('config file: %s' % cfg._LOCAL_CONFIG_PATH)
-    logger.debug('share path: %s' % cfg._LOCAL_DATA_FOLDER)
-    logger.debug('profiles: %s' % ', '.join('%s=%s' % (x, cfg.profileName(x))
-                                                        for x in cfg.profiles()))
+    logger.debug('config file: "{}"; share path: "{}"; profiles: "{}"'.format(
+        cfg._LOCAL_CONFIG_PATH,
+        cfg._LOCAL_DATA_FOLDER,
+        ', '.join(f'{profile_id}={cfg.profileName(profile_id)}'
+                  for profile_id in cfg.profiles())
+    ))
 
     if 'profile_id' in args and args.profile_id:
         if not cfg.setCurrentProfile(args.profile_id):
             logger.error('Profile-ID not found: %s' % args.profile_id)
             sys.exit(RETURN_ERR)
+
     if 'profile' in args and args.profile:
         if not cfg.setCurrentProfileByName(args.profile):
             logger.error('Profile not found: %s' % args.profile)
             sys.exit(RETURN_ERR)
+
     if check and not cfg.isConfigured():
         logger.error('%(app)s is not configured!' %{'app': cfg.APP_NAME})
         sys.exit(RETURN_NO_CFG)
+
     if 'checksum' in args:
         cfg.forceUseChecksum = args.checksum
+
     return cfg
+
 
 def setQuiet(args):
     """
@@ -1113,7 +1127,7 @@ def removeAndDoNotAskAgain(args):
 
 def smartRemove(args):
     """
-    Command for running Smart-Remove from Terminal.
+    Command for running Smart-Removal from Terminal.
 
     Args:
         args (argparse.Namespace):
@@ -1121,7 +1135,7 @@ def smartRemove(args):
 
     Raises:
         SystemExit:     0 if okay
-                        2 if Smart-Remove is not configured
+                        2 if Smart-Removal is not configured
     """
     setQuiet(args)
     printHeader()
@@ -1136,12 +1150,12 @@ def smartRemove(args):
                                            keep_one_per_day,
                                            keep_one_per_week,
                                            keep_one_per_month)
-        logger.info('Smart Remove will remove {} snapshots'.format(len(del_snapshots)))
+        logger.info('Smart Removal will remove {} snapshots'.format(len(del_snapshots)))
         sn.smartRemove(del_snapshots, log = logger.info)
         _umount(cfg)
         sys.exit(RETURN_OK)
     else:
-        logger.error('Smart Remove is not configured.')
+        logger.error('Smart Removal is not configured.')
         sys.exit(RETURN_NO_CFG)
 
 def restore(args):

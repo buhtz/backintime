@@ -20,6 +20,7 @@ import sys
 import os
 import subprocess
 import signal
+import textwrap
 
 # TODO Is this really required? If the client is not configured for X11
 #      it may use Wayland or something else...
@@ -73,7 +74,7 @@ class QtSysTrayIcon:
         self.contextMenu = QMenu()
 
         self.menuProfileName = self.contextMenu.addAction(
-            '{}: {}'.format(_('Profile'), self.config.profileName()))
+            _('Profile: {profile_name}').format(profile_name=self.config.profileName()))
         qttools.setFontBold(self.menuProfileName)
         self.contextMenu.addSeparator()
 
@@ -177,10 +178,8 @@ class QtSysTrayIcon:
                 self.last_message = message
                 if self.decode:
                     message = (message[0], self.decode.log(message[1]))
-                self.menuStatusMessage.setText('\n'.join(logger.wrapLine(message[1], \
-                                                                                size = 80, \
-                                                                                delimiters = '', \
-                                                                                new_line_indicator = '') \
+                self.menuStatusMessage.setText('\n'.join(textwrap.wrap(message[1], \
+                                                                                width = 80) \
                                                          ))
                 self.status_icon.setToolTip(message[1])
 
@@ -202,13 +201,13 @@ class QtSysTrayIcon:
             self.menuProgress.setVisible(False)
 
     def getMenuProgress(self, pg):
-        d = (
-            ('sent', _('Sent') + ':'),
-            ('speed', _('Speed') + ':'),
-            ('eta',    _('ETA') + ':')
+        data = (
+            ('sent', _('Sent:')),
+            ('speed', _('Speed:')),
+            ('eta',    _('ETA:'))
         )
 
-        for key, txt in d:
+        for key, txt in data:
             value = pg.strValue(key, '')
 
             if not value:

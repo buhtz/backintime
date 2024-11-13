@@ -1,41 +1,40 @@
-# (from BackInTime)
-# Copyright (C) 2015-2022 Germar Reitze
+# SPDX-FileCopyrightText: © 2015-2022 Germar Reitze
+# SPDX-FileCopyrightText: © 2008 Canonical Ltd.
+# SPDX-FileCopyrightText: © 2004-2006 Red Hat Inc. <http://www.redhat.com>
+# SPDX-FileCopyrightText: © 2005-2007 Collabora Ltd. <http://www.collabora.co.uk>
+# SPDX-FileCopyrightText: © 2009 David D. Lowe
 #
-# This program is free software; you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation; either version 2 of the License, or
-# (at your option) any later version.
+# SPDX-License-Identifier: GPL-2.0-or-later
+# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: CC0-1.0
 #
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
+# This file is released under several licenses mentioned above. The file is
+# part of the program "Back In Time". The program as a whole is released under
+# GNU General Public License v2 (GPLv2). See file/folder LICENSE or go to
+# - <https://spdx.org/licenses/GPL-2.0-or-later.html>.
+# - <https://spdx.org/licenses/MIT.html>
+# - <https://spdx.org/licenses/CC0-1.0.html>
 #
-# You should have received a copy of the GNU General Public License along
-# with this program; if not, write to the Free Software Foundation, Inc.,
-# 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-
-# (from jockey)
-# (c) 2008 Canonical Ltd.
+# Note about the licenses by Christian Buhtz (2024-09):
+# Despite extensive research and attempts to contact the aforementioned
+# individuals and institutions, it was not possible to definitively determine
+# which of the mentioned licenses and copyright notices apply to which parts of
+# the code contained in this file. The situation could not be clarified even
+# with the git commit history.
+# It should be noted that, in case of doubt, preference should be given to the
+# strongest or most restrictive license.
 #
-# This program is free software; you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation; either version 2 of the License, or
-# (at your option) any later version.
+# Before SPDX meta data was added to the file it originally had some comments
+# that are summarized as follows:
+# - Germar Reitze claimed GPL-2.0-or-later in context of Back In Time.
+# - Unknown person claimed GPL-2.0-or-later in context of "jockey".
+# - Read Hat Inc. and Collabora Ltd. claimed MIT License in context of
+#   "python-dbus-docs"
+# - David D. Lowe claimed CC0-1.0 (public domain) in unknown context.
 #
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License along
-# with this program; if not, write to the Free Software Foundation, Inc.,
-# 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-
-# (from python-dbus-docs)
-# Copyright (C) 2004-2006 Red Hat Inc. <http://www.redhat.com/>
-# Copyright (C) 2005-2007 Collabora Ltd. <http://www.collabora.co.uk/>
-#
+# Because of MIT License the following permission notice need to be included
+# in this file and should not be removed:
+# --- Begin of MIT License permission notice ---
 # Permission is hereby granted, free of charge, to any person
 # obtaining a copy of this software and associated documentation
 # files (the "Software"), to deal in the Software without
@@ -55,12 +54,7 @@
 # WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 # DEALINGS IN THE SOFTWARE.
-#
-# This file was modified by David D. Lowe in 2009.
-# To the extent possible under law, David D. Lowe has waived all
-# copyright and related or neighboring rights to his modifications to
-# this file under this license: http://creativecommons.org/publicdomain/zero/1.0/
-
+# --- End of MIT License permission notice ---
 import os
 import re
 from subprocess import Popen, PIPE
@@ -69,8 +63,6 @@ try:
 except ImportError:
     pwd = None
 
-# "dbus-python" not available for ppc64le architecture
-# "dbus.mainloop.pyqt6" not available via PyPi for any architecture
 import dbus
 import dbus.service
 import dbus.mainloop
@@ -82,17 +74,22 @@ from PyQt6.QtCore import QCoreApplication
 
 UDEV_RULES_PATH = '/etc/udev/rules.d/99-backintime-%s.rules'
 
+
 class InvalidChar(dbus.DBusException):
     _dbus_error_name = 'net.launchpad.backintime.InvalidChar'
+
 
 class InvalidCmd(dbus.DBusException):
     _dbus_error_name = 'net.launchpad.backintime.InvalidCmd'
 
+
 class LimitExceeded(dbus.DBusException):
     _dbus_error_name = 'net.launchpad.backintime.LimitExceeded'
 
+
 class PermissionDeniedByPolicy(dbus.DBusException):
     _dbus_error_name = 'com.ubuntu.DeviceDriver.PermissionDeniedByPolicy'
+
 
 class UdevRules(dbus.service.Object):
     def __init__(self, conn=None, object_path=None, bus_name=None):
@@ -114,7 +111,7 @@ class UdevRules(dbus.service.Object):
         self.max_cmd_len = 120  # was 100 before but was too small (see #1027)
 
     def _which(self, exe, fallback):
-        proc = Popen(['which', exe], stdout = PIPE)
+        proc = Popen(['which', exe], stdout=PIPE)
         ret = proc.communicate()[0].strip().decode()
         if proc.returncode or not ret:
             return fallback
@@ -148,18 +145,23 @@ class UdevRules(dbus.service.Object):
                 break
 
         if not parts:
-            raise InvalidCmd("Parameter 'cmd' does not contain the backintime command")
+            raise InvalidCmd(
+                "Parameter 'cmd' does not contain the backintime command")
+
         elif parts[0] != self.backintime:
-            raise InvalidCmd("Parameter 'cmd' contains non-whitelisted cmd/parameter (%s)" % parts[0])
+            raise InvalidCmd("Parameter 'cmd' contains non-whitelisted "
+                             f"cmd/parameter ({parts[0]})")
 
     def _checkLimits(self, owner, cmd):
 
         if len(self.tmpDict.get(owner, [])) >= self.max_rules:
             raise LimitExceeded("Maximum number of cached rules reached (%d)"
                             % self.max_rules)
+
         elif len(self.tmpDict) >= self.max_users:
             raise LimitExceeded("Maximum number of cached users reached (%d)"
                             % self.max_users)
+
         elif len(cmd) > self.max_cmd_len:
             raise LimitExceeded("Maximum length of command line reached (%d)"
                             % self.max_cmd_len)
@@ -173,12 +175,12 @@ class UdevRules(dbus.service.Object):
         This is done on the service side to prevent malicious code to
         run as root.
         """
-        #prevent breaking out of su command
+        # prevent breaking out of su command
         chars = re.findall(r'[^a-zA-Z0-9-/\.>& ]', cmd)
         if chars:
             raise InvalidChar("Parameter 'cmd' contains invalid character(s) %s"
                               % '|'.join(set(chars)))
-        #only allow relevant chars in uuid
+        # only allow relevant chars in uuid
         chars = re.findall(r'[^a-zA-Z0-9-]', uuid)
         if chars:
             raise InvalidChar("Parameter 'uuid' contains invalid character(s) %s"
@@ -200,6 +202,7 @@ class UdevRules(dbus.service.Object):
         #store rule
         if not owner in self.tmpDict:
             self.tmpDict[owner] = []
+
         self.tmpDict[owner].append(rule)
 
     @dbus.service.method("net.launchpad.backintime.serviceHelper.UdevRules",
@@ -220,17 +223,22 @@ class UdevRules(dbus.service.Object):
         if not owner in self.tmpDict or not self.tmpDict[owner]:
             self.delete(sender, conn)
             return False
+
         #return False if rule already exist.
         if os.path.exists(UDEV_RULES_PATH % user):
             with open(UDEV_RULES_PATH % user, 'r') as f:
                 if self.tmpDict[owner] == f.readlines():
                     self._clean(owner)
                     return False
+
         #auth to save changes
         self._checkPolkitPrivilege(sender, conn, 'net.launchpad.backintime.UdevRuleSave')
+
         with open(UDEV_RULES_PATH % user, 'w') as f:
             f.writelines(self.tmpDict[owner])
+
         self._clean(owner)
+
         return True
 
     @dbus.service.method("net.launchpad.backintime.serviceHelper.UdevRules",
@@ -244,6 +252,7 @@ class UdevRules(dbus.service.Object):
         user = info.connectionUnixUser()
         owner = info.nameOwner()
         self._clean(owner)
+
         if os.path.exists(UDEV_RULES_PATH % user):
             #auth to delete rule
             self._checkPolkitPrivilege(sender, conn, 'net.launchpad.backintime.UdevRuleDelete')
@@ -293,23 +302,37 @@ class UdevRules(dbus.service.Object):
 
         # query PolicyKit
         self._initPolkit()
+
         try:
-            # we don't need is_challenge return here, since we call with AllowUserInteraction
+            # We don't need is_challenge return here, since we call
+            # with AllowUserInteraction
             (is_auth, _, details) = self.polkit.CheckAuthorization(
-                    ('system-bus-name', {'name': dbus.String(sender, variant_level=1)}),
-                    privilege, {'': ''}, dbus.UInt32(1), '', timeout=3000)
+                (
+                    'system-bus-name',
+                    {'name': dbus.String(sender, variant_level=1)}
+                ),
+                privilege,
+                {'': ''},
+                dbus.UInt32(1),
+                '',
+                timeout=3000
+            )
+
         except dbus.DBusException as e:
             if e._dbus_error_name == 'org.freedesktop.DBus.Error.ServiceUnknown':
                 # polkitd timed out, connect again
                 self.polkit = None
+
                 return self._checkPolkitPrivilege(sender, conn, privilege)
+
             else:
                 raise
 
         if not is_auth:
             raise PermissionDeniedByPolicy(privilege)
 
-class SenderInfo(object):
+
+class SenderInfo:
     def __init__(self, sender, conn):
         self.sender = sender
         self.dbus_info = dbus.Interface(conn.get_object('org.freedesktop.DBus',
@@ -327,6 +350,7 @@ class SenderInfo(object):
 
     def connectionPid(self):
         return self.dbus_info.GetConnectionUnixProcessID(self.sender)
+
 
 if __name__ == '__main__':
     DBusQtMainLoop(set_as_default=True)

@@ -1,43 +1,35 @@
-#    Back In Time
-#    Copyright (C) 2008-2022 Oprea Dan, Bart de Koning, Richard Bailey, Germar Reitze
+# SPDX-FileCopyrightText: © 2008-2022 Oprea Dan
+# SPDX-FileCopyrightText: © 2008-2022 Bart de Koning
+# SPDX-FileCopyrightText: © 2008-2022 Richard Bailey
+# SPDX-FileCopyrightText: © 2008-2022 Germar Reitze
 #
-#    This program is free software; you can redistribute it and/or modify
-#    it under the terms of the GNU General Public License as published by
-#    the Free Software Foundation; either version 2 of the License, or
-#    (at your option) any later version.
+# SPDX-License-Identifier: GPL-2.0-or-later
 #
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU General Public License for more details.
-#
-#    You should have received a copy of the GNU General Public License along
-#    with this program; if not, write to the Free Software Foundation, Inc.,
-#    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-
+# This file is part of the program "Back In time" which is released under GNU
+# General Public License v2 (GPLv2). See file/folder LICENSE or go to
+# <https://spdx.org/licenses/GPL-2.0-or-later.html>.
 import syslog
 import os
 import sys
 import atexit
-
 import bcolors
 
-DEBUG = False            # Set to "True" when passing "--debug" as cmd arg
+DEBUG = False  # Set to "True" when passing "--debug" as cmd arg
 SYSLOG_IDENTIFIER = 'backintime'
 SYSLOG_MESSAGE_PREFIX = ''
 
 # Labels for the syslog levels
 _level_names = {
     syslog.LOG_INFO: 'INFO',
-    syslog.LOG_ERR: 'ERROR',
     syslog.LOG_WARNING: 'WARNING',
-    syslog.LOG_DEBUG: 'DEBUG'
+    syslog.LOG_ERR: 'ERROR',
+    syslog.LOG_CRIT: 'CRITICAL',
+    syslog.LOG_DEBUG: 'DEBUG',
 }
 
 
 def openlog():
-    """
-    Initialize the BiT logger system (which uses syslog)
+    """Initialize the BIT logger system (which uses syslog)
 
     Esp. sets the app name as identifier for the log entries in the syslog.
 
@@ -57,128 +49,65 @@ def closelog():
 
 
 def _do_syslog(message: str, level: int) -> str:
-    for line in wrapLine(message):
-        syslog.syslog(level, '{}{}: {}'.format(
-            SYSLOG_MESSAGE_PREFIX, _level_names[level], line))
+    syslog.syslog(level, '{}{}: {}'.format(
+        SYSLOG_MESSAGE_PREFIX, _level_names[level], message))
+
+
+def critical(msg, parent=None, traceDepth=0):
+    if DEBUG:
+        msg = _debugHeader(parent, traceDepth) + ' ' + msg
+
+    print(f'{bcolors.CRITICAL}CRITICAL{bcolors.ENDC}: {msg}', file=sys.stderr)
+
+    _do_syslog(msg, syslog.LOG_CRIT)
 
 
 def error(msg, parent=None, traceDepth=0):
     if DEBUG:
-        msg = '%s %s' % (_debugHeader(parent, traceDepth), msg)
+        msg = _debugHeader(parent, traceDepth) + ' ' + msg
 
-    print('%sERROR%s: %s' % (bcolors.FAIL, bcolors.ENDC, msg), file=sys.stderr)
+    print(f'{bcolors.FAIL}ERROR{bcolors.ENDC}: {msg}', file=sys.stderr)
 
     _do_syslog(msg, syslog.LOG_ERR)
 
 
 def warning(msg, parent=None, traceDepth=0):
     if DEBUG:
-        msg = '%s %s' % (_debugHeader(parent, traceDepth), msg)
+        msg = _debugHeader(parent, traceDepth) + ' ' + msg
 
-    print('%sWARNING%s: %s' % (bcolors.WARNING, bcolors.ENDC, msg),
-          file=sys.stderr)
+    print(f'{bcolors.WARNING}WARNING{bcolors.ENDC}: {msg}', file=sys.stderr)
 
     _do_syslog(msg, syslog.LOG_WARNING)
 
 
 def info(msg, parent=None, traceDepth=0):
     if DEBUG:
-        msg = '%s %s' % (_debugHeader(parent, traceDepth), msg)
+        msg = _debugHeader(parent, traceDepth) + ' ' + msg
 
-    print('%sINFO%s: %s' % (bcolors.OKGREEN, bcolors.ENDC, msg),
-          file=sys.stderr)
+    print(f'{bcolors.OKGREEN}INFO{bcolors.ENDC}: {msg}', file=sys.stderr)
 
     _do_syslog(msg, syslog.LOG_INFO)
 
 
 def debug(msg, parent=None, traceDepth=0):
-    if DEBUG:
-        msg = '%s %s' % (_debugHeader(parent, traceDepth), msg)
+    if not DEBUG:
+        return
 
-        # Why does this code differ from eg. "error()"
-        # (where the following lines are NOT part of the "if")?
-        print('%sDEBUG%s: %s' % (bcolors.OKBLUE, bcolors.ENDC, msg),
-              file=sys.stderr)
+    msg = _debugHeader(parent, traceDepth) + ' ' + msg
 
-        _do_syslog(msg, syslog.LOG_DEBUG)
+    print(f'{bcolors.OKBLUE}DEBUG{bcolors.ENDC}: {msg}', file=sys.stderr)
 
-
-def deprecated(parent=None):
-    """Dev note (buhtz 2023-07-23): To my knowledge this function is called
-    only one time in BIT. I assume it could be replace with python's own
-    deprecation warning system.
-    """
-
-    frame = sys._getframe(1)
-    fdir, fname = os.path.split(frame.f_code.co_filename)
-    fmodule = os.path.basename(fdir)
-    line = frame.f_lineno
-    if parent:
-        fclass = '%s.' %parent.__class__.__name__
-    else:
-        fclass = ''
-    func = frame.f_code.co_name
-
-    frameCaller = sys._getframe(2)
-    fdirCaller, fnameCaller = os.path.split(frameCaller.f_code.co_filename)
-    fmoduleCaller = os.path.basename(fdirCaller)
-    lineCaller = frameCaller.f_lineno
-
-    msg = '%s/%s:%s %s%s called from ' %(fmodule, fname, line, fclass, func)
-    msgCaller = '%s/%s:%s' %(fmoduleCaller, fnameCaller, lineCaller)
-
-    print('%sDEPRECATED%s: %s%s%s%s' %(bcolors.WARNING, bcolors.ENDC, msg, bcolors.OKBLUE, msgCaller, bcolors.ENDC), file=sys.stderr)
-
-    _do_syslog('DEPRECATED: %s%s' % (msg, msgCaller), syslog.LOG_WARNING)
+    _do_syslog(msg, syslog.LOG_DEBUG)
 
 
 def _debugHeader(parent, traceDepth):
     frame = sys._getframe(2 + traceDepth)
+    line = frame.f_lineno
+    func = frame.f_code.co_name
+
     fdir, fname = os.path.split(frame.f_code.co_filename)
     fmodule = os.path.basename(fdir)
-    line = frame.f_lineno
 
-    fclass = '%s.' % parent.__class__.__name__ if parent else ''
+    fclass = f'{parent.__class__.__name__}.' if parent else ''
 
-    func = frame.f_code.co_name
-    return '[%s/%s:%s %s%s]' % (fmodule, fname, line, fclass, func)
-
-
-# This function was moved from tools.py to here to solve a circular
-# import dependency between "tools" and "logger".
-def wrapLine(msg, size=950, delimiters='\t ', new_line_indicator = 'CONTINUE: '):
-    """
-    Wrap line ``msg`` into multiple lines with each shorter than ``size``. Try
-    to break the line on ``delimiters``. New lines will start with
-    ``new_line_indicator``.
-
-    Args:
-        msg (str):                  string that should get wrapped
-        size (int):                 maximum length of returned strings
-        delimiters (str):           try to break ``msg`` on these characters
-        new_line_indicator (str):   start new lines with this string
-
-    Yields:
-        str:                        lines with max ``size`` length
-    """
-
-    # TODO Use "textwrap.wrap" instead (https://docs.python.org/3/library/textwrap.html)
-    #      (which may change the output formatting and may affect unit tests then)
-    #      To avoid duplicated argument values in calls this function could
-    #      act as a wrapper-
-
-    if len(new_line_indicator) >= size - 1:
-        new_line_indicator = ''
-    while msg:
-        if len(msg) <= size:
-            yield(msg)
-            break
-        else:
-            line = ''
-            for look in range(size-1, size//2, -1):
-                if msg[look] in delimiters:
-                    line, msg = msg[:look+1], new_line_indicator + msg[look+1:]
-                    break
-            if not line:
-                line, msg = msg[:size], new_line_indicator + msg[size:]
-            yield(line)
+    return f'[{fmodule}/{fname}:{line} {fclass}{func}]'
