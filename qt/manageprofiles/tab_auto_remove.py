@@ -41,6 +41,8 @@ class AutoRemoveTab(QDialog):
 
         self._add_label_rule_execute_order(tab_layout)
 
+        tab_layout.addWidget(qttools.HLineWidget())
+
         # older than
         self.spbRemoveOlder = QSpinBox(self)
         self.spbRemoveOlder.setRange(1, 1000)
@@ -233,7 +235,7 @@ class AutoRemoveTab(QDialog):
         self.cbSmartRemoveRunRemoteInBackground.setVisible(enabled)
 
     def _add_label_rule_execute_order(self, parent_layout: QLayout):
-        layout = QHBoxLayout(self)
+        layout = QHBoxLayout()
 
         # Info icon
         icon = self.style().standardPixmap(

@@ -2,6 +2,7 @@
 # SPDX-FileCopyrightText: © 2008-2022 Bart de Koning
 # SPDX-FileCopyrightText: © 2008-2022 Richard Bailey
 # SPDX-FileCopyrightText: © 2008-2022 Germar Reitze
+# SPDX-FileCopyrightText: © 2024 Christian Buhtz <c.buhtz@posteo.jp>
 #
 # SPDX-License-Identifier: GPL-2.0-or-later
 #
@@ -34,7 +35,8 @@ from PyQt6.QtCore import (QDir,
                           QLocale,
                           QLibraryInfo,
                           QT_VERSION_STR)
-from PyQt6.QtWidgets import (QWidget,
+from PyQt6.QtWidgets import (QFrame,
+                             QWidget,
                              QFileDialog,
                              QAbstractItemView,
                              QListView,
@@ -46,6 +48,7 @@ from PyQt6.QtWidgets import (QWidget,
                              QTreeWidgetItem,
                              QComboBox,
                              QSystemTrayIcon)
+
 from datetime import (datetime, date, timedelta)
 from calendar import monthrange
 from packaging.version import Version
@@ -130,7 +133,6 @@ def set_wrapped_tooltip(widget: QWidget,
         ))
 
     widget.setToolTip('\n'.join(result))
-
 
 
 def update_combo_profiles(config, combo_profiles, current_profile_id):
@@ -704,3 +706,16 @@ class ProfileCombo(SortedComboBox):
             if self.itemData(i) == profileID:
                 self.setCurrentIndex(i)
                 break
+
+
+class HLineWidget(QFrame):
+    """Just a horizontal line.
+
+    It really is the case that even in the year 2025 with Qt6 there is no
+    dedicated widget class to draw a horizontal line.
+    """
+
+    def __init__(self):
+        super().__init__()
+        self.setFrameShape(QFrame.Shape.HLine)
+        self.setFrameShadow(QFrame.Shadow.Sunken)
