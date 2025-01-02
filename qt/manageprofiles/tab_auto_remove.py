@@ -13,10 +13,16 @@
 from PyQt6.QtWidgets import (QDialog,
                              QGridLayout,
                              QVBoxLayout,
+                             QHBoxLayout,
                              QGroupBox,
+                             QLayout,
                              QLabel,
                              QSpinBox,
-                             QCheckBox)
+                             QStyle,
+                             QCheckBox,
+                             QToolTip)
+from PyQt6.QtCore import Qt
+from PyQt6.QtGui import QCursor
 import config
 import qttools
 from manageprofiles.combobox import BitComboBox
@@ -32,6 +38,8 @@ class AutoRemoveTab(QDialog):
         self._parent_dialog = parent
 
         tab_layout = QVBoxLayout(self)
+
+        self._add_label_rule_execute_order(tab_layout)
 
         # older than
         self.spbRemoveOlder = QSpinBox(self)
@@ -223,3 +231,40 @@ class AutoRemoveTab(QDialog):
 
     def update_items_state(self, enabled):
         self.cbSmartRemoveRunRemoteInBackground.setVisible(enabled)
+
+    def _add_label_rule_execute_order(self, parent_layout: QLayout):
+        layout = QHBoxLayout(self)
+
+        # Info icon
+        icon = self.style().standardPixmap(
+            QStyle.StandardPixmap.SP_MessageBoxInformation)
+        icon = icon.scaled(
+            icon.width()*2,
+            icon.height()*2,
+            Qt.AspectRatioMode.KeepAspectRatio)
+        label = QLabel(self)
+        label.setPixmap(icon)
+        label.setFixedSize(icon.size())
+        layout.addWidget(label)
+
+        # Info text
+        txt = _(
+            'The rules below are processed from top to buttom. Later rules '
+            'override earlier ones and are not constrained by them. See the '
+            '{manual} for details and examples.'
+        ).format(
+            manual='<a href="https://commingsoon">{}</a>'.format(
+                _('user manual')))
+        label = QLabel(txt)
+        label.setWordWrap(True)
+        label.setOpenExternalLinks(True)
+
+        # Show URL in tooltip without anoing http-protocol prefix.
+        label.linkHovered.connect(
+            lambda url: QToolTip.showText(
+                QCursor.pos(), url.replace('https://', ''))
+        )
+
+        layout.addWidget(label)
+
+        parent_layout.addLayout(layout)
