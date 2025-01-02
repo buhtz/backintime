@@ -11,6 +11,7 @@
 # General Public License v2 (GPLv2). See LICENSES directory or go to
 # <https://spdx.org/licenses/GPL-2.0-or-later.html>.
 import os
+import re
 import copy
 from PyQt6.QtGui import QPalette, QBrush, QIcon
 from PyQt6.QtWidgets import (QDialog,
@@ -246,8 +247,19 @@ class SettingsDialog(QDialog):
 
         # TAB: Auto-remove
         self._tab_auto_remove = AutoRemoveTab(self)
-        _add_tab(self._tab_auto_remove, _('&Auto-remove'))
-
+        _add_tab(self._tab_auto_remove,
+                 # Mask the "&" character, so Qt does not interpret it as a
+                 # shortcut indicator. Doing this via regex to prevent
+                 # confusing our translators. hide this from
+                 # our translators.
+                 re.sub(
+                     # "&" followed by whitespace
+                     r'&(?=\s)',
+                     # replace with this
+                     '&&',
+                     # act on that string
+                     _('&Remove & Retention')
+                 ))
         # TAB: Options
         self._tab_options = OptionsTab(self)
         _add_tab(self._tab_options, _('&Options'))
