@@ -3,20 +3,20 @@
 #
 # SPDX-License-Identifier: CC0-1.0
 #
-# This file is licensed under Creative Commons Zero v1.0 Universal (CC0-1.0)
-# and is part of the program "Back In Time" which is released under GNU General
-# Public License v2 (GPLv2). See file LICENSE or go to
-# <https://www.gnu.org/licenses/#GPL>.
+# This file is released under Creative Commons Zero 1.0 (CC0-1.0) and part of
+# the program "Back In Time". The program as a whole is released under GNU
+# General Public License v2 or any later version (GPL-2.0-or-later).
+# See LICENSES directory or go to <https://spdx.org/licenses/CC0-1.0.html>
+# and <https://spdx.org/licenses/GPL-2.0-or-later.html>.
 #
 # Credits to Mr. Mars Landis describing that solution and comparing it to
 # alternatives in his article 'Better Python Singleton with a Metaclass' at
 # <https://python.plainenglish.io/better-python-singleton-with-a-metaclass-41fb8bfe2127>
-# himself refering to this Stack Overflow
+# himself referring to this Stack Overflow
 # <https://stackoverflow.com/q/6760685/4865723> question as his inspiration.
 #
 # Original code adapted by Christian Buhtz.
-
-"""Flexible and pythonic singleton implemention.
+"""Flexible and pythonic singleton implementation.
 
 Support inheritance and multiple classes. Multilevel inheritance is
 theoretically possible if the '__allow_reinitialization' approach would be
@@ -60,7 +60,7 @@ Example ::
 
 
 class Singleton(type):
-    """Singleton implemention supporting inheritance and multiple classes."""
+    """Singleton implementation supporting inheritance and multiple classes."""
 
     _instances = {}
     """Hold single instances of multiple classes."""
@@ -68,7 +68,7 @@ class Singleton(type):
     def __call__(cls, *args, **kwargs):
 
         try:
-            # Re-use existing instance
+            # Reuse existing instance
             return cls._instances[cls]
 
         except KeyError:

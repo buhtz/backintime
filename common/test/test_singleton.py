@@ -5,6 +5,8 @@
 # This file is part of the program "Back In time" which is released under GNU
 # General Public License v2 (GPLv2).
 # See file LICENSE or go to <https://www.gnu.org/licenses/#GPL>.
+"""Tests about singleton module."""
+# pylint: disable=missing-class-docstring,too-few-public-methods
 import unittest
 import singleton
 
@@ -20,7 +22,7 @@ class Test(unittest.TestCase):
 
     def setUp(self):
         # Clean up all instances
-        singleton.Singleton._instances = {}
+        singleton.Singleton._instances = {}  # pylint: disable=protected-access
 
     def test_twins(self):
         """Identical id and values."""

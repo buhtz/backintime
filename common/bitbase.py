@@ -7,6 +7,8 @@
 # <https://spdx.org/licenses/GPL-2.0-or-later.html>.
 """Basic constants used in multiple modules."""
 from enum import Enum
+from pathlib import Path
+
 # Workaround: Mostly relevant on TravisCI but not exclusively.
 # While unittesting and without regular invocation of BIT the GNU gettext
 # class-based API isn't setup yet.
@@ -16,7 +18,6 @@ try:
 except NameError:
     def _(val):
         return val
-
 
 # See issue #1734 and #1735
 URL_ENCRYPT_TRANSITION = 'https://github.com/bit-team/backintime' \
@@ -37,6 +38,10 @@ SSH_CIPHERS = {
     'aes256-cbc': 'AES256-CBC',
     'arcfour': 'ARCFOUR'
 }
+
+USER_MANUAL_ONLINE_URL = 'https://backintime.readthedocs.io'
+USER_MANUAL_LOCAL_PATH = Path('/') / 'usr' / 'share' / 'doc' / \
+    'backintime-common' / 'manual' / 'index.html'
 
 
 class TimeUnit(Enum):
