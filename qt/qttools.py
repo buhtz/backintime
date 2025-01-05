@@ -111,7 +111,7 @@ def can_render(string, widget):
 
 def set_wrapped_tooltip(widget: QWidget,
                         tooltip: Union[str, Iterable[str]],
-                        wrap_length: int=72):
+                        wrap_length: int = 72):
     """Add a tooltip to the widget but insert line breaks when appropriated.
 
     If a list of strings is provided, each string is wrapped individually and
