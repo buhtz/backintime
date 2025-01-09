@@ -60,6 +60,8 @@ Current behavior of the algorithm:
   * Reason was that not dates but snapshotIDS (included their tags, the last 3
     digits) are used for comparison.
   * The bug is fixed.
+* Keeps the latest/youngest backup of a day.
+* Starts in current (not complete) day.
 
 ### Smart remove: Weekly
 GUI wording: _Keep one snapshot per week for the last `N` week(s)._
@@ -76,7 +78,6 @@ Current behavior of the algorithm:
   * [#1094](https://github.com/bit-team/backintime/issues/1094)
   * [PR #1944](https://github.com/bit-team/backintime/pull/1944)
   * [PR #1819](https://github.com/bit-team/backintime/pull/1819)
-
 
 
 ### Smart remove: Monthly
