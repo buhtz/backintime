@@ -52,6 +52,7 @@ full_test_files = [_base_dir / fp for fp in (
     'version.py',
     'test/test_lint.py',
     'test/test_mount.py',
+    'test/test_statedata.py',
     'test/test_singleton.py',
     'test/test_uniquenessset.py',
 )]
