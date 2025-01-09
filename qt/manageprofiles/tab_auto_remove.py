@@ -15,48 +15,47 @@ from PyQt6.QtWidgets import (QDialog,
                              QVBoxLayout,
                              QHBoxLayout,
                              QGroupBox,
-                             QLayout,
                              QLabel,
                              QSpinBox,
                              QStyle,
                              QCheckBox,
-                             QToolTip)
+                             QToolTip,
+                             QWidget)
 from PyQt6.QtCore import Qt
 from PyQt6.QtGui import QCursor
 import config
 import qttools
 from manageprofiles.combobox import BitComboBox
 from manageprofiles.statebindcheckbox import StateBindCheckBox
+from manageprofiles.spinboxunit import SpinBoxWithUnit
 
 
 class AutoRemoveTab(QDialog):
     """The 'Auto-remove' tab in the Manage Profiles dialog."""
+
+    _STRETCH_FX = (1, )
 
     def __init__(self, parent):
         super().__init__(parent=parent)
 
         self._parent_dialog = parent
 
-        tab_layout = QVBoxLayout(self)
+        # Vertical main layout
+        self._tab_layout = QVBoxLayout(self)
+        self.setLayout(self._tab_layout)
 
-        self._add_label_rule_execute_order(tab_layout)
+        # Icon & Info label
+        self._label_rule_execute_order()
 
-        tab_layout.addWidget(qttools.HLineWidget())
+        # ---
+        self._tab_layout.addWidget(qttools.HLineWidget())
 
-        # older than
-        self.spbRemoveOlder = QSpinBox(self)
-        self.spbRemoveOlder.setRange(1, 1000)
+        # Keep named backups
+        self.cbDontRemoveNamedSnapshots = self._checkbox_keep_named()
 
-        REMOVE_OLD_BACKUP_UNITS = {
-            config.Config.DAY: _('Day(s)'),
-            config.Config.WEEK: _('Week(s)'),
-            config.Config.YEAR: _('Year(s)')
-        }
-        self.comboRemoveOlderUnit = BitComboBox(self, REMOVE_OLD_BACKUP_UNITS)
-
-        self.cbRemoveOlder = StateBindCheckBox(_('Older than:'), self)
-        self.cbRemoveOlder.bind(self.spbRemoveOlder)
-        self.cbRemoveOlder.bind(self.comboRemoveOlderUnit)
+        # Remove older than N years/months/days
+        self._checkbox_remove_older, self._spinunit_remove_older \
+            = self._remove_older_than()
 
         # free space less than
         enabled, value, unit = self.config.minFreeSpace()
@@ -87,10 +86,9 @@ class AutoRemoveTab(QDialog):
         self.cbFreeInodes.stateChanged.connect(enabled)
 
         grid = QGridLayout()
-        tab_layout.addLayout(grid)
-        grid.addWidget(self.cbRemoveOlder, 0, 0)
-        grid.addWidget(self.spbRemoveOlder, 0, 1)
-        grid.addWidget(self.comboRemoveOlderUnit, 0, 2)
+
+        self._tab_layout.addLayout(grid)
+
         grid.addWidget(self.cbFreeSpace, 1, 0)
         grid.addWidget(self.spbFreeSpace, 1, 1)
         grid.addWidget(self.comboFreeSpaceUnit, 1, 2)
@@ -98,7 +96,7 @@ class AutoRemoveTab(QDialog):
         grid.addWidget(self.spbFreeInodes, 2, 1)
         grid.setColumnStretch(3, 1)
 
-        tab_layout.addSpacing(tab_layout.spacing()*2)
+        self._tab_layout.addSpacing(self._tab_layout.spacing()*2)
 
         # Smart removal: checkable GroupBox
         self.cbSmartRemove = QGroupBox(_('Smart removal:'), self)
@@ -106,7 +104,7 @@ class AutoRemoveTab(QDialog):
         smlayout = QGridLayout()
         smlayout.setColumnStretch(3, 1)
         self.cbSmartRemove.setLayout(smlayout)
-        tab_layout.addWidget(self.cbSmartRemove)
+        self._tab_layout.addWidget(self.cbSmartRemove)
 
         # Smart removal: the items...
         self.cbSmartRemoveRunRemoteInBackground = QCheckBox(
@@ -156,15 +154,7 @@ class AutoRemoveTab(QDialog):
             QLabel(_('Keep one snapshot per year for all years.'), self),
             5, 0, 1, 3)
 
-        # don't remove named snapshots
-        self.cbDontRemoveNamedSnapshots \
-            = QCheckBox(_('Keep named snapshots.'), self)
-        self.cbDontRemoveNamedSnapshots.setToolTip(
-            _('Snapshots that, in addition to the usual timestamp, have been '
-              'given a name will not be deleted.'))
-        tab_layout.addWidget(self.cbDontRemoveNamedSnapshots)
-
-        tab_layout.addStretch()
+        self._tab_layout.addStretch()
 
     @property
     def config(self) -> config.Config:
@@ -173,9 +163,10 @@ class AutoRemoveTab(QDialog):
     def load_values(self):
         # remove old snapshots
         enabled, value, unit = self.config.removeOldSnapshots()
-        self.cbRemoveOlder.setChecked(enabled)
-        self.spbRemoveOlder.setValue(value)
-        self.comboRemoveOlderUnit.select_by_data(unit)
+        print(f'{enabled=} {value=} {unit=}')
+        self._checkbox_remove_older.setChecked(enabled)
+        self._spinunit_remove_older.set_value(value)
+        self._spinunit_remove_older.select_unit(unit)
 
         # min free space
         enabled, value, unit = self.config.minFreeSpace()
@@ -204,9 +195,9 @@ class AutoRemoveTab(QDialog):
 
     def store_values(self):
         self.config.setRemoveOldSnapshots(
-            self.cbRemoveOlder.isChecked(),
-            self.spbRemoveOlder.value(),
-            self.comboRemoveOlderUnit.current_data
+            self._checkbox_remove_older.isChecked(),
+            self._spinunit_remove_older.value(),
+            self._spinunit_remove_older.unit()
         )
 
         self.config.setMinFreeSpace(
@@ -234,20 +225,18 @@ class AutoRemoveTab(QDialog):
     def update_items_state(self, enabled):
         self.cbSmartRemoveRunRemoteInBackground.setVisible(enabled)
 
-    def _add_label_rule_execute_order(self, parent_layout: QLayout):
-        layout = QHBoxLayout()
-
-        # Info icon
+    def _label_rule_execute_order(self) -> QWidget:
+        # Icon
         icon = self.style().standardPixmap(
             QStyle.StandardPixmap.SP_MessageBoxInformation)
         icon = icon.scaled(
             icon.width()*2,
             icon.height()*2,
             Qt.AspectRatioMode.KeepAspectRatio)
-        label = QLabel(self)
-        label.setPixmap(icon)
-        label.setFixedSize(icon.size())
-        layout.addWidget(label)
+
+        icon_label = QLabel(self)
+        icon_label.setPixmap(icon)
+        icon_label.setFixedSize(icon.size())
 
         # Info text
         txt = _(
@@ -257,16 +246,52 @@ class AutoRemoveTab(QDialog):
         ).format(
             manual='<a href="https://commingsoon">{}</a>'.format(
                 _('user manual')))
-        label = QLabel(txt)
-        label.setWordWrap(True)
-        label.setOpenExternalLinks(True)
+        txt_label = QLabel(txt)
+        txt_label.setWordWrap(True)
+        txt_label.setOpenExternalLinks(True)
 
         # Show URL in tooltip without anoing http-protocol prefix.
-        label.linkHovered.connect(
+        txt_label.linkHovered.connect(
             lambda url: QToolTip.showText(
                 QCursor.pos(), url.replace('https://', ''))
         )
 
-        layout.addWidget(label)
+        wdg = QWidget()
+        layout = QHBoxLayout(wdg)
+        layout.addWidget(icon_label)
+        layout.addWidget(txt_label)
 
-        parent_layout.addLayout(layout)
+        self._tab_layout.addWidget(wdg)
+
+    def _checkbox_keep_named(self) -> QCheckBox:
+        cb = QCheckBox(_('Keep named snapshots.'), self)
+        cb.setToolTip(
+            _('Snapshots that, in addition to the usual timestamp, have been '
+              'given a name will not be deleted.'))
+
+        self._tab_layout.addWidget(cb)
+
+        return cb
+
+    def _remove_older_than(self) -> QWidget:
+        layout = QHBoxLayout()
+        layout.setStretch(0, self._STRETCH_FX[0])
+
+        # units
+        units = {
+            config.Config.DAY: _('Day(s)'),
+            config.Config.WEEK: _('Week(s)'),
+            config.Config.YEAR: _('Year(s)')
+        }
+        spin_unit = SpinBoxWithUnit(self, (1, 1000), units)
+
+        # checkbox
+        checkbox = StateBindCheckBox(_('Older than:'), self)
+        checkbox.bind(spin_unit)
+
+        layout.addWidget(checkbox)
+        layout.addWidget(spin_unit)
+
+        self._tab_layout.addLayout(layout)
+
+        return checkbox, spin_unit
