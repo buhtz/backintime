@@ -951,7 +951,6 @@ class Config(configfile.ConfigFileWithProfiles):
         return datetime.date(1, 1, 1)
 
     def setRemoveOldSnapshots(self, enabled, value, unit, profile_id = None):
-        print(f'SET {enabled=} {value=} {unit=}')
         self.setProfileBoolValue('snapshots.remove_old_snapshots.enabled', enabled, profile_id)
         self.setProfileIntValue('snapshots.remove_old_snapshots.value', value, profile_id)
         self.setProfileIntValue('snapshots.remove_old_snapshots.unit', unit, profile_id)

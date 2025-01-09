@@ -163,7 +163,6 @@ class AutoRemoveTab(QDialog):
     def load_values(self):
         # remove old snapshots
         enabled, value, unit = self.config.removeOldSnapshots()
-        print(f'{enabled=} {value=} {unit=}')
         self._checkbox_remove_older.setChecked(enabled)
         self._spinunit_remove_older.set_value(value)
         self._spinunit_remove_older.select_unit(unit)
