@@ -31,7 +31,7 @@ from manageprofiles.spinboxunit import SpinBoxWithUnit
 
 
 class AutoRemoveTab(QDialog):
-    """The 'Auto-remove' tab in the Manage Profiles dialog."""
+    """The 'Remove & Retention' tab in the Manage Profiles dialog."""
 
     _STRETCH_FX = (1, )
 
@@ -56,6 +56,17 @@ class AutoRemoveTab(QDialog):
         # Remove older than N years/months/days
         self._checkbox_remove_older, self._spinunit_remove_older \
             = self._remove_older_than()
+
+        # self._tab_layout.addSpacing(self._tab_layout.spacing()*2)
+
+        # return (checkbox_group, cb_in_background, spin_all_days, one_per_day,
+        #         one_per_week, one_per_month)
+
+        # Retention policy
+        self.cbSmartRemove, self.cbSmartRemoveRunRemoteInBackground, \
+            self.spbKeepAll, self.spbKeepOnePerDay, self.spbKeepOnePerWeek, \
+            self.spbKeepOnePerMonth \
+            = self._groupbox_retention_policy()
 
         # free space less than
         enabled, value, unit = self.config.minFreeSpace()
@@ -87,8 +98,6 @@ class AutoRemoveTab(QDialog):
 
         grid = QGridLayout()
 
-        self._tab_layout.addLayout(grid)
-
         grid.addWidget(self.cbFreeSpace, 1, 0)
         grid.addWidget(self.spbFreeSpace, 1, 1)
         grid.addWidget(self.comboFreeSpaceUnit, 1, 2)
@@ -96,63 +105,7 @@ class AutoRemoveTab(QDialog):
         grid.addWidget(self.spbFreeInodes, 2, 1)
         grid.setColumnStretch(3, 1)
 
-        self._tab_layout.addSpacing(self._tab_layout.spacing()*2)
-
-        # Smart removal: checkable GroupBox
-        self.cbSmartRemove = QGroupBox(_('Smart removal:'), self)
-        self.cbSmartRemove.setCheckable(True)
-        smlayout = QGridLayout()
-        smlayout.setColumnStretch(3, 1)
-        self.cbSmartRemove.setLayout(smlayout)
-        self._tab_layout.addWidget(self.cbSmartRemove)
-
-        # Smart removal: the items...
-        self.cbSmartRemoveRunRemoteInBackground = QCheckBox(
-                _('Run in background on remote host.'), self)
-        qttools.set_wrapped_tooltip(
-            self.cbSmartRemoveRunRemoteInBackground,
-            (
-                _('The smart remove procedure will run directly on the remote '
-                  'machine, not locally. The commands "bash", "screen", and '
-                  '"flock" must be installed and available on the '
-                  'remote machine.'),
-                _('If selected, Back In Time will first test the '
-                  'remote machine.')
-            )
-        )
-        smlayout.addWidget(self.cbSmartRemoveRunRemoteInBackground, 0, 0, 1, 2)
-
-        smlayout.addWidget(
-            QLabel(_('Keep all snapshots for the last'), self), 1, 0)
-        self.spbKeepAll = QSpinBox(self)
-        self.spbKeepAll.setRange(1, 10000)
-        smlayout.addWidget(self.spbKeepAll, 1, 1)
-        smlayout.addWidget(QLabel(_('day(s).'), self), 1, 2)
-
-        smlayout.addWidget(
-            QLabel(_('Keep one snapshot per day for the last'), self), 2, 0)
-        self.spbKeepOnePerDay = QSpinBox(self)
-        self.spbKeepOnePerDay.setRange(1, 10000)
-        smlayout.addWidget(self.spbKeepOnePerDay, 2, 1)
-        smlayout.addWidget(QLabel(_('day(s).'), self), 2, 2)
-
-        smlayout.addWidget(
-            QLabel(_('Keep one snapshot per week for the last'), self), 3, 0)
-        self.spbKeepOnePerWeek = QSpinBox(self)
-        self.spbKeepOnePerWeek.setRange(1, 10000)
-        smlayout.addWidget(self.spbKeepOnePerWeek, 3, 1)
-        smlayout.addWidget(QLabel(_('week(s).'), self), 3, 2)
-
-        smlayout.addWidget(
-            QLabel(_('Keep one snapshot per month for the last'), self), 4, 0)
-        self.spbKeepOnePerMonth = QSpinBox(self)
-        self.spbKeepOnePerMonth.setRange(1, 1000)
-        smlayout.addWidget(self.spbKeepOnePerMonth, 4, 1)
-        smlayout.addWidget(QLabel(_('month(s).'), self), 4, 2)
-
-        smlayout.addWidget(
-            QLabel(_('Keep one snapshot per year for all years.'), self),
-            5, 0, 1, 3)
+        self._tab_layout.addLayout(grid)
 
         self._tab_layout.addStretch()
 
@@ -274,7 +227,7 @@ class AutoRemoveTab(QDialog):
 
     def _remove_older_than(self) -> QWidget:
         layout = QHBoxLayout()
-        layout.setStretch(0, self._STRETCH_FX[0])
+        #layout.setStretch(0, self._STRETCH_FX[0])
 
         # units
         units = {
@@ -285,7 +238,7 @@ class AutoRemoveTab(QDialog):
         spin_unit = SpinBoxWithUnit(self, (1, 1000), units)
 
         # checkbox
-        checkbox = StateBindCheckBox(_('Older than:'), self)
+        checkbox = StateBindCheckBox(_('Remove snapshots older than'), self)
         checkbox.bind(spin_unit)
 
         layout.addWidget(checkbox)
@@ -294,3 +247,70 @@ class AutoRemoveTab(QDialog):
         self._tab_layout.addLayout(layout)
 
         return checkbox, spin_unit
+
+    def _groupbox_retention_policy(self) -> tuple:
+        layout = QGridLayout()
+        layout.setColumnStretch(0, 1)
+
+        checkbox_group = QGroupBox(_('Retention policy'), self)
+        checkbox_group.setCheckable(True)
+        checkbox_group.setLayout(layout)
+
+        cb_in_background = QCheckBox(
+            _('Run in background on remote host.'), self)
+        qttools.set_wrapped_tooltip(
+            cb_in_background,
+            (_('The smart remove procedure will run directly on the remote '
+               'machine, not locally. The commands "bash", "screen", and '
+               '"flock" must be installed and available on the '
+               'remote machine.'),
+             _('If selected, Back In Time will first test the '
+               'remote machine.')))
+        layout.addWidget(cb_in_background, 0, 0, 1, 2)
+
+        layout.addWidget(
+            QLabel(_('Keep all snapshots for the last'), self), 1, 0)
+        all_last_days = QSpinBox(self)
+        all_last_days.setRange(1, 10000)
+        all_last_days.setSuffix(' ' + _('day(s).'))
+        all_last_days.setAlignment(Qt.AlignmentFlag.AlignRight)
+        layout.addWidget(all_last_days, 1, 1)
+        # smlayout.addWidget(QLabel(_('day(s).'), self), 1, 2)
+
+        layout.addWidget(QLabel(_('Keep the last snapshot for each day for '
+                                  'the last'), self),
+                         2, 0)
+        one_per_day = QSpinBox(self)
+        one_per_day.setRange(1, 10000)
+        one_per_day.setSuffix(' ' + _('day(s).'))
+        one_per_day.setAlignment(Qt.AlignmentFlag.AlignRight)
+        layout.addWidget(one_per_day, 2, 1)
+        # smlayout.addWidget(QLabel(_('day(s).'), self), 2, 2)
+
+        layout.addWidget(QLabel(_('Keep the last snapshot for each week for '
+                                  'the last'), self), 3, 0)
+        one_per_week = QSpinBox(self)
+        one_per_week.setRange(1, 10000)
+        one_per_week.setSuffix(' ' + _('week(s).'))
+        one_per_week.setAlignment(Qt.AlignmentFlag.AlignRight)
+        layout.addWidget(one_per_week, 3, 1)
+        # smlayout.addWidget(QLabel(_('week(s).'), self), 3, 2)
+
+        layout.addWidget(QLabel(_('Keep the last snapshot for each month for '
+                                  'the last'), self), 4, 0)
+        one_per_month = QSpinBox(self)
+        one_per_month.setRange(1, 1000)
+        one_per_month.setSuffix(_('month(s).'))
+        one_per_month.setAlignment(Qt.AlignmentFlag.AlignRight)
+        layout.addWidget(one_per_month, 4, 1)
+        # smlayout.addWidget(QLabel(_('month(s).'), self), 4, 2)
+
+        layout.addWidget(QLabel(_('Keep the last snapshot for each year for'),
+                                self), 5, 0)
+        layout.addWidget(QLabel(_('all years.'),
+                                self), 5, 1, Qt.AlignmentFlag.AlignRight)
+
+        self._tab_layout.addWidget(checkbox_group)
+
+        return (checkbox_group, cb_in_background, all_last_days, one_per_day,
+                one_per_week, one_per_month)
