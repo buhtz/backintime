@@ -158,7 +158,8 @@ class StateData(dict, metaclass=singleton.Singleton):
         self['_meta'] = meta
 
     def save(self):
-        """Store application state data to a file."""
+        """Store application state data to a file.
+        """
         logger.debug('Save state data.')
 
         self._set_save_meta_data()
