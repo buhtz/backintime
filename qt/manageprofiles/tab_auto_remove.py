@@ -227,7 +227,6 @@ class AutoRemoveTab(QDialog):
 
     def _remove_older_than(self) -> QWidget:
         layout = QHBoxLayout()
-        #layout.setStretch(0, self._STRETCH_FX[0])
 
         # units
         units = {
@@ -235,7 +234,7 @@ class AutoRemoveTab(QDialog):
             config.Config.WEEK: _('Week(s)'),
             config.Config.YEAR: _('Year(s)')
         }
-        spin_unit = SpinBoxWithUnit(self, (1, 1000), units)
+        spin_unit = SpinBoxWithUnit(self, (1, 999), units)
 
         # checkbox
         checkbox = StateBindCheckBox(_('Remove snapshots older than'), self)
@@ -244,13 +243,15 @@ class AutoRemoveTab(QDialog):
         layout.addWidget(checkbox)
         layout.addWidget(spin_unit)
 
+        layout.addStretch()
+
         self._tab_layout.addLayout(layout)
 
         return checkbox, spin_unit
 
     def _groupbox_retention_policy(self) -> tuple:
         layout = QGridLayout()
-        layout.setColumnStretch(0, 1)
+        layout.setColumnStretch(2, 1)
 
         checkbox_group = QGroupBox(_('Retention policy'), self)
         checkbox_group.setCheckable(True)
@@ -271,39 +272,36 @@ class AutoRemoveTab(QDialog):
         layout.addWidget(
             QLabel(_('Keep all snapshots for the last'), self), 1, 0)
         all_last_days = QSpinBox(self)
-        all_last_days.setRange(1, 10000)
+        all_last_days.setRange(1, 999)
         all_last_days.setSuffix(' ' + _('day(s).'))
         all_last_days.setAlignment(Qt.AlignmentFlag.AlignRight)
         layout.addWidget(all_last_days, 1, 1)
-        # smlayout.addWidget(QLabel(_('day(s).'), self), 1, 2)
 
-        layout.addWidget(QLabel(_('Keep the last snapshot for each day for '
-                                  'the last'), self),
-                         2, 0)
+        layout.addWidget(
+            QLabel(_('Keep the last snapshot for each day for '
+                     'the last'), self),
+            2, 0)
         one_per_day = QSpinBox(self)
-        one_per_day.setRange(1, 10000)
+        one_per_day.setRange(1, 999)
         one_per_day.setSuffix(' ' + _('day(s).'))
         one_per_day.setAlignment(Qt.AlignmentFlag.AlignRight)
         layout.addWidget(one_per_day, 2, 1)
-        # smlayout.addWidget(QLabel(_('day(s).'), self), 2, 2)
 
         layout.addWidget(QLabel(_('Keep the last snapshot for each week for '
                                   'the last'), self), 3, 0)
         one_per_week = QSpinBox(self)
-        one_per_week.setRange(1, 10000)
+        one_per_week.setRange(1, 999)
         one_per_week.setSuffix(' ' + _('week(s).'))
         one_per_week.setAlignment(Qt.AlignmentFlag.AlignRight)
         layout.addWidget(one_per_week, 3, 1)
-        # smlayout.addWidget(QLabel(_('week(s).'), self), 3, 2)
 
         layout.addWidget(QLabel(_('Keep the last snapshot for each month for '
                                   'the last'), self), 4, 0)
         one_per_month = QSpinBox(self)
-        one_per_month.setRange(1, 1000)
-        one_per_month.setSuffix(_('month(s).'))
+        one_per_month.setRange(1, 999)
+        one_per_month.setSuffix(' ' + _('month(s).'))
         one_per_month.setAlignment(Qt.AlignmentFlag.AlignRight)
         layout.addWidget(one_per_month, 4, 1)
-        # smlayout.addWidget(QLabel(_('month(s).'), self), 4, 2)
 
         layout.addWidget(QLabel(_('Keep the last snapshot for each year for'),
                                 self), 5, 0)
