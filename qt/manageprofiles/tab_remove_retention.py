@@ -29,7 +29,7 @@ from manageprofiles.statebindcheckbox import StateBindCheckBox
 from manageprofiles.spinboxunit import SpinBoxWithUnit
 
 
-class AutoRemoveTab(QDialog):
+class RemoveRetentionTab(QDialog):
     """The 'Remove & Retention' tab in the Manage Profiles dialog."""
 
     _STRETCH_FX = (1, )
