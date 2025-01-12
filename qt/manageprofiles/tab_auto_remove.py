@@ -25,7 +25,6 @@ from PyQt6.QtCore import Qt
 from PyQt6.QtGui import QCursor
 import config
 import qttools
-from manageprofiles.combobox import BitComboBox
 from manageprofiles.statebindcheckbox import StateBindCheckBox
 from manageprofiles.spinboxunit import SpinBoxWithUnit
 
@@ -57,55 +56,21 @@ class AutoRemoveTab(QDialog):
         self._checkbox_remove_older, self._spinunit_remove_older \
             = self._remove_older_than()
 
-        # self._tab_layout.addSpacing(self._tab_layout.spacing()*2)
-
-        # return (checkbox_group, cb_in_background, spin_all_days, one_per_day,
-        #         one_per_week, one_per_month)
-
         # Retention policy
-        self.cbSmartRemove, self.cbSmartRemoveRunRemoteInBackground, \
-            self.spbKeepAll, self.spbKeepOnePerDay, self.spbKeepOnePerWeek, \
+        self.cbSmartRemove, \
+            self.cbSmartRemoveRunRemoteInBackground, \
+            self.spbKeepAll, \
+            self.spbKeepOnePerDay, \
+            self.spbKeepOnePerWeek, \
             self.spbKeepOnePerMonth \
             = self._groupbox_retention_policy()
 
-        # free space less than
-        enabled, value, unit = self.config.minFreeSpace()
-
-        self.spbFreeSpace = QSpinBox(self)
-        self.spbFreeSpace.setRange(1, 1000)
-
-        MIN_FREE_SPACE_UNITS = {
-            config.Config.DISK_UNIT_MB: 'MiB',
-            config.Config.DISK_UNIT_GB: 'GiB'
-        }
-        self.comboFreeSpaceUnit = BitComboBox(self, MIN_FREE_SPACE_UNITS)
-
-        self.cbFreeSpace = StateBindCheckBox(_('If free space is less than:'), self)
-        self.cbFreeSpace.bind(self.spbFreeSpace)
-        self.cbFreeSpace.bind(self.comboFreeSpaceUnit)
-
-        # min free inodes
-        self.cbFreeInodes = QCheckBox(_('If free inodes is less than:'), self)
-
-        self.spbFreeInodes = QSpinBox(self)
-        self.spbFreeInodes.setSuffix(' %')
-        self.spbFreeInodes.setSingleStep(1)
-        self.spbFreeInodes.setRange(0, 15)
-
-        enabled = lambda state: self.spbFreeInodes.setEnabled(state)
-        enabled(False)
-        self.cbFreeInodes.stateChanged.connect(enabled)
-
-        grid = QGridLayout()
-
-        grid.addWidget(self.cbFreeSpace, 1, 0)
-        grid.addWidget(self.spbFreeSpace, 1, 1)
-        grid.addWidget(self.comboFreeSpaceUnit, 1, 2)
-        grid.addWidget(self.cbFreeInodes, 2, 0)
-        grid.addWidget(self.spbFreeInodes, 2, 1)
-        grid.setColumnStretch(3, 1)
-
-        self._tab_layout.addLayout(grid)
+        # return spin_unit_space, spin_inodes
+        self._checkbox_space, \
+            self._spin_unit_space, \
+            self._checkbox_inodes, \
+            self._spin_inodes \
+            = self._remove_free_space_inodes()
 
         self._tab_layout.addStretch()
 
@@ -114,21 +79,15 @@ class AutoRemoveTab(QDialog):
         return self._parent_dialog.config
 
     def load_values(self):
+        # don't remove named snapshots
+        self.cbDontRemoveNamedSnapshots.setChecked(
+            self.config.dontRemoveNamedSnapshots())
+
         # remove old snapshots
         enabled, value, unit = self.config.removeOldSnapshots()
         self._checkbox_remove_older.setChecked(enabled)
         self._spinunit_remove_older.set_value(value)
         self._spinunit_remove_older.select_unit(unit)
-
-        # min free space
-        enabled, value, unit = self.config.minFreeSpace()
-        self.cbFreeSpace.setChecked(enabled)
-        self.spbFreeSpace.setValue(value)
-        self.comboFreeSpaceUnit.select_by_data(unit)
-
-        # min free inodes
-        self.cbFreeInodes.setChecked(self.config.minFreeInodesEnabled())
-        self.spbFreeInodes.setValue(self.config.minFreeInodes())
 
         # smart remove
         smart_remove, keep_all, keep_one_per_day, keep_one_per_week, \
@@ -141,9 +100,15 @@ class AutoRemoveTab(QDialog):
         self.cbSmartRemoveRunRemoteInBackground.setChecked(
             self.config.smartRemoveRunRemoteInBackground())
 
-        # don't remove named snapshots
-        self.cbDontRemoveNamedSnapshots.setChecked(
-            self.config.dontRemoveNamedSnapshots())
+        # min free space
+        enabled, value, unit = self.config.minFreeSpace()
+        self._checkbox_space.setChecked(enabled)
+        self._spin_unit_space.set_value(value)
+        self._spin_unit_space.select_unit(unit)
+
+        # min free inodes
+        self._checkbox_inodes.setChecked(self.config.minFreeInodesEnabled())
+        self._spin_inodes.setValue(self.config.minFreeInodes())
 
     def store_values(self):
         self.config.setRemoveOldSnapshots(
@@ -151,15 +116,6 @@ class AutoRemoveTab(QDialog):
             self._spinunit_remove_older.value(),
             self._spinunit_remove_older.unit()
         )
-
-        self.config.setMinFreeSpace(
-            self.cbFreeSpace.isChecked(),
-            self.spbFreeSpace.value(),
-            self.comboFreeSpaceUnit.current_data)
-
-        self.config.setMinFreeInodes(
-            self.cbFreeInodes.isChecked(),
-            self.spbFreeInodes.value())
 
         self.config.setDontRemoveNamedSnapshots(
             self.cbDontRemoveNamedSnapshots.isChecked())
@@ -173,6 +129,15 @@ class AutoRemoveTab(QDialog):
 
         self.config.setSmartRemoveRunRemoteInBackground(
             self.cbSmartRemoveRunRemoteInBackground.isChecked())
+
+        self.config.setMinFreeSpace(
+            self._spin_unit_space.isEnabled(),
+            self._spin_unit_space.value(),
+            self._spin_unit_space.unit())
+
+        self.config.setMinFreeInodes(
+            self._spin_inodes.isEnabled(),
+            self._spin_inodes.value())
 
     def update_items_state(self, enabled):
         self.cbSmartRemoveRunRemoteInBackground.setVisible(enabled)
@@ -274,7 +239,7 @@ class AutoRemoveTab(QDialog):
         all_last_days = QSpinBox(self)
         all_last_days.setRange(1, 999)
         all_last_days.setSuffix(' ' + _('day(s).'))
-        all_last_days.setAlignment(Qt.AlignmentFlag.AlignRight)
+        # all_last_days.setAlignment(Qt.AlignmentFlag.AlignRight)
         layout.addWidget(all_last_days, 1, 1)
 
         layout.addWidget(
@@ -284,7 +249,7 @@ class AutoRemoveTab(QDialog):
         one_per_day = QSpinBox(self)
         one_per_day.setRange(1, 999)
         one_per_day.setSuffix(' ' + _('day(s).'))
-        one_per_day.setAlignment(Qt.AlignmentFlag.AlignRight)
+        # one_per_day.setAlignment(Qt.AlignmentFlag.AlignRight)
         layout.addWidget(one_per_day, 2, 1)
 
         layout.addWidget(QLabel(_('Keep the last snapshot for each week for '
@@ -292,7 +257,7 @@ class AutoRemoveTab(QDialog):
         one_per_week = QSpinBox(self)
         one_per_week.setRange(1, 999)
         one_per_week.setSuffix(' ' + _('week(s).'))
-        one_per_week.setAlignment(Qt.AlignmentFlag.AlignRight)
+        # one_per_week.setAlignment(Qt.AlignmentFlag.AlignRight)
         layout.addWidget(one_per_week, 3, 1)
 
         layout.addWidget(QLabel(_('Keep the last snapshot for each month for '
@@ -300,15 +265,55 @@ class AutoRemoveTab(QDialog):
         one_per_month = QSpinBox(self)
         one_per_month.setRange(1, 999)
         one_per_month.setSuffix(' ' + _('month(s).'))
-        one_per_month.setAlignment(Qt.AlignmentFlag.AlignRight)
+        # one_per_month.setAlignment(Qt.AlignmentFlag.AlignRight)
         layout.addWidget(one_per_month, 4, 1)
 
         layout.addWidget(QLabel(_('Keep the last snapshot for each year for'),
                                 self), 5, 0)
         layout.addWidget(QLabel(_('all years.'),
-                                self), 5, 1, Qt.AlignmentFlag.AlignRight)
+                                self), 5, 1)  # , Qt.AlignmentFlag.AlignRight)
 
         self._tab_layout.addWidget(checkbox_group)
 
         return (checkbox_group, cb_in_background, all_last_days, one_per_day,
                 one_per_week, one_per_month)
+
+    def _remove_free_space_inodes(self) -> tuple:
+        # enabled, value, unit = self.config.minFreeSpace()
+
+        # free space less than
+        MIN_FREE_SPACE_UNITS = {
+            config.Config.DISK_UNIT_MB: 'MiB',
+            config.Config.DISK_UNIT_GB: 'GiB'
+        }
+        spin_unit_space = SpinBoxWithUnit(self, (1, 99999), MIN_FREE_SPACE_UNITS)
+
+        checkbox_space = StateBindCheckBox(
+            _('… the free space is less than'), self)
+        checkbox_space.bind(spin_unit_space)
+
+        # min free inodes
+        checkbox_inodes = StateBindCheckBox(
+            _('… the free inodes are less than'), self)
+
+        spin_inodes = QSpinBox(self)
+        spin_inodes.setSuffix(' %')
+        spin_inodes.setRange(0, 15)
+
+        checkbox_inodes.bind(spin_inodes)
+
+        # layout
+        groupbox = QGroupBox(_('Remmove oldest snapshots if …'), self)
+        grid = QGridLayout()
+        groupbox.setLayout(grid)
+
+        grid.addWidget(checkbox_space, 1, 0)
+        grid.addWidget(spin_unit_space, 1, 1)
+        grid.addWidget(checkbox_inodes, 2, 0)
+        grid.addWidget(spin_inodes, 2, 1)
+        grid.setColumnStretch(0, 1)
+        grid.setColumnStretch(2, 2)
+
+        self._tab_layout.addWidget(groupbox)
+
+        return checkbox_space, spin_unit_space, checkbox_inodes, spin_inodes
