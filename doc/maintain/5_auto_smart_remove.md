@@ -46,11 +46,21 @@ This is how it looks like currently:
 - In `smartRemoveList()` the direction of ordering of the initial snapshots
   list is of high relevance.
 
-### Older than N years
+### Older than N years/weeks/days
 - Happens in `Snapshots.freeSpace()`
 - Relevant also `self.config.removeOldSnapshotsDate()`
 - Backups removed immediately before executing any other rule.
 - Named snapshots ignored and kept.
+- Days:
+  - Just days. Nothing special.
+- Weeks:
+  - It is always Monday.
+  - Current (incomplete) week is ignored.
+- Years:
+  - Not years but 12 months are counted.
+  - But current month is ignored.
+  - Example: Step 2 Years back beginning from 7th August 2025, will result in
+    1th August 2023.
 
 ### Smart remove: Daily
 GUI wording: _Keep all snapshots for the last `N` day(s)._

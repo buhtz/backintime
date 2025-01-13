@@ -1860,7 +1860,6 @@ class Snapshots:
         """
         snapshots = listSnapshots(self.config, reverse=False)
         if not snapshots:
-            logger.debug('No snapshots. Skip freeSpace', self)
             return
 
         last_snapshot = snapshots[-1]
@@ -1870,7 +1869,8 @@ class Snapshots:
             self.setTakeSnapshotMessage(0, _('Removing old snapshots'))
 
             oldBackupId = SID(self.config.removeOldSnapshotsDate(), self.config)
-            logger.debug("Remove snapshots older than: {}".format(oldBackupId.withoutTag), self)
+            logger.debug("Remove snapshots older than: {}"
+                         .format(oldBackupId.withoutTag), self)
 
             while True:
                 if len(snapshots) <= 1:
