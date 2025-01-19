@@ -8,7 +8,7 @@ General Public License v2 (GPLv2).
 See file/folder LICENSE or
 go to <https://spdx.org/licenses/GPL-2.0-or-later.html>
 -->
-# Quick start
+# Quick Start
 
 - Start *Back In Time* from your applications menu.
 - Select a destination directory for backups in the *General* tab (USB drive/local directory/network location…).
