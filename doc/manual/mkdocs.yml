@@ -39,7 +39,7 @@ nav:
   - Manage profiles: 'settings.md'
   - Snapshots Dialog: 'snapshots-dialog.md'
   - Log View: 'log.md'
-  - Remove & Retention: 'remove_retention.md'
+  - 'remove_retention.md'
   - User callback script: 'user-callback.md'
   - Additional sources: 'additional.md'
 
