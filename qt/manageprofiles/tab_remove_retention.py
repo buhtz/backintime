@@ -303,7 +303,7 @@ class RemoveRetentionTab(QDialog):
         checkbox_inodes.bind(spin_inodes)
 
         # layout
-        groupbox = QGroupBox(_('Remmove oldest snapshots if …'), self)
+        groupbox = QGroupBox(_('Remove oldest snapshots if …'), self)
         grid = QGridLayout()
         groupbox.setLayout(grid)
 
