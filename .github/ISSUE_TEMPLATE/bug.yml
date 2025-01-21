@@ -2,7 +2,6 @@ name: Name
 description: "Thank you for reporting a bug!"
 body:
   - type: markdown
-    id: markdown
     value: "## Welcome!"
     validations:
       required: false
