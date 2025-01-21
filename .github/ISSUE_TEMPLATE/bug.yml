@@ -22,28 +22,4 @@ body:
         ```
     validations:
       required: true
-  - type: dropdown
-    attributes:
-      label: "CPython versions tested on:"
-      multiple: true
-      options:
-        - "3.9"
-        - "3.10"
-        - "3.11"
-        - "3.12"
-        - "3.13"
-        - "3.14"
-        - "CPython main branch"
-    validations:
-      required: true
-  - type: dropdown
-    attributes:
-      label: "Operating systems tested on:"
-      multiple: true
-      options:
-        - Linux
-        - macOS
-        - Windows
-        - Other
-    validations:
-      required: false
+  
