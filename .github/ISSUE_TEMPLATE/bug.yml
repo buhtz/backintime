@@ -9,7 +9,7 @@ body:
         - As an **alternative** fell free to use our [mailing list](https://mail.python.org/mailman3/lists/bit-dev.python.org) for every topic about _Back In Time_.
   - type: textarea
     attributes:
-      label: "LAbEL? Bug description:"
+      label: "Describe the problem, feature or ask a question:"
       description: >
         Give a clear and concise description of what happened.
         Include a [minimal, reproducible example](https://stackoverflow.com/help/minimal-reproducible-example) if possible.
