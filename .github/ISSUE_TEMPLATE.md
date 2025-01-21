@@ -1,3 +1,7 @@
+name: Name
+description: Desc
+body:
+
 To help us diagnose the problem quickly, please provide the output of the console command `backintime --diagnostics`.
 
 Additionally, please specify as precisely as you can the package or installation source where you got Back In Time from. Sometimes there are multiple alternatives, like in [for Arch-based distros](https://aur.archlinux.org/packages?K=backintime).
