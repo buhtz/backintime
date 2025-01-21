@@ -4,10 +4,7 @@ body:
   - type: markdown
     attributes:
       value: |
-        - Please provide the output of the console command `backintime --diagnostics`, to help us diagnose the problem quickly.
-        - Please specify as precisely as you can the package or installation source where you got _Back In Time_ from. Sometimes there are multiple alternatives, like in [Arch-based distros](https://aur.archlinux.org/packages?K=backintime).
-        - As an **alternative** fell free to use our [mailing list](https://mail.python.org/mailman3/lists/bit-dev.python.org) for every topic about _Back In Time_.
+        1. Please provide the output of the console command `backintime --diagnostics`, to help us diagnose the problem quickly.
+        2. Please specify as precisely as you can the package or installation source where you got _Back In Time_ from. Sometimes there are multiple alternatives, like in [Arch-based distros](https://aur.archlinux.org/packages?K=backintime).
+        3. As an **alternative** fell free to use our [mailing list](https://mail.python.org/mailman3/lists/bit-dev.python.org) for every topic about _Back In Time_.
   - type: textarea
-    attributes:
-      label: "Describe the problem, feature or ask a question:"
-      
