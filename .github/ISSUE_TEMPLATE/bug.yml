@@ -20,6 +20,3 @@ body:
         ```python
         # Add a code block here, if required
         ```
-    validations:
-      required: true
-  
