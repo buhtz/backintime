@@ -1,5 +1,5 @@
-name: Name Bug report
-description: Description Submit a bug report
+name: Bug report
+description: Submit a bug report
 body:
   - type: markdown
     attributes:
