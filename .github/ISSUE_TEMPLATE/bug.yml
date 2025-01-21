@@ -7,12 +7,6 @@ body:
         **New to Python?**
 
         For help or advice on using Python, try one of the following options instead of opening a GitHub issue:
-
-          - Asking on [Discourse](https://discuss.python.org/c/users/7) or [Stack Overflow](https://stackoverflow.com)
-          - Reading the [Python tutorial](https://docs.python.org/3/tutorial/)
-          - Emailing [python-list](https://mail.python.org/mailman/listinfo/python-list)
-
-        Make sure to also search th [CPython issue tracker](https://github.com/python/cpython/issues?q=is%3Aissue+sort%3Acreated-desc) to check that the bug has not already been reported.
 - type: textarea
   attributes:
     label: "What's wrong?"
