@@ -1,14 +1,12 @@
 name: Bug report
 description: Submit a bug report
 body:
-  - type: html
+  - type: markdown
     attributes:
-      value:
-         <ul>
-        <li>👉 Please provide the output of the console command `backintime --diagnostics`, to help us diagnose the problem quickly.</li>
-        <li>👉 Please specify as precisely as you can the package or installation source where you got _Back In Time_ from. Sometimes there are multiple alternatives, like in [Arch-based distros](https://aur.archlinux.org/packages?K=backintime).</li>
-        <li>👉 As an **alternative** fell free to use our [mailing list](https://mail.python.org/mailman3/lists/bit-dev.python.org) for every topic about _Back In Time_.</li>
-        </ul>
+      value: |
+        *👉 Please provide the output of the console command `backintime --diagnostics`, to help us diagnose the problem quickly.
+        *👉 Please specify as precisely as you can the package or installation source where you got _Back In Time_ from. Sometimes there are multiple alternatives, like in [Arch-based distros](https://aur.archlinux.org/packages?K=backintime).
+        *👉 As an **alternative** fell free to use our [mailing list](https://mail.python.org/mailman3/lists/bit-dev.python.org) for every topic about _Back In Time_.
   - type: textarea
     attributes:
       label: "Describe the problem, feature or ask a question:"
