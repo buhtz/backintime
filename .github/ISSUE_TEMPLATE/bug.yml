@@ -15,3 +15,6 @@ body:
         Make sure to also search th [CPython issue tracker](https://github.com/python/cpython/issues?q=is%3Aissue+sort%3Acreated-desc) to check that the bug has not already been reported.
     validations:
       required: false
+- type: textarea
+  attributes:
+    label: "What's wrong?"
