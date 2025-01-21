@@ -3,6 +3,5 @@ description: "Thank you for reporting a bug!"
 body:
   - type: markdown
     attributes:
-    value: |
-    Foo Bar
+    value: "    Foo Bar"
     
