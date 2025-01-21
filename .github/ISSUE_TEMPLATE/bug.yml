@@ -7,6 +7,3 @@ body:
         **New to Python?**
 
         For help or advice on using Python, try one of the following options instead of opening a GitHub issue:
-- type: textarea
-  attributes:
-    label: "What's wrong?"
