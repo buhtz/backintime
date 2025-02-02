@@ -42,6 +42,7 @@ SSH_CIPHERS = {
 USER_MANUAL_ONLINE_URL = 'https://backintime.readthedocs.io'
 USER_MANUAL_LOCAL_PATH = Path('/') / 'usr' / 'share' / 'doc' / \
     'backintime-common' / 'manual' / 'index.html'
+USER_MANUAL_LOCAL_AVAILABLE = USER_MANUAL_LOCAL_PATH.exists()
 
 
 class TimeUnit(Enum):
