@@ -29,6 +29,7 @@ import mount
 import password
 import encfstools
 import cli
+from bitbase import URL_ENCRYPT_TRANSITION
 from diagnostics import collect_diagnostics, collect_minimal_diagnostics
 from exceptions import MountException
 from applicationinstance import ApplicationInstance
@@ -50,9 +51,12 @@ def takeSnapshotAsync(cfg, checksum=False):
         cfg (config.Config): config that should be used
     """
     cmd = []
+
     if cfg.ioniceOnUser():
         cmd.extend(('ionice', '-c2', '-n7'))
+
     cmd.append('backintime')
+
     if '1' != cfg.currentProfile():
         cmd.extend(('--profile-id', str(cfg.currentProfile())))
     if cfg._LOCAL_CONFIG_PATH is not cfg._DEFAULT_CONFIG_PATH:
@@ -63,16 +67,20 @@ def takeSnapshotAsync(cfg, checksum=False):
         cmd.append('--debug')
     if checksum:
         cmd.append('--checksum')
+
     cmd.append('backup')
 
     # child process need to start its own ssh-agent because otherwise
     # it would be lost without ssh-agent if parent will close
     env = os.environ.copy()
+
     for i in ('SSH_AUTH_SOCK', 'SSH_AGENT_PID'):
         try:
             del env[i]
+
         except:
             pass
+
     subprocess.Popen(cmd, env = env)
 
 
@@ -90,6 +98,7 @@ def takeSnapshot(cfg, force=True):
     """
     tools.envLoad(cfg.cronEnvFile())
     ret = snapshots.Snapshots(cfg).backup(force)
+
     return ret
 
 
@@ -98,13 +107,15 @@ def _mount(cfg):
     Mount external filesystems.
 
     Args:
-        cfg (config.Config):    config that should be used
+        cfg (config.Config): Config that should be used.
     """
     try:
-        hash_id = mount.Mount(cfg = cfg).mount()
+        hash_id = mount.Mount(cfg=cfg).mount()
+
     except MountException as ex:
         logger.error(str(ex))
         sys.exit(RETURN_ERR)
+
     else:
         cfg.setCurrentHashId(hash_id)
 
@@ -114,10 +125,11 @@ def _umount(cfg):
     Unmount external filesystems.
 
     Args:
-        cfg (config.Config):    config that should be used
+        cfg (config.Config): Config that should be used.
     """
     try:
-        mount.Mount(cfg = cfg).umount(cfg.current_hash_id)
+        mount.Mount(cfg=cfg).umount(cfg.current_hash_id)
+
     except MountException as ex:
         logger.error(str(ex))
 
@@ -488,6 +500,47 @@ def createParsers(app_name='backintime'):
                            help=argparse.SUPPRESS)
 
 
+def encfs_deprecation_warning():
+    """Warn about encfs deprecation in syslog.
+
+    See Issue #1734 for details. This function is a workraound and will be
+    removed if #1734 is closed.
+    """
+
+    # Don't warn if EncFS isn't installed
+    if not tools.checkCommand('encfs'):
+        return
+
+    # Timestamp file
+    xdg_state = os.environ.get('XDG_STATE_HOME', None)
+    if xdg_state:
+        xdg_state = pathlib.Path(xdg_state)
+    else:
+        xdg_state = pathlib.Path.home() / '.local' / 'state'
+    fp = xdg_state / 'backintime.encfs-warning.timestamp'
+
+    # ensure existence
+    if not fp.exists():
+        fp.parent.mkdir(parents=True, exist_ok=True)
+        fp.touch()
+
+    # Calculate age of that file
+    delta = datetime.now() - datetime.fromtimestamp(fp.stat().st_mtime)
+
+    # Don't warn if to young
+    if delta.days < 30:
+        return
+
+    logger.warning('EncFS encrypted profiles are deprecated in Back In Time. '
+                   'Removal is schedule for minor release 1.7 in year 2026. '
+                   'For details and alternatives '
+                   f'read: {URL_ENCRYPT_TRANSITION}')
+
+
+    # refresh timestamp
+    fp.touch()
+
+
 def startApp(app_name='backintime'):
     """
     Start the requested command or return config if there was no command
@@ -524,6 +577,8 @@ def startApp(app_name='backintime'):
             "It looks like you're using 'sudo' to start "
             f"{config.Config.APP_NAME}. This will cause some trouble. "
             f"Please use either 'sudo -i {app_name}' or 'pkexec {app_name}'.")
+
+    encfs_deprecation_warning()
 
     # Call commands
     if 'func' in dir(args):
