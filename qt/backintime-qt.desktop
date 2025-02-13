@@ -17,7 +17,7 @@ Terminal=NO
 Type=Application
 StartupNotify=YES
 # See Desktop Menu Specification
-Categories=Utility;Archiving;Qt;
+Categories=Utility;System;Archiving;Qt;
 # Limit comments to 80 chars (Desktop Entry Specification)               80th char --> |
 Comment=Comfortable GUI for incremental (rsync) backups to save storage space
 Comment[de]=Einfache GUI für inkrementelle (rsync) Backups zur Speicherplatzreduzierung
