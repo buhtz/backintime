@@ -23,3 +23,4 @@ Categories=Utility;System;Archiving;Qt;
 Comment=Comfortable GUI for incremental (rsync) backups to save storage space
 Comment[de]=Einfache GUI für inkrementelle (rsync) Backups zur Speicherplatzreduzierung
 Keywords=backup;incremental;automatic;restore;rsync;
+
