@@ -14,10 +14,10 @@
 # REUSE-IgnoreStart
 msgid ""
 msgstr ""
-"Project-Id-Version: Back In Time 2.0.0-rc1\n"
+"Project-Id-Version: Back In Time 2.0.0-rc2\n"
 "Report-Msgid-Bugs-To: https://github.com/bit-team/backintime\n"
-"POT-Creation-Date: 2026-08-30 21:13+0200\n"
-"PO-Revision-Date: 2026-08-14 08:25+0000\n"
+"POT-Creation-Date: 2026-09-08 22:46+0200\n"
+"PO-Revision-Date: 2026-09-01 06:42+0000\n"
 "Last-Translator: Remus-Gabriel Chelu <remusgabriel.chelu@disroot.org>\n"
 "Language-Team: Romanian <https://translate.codeberg.org/projects/backintime/common/ro/>\n"
 "Language: ro\n"
@@ -557,24 +557,25 @@ msgstr "Accesul de scriere poate fi restricționat."
 
 #: common/tools.py:411
 msgid "Not enough free space on the device."
-msgstr ""
+msgstr "Nu există suficient spațiu liber pe dispozitiv."
 
 #: common/tools.py:415
 msgid "Not enough free space because the disk quota has been exceeded."
 msgstr ""
+"Nu există suficient spațiu liber, deoarece cota de spațiu pe disc a fost "
+"depășită."
 
 #: common/tools.py:419
 msgid "Filesystem is read-only."
-msgstr ""
+msgstr "Sistemul de fișiere este montat doar-pentru-citire."
 
 #: common/tools.py:422
 msgid "Unexpected error: "
-msgstr ""
+msgstr "Eroare neașteptată: "
 
 #: common/tools.py:425
-#, fuzzy
 msgid "Creation failed:"
-msgstr "Autentificarea SSH a eșuat pentru:"
+msgstr "Crearea a eșuat:"
 
 #: common/tools.py:460
 #, python-brace-format
@@ -2468,19 +2469,19 @@ msgstr ""
 "Autentificarea este necesară pentru a modifica programările de copie de "
 "rezervă declanșate de conectările dispozitivelor de stocare externe."
 
-#: qt/placeswidget.py:53
+#: qt/placeswidget.py:54
 msgid "Shortcuts"
 msgstr "Scurtături"
 
-#: qt/placeswidget.py:98
+#: qt/placeswidget.py:99
 msgid "Places"
 msgstr "Locuri"
 
-#: qt/placeswidget.py:99
+#: qt/placeswidget.py:100
 msgid "File System"
 msgstr "Sistemul de fișiere"
 
-#: qt/placeswidget.py:144
+#: qt/placeswidget.py:145
 msgid "Backup directories"
 msgstr "Directoare copie de rezervă"
 

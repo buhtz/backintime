@@ -16,10 +16,10 @@
 # REUSE-IgnoreStart
 msgid ""
 msgstr ""
-"Project-Id-Version: Back In Time 2.0.0-rc1\n"
+"Project-Id-Version: Back In Time 2.0.0-rc2\n"
 "Report-Msgid-Bugs-To: https://github.com/bit-team/backintime\n"
-"POT-Creation-Date: 2026-08-30 21:13+0200\n"
-"PO-Revision-Date: 2026-08-10 08:19+0000\n"
+"POT-Creation-Date: 2026-09-08 22:46+0200\n"
+"PO-Revision-Date: 2026-08-31 08:25+0000\n"
 "Last-Translator: gallegonovato <gallegonovato@noreply.codeberg.org>\n"
 "Language-Team: Spanish <https://translate.codeberg.org/projects/backintime/common/es/>\n"
 "Language: es\n"
@@ -547,24 +547,23 @@ msgstr "El permiso de escritura puede estar restringido."
 
 #: common/tools.py:411
 msgid "Not enough free space on the device."
-msgstr ""
+msgstr "Sin espacio libre suficiente en el dispositivo."
 
 #: common/tools.py:415
 msgid "Not enough free space because the disk quota has been exceeded."
-msgstr ""
+msgstr "Espacio insuficiente: cuota de disco excedida."
 
 #: common/tools.py:419
 msgid "Filesystem is read-only."
-msgstr ""
+msgstr "Error: Sistema de archivos de solo lectura."
 
 #: common/tools.py:422
 msgid "Unexpected error: "
-msgstr ""
+msgstr "Error no previsto: "
 
 #: common/tools.py:425
-#, fuzzy
 msgid "Creation failed:"
-msgstr "La autenticación SSH falló para:"
+msgstr "Error al crear:"
 
 #: common/tools.py:460
 #, python-brace-format
@@ -2442,19 +2441,19 @@ msgstr ""
 "seguridad que se activan al conectar dispositivos de almacenamiento "
 "externos."
 
-#: qt/placeswidget.py:53
+#: qt/placeswidget.py:54
 msgid "Shortcuts"
 msgstr "Atajos"
 
-#: qt/placeswidget.py:98
+#: qt/placeswidget.py:99
 msgid "Places"
 msgstr "Ubicaciones"
 
-#: qt/placeswidget.py:99
+#: qt/placeswidget.py:100
 msgid "File System"
 msgstr "Sistema de archivos"
 
-#: qt/placeswidget.py:144
+#: qt/placeswidget.py:145
 msgid "Backup directories"
 msgstr "Directorios de copia de seguridad"
 

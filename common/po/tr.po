@@ -16,9 +16,9 @@
 # REUSE-IgnoreStart
 msgid ""
 msgstr ""
-"Project-Id-Version: Back In Time 2.0.0-rc1\n"
+"Project-Id-Version: Back In Time 2.0.0-rc2\n"
 "Report-Msgid-Bugs-To: https://github.com/bit-team/backintime\n"
-"POT-Creation-Date: 2026-08-30 21:13+0200\n"
+"POT-Creation-Date: 2026-09-08 22:46+0200\n"
 "PO-Revision-Date: 2026-03-12 11:29+0000\n"
 "Last-Translator: barisozyurt <barisozyurt@noreply.codeberg.org>\n"
 "Language-Team: Turkish <https://translate.codeberg.org/projects/backintime/common/tr/>\n"
@@ -2414,19 +2414,19 @@ msgstr ""
 "Harici depolama aygıtı bağlantıları tarafından tetiklenen yedekleme "
 "zamanlamalarını değiştirmek için kimlik doğrulama gereklidir."
 
-#: qt/placeswidget.py:53
+#: qt/placeswidget.py:54
 msgid "Shortcuts"
 msgstr "Kısayollar"
 
-#: qt/placeswidget.py:98
+#: qt/placeswidget.py:99
 msgid "Places"
 msgstr "Yer"
 
-#: qt/placeswidget.py:99
+#: qt/placeswidget.py:100
 msgid "File System"
 msgstr "Dosya Sistemi"
 
-#: qt/placeswidget.py:144
+#: qt/placeswidget.py:145
 msgid "Backup directories"
 msgstr "Yedekleme klasörleri"
 

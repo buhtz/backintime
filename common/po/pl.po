@@ -13,10 +13,10 @@
 # REUSE-IgnoreStart
 msgid ""
 msgstr ""
-"Project-Id-Version: Back In Time 2.0.0-rc1\n"
+"Project-Id-Version: Back In Time 2.0.0-rc2\n"
 "Report-Msgid-Bugs-To: https://github.com/bit-team/backintime\n"
-"POT-Creation-Date: 2026-08-30 21:13+0200\n"
-"PO-Revision-Date: 2026-08-10 08:19+0000\n"
+"POT-Creation-Date: 2026-09-08 22:46+0200\n"
+"PO-Revision-Date: 2026-08-31 08:25+0000\n"
 "Last-Translator: Merik <merik@noreply.codeberg.org>\n"
 "Language-Team: Polish <https://translate.codeberg.org/projects/backintime/common/pl/>\n"
 "Language: pl\n"
@@ -547,24 +547,24 @@ msgstr "Dostęp do zapisu może być ograniczony."
 
 #: common/tools.py:411
 msgid "Not enough free space on the device."
-msgstr ""
+msgstr "Za mało wolnego miejsca na urządzeniu."
 
 #: common/tools.py:415
 msgid "Not enough free space because the disk quota has been exceeded."
 msgstr ""
+"Za mało wolnego miejsca, ponieważ przekroczono limit miejsca na dysku."
 
 #: common/tools.py:419
 msgid "Filesystem is read-only."
-msgstr ""
+msgstr "System plików jest tylko do odczytu."
 
 #: common/tools.py:422
 msgid "Unexpected error: "
-msgstr ""
+msgstr "Nieoczekiwany błąd: "
 
 #: common/tools.py:425
-#, fuzzy
 msgid "Creation failed:"
-msgstr "Uwierzytelnianie SSH nie powiodło się dla:"
+msgstr "Tworzenie nie powiodło się:"
 
 #: common/tools.py:460
 #, python-brace-format
@@ -2442,19 +2442,19 @@ msgstr ""
 "zapasowych uruchamianych przez połączenia z zewnętrznymi urządzeniami "
 "pamięci masowej."
 
-#: qt/placeswidget.py:53
+#: qt/placeswidget.py:54
 msgid "Shortcuts"
 msgstr "Skróty"
 
-#: qt/placeswidget.py:98
+#: qt/placeswidget.py:99
 msgid "Places"
 msgstr "Miejsca"
 
-#: qt/placeswidget.py:99
+#: qt/placeswidget.py:100
 msgid "File System"
 msgstr "System plików"
 
-#: qt/placeswidget.py:144
+#: qt/placeswidget.py:145
 msgid "Backup directories"
 msgstr "Katalogi kopii zapasowej"
 

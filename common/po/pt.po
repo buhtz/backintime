@@ -15,10 +15,10 @@
 # REUSE-IgnoreStart
 msgid ""
 msgstr ""
-"Project-Id-Version: Back In Time 2.0.0-rc1\n"
+"Project-Id-Version: Back In Time 2.0.0-rc2\n"
 "Report-Msgid-Bugs-To: https://github.com/bit-team/backintime\n"
-"POT-Creation-Date: 2026-08-30 21:13+0200\n"
-"PO-Revision-Date: 2026-08-15 10:26+0000\n"
+"POT-Creation-Date: 2026-09-08 22:46+0200\n"
+"PO-Revision-Date: 2026-08-31 13:15+0000\n"
 "Last-Translator: N4ta <codeberg@n4ta.anonaddy.me>\n"
 "Language-Team: Portuguese <https://translate.codeberg.org/projects/backintime/common/pt/>\n"
 "Language: pt\n"
@@ -547,24 +547,24 @@ msgstr "A permissão de escrita pode estar restrita."
 
 #: common/tools.py:411
 msgid "Not enough free space on the device."
-msgstr ""
+msgstr "Não existe espaço livre suficiente no dispositivo."
 
 #: common/tools.py:415
 msgid "Not enough free space because the disk quota has been exceeded."
 msgstr ""
+"Não existe espaço livre suficiente porque a cota do disco foi excedida."
 
 #: common/tools.py:419
 msgid "Filesystem is read-only."
-msgstr ""
+msgstr "O sistema é apenas de leitura."
 
 #: common/tools.py:422
 msgid "Unexpected error: "
-msgstr ""
+msgstr "Erro não previsto: "
 
 #: common/tools.py:425
-#, fuzzy
 msgid "Creation failed:"
-msgstr "Autenticação SSH falhou para:"
+msgstr "Criação falhou:"
 
 #: common/tools.py:460
 #, python-brace-format
@@ -2427,19 +2427,19 @@ msgstr ""
 "Autenticação é necessária para mudar cópias programadas acionadas por "
 "conexões de dispositivos de armazenamento externos."
 
-#: qt/placeswidget.py:53
+#: qt/placeswidget.py:54
 msgid "Shortcuts"
 msgstr "Atalhos"
 
-#: qt/placeswidget.py:98
+#: qt/placeswidget.py:99
 msgid "Places"
 msgstr "Lugares"
 
-#: qt/placeswidget.py:99
+#: qt/placeswidget.py:100
 msgid "File System"
 msgstr "Sistema de Ficheiros"
 
-#: qt/placeswidget.py:144
+#: qt/placeswidget.py:145
 msgid "Backup directories"
 msgstr "Diretórios de Cópia de Segurança"
 

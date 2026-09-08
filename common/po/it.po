@@ -13,10 +13,10 @@
 # REUSE-IgnoreStart
 msgid ""
 msgstr ""
-"Project-Id-Version: Back In Time 2.0.0-rc1\n"
+"Project-Id-Version: Back In Time 2.0.0-rc2\n"
 "Report-Msgid-Bugs-To: https://github.com/bit-team/backintime\n"
-"POT-Creation-Date: 2026-08-30 21:13+0200\n"
-"PO-Revision-Date: 2026-08-10 08:19+0000\n"
+"POT-Creation-Date: 2026-09-08 22:46+0200\n"
+"PO-Revision-Date: 2026-08-31 08:25+0000\n"
 "Last-Translator: smart2128 <smart2128@noreply.codeberg.org>\n"
 "Language-Team: Italian <https://translate.codeberg.org/projects/backintime/common/it/>\n"
 "Language: it\n"
@@ -540,24 +540,23 @@ msgstr "L'accesso in scrittura potrebbe essere limitato."
 
 #: common/tools.py:411
 msgid "Not enough free space on the device."
-msgstr ""
+msgstr "Non c'è abbastanza spazio nel dispositivo."
 
 #: common/tools.py:415
 msgid "Not enough free space because the disk quota has been exceeded."
-msgstr ""
+msgstr "Spazio libero insufficiente perché la quota disco è stata superata."
 
 #: common/tools.py:419
 msgid "Filesystem is read-only."
-msgstr ""
+msgstr "Il file system è a sola lettura."
 
 #: common/tools.py:422
 msgid "Unexpected error: "
-msgstr ""
+msgstr "Errore imprevisto: "
 
 #: common/tools.py:425
-#, fuzzy
 msgid "Creation failed:"
-msgstr "Autenticazione SSH non riuscita per:"
+msgstr "Creazione non riuscita:"
 
 #: common/tools.py:460
 #, python-brace-format
@@ -2434,19 +2433,19 @@ msgstr ""
 "Per modificare le pianificazioni di backup attivate dalle connessioni a "
 "dispositivi di archiviazione esterni è richiesta l'autenticazione."
 
-#: qt/placeswidget.py:53
+#: qt/placeswidget.py:54
 msgid "Shortcuts"
 msgstr "Collegamenti"
 
-#: qt/placeswidget.py:98
+#: qt/placeswidget.py:99
 msgid "Places"
 msgstr "Risorse"
 
-#: qt/placeswidget.py:99
+#: qt/placeswidget.py:100
 msgid "File System"
 msgstr "File System"
 
-#: qt/placeswidget.py:144
+#: qt/placeswidget.py:145
 msgid "Backup directories"
 msgstr "Cartelle di backup"
 

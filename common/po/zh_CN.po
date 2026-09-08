@@ -13,11 +13,11 @@
 # REUSE-IgnoreStart
 msgid ""
 msgstr ""
-"Project-Id-Version: Back In Time 2.0.0-rc1\n"
+"Project-Id-Version: Back In Time 2.0.0-rc2\n"
 "Report-Msgid-Bugs-To: https://github.com/bit-team/backintime\n"
-"POT-Creation-Date: 2026-08-30 21:13+0200\n"
-"PO-Revision-Date: 2026-08-11 09:16+0000\n"
-"Last-Translator: Outbreak2096 <outbreak2096@noreply.codeberg.org>\n"
+"POT-Creation-Date: 2026-09-08 22:46+0200\n"
+"PO-Revision-Date: 2026-08-31 13:15+0000\n"
+"Last-Translator: ktzhao <ktzhao@noreply.codeberg.org>\n"
 "Language-Team: Chinese (Simplified Han script) <https://translate.codeberg.org/projects/backintime/common/zh_Hans/>\n"
 "Language: zh_CN\n"
 "MIME-Version: 1.0\n"
@@ -505,24 +505,23 @@ msgstr "写入权限可能受到限制。"
 
 #: common/tools.py:411
 msgid "Not enough free space on the device."
-msgstr ""
+msgstr "设备上可用空间不足。"
 
 #: common/tools.py:415
 msgid "Not enough free space because the disk quota has been exceeded."
-msgstr ""
+msgstr "可用空间不足，因为已超出磁盘配额。"
 
 #: common/tools.py:419
 msgid "Filesystem is read-only."
-msgstr ""
+msgstr "只读文件系统。"
 
 #: common/tools.py:422
 msgid "Unexpected error: "
-msgstr ""
+msgstr "意外错误： "
 
 #: common/tools.py:425
-#, fuzzy
 msgid "Creation failed:"
-msgstr "SSH 身份验证失败："
+msgstr "创建失败："
 
 #: common/tools.py:460
 #, python-brace-format
@@ -2244,19 +2243,19 @@ msgid ""
 "storage device connections."
 msgstr "需要进行身份验证才能更改由外部存储设备连接触发的备份计划。"
 
-#: qt/placeswidget.py:53
+#: qt/placeswidget.py:54
 msgid "Shortcuts"
 msgstr "快捷方式"
 
-#: qt/placeswidget.py:98
+#: qt/placeswidget.py:99
 msgid "Places"
 msgstr "位置"
 
-#: qt/placeswidget.py:99
+#: qt/placeswidget.py:100
 msgid "File System"
 msgstr "文件系统"
 
-#: qt/placeswidget.py:144
+#: qt/placeswidget.py:145
 msgid "Backup directories"
 msgstr "备份目录"
 

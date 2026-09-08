@@ -13,10 +13,10 @@
 # REUSE-IgnoreStart
 msgid ""
 msgstr ""
-"Project-Id-Version: Back In Time 2.0.0-rc1\n"
+"Project-Id-Version: Back In Time 2.0.0-rc2\n"
 "Report-Msgid-Bugs-To: https://github.com/bit-team/backintime\n"
-"POT-Creation-Date: 2026-08-30 21:13+0200\n"
-"PO-Revision-Date: 2026-01-31 12:36+0000\n"
+"POT-Creation-Date: 2026-09-08 22:46+0200\n"
+"PO-Revision-Date: 2026-08-31 13:15+0000\n"
 "Last-Translator: ktzhao <ktzhao@noreply.codeberg.org>\n"
 "Language-Team: Chinese (Traditional Han script) <https://translate.codeberg.org/projects/backintime/common/zh_Hant/>\n"
 "Language: zh_TW\n"
@@ -24,7 +24,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 5.15.2\n"
+"X-Generator: Weblate 2026.8.1\n"
 
 #: common/bitbase.py:21 common/config.py:36 common/konfig.py:34
 #: common/mount/_backends.py:23 common/tools.py:88 qt/encfsmsgbox.py:32
@@ -70,7 +70,7 @@ msgstr "該目錄不能包含在備份中，因為它是備份目標本身的一
 
 #: common/check_config.py:113
 msgid "Two settings conflict with each other."
-msgstr ""
+msgstr "兩個設定相互衝突。"
 
 #: common/check_config.py:116
 #, fuzzy, python-brace-format
@@ -128,7 +128,7 @@ msgstr "udev 定期排程不適用於 {mode} 模式"
 msgid ""
 "Authentication timed out. The setup of Udev-based scheduling was not "
 "completed. Please try again."
-msgstr ""
+msgstr "身份驗證超時。基於 Udev 的調度設定未完成。請重試。"
 
 #: common/config.py:1945
 msgid "Failed to write new crontab."
@@ -160,25 +160,25 @@ msgstr "然後按“確定”。"
 
 #: common/mount/_backends.py:123
 msgid "Back In Time could not connect to the remote backup location."
-msgstr ""
+msgstr "Back In Time 無法連線到遠端備份位置。"
 
 #: common/mount/_backends.py:125 qt/manageprofiles/tab_general.py:477
 msgid "Reason:"
-msgstr ""
+msgstr "原因："
 
 #: common/mount/_backends.py:176 common/sshsetupvalidator.py:180
 #, python-brace-format
 msgid "Could not reach the SSH proxy host \"{host_port}\"."
-msgstr ""
+msgstr "無法連線到 SSH 代理主機「{host_port}」。"
 
 #: common/mount/_backends.py:181 common/sshsetupvalidator.py:185
 #, python-brace-format
 msgid "Could not reach the SSH host \"{host_port}\"."
-msgstr ""
+msgstr "無法連線到 SSH 主機“{host_port}”。"
 
 #: common/mount/_backends.py:235
 msgid "SSH authentication failed for:"
-msgstr ""
+msgstr "SSH 身份驗證失敗："
 
 #: common/mount/_backends.py:237 common/mount/_backends.py:414
 #: common/mount/_encryptors.py:262 common/sshsetupvalidator.py:239
@@ -186,7 +186,7 @@ msgstr ""
 #: common/sshsetupvalidator.py:430 common/sshsetupvalidator.py:484
 #: common/sshsetupvalidator.py:513 common/sshsetupvalidator.py:563
 msgid "Details:"
-msgstr ""
+msgstr "細節："
 
 #: common/mount/_backends.py:292
 #, fuzzy
@@ -209,7 +209,7 @@ msgstr "路徑:"
 
 #: common/mount/_backends.py:325
 msgid "No SSH host configured."
-msgstr ""
+msgstr "未配置 SSH 主機。"
 
 #: common/mount/_backends.py:332
 #, fuzzy
@@ -224,7 +224,7 @@ msgstr "無法建立遠端路徑。"
 #: common/mount/_encryptors.py:188
 msgid ""
 "Cannot initialize encryption because the backup destination is not empty."
-msgstr ""
+msgstr "無法初始化加密，因為備份目標位置不為空。"
 
 #: common/mount/_encryptors.py:191
 #, fuzzy
@@ -234,7 +234,7 @@ msgstr "遠端路徑存在但不是目錄。"
 #: common/mount/_encryptors.py:208
 #, python-brace-format
 msgid "Required tool \"{tool}\" is not installed or not available."
-msgstr ""
+msgstr "所需的工具“{tool}”未安裝或不可用。"
 
 #: common/mount/_encryptors.py:209
 #, fuzzy
@@ -250,17 +250,17 @@ msgstr "無法初始化加密路徑“{command}”"
 #, python-brace-format
 msgid ""
 "Backup destination directory is not prepared for encryption. Path: {path}"
-msgstr ""
+msgstr "備份目標目錄未針對加密做好準備。路徑：{path}"
 
 #: common/mount/_encryptors.py:286
 #, python-brace-format
 msgid "Decrypted view mountpoint is missing. Path: {path}"
-msgstr ""
+msgstr "解密視圖掛載點缺失。路徑：{path}"
 
 #: common/mount/_encryptors.py:338
 #, python-brace-format
 msgid "Mount failed with return code {rc}."
-msgstr ""
+msgstr "掛載失敗，回傳碼為 {rc}。"
 
 #: common/mount/_encryptors.py:341
 #, fuzzy
@@ -272,18 +272,19 @@ msgid "Command:"
 msgstr "命令:"
 
 #: common/mount/_encryptors.py:374
+#, fuzzy
 msgid "Unmount failed"
-msgstr ""
+msgstr "解除安裝失敗"
 
 #: common/mount/_encryptors.py:376
 #, python-brace-format
 msgid "Return code: {rc}"
-msgstr ""
+msgstr "返回碼：{rc}"
 
 #: common/mount/_encryptors.py:378
 #, python-brace-format
 msgid "Original error: {err}"
-msgstr ""
+msgstr "原始錯誤：{err}"
 
 #: common/password.py:297
 #, python-brace-format
@@ -399,7 +400,7 @@ msgstr "有關更多詳細信息，請參閱“man rsync”"
 msgid ""
 "Negative exit codes indicate termination by a signal. The number corresponds"
 " to the signal (see 'kill -l')."
-msgstr ""
+msgstr "負退出碼表示因訊號而終止。該數字對應於該訊號（參見“kill -l”）。"
 
 #: common/snapshots.py:1599
 msgid "Nothing changed, no new backup necessary"
@@ -434,7 +435,7 @@ msgstr "現在"
 #: common/sshsetupvalidator.py:123
 #, python-brace-format
 msgid "\"{tool}\" is not installed on the remote host."
-msgstr ""
+msgstr "遠端主機上未安裝“{tool}”。"
 
 #: common/sshsetupvalidator.py:220
 #, fuzzy
@@ -444,20 +445,20 @@ msgstr "未找到ssh-agent。 請確保它已安裝。"
 #: common/sshsetupvalidator.py:236 common/sshsetupvalidator.py:354
 #, python-brace-format
 msgid "Unexpected response from '{process}'."
-msgstr ""
+msgstr "來自“{process}”的意外回應。"
 
 #: common/sshsetupvalidator.py:255
 #, python-brace-format
 msgid "Unexpected output from '{process}'."
-msgstr ""
+msgstr "來自“{process}”的意外輸出。"
 
 #: common/sshsetupvalidator.py:258
 msgid "Output:"
-msgstr ""
+msgstr "輸出："
 
 #: common/sshsetupvalidator.py:285
 msgid "The SSH key is not loaded into ssh-agent."
-msgstr ""
+msgstr "SSH 金鑰未載入到 ssh-agent 中。"
 
 #: common/sshsetupvalidator.py:314
 #, fuzzy
@@ -466,28 +467,28 @@ msgstr "無法在 {path} 中建立新的 SSH 金鑰。"
 
 #: common/sshsetupvalidator.py:336
 msgid "sshfs is not installed"
-msgstr ""
+msgstr "未安裝 sshfs"
 
 #: common/sshsetupvalidator.py:384
 #, python-brace-format
 msgid "The SSH host \"{host}\" is not known yet."
-msgstr ""
+msgstr "SSH 主機「{host}」尚屬未知。"
 
 #: common/sshsetupvalidator.py:388
 msgid "Please connect to the host manually once to confirm its fingerprint."
-msgstr ""
+msgstr "請手動連接一次該主機，以確認其指紋。"
 
 #: common/sshsetupvalidator.py:429
 msgid "Could not write files to the remote host using rsync."
-msgstr ""
+msgstr "無法使用 rsync 向遠端主機寫入檔案。"
 
 #: common/sshsetupvalidator.py:483
 msgid "Could not verify rsync hardlink support."
-msgstr ""
+msgstr "無法驗證 rsync 對硬連結的支援。"
 
 #: common/sshsetupvalidator.py:512
 msgid "Unexpected error while verifying rsync hardlink support."
-msgstr ""
+msgstr "驗證 rsync 硬連結支援時發生意外錯誤。"
 
 #: common/sshsetupvalidator.py:519
 #, fuzzy
@@ -522,7 +523,7 @@ msgstr "寫入權限可能受到限制。"
 
 #: common/tools.py:411
 msgid "Not enough free space on the device."
-msgstr ""
+msgstr "設備上可用空間不足。"
 
 #: common/tools.py:415
 msgid "Not enough free space because the disk quota has been exceeded."
@@ -1373,47 +1374,47 @@ msgstr "排除檔案"
 
 #: qt/manageprofiles/excludesuggestions.py:36
 msgid "Vim swap files"
-msgstr ""
+msgstr "Vim 交換文件"
 
 #: qt/manageprofiles/excludesuggestions.py:37
 msgid "Microsoft Office temporary files"
-msgstr ""
+msgstr "Microsoft Office 臨時文件"
 
 #: qt/manageprofiles/excludesuggestions.py:40
 msgid "LibreOffice & other OpenDocument Editors lock files"
-msgstr ""
+msgstr "LibreOffice 及其他 OpenDocument 編輯器會鎖定文件"
 
 #: qt/manageprofiles/excludesuggestions.py:44
 msgid "Thumbnails & Temporary Pictures"
-msgstr ""
+msgstr "縮圖與臨時圖片"
 
 #: qt/manageprofiles/excludesuggestions.py:47
 msgid "Thumbnail cache on GNU/Linux and other unixoid OS'es"
-msgstr ""
+msgstr "GNU/Linux 及其他類 Unix 作業系統上的縮圖緩存"
 
 #: qt/manageprofiles/excludesuggestions.py:50
 msgid "Thumbnail database on Windows"
-msgstr ""
+msgstr "Windows 上的縮圖資料庫"
 
 #: qt/manageprofiles/excludesuggestions.py:51
 msgid "Metadata directory on MacOS"
-msgstr ""
+msgstr "macOS 上的元資料目錄"
 
 #: qt/manageprofiles/excludesuggestions.py:53
 msgid "Application-specific locks"
-msgstr ""
+msgstr "特定於應用程式的鎖"
 
 #: qt/manageprofiles/excludesuggestions.py:56
 msgid "Discord application lock file"
-msgstr ""
+msgstr "Discord 應用程式鎖定文件"
 
 #: qt/manageprofiles/excludesuggestions.py:57
 msgid "Discord session lock file"
-msgstr ""
+msgstr "Discord 會話鎖定文件"
 
 #: qt/manageprofiles/excludesuggestions.py:60
 msgid "Mozilla Firefox & Thunderbird lock file"
-msgstr ""
+msgstr "Mozilla Firefox 和 Thunderbird 鎖定文件"
 
 #: qt/manageprofiles/excludesuggestions.py:62
 #, fuzzy
@@ -1422,7 +1423,7 @@ msgstr "備份目錄"
 
 #: qt/manageprofiles/excludesuggestions.py:63
 msgid "User application cache"
-msgstr ""
+msgstr "用戶應用程式緩存"
 
 #: qt/manageprofiles/excludesuggestions.py:64
 #: qt/manageprofiles/excludesuggestions.py:67
@@ -1432,11 +1433,11 @@ msgstr "無法刪除目錄"
 
 #: qt/manageprofiles/excludesuggestions.py:72
 msgid "Package cache for Debian(-based) GNU/Linux distributions"
-msgstr ""
+msgstr "適用於 Debian（及其衍生）GNU/Linux 發行版的軟體包緩存"
 
 #: qt/manageprofiles/excludesuggestions.py:77
 msgid "Flatpak app and runtime repository"
-msgstr ""
+msgstr "Flatpak 應用程式與運行時倉庫"
 
 #: qt/manageprofiles/excludesuggestions.py:81
 #, fuzzy
@@ -1445,15 +1446,15 @@ msgstr "顯示隱藏檔案"
 
 #: qt/manageprofiles/excludesuggestions.py:84
 msgid "Kernel and process information"
-msgstr ""
+msgstr "核心與行程資訊"
 
 #: qt/manageprofiles/excludesuggestions.py:89
 msgid "Device and other hardware information (sysfs interface)"
-msgstr ""
+msgstr "設備及其他硬體資訊（sysfs 介面）"
 
 #: qt/manageprofiles/excludesuggestions.py:92
 msgid "Device nodes"
-msgstr ""
+msgstr "設備節點"
 
 #: qt/manageprofiles/excludesuggestions.py:93
 msgid "Runtime system files"
@@ -2287,19 +2288,19 @@ msgid ""
 "storage device connections."
 msgstr ""
 
-#: qt/placeswidget.py:53
+#: qt/placeswidget.py:54
 msgid "Shortcuts"
 msgstr "快速鍵"
 
-#: qt/placeswidget.py:98
+#: qt/placeswidget.py:99
 msgid "Places"
 msgstr "位置"
 
-#: qt/placeswidget.py:99
+#: qt/placeswidget.py:100
 msgid "File System"
 msgstr "檔案系統"
 
-#: qt/placeswidget.py:144
+#: qt/placeswidget.py:145
 msgid "Backup directories"
 msgstr "備份目錄"
 

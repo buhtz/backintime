@@ -13,10 +13,10 @@
 # REUSE-IgnoreStart
 msgid ""
 msgstr ""
-"Project-Id-Version: Back In Time 2.0.0-rc1\n"
+"Project-Id-Version: Back In Time 2.0.0-rc2\n"
 "Report-Msgid-Bugs-To: https://github.com/bit-team/backintime\n"
-"POT-Creation-Date: 2026-08-30 21:13+0200\n"
-"PO-Revision-Date: 2026-08-10 08:19+0000\n"
+"POT-Creation-Date: 2026-09-08 22:46+0200\n"
+"PO-Revision-Date: 2026-08-31 13:15+0000\n"
 "Last-Translator: Priit Jõerüüt <jrtcdbrg@noreply.codeberg.org>\n"
 "Language-Team: Estonian <https://translate.codeberg.org/projects/backintime/common/et/>\n"
 "Language: et\n"
@@ -540,24 +540,24 @@ msgstr "Kirjutusõigused võivad olla piiratud."
 
 #: common/tools.py:411
 msgid "Not enough free space on the device."
-msgstr ""
+msgstr "Seadmes pole piisavalt vaba andmeruumi."
 
 #: common/tools.py:415
 msgid "Not enough free space because the disk quota has been exceeded."
 msgstr ""
+"Oled ületanud kettamahule eraldatud kvoodi ja seega vaba andmeruumi pole."
 
 #: common/tools.py:419
 msgid "Filesystem is read-only."
-msgstr ""
+msgstr "Failisüsteem on vaid lugemisõigustes."
 
 #: common/tools.py:422
 msgid "Unexpected error: "
-msgstr ""
+msgstr "Ootamatu viga: "
 
 #: common/tools.py:425
-#, fuzzy
 msgid "Creation failed:"
-msgstr "SSH-ga autentimine ei õnnestunud:"
+msgstr "Loomine ei õnnestunud:"
 
 #: common/tools.py:460
 #, python-brace-format
@@ -2415,19 +2415,19 @@ msgstr ""
 "Kui soovid muuta varunduse ajastamist, mis käivituvad väliste andmekandjate "
 "ühendamisel, siis pead end autentima."
 
-#: qt/placeswidget.py:53
+#: qt/placeswidget.py:54
 msgid "Shortcuts"
 msgstr "Otseteed"
 
-#: qt/placeswidget.py:98
+#: qt/placeswidget.py:99
 msgid "Places"
 msgstr "Asukohad"
 
-#: qt/placeswidget.py:99
+#: qt/placeswidget.py:100
 msgid "File System"
 msgstr "Failisüsteem"
 
-#: qt/placeswidget.py:144
+#: qt/placeswidget.py:145
 msgid "Backup directories"
 msgstr "Tagavarakoopia kaustad"
 

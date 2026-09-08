@@ -15,9 +15,9 @@
 # REUSE-IgnoreStart
 msgid ""
 msgstr ""
-"Project-Id-Version: Back In Time 2.0.0-rc1\n"
+"Project-Id-Version: Back In Time 2.0.0-rc2\n"
 "Report-Msgid-Bugs-To: https://github.com/bit-team/backintime\n"
-"POT-Creation-Date: 2026-08-30 21:13+0200\n"
+"POT-Creation-Date: 2026-09-08 22:46+0200\n"
 "PO-Revision-Date: 2026-08-13 06:03+0000\n"
 "Last-Translator: kazuo <kazuo@noreply.codeberg.org>\n"
 "Language-Team: Japanese <https://translate.codeberg.org/projects/backintime/common/ja/>\n"
@@ -2278,19 +2278,19 @@ msgid ""
 "storage device connections."
 msgstr "外部ストレージデバイスの接続によってトリガーされるバックアップスケジュールの変更には認証が必要です。"
 
-#: qt/placeswidget.py:53
+#: qt/placeswidget.py:54
 msgid "Shortcuts"
 msgstr "ショートカット"
 
-#: qt/placeswidget.py:98
+#: qt/placeswidget.py:99
 msgid "Places"
 msgstr "場所"
 
-#: qt/placeswidget.py:99
+#: qt/placeswidget.py:100
 msgid "File System"
 msgstr "ファイルシステム"
 
-#: qt/placeswidget.py:144
+#: qt/placeswidget.py:145
 msgid "Backup directories"
 msgstr "バックアップ元のフォルダ"
 

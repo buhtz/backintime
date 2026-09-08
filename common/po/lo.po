@@ -1,0 +1,2616 @@
+# SPDX-FileCopyrightText: © 2008 Back In Time Team <bit-dev@python.org>
+# SPDX-FileCopyrightText: © Bone NI
+#
+# SPDX-License-Identifier: GPL-2.0-or-later
+#
+# This file is part of the program "Back In Time" which is released under GNU
+# General Public License v2 (GPLv2). See LICENSES directory or go to
+# <https://spdx.org/licenses/GPL-2.0-or-later.html>.
+#
+# Strict and accurate recording of translators' names began around 2022. As
+# the project started in 2008, some earlier translators' names may not have
+# been documented and could be lost.
+# REUSE-IgnoreStart
+msgid ""
+msgstr ""
+"Project-Id-Version: Back In Time 2.0.0-rc2\n"
+"Report-Msgid-Bugs-To: https://github.com/bit-team/backintime\n"
+"POT-Creation-Date: 2026-09-08 22:46+0200\n"
+"PO-Revision-Date: 2026-09-03 07:01+0000\n"
+"Last-Translator: Bone NI <bounkirdni@noreply.codeberg.org>\n"
+"Language-Team: Lao <https://translate.codeberg.org/projects/backintime/common/lo/>\n"
+"Language: lo\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 2026.8.1\n"
+
+#: common/bitbase.py:21 common/config.py:36 common/konfig.py:34
+#: common/mount/_backends.py:23 common/tools.py:88 qt/encfsmsgbox.py:32
+#: qt/messagebox.py:100 qt/timeline.py:34
+msgid "Warning"
+msgstr "ຄຳເຕືອນ"
+
+#: common/bitlicense.py:23
+#, python-brace-format
+msgid ""
+"All licenses used in this project are located in the {dir_link} directory. "
+"To extract per-file license and copyright information using SPDX metadata, "
+"refer to {readme_link}."
+msgstr ""
+"ໃບອະນຸຍາດທັງໝົດທີ່ໃຊ້ໃນໂຄງການນີ້ແມ່ນຢູ່ໃນໄດເຣັກທໍຣີ {dir_link}. "
+"ສຳລັບການສະກັດຂໍ້ມູນໃບອະນຸຍາດ ແລະ ລິຂະສິດແຕ່ລະໄຟລ໌ໂດຍໃຊ້ SPDX metadata, "
+"ໃຫ້ອ້າງອີງທີ່ {readme_link}."
+
+#: common/check_config.py:45 common/check_config.py:55
+#: common/check_config.py:74 common/check_config.py:90
+#: common/check_config.py:111
+#, python-brace-format
+msgid "Profile: \"{name}\""
+msgstr "ໂປຣໄຟລ໌: \"{name}\""
+
+#: common/check_config.py:48
+msgid "Backup directory is not valid."
+msgstr "ໄດເຣັກທໍຣີສຳຮອງຂໍ້ມູນບໍ່ຖືກຕ້ອງ."
+
+#: common/check_config.py:57
+msgid "At least one directory must be selected for backup."
+msgstr "ຕ້ອງເລືອກຢ່າງໜ້ອຍໜຶ່ງໄດເຣັກທໍຣີເພື່ອສຳຮອງຂໍ້ມູນ."
+
+#: common/check_config.py:76 common/check_config.py:92
+#, python-brace-format
+msgid "Directory: {path}"
+msgstr "ໄດເຣັກທໍຣີ: {path}"
+
+#: common/check_config.py:79 common/check_config.py:95
+msgid ""
+"This directory cannot be included in the backup as it is part of the backup "
+"destination itself."
+msgstr ""
+"ໄດເຣັກທໍຣີນີ້ບໍ່ສາມາດລວມເຂົ້າໃນການສຳຮອງຂໍ້ມູນໄດ້ "
+"ເພາະມັນເປັນສ່ວນໜຶ່ງຂອງປາຍທາງການສຳຮອງຂໍ້ມູນເອງ."
+
+#: common/check_config.py:113
+msgid "Two settings conflict with each other."
+msgstr "ສອງການຕັ້ງຄ່າຂັດແຍ້ງກັນ."
+
+#: common/check_config.py:116
+#, python-brace-format
+msgid ""
+"The value for \"Remove oldest backup if the free space is less than\" "
+"({val_one}) must be less than or equal to the value for \"Warn if the free "
+"disk space falls below\" ({val_two})."
+msgstr ""
+"ຄ່າສຳລັບ \"ລຶບການສຳຮອງຂໍ້ມູນທີ່ເກົ່າທີ່ສຸດຫາກພື້ນທີ່ຫວ່າງໜ້ອຍກວ່າ\" "
+"({val_one}) ຕ້ອງໜ້ອຍກວ່າ ຫຼື ເທົ່າກັບຄ່າສຳລັບ "
+"\"ເຕືອນຫາກພື້ນທີ່ດິດຫວ່າງຕໍ່າກວ່າ\" ({val_two})."
+
+#: common/check_config.py:123
+msgid ""
+"Please adjust the settings. The threshold for removing old backups must not "
+"be higher for the free disk space warning value."
+msgstr ""
+"ກະລຸນາປັບການຕັ້ງຄ່າ. "
+"ເກນສຳລັບການລຶບການສຳຮອງຂໍ້ມູນເກົ່າຕ້ອງບໍ່ສູງກວ່າຄ່າເຕືອນພື້ນທີ່ດິດຫວ່າງ."
+
+#: common/config.py:175 common/konfig.py:52 common/konfig.py:1427
+msgid "Main profile"
+msgstr "ໂປຣໄຟລ໌ຫຼັກ"
+
+#: common/config.py:189
+msgid "Local"
+msgstr "ພາຍໃນເຄື່ອງ"
+
+#: common/config.py:195
+msgid "Local (encrypted)"
+msgstr "ພາຍໃນເຄື່ອງ (ເຂົ້າລະຫັດ)"
+
+#: common/config.py:196 common/config.py:209
+#: qt/manageprofiles/tab_general.py:394
+msgid "Encryption"
+msgstr "ການເຂົ້າລະຫັດ"
+
+#: common/config.py:201
+msgid "SSH"
+msgstr "SSH"
+
+#: common/config.py:202 common/config.py:208
+#: qt/manageprofiles/tab_general.py:750
+msgid "SSH private key"
+msgstr "ກະແຈສ່ວນຕົວ SSH"
+
+#: common/config.py:207
+msgid "SSH (encrypted)"
+msgstr "SSH (ເຂົ້າລະຫັດ)"
+
+#: common/config.py:1880
+#, python-brace-format
+msgid "Udev scheduling is not supported with mode \"{mode}\"."
+msgstr "ບໍ່ຮອງຮັບການກຳນົດເວລາ Udev ດ້ວຍໂໝດ \"{mode}\"."
+
+#: common/config.py:1907
+msgid ""
+"Authentication timed out. The setup of Udev-based scheduling was not "
+"completed. Please try again."
+msgstr ""
+"ການຢືນຢັນຕົວຕົນໝົດເວລາ. ການຕັ້ງຄ່າການກຳນົດເວລາແບບ Udev ບໍ່ສຳເລັດ. "
+"ກະລຸນາລອງໃໝ່ອີກຄັ້ງ."
+
+#: common/config.py:1945
+msgid "Failed to write new crontab."
+msgstr "ຂຽນ crontab ໃໝ່ບໍ່ສຳເລັດ."
+
+#: common/config.py:1954
+msgid ""
+"Cron is not running, even though the crontab command is available. Scheduled"
+" backup jobs will not run. Cron might be installed but not enabled. Try "
+"running the two commands \"systemctl enable cron\" and \"systemctl start "
+"cron\", or consult the support channels of the currently used GNU/Linux "
+"distribution for assistance."
+msgstr ""
+"Cron ບໍ່ໄດ້ເຮັດວຽກ, ເຖິງແມ່ນວ່າມີຄຳສັ່ງ crontab. "
+"ວຽກສຳຮອງທີ່ກຳນົດໄວ້ຈະບໍ່ເຮັດວຽກ. Cron ອາດຈະຖືກຕິດຕັ້ງແລ້ວແຕ່ບໍ່ໄດ້ເປີດໃຊ້. "
+"ລອງໃຊ້ສອງຄຳສັ່ງ \"systemctl enable cron\" ແລະ \"systemctl start cron\", ຫຼື "
+"ປຶກສາຊ່ອງທາງການຊ່ວຍເຫຼືອຂອງ GNU/Linux distribution ທີ່ທ່ານກຳລັງໃຊ້ຢູ່."
+
+#: common/mount/_backends.py:103 common/snapshots.py:972
+msgid "Can't find backup destination directory."
+msgstr "ບໍ່ພົບໄດເຣັກທໍຣີປາຍທາງການສຳຮອງຂໍ້ມູນ."
+
+#: common/mount/_backends.py:105 common/snapshots.py:976
+msgid "If it is on a removable drive, please plug it in."
+msgstr "ຫາກມັນຢູ່ໃນໄດຣຟ໌ທີ່ຖອດອອກໄດ້, ກະລຸນາສຽບມັນເຂົ້າ."
+
+#: common/mount/_backends.py:106
+msgid "Then press OK."
+msgstr "ຈາກນັ້ນກົດ ຕົກລົງ."
+
+#: common/mount/_backends.py:123
+msgid "Back In Time could not connect to the remote backup location."
+msgstr "Back In Time ບໍ່ສາມາດເຊື່ອມຕໍ່ກັບສະຖານທີ່ສຳຮອງຂໍ້ມູນທາງໄກໄດ້."
+
+#: common/mount/_backends.py:125 qt/manageprofiles/tab_general.py:477
+msgid "Reason:"
+msgstr "ເຫດຜົນ:"
+
+#: common/mount/_backends.py:176 common/sshsetupvalidator.py:180
+#, python-brace-format
+msgid "Could not reach the SSH proxy host \"{host_port}\"."
+msgstr "ບໍ່ສາມາດເຂົ້າເຖິງ SSH proxy host \"{host_port}\"."
+
+#: common/mount/_backends.py:181 common/sshsetupvalidator.py:185
+#, python-brace-format
+msgid "Could not reach the SSH host \"{host_port}\"."
+msgstr "ບໍ່ສາມາດເຂົ້າເຖິງ SSH host \"{host_port}\"."
+
+#: common/mount/_backends.py:235
+msgid "SSH authentication failed for:"
+msgstr "ການຢືນຢັນຕົວຕົນ SSH ລົ້ມເຫຼວສຳລັບ:"
+
+#: common/mount/_backends.py:237 common/mount/_backends.py:414
+#: common/mount/_encryptors.py:262 common/sshsetupvalidator.py:239
+#: common/sshsetupvalidator.py:315 common/sshsetupvalidator.py:357
+#: common/sshsetupvalidator.py:430 common/sshsetupvalidator.py:484
+#: common/sshsetupvalidator.py:513 common/sshsetupvalidator.py:563
+msgid "Details:"
+msgstr "ລາຍລະອຽດ:"
+
+#: common/mount/_backends.py:292
+msgid "The remote backup directory is missing or is not a valid directory."
+msgstr "ໄດເຣັກທໍຣີສຳຮອງຂໍ້ມູນທາງໄກຫາຍສາບສູນ ຫຼື ບໍ່ແມ່ນໄດເຣັກທໍຣີທີ່ຖືກຕ້ອງ."
+
+#: common/mount/_backends.py:298
+msgid "Write access to the remote backup directory was denied."
+msgstr "ການເຂົ້າເຖິງເພື່ອຂຽນລົງໃນໄດຣັກທໍຣີສຳຮອງຂໍ້ມູນທາງໄກຖືກປະຕິເສດ."
+
+#: common/mount/_backends.py:303
+msgid "Access to the remote backup directory was denied."
+msgstr "ການເຂົ້າເຖິງໄດເຣັກທໍຣີສຳຮອງຂໍ້ມູນທາງໄກຖືກປະຕິເສດ."
+
+#: common/mount/_backends.py:317 qt/manageprofiles/tab_general.py:126
+msgid "Path:"
+msgstr "ເສັ້ນທາງ:"
+
+#: common/mount/_backends.py:325
+msgid "No SSH host configured."
+msgstr "ບໍ່ໄດ້ກຳນົດຄ່າ SSH host."
+
+#: common/mount/_backends.py:332
+msgid "No destination backup directory configured."
+msgstr "ບໍ່ໄດ້ກຳນົດຄ່າໄດເຣັກທໍຣີປາຍທາງການສຳຮອງຂໍ້ມູນ."
+
+#: common/mount/_backends.py:412
+msgid "Could not mount the remote backup location."
+msgstr "ບໍ່ສາມາດເຊື່ອມຕໍ່ (mount) ສະຖານທີ່ສຳຮອງຂໍ້ມູນທາງໄກໄດ້."
+
+#: common/mount/_encryptors.py:188
+msgid ""
+"Cannot initialize encryption because the backup destination is not empty."
+msgstr ""
+"ບໍ່ສາມາດເລີ່ມຕົ້ນການເຂົ້າລະຫັດໄດ້ "
+"ເພາະປາຍທາງການສຳຮອງຂໍ້ມູນບໍ່ແມ່ນໂຟນເດີຫວ່າງ."
+
+#: common/mount/_encryptors.py:191
+msgid "Remove existing files or choose an empty directory."
+msgstr "ລຶບໄຟລ໌ທີ່ມີຢູ່ ຫຼື ເລືອກໄດເຣັກທໍຣີທີ່ຫວ່າງເປົ່າ."
+
+#: common/mount/_encryptors.py:208
+#, python-brace-format
+msgid "Required tool \"{tool}\" is not installed or not available."
+msgstr "ເຄື່ອງມືທີ່ຈຳເປັນ \"{tool}\" ບໍ່ໄດ້ຖືກຕິດຕັ້ງ ຫຼື ບໍ່ພ້ອມໃຊ້ງານ."
+
+#: common/mount/_encryptors.py:209
+msgid "Please install it and try again."
+msgstr "ກະລຸນາຕິດຕັ້ງມັນແລ້ວລອງໃໝ່ອີກຄັ້ງ."
+
+#: common/mount/_encryptors.py:261
+msgid "Unable to initialize encryption."
+msgstr "ບໍ່ສາມາດເລີ່ມຕົ້ນການເຂົ້າລະຫັດໄດ້."
+
+#: common/mount/_encryptors.py:277
+#, python-brace-format
+msgid ""
+"Backup destination directory is not prepared for encryption. Path: {path}"
+msgstr ""
+"ໄດເຣັກທໍຣີປາຍທາງການສຳຮອງຂໍ້ມູນບໍ່ໄດ້ຖືກຕຽມໄວ້ສຳລັບການເຂົ້າລະຫັດ. ເສັ້ນທາງ: "
+"{path}"
+
+#: common/mount/_encryptors.py:286
+#, python-brace-format
+msgid "Decrypted view mountpoint is missing. Path: {path}"
+msgstr ""
+"ຈຸດເຊື່ອມຕໍ່ (mountpoint) ສຳລັບການເບິ່ງແບບຖອດລະຫັດຫາຍສາບສູນ. ເສັ້ນທາງ: "
+"{path}"
+
+#: common/mount/_encryptors.py:338
+#, python-brace-format
+msgid "Mount failed with return code {rc}."
+msgstr "ການເຊື່ອມຕໍ່ (mount) ລົ້ມເຫຼວດ້ວຍລະຫັດ {rc}."
+
+#: common/mount/_encryptors.py:341
+msgid "Error:"
+msgstr "ຂໍ້ຜິດພາດ:"
+
+#: common/mount/_encryptors.py:343 qt/snapshotsdialog.py:70
+msgid "Command:"
+msgstr "ຄຳສັ່ງ:"
+
+#: common/mount/_encryptors.py:374
+msgid "Unmount failed"
+msgstr "ການຍົກເລີກການເຊື່ອມຕໍ່ (unmount) ລົ້ມເຫຼວ"
+
+#: common/mount/_encryptors.py:376
+#, python-brace-format
+msgid "Return code: {rc}"
+msgstr "ລະຫັດສົ່ງຄືນ: {rc}"
+
+#: common/mount/_encryptors.py:378
+#, python-brace-format
+msgid "Original error: {err}"
+msgstr "ຂໍ້ຜິດພາດເດີມ: {err}"
+
+#: common/password.py:297
+#, python-brace-format
+msgid "Enter password for {mode} profile \"{profile}\":"
+msgstr "ປ້ອນລະຫັດຜ່ານສຳລັບໂໝດ {mode} ໂປຣໄຟລ໌ \"{profile}\":"
+
+#: common/schedule.py:237
+#, python-brace-format
+msgid ""
+"Could not install Udev rule for profile {profile_id}. DBus Service "
+"'{dbus_interface}' wasn't available."
+msgstr ""
+"ບໍ່ສາມາດຕິດຕັ້ງກົດ Udev ສຳລັບໂປຣໄຟລ໌ {profile_id}. ບໍລິການ DBus "
+"'{dbus_interface}' ບໍ່ພ້ອມໃຊ້ງານ."
+
+#: common/schedule.py:251
+#, python-brace-format
+msgid "Couldn't find UUID for {path}"
+msgstr "ບໍ່ພົບ UUID ສຳລັບ {path}"
+
+#: common/snapshots.py:386 common/snapshots.py:670
+msgid "FAILED"
+msgstr "ລົ້ມເຫຼວ"
+
+#: common/snapshots.py:593 common/snapshots.py:666
+msgid "Restore permissions"
+msgstr "ກູ້ຄືນສິດການເຂົ້າເຖິງ"
+
+#: common/snapshots.py:670 qt/app.py:209 qt/app.py:1216 qt/app.py:1242
+#: qt/qtsystrayicon.py:125
+msgid "Done"
+msgstr "ສຳເລັດ"
+
+#: common/snapshots.py:768
+msgid ""
+"The following entries from the include list have no corresponding file or "
+"directory in the backup source:"
+msgstr ""
+"ລາຍການຕໍ່ໄປນີ້ຈາກລາຍການທີ່ລວມໄວ້ ບໍ່ມີໄຟລ໌ ຫຼື "
+"ໄດເຣັກທໍຣີທີ່ກົງກັນໃນແຫຼ່ງຂໍ້ມູນສຳຮອງ:"
+
+#: common/snapshots.py:858
+msgid "Deferring backup while on battery"
+msgstr "ເລື່ອນການສຳຮອງຂໍ້ມູນອອກໄປໃນຂະນະທີ່ໃຊ້ແບັດເຕີຣີ"
+
+#: common/snapshots.py:980
+#, python-brace-format
+msgid "Waiting {n} second."
+msgid_plural "Waiting {n} seconds."
+msgstr[0] "ກຳລັງລໍຖ້າ {n} ວິນາທີ."
+
+#: common/snapshots.py:1055
+#, python-brace-format
+msgid "Failed to create backup {snapshot_id}."
+msgstr "ສ້າງການສຳຮອງຂໍ້ມູນ {snapshot_id} ບໍ່ສຳເລັດ."
+
+#: common/snapshots.py:1087
+msgid "Please be patient. Finalizing…"
+msgstr "ກະລຸນາລໍຖ້າ. ກຳລັງດຳເນີນການຂັ້ນສຸດທ້າຍ…"
+
+#: common/snapshots.py:1184
+msgid "Take snapshot"
+msgstr "ສ້າງສະນັບຊອດ (ສຳຮອງຂໍ້ມູນ)"
+
+#: common/snapshots.py:1219
+msgid "Can't create directory."
+msgstr "ບໍ່ສາມາດສ້າງໄດເຣັກທໍຣີໄດ້."
+
+#: common/snapshots.py:1235
+msgid "Saving config file…"
+msgstr "ກຳລັງບັນທຶກໄຟລ໌ກຳນົດຄ່າ…"
+
+#: common/snapshots.py:1280
+msgid "Saving permissions…"
+msgstr "ກຳລັງບັນທຶກສິດການເຂົ້າເຖິງ…"
+
+#: common/snapshots.py:1395
+#, python-brace-format
+msgid "Found incomplete backup {snapshot_id} that can be continued."
+msgstr ""
+"ພົບການສຳຮອງຂໍ້ມູນ {snapshot_id} ທີ່ບໍ່ສົມບູນ ເຊິ່ງສາມາດດຳເນີນການຕໍ່ໄດ້."
+
+#: common/snapshots.py:1419
+#, python-brace-format
+msgid "Removing incomplete {snapshot_id} directory from last run"
+msgstr "ກຳລັງລຶບໄດເຣັກທໍຣີ {snapshot_id} ທີ່ບໍ່ສົມບູນຈາກການເຮັດວຽກຄັ້ງກ່ອນ"
+
+#: common/snapshots.py:1430
+msgid "Can't remove directory"
+msgstr "ບໍ່ສາມາດລຶບໄດເຣັກທໍຣີໄດ້"
+
+#: common/snapshots.py:1497
+msgid "Creating backup"
+msgstr "ກຳລັງສ້າງການສຳຮອງຂໍ້ມູນ"
+
+#: common/snapshots.py:1548
+msgid "Success"
+msgstr "ສຳເລັດ"
+
+#: common/snapshots.py:1551
+msgid "Partial transfer due to error"
+msgstr "ການສົ່ງຂໍ້ມູນສຳເລັດບາງສ່ວນເນື່ອງຈາກຂໍ້ຜິດພາດ"
+
+#: common/snapshots.py:1552
+msgid "Partial transfer due to vanished source files (see 'man rsync')"
+msgstr ""
+"ການສົ່ງຂໍ້ມູນສຳເລັດບາງສ່ວນເນື່ອງຈາກໄຟລ໌ແຫຼ່ງຂໍ້ມູນຫາຍໄປ (ເບິ່ງ 'man rsync')"
+
+#: common/snapshots.py:1556
+#, python-brace-format
+msgid "'rsync' ended with exit code {exit_code}"
+msgstr "'rsync' ສິ້ນສຸດດ້ວຍລະຫັດ {exit_code}"
+
+#: common/snapshots.py:1569
+msgid "See 'man rsync' for more details"
+msgstr "ເບິ່ງ 'man rsync' ສຳລັບລາຍລະອຽດເພີ່ມເຕີມ"
+
+#: common/snapshots.py:1576
+msgid ""
+"Negative exit codes indicate termination by a signal. The number corresponds"
+" to the signal (see 'kill -l')."
+msgstr ""
+"ລະຫັດສິ້ນສຸດທີ່ເປັນຄ່າລົບ ບົ່ງບອກເຖິງການຢຸດໂດຍສັນຍານ. ຕົວເລກຈະກົງກັບສັນຍານ "
+"(ເບິ່ງ 'kill -l')."
+
+#: common/snapshots.py:1599
+msgid "Nothing changed, no new backup necessary"
+msgstr "ບໍ່ມີຫຍັງປ່ຽນແປງ, ບໍ່ຈຳເປັນຕ້ອງສຳຮອງຂໍ້ມູນໃໝ່"
+
+#: common/snapshots.py:1643
+#, python-brace-format
+msgid "Unable to rename {new_path} to {path}."
+msgstr "ບໍ່ສາມາດປ່ຽນຊື່ {new_path} ເປັນ {path} ໄດ້."
+
+#: common/snapshots.py:2053
+msgid "Applying rules to remove old backups"
+msgstr "ກຳລັງໃຊ້ກົດເພື່ອລຶບການສຳຮອງຂໍ້ມູນເກົ່າ"
+
+#: common/snapshots.py:2090
+msgid "Applying retention policy"
+msgstr "ກຳລັງໃຊ້ນະໂຍບາຍການເກັບຮັກສາ"
+
+#: common/snapshots.py:2100
+msgid "Trying to keep min free space"
+msgstr "ກຳລັງພະຍາຍາມຮັກສາພື້ນທີ່ຫວ່າງຕໍ່າສຸດ"
+
+#: common/snapshots.py:2143
+#, python-brace-format
+msgid "Trying to keep min {perc} free inodes"
+msgstr "ກຳລັງພະຍາຍາມຮັກສາໄອນອດ (inodes) ຫວ່າງຕໍ່າສຸດ {perc}"
+
+#: common/snapshots.py:3374 qt/app.py:1563 qt/timeline.py:405
+msgid "Now"
+msgstr "ດຽວນີ້"
+
+#: common/sshsetupvalidator.py:123
+#, python-brace-format
+msgid "\"{tool}\" is not installed on the remote host."
+msgstr "\"{tool}\" ບໍ່ໄດ້ຖືກຕິດຕັ້ງຢູ່ໃນເຄື່ອງປາຍທາງ."
+
+#: common/sshsetupvalidator.py:220
+msgid "ssh-agent is not installed"
+msgstr "ssh-agent ບໍ່ໄດ້ຖືກຕິດຕັ້ງ"
+
+#: common/sshsetupvalidator.py:236 common/sshsetupvalidator.py:354
+#, python-brace-format
+msgid "Unexpected response from '{process}'."
+msgstr "ການຕອບສະໜອງທີ່ບໍ່ຄາດຄິດຈາກ '{process}'."
+
+#: common/sshsetupvalidator.py:255
+#, python-brace-format
+msgid "Unexpected output from '{process}'."
+msgstr "ຜົນການເຮັດວຽກທີ່ບໍ່ຄາດຄິດຈາກ '{process}'."
+
+#: common/sshsetupvalidator.py:258
+msgid "Output:"
+msgstr "ຜົນອອກ:"
+
+#: common/sshsetupvalidator.py:285
+msgid "The SSH key is not loaded into ssh-agent."
+msgstr "ກະແຈ SSH ບໍ່ໄດ້ຖືກໂຫລດເຂົ້າໃນ ssh-agent."
+
+#: common/sshsetupvalidator.py:314
+msgid "Failed to add SSH key."
+msgstr "ເພີ່ມກະແຈ SSH ບໍ່ສຳເລັດ."
+
+#: common/sshsetupvalidator.py:336
+msgid "sshfs is not installed"
+msgstr "sshfs ບໍ່ໄດ້ຖືກຕິດຕັ້ງ"
+
+#: common/sshsetupvalidator.py:384
+#, python-brace-format
+msgid "The SSH host \"{host}\" is not known yet."
+msgstr "SSH host \"{host}\" ຍັງບໍ່ເປັນທີ່ຮູ້ຈັກ."
+
+#: common/sshsetupvalidator.py:388
+msgid "Please connect to the host manually once to confirm its fingerprint."
+msgstr ""
+"ກະລຸນາເຊື່ອມຕໍ່ກັບໂຮສດ້ວຍຕົນເອງໜຶ່ງຄັ້ງເພື່ອຢືນຢັນ fingerprint ຂອງມັນ."
+
+#: common/sshsetupvalidator.py:429
+msgid "Could not write files to the remote host using rsync."
+msgstr "ບໍ່ສາມາດຂຽນໄຟລ໌ລົງໃນເຄື່ອງປາຍທາງໂດຍໃຊ້ rsync ໄດ້."
+
+#: common/sshsetupvalidator.py:483
+msgid "Could not verify rsync hardlink support."
+msgstr "ບໍ່ສາມາດກວດສອບການຮອງຮັບ rsync hardlink ໄດ້."
+
+#: common/sshsetupvalidator.py:512
+msgid "Unexpected error while verifying rsync hardlink support."
+msgstr "ເກີດຂໍ້ຜິດພາດທີ່ບໍ່ຄາດຄິດຂະນະກວດສອບການຮອງຮັບ rsync hardlink."
+
+#: common/sshsetupvalidator.py:519
+msgid "The remote file system does not support hardlinks."
+msgstr "ລະບົບໄຟລ໌ປາຍທາງບໍ່ຮອງຮັບ hardlinks."
+
+#: common/sshsetupvalidator.py:562
+#, python-brace-format
+msgid "Could not create remote backup directory: {path}"
+msgstr "ບໍ່ສາມາດສ້າງໄດເຣັກທໍຣີສຳຮອງຂໍ້ມູນທາງໄກ: {path}"
+
+#: common/sshtools.py:157
+#, python-brace-format
+msgid "Copy public SSH key \"{pubkey}\" to remote host \"{host}\"."
+msgstr "ຄັດລອກກະແຈ SSH ສາທາລະນະ \"{pubkey}\" ໄປຍັງເຄື່ອງປາຍທາງ \"{host}\"."
+
+#: common/sshtools.py:159
+#, python-brace-format
+msgid "Please enter a password for \"{user}\"."
+msgstr "ກະລຸນາປ້ອນລະຫັດຜ່ານສຳລັບ \"{user}\"."
+
+#: common/tools.py:401
+#, python-brace-format
+msgid ""
+"The destination filesystem for {path} is formatted with NTFS, which has "
+"known incompatibilities with Unix-style filesystems."
+msgstr ""
+"ລະບົບໄຟລ໌ປາຍທາງສຳລັບ {path} ຖືກຟໍແມັດເປັນ NTFS, "
+"ເຊິ່ງມີຄວາມບໍ່ເຂົ້າກັນກັບລະບົບໄຟລ໌ແບບ Unix."
+
+#: common/tools.py:408
+msgid "Write access may be restricted."
+msgstr "ການເຂົ້າເຖິງເພື່ອຂຽນອາດຈະຖືກຈຳກັດ."
+
+#: common/tools.py:411
+msgid "Not enough free space on the device."
+msgstr "ພື້ນທີ່ຫວ່າງໃນອຸປະກອນບໍ່ພຽງພໍ."
+
+#: common/tools.py:415
+msgid "Not enough free space because the disk quota has been exceeded."
+msgstr "ພື້ນທີ່ຫວ່າງບໍ່ພຽງພໍເນື່ອງຈາກເກີນໂຄຕ້າດິດ (disk quota)."
+
+#: common/tools.py:419
+msgid "Filesystem is read-only."
+msgstr "ລະບົບໄຟລ໌ເປັນແບບອ່ານຢ່າງດຽວ (read-only)."
+
+#: common/tools.py:422
+msgid "Unexpected error: "
+msgstr "ຂໍ້ຜິດພາດທີ່ບໍ່ຄາດຄິດ: "
+
+#: common/tools.py:425
+msgid "Creation failed:"
+msgstr "ການສ້າງລົ້ມເຫຼວ:"
+
+#: common/tools.py:460
+#, python-brace-format
+msgid "{path} is not a valid directory."
+msgstr "{path} ບໍ່ແມ່ນໄດເຣັກທໍຣີທີ່ຖືກຕ້ອງ."
+
+#: common/tools.py:522
+#, python-brace-format
+msgid ""
+"Destination filesystem for {path} is formatted with FAT which doesn't "
+"support hard-links. Please use a native GNU/Linux filesystem."
+msgstr ""
+"ລະບົບໄຟລ໌ປາຍທາງສຳລັບ {path} ຖືກຟໍແມັດເປັນ FAT ເຊິ່ງບໍ່ຮອງຮັບ hard-links. "
+"ກະລຸນາໃຊ້ລະບົບໄຟລ໌ພື້ນຖານຂອງ GNU/Linux."
+
+#: common/tools.py:533
+#, python-brace-format
+msgid ""
+"Destination filesystem for {path} is a share mounted via SMB. Please make "
+"sure the remote SMB server supports symlinks or activate \"{copyLinks}\" in "
+"\"{expertOptions}\"."
+msgstr ""
+"ລະບົບໄຟລ໌ປາຍທາງສຳລັບ {path} ເປັນແຊຣ໌ທີ່ເຊື່ອມຕໍ່ຜ່ານ SMB. "
+"ກະລຸນາກວດສອບໃຫ້ແນ່ໃຈວ່າເຊີບເວີ SMB ປາຍທາງຮອງຮັບ symlinks ຫຼື ເປີດໃຊ້ "
+"\"{copyLinks}\" ໃນ \"{expertOptions}\"."
+
+#: common/tools.py:537
+msgid "Copy links (dereference symbolic links)"
+msgstr "ຄັດລອກລິ້ງຄ໌ (dereference symbolic links)"
+
+#: common/tools.py:538
+msgid "Expert Options"
+msgstr "ຕົວເລືອກຂັ້ນສູງ"
+
+#: common/tools.py:542
+#, python-brace-format
+msgid ""
+"Destination filesystem for {path} is a share mounted via sshfs. Sshfs "
+"doesn't support hard-links. Please use mode \"SSH\" instead."
+msgstr ""
+"ລະບົບໄຟລ໌ປາຍທາງສຳລັບ {path} ເປັນແຊຣ໌ທີ່ເຊື່ອມຕໍ່ຜ່ານ sshfs. Sshfs ບໍ່ຮອງຮັບ "
+"hard-links. ກະລຸນາໃຊ້ໂໝດ \"SSH\" ແທນ."
+
+#: common/udev.py:43 qt/app.py:1329 qt/messagebox.py:137
+msgid "Error"
+msgstr "ຂໍ້ຜິດພາດ"
+
+#: qt/aboutdlg.py:50
+msgid "About Back In Time"
+msgstr "ກ່ຽວກັບ Back In Time"
+
+#: qt/aboutdlg.py:88
+msgid "Copyright:"
+msgstr "ລິຂະສິດ:"
+
+#: qt/aboutdlg.py:92
+msgid "Authors:"
+msgstr "ຜູ້ຂຽນ:"
+
+#: qt/aboutdlg.py:96
+msgid "Translators:"
+msgstr "ຜູ້ແປ:"
+
+#: qt/aboutdlg.py:99
+msgid "translator-credits-placeholder"
+msgstr "Bone NI"
+
+#: qt/aboutdlg.py:106
+msgid "Translator credits not available for current language."
+msgstr "ບໍ່ມີຂໍ້ມູນລາຍຊື່ຜູ້ແປສຳລັບພາສາປັດຈຸບັນ."
+
+#: qt/aboutdlg.py:115
+msgid "this link"
+msgstr "ລິ້ງຄ໌ນີ້"
+
+#: qt/aboutdlg.py:117
+#, python-brace-format
+msgid "Follow {thislink} to get translator credits for all languages."
+msgstr "ຕິດຕາມ {thislink} ເພື່ອເບິ່ງລາຍຊື່ຜູ້ແປທຸກພາສາ."
+
+#: qt/aboutdlg.py:240 qt/app.py:595
+msgid "Project website"
+msgstr "ເວັບໄຊທ໌ຂອງໂຄງການ"
+
+#: qt/aboutdlg.py:245 qt/app.py:577
+msgid "User manual"
+msgstr "ຄູ່ມືຜູ້ໃຊ້"
+
+#: qt/aboutdlg.py:247 qt/app.py:579
+msgid "Open user manual in browser (local if available, otherwise online)"
+msgstr "ເປີດຄູ່ມືຜູ້ໃຊ້ໃນບຣາວເຊີ (ພາຍໃນເຄື່ອງຫາກມີ, ຖ້າບໍ່ມີຈະເປີດແບບອອນໄລນ໌)"
+
+#: qt/aboutdlg.py:297
+#, python-brace-format
+msgid "{BOLD}Version{BOLDEND}: {version}"
+msgstr "{BOLD}ເວີຊັນ{BOLDEND}: {version}"
+
+#: qt/app.py:352
+#, python-brace-format
+msgid ""
+"{app_name} appears to be running for the first time because no configuration"
+" is found."
+msgstr ""
+"ເບິ່ງຄືວ່າ {app_name} ກຳລັງເຮັດວຽກເປັນຄັ້ງທຳອິດ ເພາະບໍ່ພົບການກຳນົດຄ່າໃດໆ."
+
+#: qt/app.py:357
+msgid ""
+"Create a new configuration or import an existing configuration from a "
+"backup?"
+msgstr "ສ້າງການກຳນົດຄ່າໃໝ່ ຫຼື ນຳເຂົ້າການກຳນົດຄ່າທີ່ມີຢູ່ຈາກການສຳຮອງຂໍ້ມູນ?"
+
+#: qt/app.py:362 qt/confirmrestoredialog.py:36 qt/messagebox.py:124
+msgid "Question"
+msgstr "ຄຳຖາມ"
+
+#: qt/app.py:366
+msgid "Create"
+msgstr "ສ້າງ"
+
+#: qt/app.py:368 qt/restoreconfigdialog.py:136
+msgid "Import"
+msgstr "ນຳເຂົ້າ"
+
+#: qt/app.py:514
+msgid "Create a backup"
+msgstr "ສ້າງການສຳຮອງຂໍ້ມູນ"
+
+#: qt/app.py:516
+msgid "Use modification time & size for file change detection."
+msgstr "ໃຊ້ເວລາປ່ຽນແປງ ແລະ ຂະໜາດເພື່ອທວດສອບການປ່ຽນແປງຂອງໄຟລ໌."
+
+#: qt/app.py:519
+msgid "Create a backup (checksum mode)"
+msgstr "ສ້າງການສຳຮອງຂໍ້ມູນ (ໂໝດ checksum)"
+
+#: qt/app.py:521
+msgid "Use checksums for file change detection."
+msgstr "ໃຊ້ checksums ເພື່ອທວດສອບການປ່ຽນແປງຂອງໄຟລ໌."
+
+#: qt/app.py:523 qt/qtsystrayicon.py:132
+msgid "Pause backup process"
+msgstr "ພັກຂະບວນການສຳຮອງຂໍ້ມູນ"
+
+#: qt/app.py:528 qt/qtsystrayicon.py:137
+msgid "Resume backup process"
+msgstr "ດຳເນີນຂະບວນການສຳຮອງຂໍ້ມູນຕໍ່"
+
+#: qt/app.py:533 qt/qtsystrayicon.py:142
+msgid "Stop backup process"
+msgstr "ຢຸດຂະບວນການສຳຮອງຂໍ້ມູນ"
+
+#: qt/app.py:537
+msgid "Refresh backup list"
+msgstr "ໂຫຼດລາຍການສຳຮອງຂໍ້ມູນໃໝ່"
+
+#: qt/app.py:541
+msgid "Name backup"
+msgstr "ຕັ້ງຊື່ການສຳຮອງຂໍ້ມູນ"
+
+#: qt/app.py:545
+msgid "Remove backup"
+msgstr "ລຶບການສຳຮອງຂໍ້ມູນ"
+
+#: qt/app.py:549
+msgid "Open backup log"
+msgstr "ເປີດບັນທຶກ (log) ການສຳຮອງຂໍ້ມູນ"
+
+#: qt/app.py:551
+msgid "View log of the selected backup."
+msgstr "ເບິ່ງບັນທຶກຂອງການສຳຮອງຂໍ້ມູນທີ່ເລືອກ."
+
+#: qt/app.py:553
+msgid "Open last backup log"
+msgstr "ເປີດບັນທຶກການສຳຮອງຂໍ້ມູນຫຼ້າສຸດ"
+
+#: qt/app.py:555
+msgid "View log of the latest backup."
+msgstr "ເບິ່ງບັນທຶກຂອງການສຳຮອງຂໍ້ມູນຫຼ້າສຸດ."
+
+#: qt/app.py:557
+msgid "Manage profiles…"
+msgstr "ຈັດການໂປຣໄຟລ໌…"
+
+#: qt/app.py:561
+msgid "Edit user-callback"
+msgstr "ແກ້ໄຂ user-callback"
+
+#: qt/app.py:565
+msgid "Shutdown"
+msgstr "ປິດເຄື່ອງ"
+
+#: qt/app.py:567
+msgid "Shut down system after backup has finished."
+msgstr "ປິດລະບົບຫຼັງຈາກການສຳຮອງຂໍ້ມູນສຳເລັດ."
+
+#: qt/app.py:569
+msgid "Setup language…"
+msgstr "ຕັ້ງຄ່າພາສາ…"
+
+#: qt/app.py:573
+msgid "Exit"
+msgstr "ອອກ"
+
+#: qt/app.py:583
+msgid "man page: Back In Time"
+msgstr "ໜ້າ man: Back In Time"
+
+#: qt/app.py:585
+msgid "Displays man page about Back In Time (backintime)"
+msgstr "ສະແດງໜ້າ man ກ່ຽວກັບ Back In Time (backintime)"
+
+#: qt/app.py:588
+msgid "man page: Profiles config file"
+msgstr "ໜ້າ man: ໄຟລ໌ກຳນົດຄ່າໂປຣໄຟລ໌"
+
+#: qt/app.py:591
+msgid "Displays man page about profiles config file (backintime-config)"
+msgstr "ສະແດງໜ້າ man ກ່ຽວກັບໄຟລ໌ກຳນົດຄ່າໂປຣໄຟລ໌ (backintime-config)"
+
+#: qt/app.py:598
+msgid "Open Back In Time website in browser"
+msgstr "ເປີດເວັບໄຊທ໌ Back In Time ໃນບຣາວເຊີ"
+
+#: qt/app.py:600 qt/app.py:2385
+msgid "Changelog"
+msgstr "ບັນທຶກການປ່ຽນແປງ"
+
+#: qt/app.py:603
+msgid "Open changelog (locally if available, otherwise from the web)"
+msgstr "ເປີດບັນທຶກການປ່ຽນແປງ (ພາຍໃນເຄື່ອງຫາກມີ, ຖ້າບໍ່ມີຈະເປີດຈາກເວັບ)"
+
+#: qt/app.py:606
+msgid "FAQ"
+msgstr "ຄຳຖາມທີ່ພົບເລື້ອຍ (FAQ)"
+
+#: qt/app.py:608
+msgid "Open Frequently Asked Questions (FAQ) in browser"
+msgstr "ເປີດຄຳຖາມທີ່ພົບເລື້ອຍ (FAQ) ໃນບຣາວເຊີ"
+
+#: qt/app.py:610
+msgid "Report a bug"
+msgstr "ລາຍງານບັນຫາ (bug)"
+
+#: qt/app.py:613
+msgid "Contact"
+msgstr "ຕິດຕໍ່"
+
+#: qt/app.py:615
+msgid "Shows additional contact options in the browser"
+msgstr "ສະແດງຕົວເລືອກການຕິດຕໍ່ເພີ່ມເຕີມໃນບຣາວເຊີ"
+
+#: qt/app.py:618
+msgid "Translation"
+msgstr "ການແປພາສາ"
+
+#: qt/app.py:620
+msgid "Shows the message about participation in translation again."
+msgstr "ສະແດງຂໍ້ຄວາມກ່ຽວກັບການມີສ່ວນຮ່ວມໃນການແປພາສາອີກຄັ້ງ."
+
+#: qt/app.py:630
+msgid "About"
+msgstr "ກ່ຽວກັບ"
+
+#: qt/app.py:633 qt/restoredialog.py:48 qt/snapshotsdialog.py:183
+#: qt/snapshotsdialog.py:188
+msgid "Restore"
+msgstr "ກູ້ຄືນ"
+
+#: qt/app.py:635
+msgid "Restore the selected files or directories to the original location."
+msgstr "ກູ້ຄືນໄຟລ໌ ຫຼື ໄດເຣັກທໍຣີທີ່ເລືອກກັບໄປບ່ອນເດີມ."
+
+#: qt/app.py:638 qt/app.py:2006 qt/snapshotsdialog.py:185
+msgid "Restore to …"
+msgstr "ກູ້ຄືນໄປຍັງ …"
+
+#: qt/app.py:640
+msgid "Restore the selected files or directories to a new location."
+msgstr "ກູ້ຄືນໄຟລ໌ ຫຼື ໄດເຣັກທໍຣີທີ່ເລືອກໄປຍັງບ່ອນໃໝ່."
+
+#: qt/app.py:646
+msgid ""
+"Restore the currently shown directory and all its contents to the original "
+"location."
+msgstr "ກູ້ຄືນໄດເຣັກທໍຣີທີ່ກຳລັງສະແດງ ແລະ ເນື້ອໃນທັງໝົດກັບໄປບ່ອນເດີມ."
+
+#: qt/app.py:652
+msgid ""
+"Restore the currently shown directory and all its contents to a new "
+"location."
+msgstr "ກູ້ຄືນໄດເຣັກທໍຣີທີ່ກຳລັງສະແດງ ແລະ ເນື້ອໃນທັງໝົດໄປຍັງບ່ອນໃໝ່."
+
+#: qt/app.py:655
+msgid "Up"
+msgstr "ຂຶ້ນ"
+
+#: qt/app.py:658
+msgid "Show hidden files"
+msgstr "ສະແດງໄຟລ໌ທີ່ຊ່ອນຢູ່"
+
+#: qt/app.py:661
+msgid "Compare backups…"
+msgstr "ປຽບທຽບການສຳຮອງຂໍ້ມູນ…"
+
+#: qt/app.py:691 qt/app.py:1826
+msgid "Release Candidate"
+msgstr "ລຸ້ນທົດລອງ (Release Candidate)"
+
+#: qt/app.py:694
+msgid "Shows the message about this Release Candidate again."
+msgstr "ສະແດງຂໍ້ຄວາມກ່ຽວກັບລຸ້ນທົດລອງ (Release Candidate) ນີ້ອີກຄັ້ງ."
+
+#: qt/app.py:731
+msgid "Back In &Time"
+msgstr "Back In &Time"
+
+#: qt/app.py:736
+msgid "&Backup"
+msgstr "&ສຳຮອງຂໍ້ມູນ"
+
+#: qt/app.py:748
+msgid "&Restore"
+msgstr "&ກູ້ຄືນ"
+
+#: qt/app.py:754
+msgid "&Help"
+msgstr "&ຊ່ວຍເຫຼືອ"
+
+#: qt/app.py:804
+msgid "Systray Icon"
+msgstr "ໄອຄອນໃນແຖບລະບົບ"
+
+#: qt/app.py:810
+msgid "Automatic"
+msgstr "ອັດຕະໂນມັດ"
+
+#: qt/app.py:814
+msgid "Light icon"
+msgstr "ໄອຄອນສີອ່ອນ"
+
+#: qt/app.py:815
+msgid "Dark icon"
+msgstr "ໄອຄອນສີເຂັ້ມ"
+
+#: qt/app.py:838
+msgid "Icons only"
+msgstr "ໄອຄອນເທົ່ານັ້ນ"
+
+#: qt/app.py:841
+msgid "Text only"
+msgstr "ຂໍ້ຄວາມເທົ່ານັ້ນ"
+
+#: qt/app.py:844
+msgid "Text below icons"
+msgstr "ຂໍ້ຄວາມຢູ່ລຸ່ມໄອຄອນ"
+
+#: qt/app.py:847
+msgid "Text beside icon"
+msgstr "ຂໍ້ຄວາມຢູ່ຂ້າງໄອຄອນ"
+
+#: qt/app.py:973
+msgid "This directory doesn't exist in the selected backup."
+msgstr "ໄດເຣັກທໍຣີນີ້ບໍ່ມີຢູ່ໃນການສຳຮອງຂໍ້ມູນທີ່ເລືອກ."
+
+#: qt/app.py:976
+msgid "This directory doesn't exist on the computer."
+msgstr "ໄດເຣັກທໍຣີນີ້ບໍ່ມີຢູ່ໃນຄອມພິວເຕີ."
+
+#: qt/app.py:1026
+msgid ""
+"If this window is closed, Back In Time will not be able to shut down your "
+"system when the backup is finished."
+msgstr ""
+"ຫາກປິດໜ້າຈໍນີ້, Back In Time "
+"ຈະບໍ່ສາມາດປິດລະບົບຂອງທ່ານໄດ້ເມື່ອການສຳຮອງຂໍ້ມູນສຳເລັດ."
+
+#: qt/app.py:1030
+msgid "Close the window anyway?"
+msgstr "ຍັງຕ້ອງການປິດໜ້າຈໍຢູ່ຫຼືບໍ່?"
+
+#: qt/app.py:1120 qt/app.py:1127
+msgid "Backup destination unavailable"
+msgstr "ປາຍທາງການສຳຮອງຂໍ້ມູນບໍ່ພ້ອມໃຊ້ງານ"
+
+#: qt/app.py:1245
+msgid "Done, no backup needed"
+msgstr "ສຳເລັດ, ບໍ່ຈຳເປັນຕ້ອງສຳຮອງຂໍ້ມູນ"
+
+#: qt/app.py:1316
+msgid "Working:"
+msgstr "ກຳລັງເຮັດວຽກ:"
+
+#: qt/app.py:1323
+msgid "Working"
+msgstr "ກຳລັງເຮັດວຽກ"
+
+#: qt/app.py:1379 qt/qtsystrayicon.py:293
+msgid "Sent:"
+msgstr "ສົ່ງແລ້ວ:"
+
+#: qt/app.py:1380 qt/qtsystrayicon.py:294
+msgid "Speed:"
+msgstr "ຄວາມໄວ:"
+
+#: qt/app.py:1381 qt/qtsystrayicon.py:295
+msgid "ETA:"
+msgstr "ເວລາທີ່ເຫຼືອ:"
+
+#: qt/app.py:1571
+msgid "Backup:"
+msgstr "ການສຳຮອງຂໍ້ມູນ:"
+
+#: qt/app.py:1674
+#, python-brace-format
+msgid "Restore {path}"
+msgstr "ກູ້ຄືນ {path}"
+
+#: qt/app.py:1676
+#, python-brace-format
+msgid "Restore {path} to …"
+msgstr "ກູ້ຄືນ {path} ໄປຍັງ …"
+
+#: qt/app.py:1700
+#, python-brace-format
+msgid ""
+"Hello\n"
+"You have used Back In Time in the {language} language a few times by now.\n"
+"The translation of your installed version of Back In Time into {language} is {perc} complete. Regardless of your level of technical expertise, you can contribute to the translation and thus Back In Time itself.\n"
+"Please visit the {translation_platform_url} if you wish to contribute. For further assistance and questions, please visit the {back_in_time_project_website}.\n"
+"We apologize for the interruption, and this message will not be shown again. This dialog is available at any time via the help menu.\n"
+"Your Back In Time Team"
+msgstr ""
+"ສະບາຍດີ\n"
+"ທ່ານໄດ້ໃຊ້ Back In Time ໃນພາສາ {language} ມາໄດ້ໄລຍະໜຶ່ງແລ້ວ.\n"
+"ການແປພາສາ {language} ໃນ Back In Time ເວີຊັນທີ່ທ່ານຕິດຕັ້ງແມ່ນສຳເລັດ {perc}. ບໍ່ວ່າທ່ານຈະມີຄວາມຮູ້ດ້ານເຕັກນິກໃນລະດັບໃດ, ທ່ານກໍສາມາດປະກອບສ່ວນໃນການແປ ແລະ ຊ່ວຍພັດທະນາ Back In Time ໄດ້.\n"
+"ກະລຸນາເຂົ້າໄປທີ່ {translation_platform_url} ຫາກທ່ານຕ້ອງການປະກອບສ່ວນ. ສຳລັບການຊ່ວຍເຫຼືອເພີ່ມເຕີມ ຫຼື ຄຳຖາມຕ່າງໆ, ກະລຸນາເຂົ້າໄປທີ່ {back_in_time_project_website}.\n"
+"ພວກເຮົາຂໍອະໄພທີ່ລົບກວນ, ແລະ ຂໍ້ຄວາມນີ້ຈະບໍ່ສະແດງຂຶ້ນມາອີກ. ທ່ານສາມາດເປີດເບິ່ງໜ້ານີ້ໄດ້ທຸກເວລາຜ່ານເມນູຊ່ວຍເຫຼືອ.\n"
+"ຈາກທີມງານ Back In Time ຂອງທ່ານ"
+
+#: qt/app.py:1729
+msgid "translation platform"
+msgstr "ແພລດຟອມການແປພາສາ"
+
+#: qt/app.py:1734
+msgid "Website"
+msgstr "ເວັບໄຊທ໌"
+
+#: qt/app.py:1748
+msgid "Your translation"
+msgstr "ການແປຂອງທ່ານ"
+
+#: qt/app.py:1785
+#, python-brace-format
+msgid "In the Fediverse at Mastodon: {link_and_label}."
+msgstr "ໃນ Fediverse ທີ່ Mastodon: {link_and_label}."
+
+#: qt/app.py:1790
+#, python-brace-format
+msgid "Email to {link_and_label}."
+msgstr "ອີເມລຫາ {link_and_label}."
+
+#: qt/app.py:1794
+#, python-brace-format
+msgid "Mailing list {link_and_label}."
+msgstr "ລາຍຊື່ຜູ້ຮັບອີເມລ (Mailing list) {link_and_label}."
+
+#: qt/app.py:1798
+#, python-brace-format
+msgid "{link_and_label} on the project website."
+msgstr "{link_and_label} ໃນເວັບໄຊທ໌ຂອງໂຄງການ."
+
+#: qt/app.py:1801
+msgid "Open an issue"
+msgstr "ແຈ້ງບັນຫາ"
+
+#: qt/app.py:1802
+msgid "Alternatively, you can use another channel of your choice."
+msgstr "ຫຼື ທ່ານສາມາດໃຊ້ຊ່ອງທາງອື່ນຕາມທີ່ທ່ານຕ້ອງການ."
+
+#: qt/app.py:1807
+#, python-brace-format
+msgid ""
+"This version is a Release Candidate for testing before the next stable release.\n"
+"If you test this version, please provide feedback. Let us know if you found a problem or if everything worked as expected. Even a short test of a few minutes is helpful.\n"
+"You can reach the Back In Time team via:\n"
+"{contact_list}\n"
+"This message won't be shown again, but it can be opened anytime from the Help menu.\n"
+"Thank you for testing Back In Time and helping us improve it!"
+msgstr ""
+"ເວີຊັນນີ້ແມ່ນລຸ້ນທົດລອງ (Release Candidate) ສຳລັບການທົດສອບກ່ອນການປ່ອຍເວີຊັນທີ່ໝັ້ນຄົງ.\n"
+"ຫາກທ່ານທົດສອບເວີຊັນນີ້, ກະລຸນາໃຫ້ຄຳຄິດເຫັນ. ບອກໃຫ້ພວກເຮົາຮູ້ຫາກທ່ານພົບບັນຫາ ຫຼື ທຸກຢ່າງເຮັດວຽກໄດ້ຕາມທີ່ຄາດໄວ້. ແມ່ນແຕ່ການທົດສອບສັ້ນໆພຽງສອງສາມນາທີກໍມີປະໂຫຍດຫຼາຍ.\n"
+"ທ່ານສາມາດຕິດຕໍ່ທີມງານ Back In Time ຜ່ານ:\n"
+"{contact_list}\n"
+"ຂໍ້ຄວາມນີ້ຈະບໍ່ສະແດງອີກ, ແຕ່ສາມາດເປີດເບິ່ງໄດ້ທຸກເວລາຈາກເມນູຊ່ວຍເຫຼືອ.\n"
+"ຂອບໃຈທີ່ຊ່ວຍທົດສອບ Back In Time ແລະ ຊ່ວຍພວກເຮົາປັບປຸງມັນ!"
+
+#: qt/app.py:1890
+msgid "Check if remote host is online"
+msgstr "ກວດສອບວ່າເຄື່ອງປາຍທາງອອນໄລນ໌ຫຼືບໍ່"
+
+#: qt/app.py:1891
+msgid "Check if remote host supports all necessary commands."
+msgstr "ກວດສອບວ່າເຄື່ອງປາຍທາງຮອງຮັບຄຳສັ່ງທີ່ຈຳເປັນທັງໝົດຫຼືບໍ່."
+
+#: qt/app.py:1934
+#, python-brace-format
+msgid ""
+"Only {free} free space available on the destination, which is below the "
+"configured threshold of {threshold}."
+msgstr ""
+"ມີພື້ນທີ່ຫວ່າງພຽງ {free} ໃນປາຍທາງ, ເຊິ່ງຕໍ່າກວ່າເກນ {threshold} ທີ່ກຳນົດໄວ້."
+
+#: qt/app.py:1939
+msgid "Proceed with the backup?"
+msgstr "ດຳເນີນການສຳຮອງຂໍ້ມູນຕໍ່ຫຼືບໍ່?"
+
+#: qt/app.py:1986
+#, python-brace-format
+msgid "All newer files in {path} will be removed. Proceed?"
+msgstr "ໄຟລ໌ທັງໝົດທີ່ໃໝ່ກວ່າໃນ {path} ຈະຖືກລຶບອອກ. ດຳເນີນການຕໍ່ຫຼືບໍ່?"
+
+#: qt/app.py:1989
+msgid "All newer files in the original directory will be removed. Proceed?"
+msgstr "ໄຟລ໌ທັງໝົດທີ່ໃໝ່ກວ່າໃນໄດເຣັກທໍຣີເດີມຈະຖືກລຶບອອກ. ດຳເນີນການຕໍ່ຫຼືບໍ່?"
+
+#: qt/app.py:1995
+#, python-brace-format
+msgid ""
+"{BOLD}Warning{BOLDEND}: Deleting files in the filesystem root could break "
+"the entire system."
+msgstr ""
+"{BOLD}ຄຳເຕືອນ{BOLDEND}: ການລຶບໄຟລ໌ໃນຮາກຂອງລະບົບໄຟລ໌ (filesystem root) "
+"ອາດເຮັດໃຫ້ລະບົບທັງໝົດເພໄດ້."
+
+#: qt/app.py:2244
+msgid "Backup name"
+msgstr "ຊື່ການສຳຮອງຂໍ້ມູນ"
+
+#: qt/app.py:2276
+msgid "Remove this backup?"
+msgid_plural "Remove these backups?"
+msgstr[0] "ລຶບການສຳຮອງຂໍ້ມູນເຫຼົ່ານີ້ຫຼືບໍ່?"
+
+#: qt/app.py:2343
+msgid "The language settings take effect only after restarting Back In Time."
+msgstr "ການຕັ້ງຄ່າພາສາຈະມີຜົນຫຼັງຈາກເລີ່ມຕົ້ນ Back In Time ໃໝ່ເທົ່ານັ້ນ."
+
+#: qt/backintime-qt-root.desktop:14
+msgid "Versioned Backups (root)"
+msgstr "ການສຳຮອງຂໍ້ມູນແບບແຍກເວີຊັນ (root)"
+
+#: qt/backintime-qt-root.desktop:23
+msgid ""
+"User-friendly GUI for versioned backups that reduces disk usage (root mode)"
+msgstr ""
+"GUI ທີ່ໃຊ້ງານງ່າຍສຳລັບການສຳຮອງຂໍ້ມູນແບບແຍກເວີຊັນ "
+"ທີ່ຊ່ວຍຫຼຸດຜ່ອນການນຳໃຊ້ພື້ນທີ່ດິດ (ໂໝດ root)"
+
+#: qt/backintime-qt.desktop:14
+msgid "Versioned Backups"
+msgstr "ການສຳຮອງຂໍ້ມູນແບບແຍກເວີຊັນ"
+
+#: qt/backintime-qt.desktop:23
+msgid "User-friendly GUI for versioned backups that reduces disk usage"
+msgstr ""
+"GUI ທີ່ໃຊ້ງານງ່າຍສຳລັບການສຳຮອງຂໍ້ມູນແບບແຍກເວີຊັນ "
+"ທີ່ຊ່ວຍຫຼຸດຜ່ອນການນຳໃຊ້ພື້ນທີ່ດິດ"
+
+#: qt/confirmrestoredialog.py:77
+#, python-brace-format
+msgid ""
+"Create backup copies with trailing {suffix} before overwriting or removing "
+"local elements."
+msgstr ""
+"ສ້າງສຳເນົາສຳຮອງໂດຍຕື່ມ {suffix} ຕໍ່ທ້າຍກ່ອນທີ່ຈະຂຽນທັບ ຫຼື "
+"ລຶບລາຍການພາຍໃນເຄື່ອງ."
+
+#: qt/confirmrestoredialog.py:82 qt/manageprofiles/tab_options.py:69
+#, python-brace-format
+msgid ""
+"Before restoring, newer versions of files will be renamed with the appended "
+"{suffix}. These files can be removed with the following command:"
+msgstr ""
+"ກ່ອນການກູ້ຄືນ, ໄຟລ໌ເວີຊັນທີ່ໃໝ່ກວ່າຈະຖືກປ່ຽນຊື່ໂດຍຕື່ມ {suffix} ຕໍ່ທ້າຍ. "
+"ໄຟລ໌ເຫຼົ່ານີ້ສາມາດລຶບໄດ້ດ້ວຍຄຳສັ່ງຕໍ່ໄປນີ້:"
+
+#: qt/confirmrestoredialog.py:95
+#, python-brace-format
+msgid ""
+"Only restore elements which do not exist or are newer than those in "
+"destination. Using \"{rsync_example}\" option."
+msgstr ""
+"ກູ້ຄືນສະເພາະລາຍການທີ່ບໍ່ມີຢູ່ ຫຼື ໃໝ່ກວ່າລາຍການໃນປາຍທາງເທ່ານັ້ນ. "
+"ໂດຍໃຊ້ຕົວເລືອກ \"{rsync_example}\"."
+
+#: qt/confirmrestoredialog.py:134
+msgid "Remove newer elements in original directory."
+msgstr "ລຶບລາຍການທີ່ໃໝ່ກວ່າໃນໄດເຣັກທໍຣີເດີມ."
+
+#: qt/confirmrestoredialog.py:136
+msgid ""
+"Restore selected files or directories to the original destination and delete"
+" files or directories which are not in the backup. Be extremely careful "
+"because this will delete files and directories which were excluded during "
+"the creation of the backup."
+msgstr ""
+"ກູ້ຄືນໄຟລ໌ ຫຼື ໄດເຣັກທໍຣີທີ່ເລືອກໄປຍັງປາຍທາງເດີມ ແລະ ລຶບໄຟລ໌ ຫຼື "
+"ໄດເຣັກທໍຣີທີ່ບໍ່ມີຢູ່ໃນການສຳຮອງຂໍ້ມູນ. ຄວນລະມັດລະວັງເປັນຢ່າງຍິ່ງ "
+"ເພາະສິ່ງນີ້ຈະລຶບໄຟລ໌ ແລະ "
+"ໄດເຣັກທໍຣີທີ່ຖືກຍົກເວັ້ນໃນລະຫວ່າງການສ້າງການສຳຮອງຂໍ້ມູນ."
+
+#: qt/confirmrestoredialog.py:148
+msgid "Really restore this element into the new directory?"
+msgid_plural "Really restore these elements into the new directory?"
+msgstr[0] "ຕ້ອງການກູ້ຄືນລາຍການເຫຼົ່ານີ້ໄປຍັງໄດເຣັກທໍຣີໃໝ່ແທ້ຫຼືບໍ່?"
+
+#: qt/confirmrestoredialog.py:158
+msgid "Really restore this element?"
+msgid_plural "Really restore these elements?"
+msgstr[0] "ຕ້ອງການກູ້ຄືນລາຍການເຫຼົ່ານີ້ແທ້ຫຼືບໍ່?"
+
+#: qt/editusercallback.py:43
+#, python-brace-format
+msgid "User-callback: \"{filename}\""
+msgstr "User-callback: \"{filename}\""
+
+#: qt/editusercallback.py:105
+#, python-brace-format
+msgid ""
+"The user-callback script must include a shebang on the first line (e.g. "
+"{example})."
+msgstr "ສະຄຣິບ user-callback ຕ້ອງມີ shebang ໃນແຖວທຳອິດ (ເຊັ່ນ: {example})."
+
+#: qt/filedialog.py:87
+msgid "Show/hide hidden files and directories (Ctrl+H)"
+msgstr "ສະແດງ/ຊ່ອນ ໄຟລ໌ ແລະ ໄດເຣັກທໍຣີທີ່ຊ່ອນຢູ່ (Ctrl+H)"
+
+#: qt/fileview.py:207
+msgid "Add to Include"
+msgstr "ເພີ່ມເຂົ້າໃນລາຍການທີ່ລວມເອົາ"
+
+#: qt/fileview.py:208
+msgid "Add to Exclude"
+msgstr "ເພີ່ມເຂົ້າໃນລາຍການທີ່ຍົກເວັ້ນ"
+
+#: qt/fileview.py:295
+msgid "The selected item is already in the include list."
+msgid_plural "The selected items are already in the include list."
+msgstr[0] "ລາຍການທີ່ເລືອກມີຢູ່ໃນລາຍການທີ່ລວມເອົາແລ້ວ."
+
+#: qt/fileview.py:302
+msgid "The following item is already in the include list."
+msgid_plural "The following items are already in the include list."
+msgstr[0] "ລາຍການຕໍ່ໄປນີ້ມີຢູ່ໃນລາຍການທີ່ລວມເອົາແລ້ວ."
+
+#: qt/fileview.py:316
+msgid "The selected item is already in the exclude list."
+msgid_plural "The selected items are already in the exclude list."
+msgstr[0] "ລາຍການທີ່ເລືອກມີຢູ່ໃນລາຍການທີ່ຍົກເວັ້ນແລ້ວ."
+
+#: qt/fileview.py:323
+msgid "The following item is already in the exclude list."
+msgid_plural "The following items are already in the exclude list."
+msgstr[0] "ລາຍການຕໍ່ໄປນີ້ມີຢູ່ໃນລາຍການທີ່ຍົກເວັ້ນແລ້ວ."
+
+#: qt/languagedialog.py:36
+msgid "Setup language"
+msgstr "ຕັ້ງຄ່າພາສາ"
+
+#: qt/languagedialog.py:120
+#, python-brace-format
+msgid "Translated: {percent}"
+msgstr "ແປແລ້ວ: {percent}"
+
+#: qt/languagedialog.py:132
+msgid "System default"
+msgstr "ຄ່າເລີ່ມຕົ້ນຂອງລະບົບ"
+
+#: qt/languagedialog.py:142
+msgid "Use operating system's language."
+msgstr "ໃຊ້ພາສາຂອງລະບົບປະຕິບັດການ."
+
+#: qt/logviewdialog.py:60
+msgid "Backup Log View"
+msgstr "ເບິ່ງບັນທຶກການສຳຮອງຂໍ້ມູນ"
+
+#: qt/logviewdialog.py:60
+msgid "Last Log View"
+msgstr "ເບິ່ງບັນທຶກຫຼ້າສຸດ"
+
+#: qt/logviewdialog.py:69 qt/manageprofiles/__init__.py:75
+#: qt/manageprofiles/tab_general.py:244 qt/restoreconfigdialog.py:348
+msgid "Profile:"
+msgstr "ໂປຣໄຟລ໌:"
+
+#: qt/logviewdialog.py:84
+msgid "Backups:"
+msgstr "ການສຳຮອງຂໍ້ມູນ:"
+
+#: qt/logviewdialog.py:91
+msgid "Filter:"
+msgstr "ຕົວກັ່ນຕອງ:"
+
+#: qt/logviewdialog.py:98
+msgid "[E] Error, [I] Information, [C] Change"
+msgstr "[E] ຂໍ້ຜິດພາດ, [I] ຂໍ້ມູນ, [C] ການປ່ຽນແປງ"
+
+#: qt/logviewdialog.py:113 qt/manageprofiles/copylinkswidget.py:55
+#: qt/manageprofiles/tab_options.py:188
+msgid "All"
+msgstr "ທັງໝົດ"
+
+#: qt/logviewdialog.py:119 qt/logviewdialog.py:123
+#: qt/manageprofiles/tab_options.py:187
+msgid "Changes"
+msgstr "ການປ່ຽນແປງ"
+
+#: qt/logviewdialog.py:119 qt/logviewdialog.py:122
+#: qt/manageprofiles/tab_options.py:186 qt/manageprofiles/tab_options.py:187
+msgid "Errors"
+msgstr "ຂໍ້ຜິດພາດ"
+
+#: qt/logviewdialog.py:124 qt/messagebox.py:75
+msgid "Information"
+msgid_plural "Information"
+msgstr[0] "ຂໍ້ມູນ"
+
+#: qt/logviewdialog.py:126
+msgid "rsync transfer failures (experimental)"
+msgstr "ຄວາມລົ້ມເຫຼວໃນການສົ່ງຂໍ້ມູນ rsync (ລຸ້ນທົດລອງ)"
+
+#: qt/manageprofiles/__init__.py:67
+msgid "Manage profiles"
+msgstr "ຈັດການໂປຣໄຟລ໌"
+
+#: qt/manageprofiles/__init__.py:86
+msgid "Edit"
+msgstr "ແກ້ໄຂ"
+
+#: qt/manageprofiles/__init__.py:90
+msgid "Add"
+msgstr "ເພີ່ມ"
+
+#: qt/manageprofiles/__init__.py:94 qt/manageprofiles/tab_exclude.py:126
+#: qt/manageprofiles/tab_include.py:81
+msgid "Remove"
+msgstr "ລຶບ"
+
+#: qt/manageprofiles/__init__.py:115
+msgid "&General"
+msgstr "&ທົ່ວໄປ"
+
+#: qt/manageprofiles/__init__.py:119
+msgid "&Include"
+msgstr "&ລວມເອົາ"
+
+#: qt/manageprofiles/__init__.py:123
+msgid "&Exclude"
+msgstr "&ຍົກເວັ້ນ"
+
+#: qt/manageprofiles/__init__.py:138
+msgid "&Remove & Retention"
+msgstr "&ລຶບ & ການເກັບຮັກສາ"
+
+#: qt/manageprofiles/__init__.py:142
+msgid "&Options"
+msgstr "&ຕົວເລືອກ"
+
+#: qt/manageprofiles/__init__.py:146
+msgid "E&xpert Options"
+msgstr "&ຕົວເລືອກຂັ້ນສູງ"
+
+#: qt/manageprofiles/__init__.py:154
+msgid "Restore Config"
+msgstr "ກູ້ຄືນການກຳນົດຄ່າ"
+
+#: qt/manageprofiles/__init__.py:185
+msgid "New profile"
+msgstr "ໂປຣໄຟລ໌ໃໝ່"
+
+#: qt/manageprofiles/__init__.py:203
+msgid "Rename profile"
+msgstr "ປ່ຽນຊື່ໂປຣໄຟລ໌"
+
+#: qt/manageprofiles/__init__.py:222
+#, python-brace-format
+msgid "Delete the profile \"{name}\"?"
+msgstr "ລຶບໂປຣໄຟລ໌ \"{name}\" ຫຼືບໍ່?"
+
+#: qt/manageprofiles/copylinkswidget.py:37
+msgid "Copy symbolic links as files"
+msgstr "ຄັດລອກ symbolic links ເປັນໄຟລ໌"
+
+#: qt/manageprofiles/copylinkswidget.py:42
+msgid ""
+"Copy symbolic links as real files or directories in the backup. Select "
+"whether all links or only those pointing outside the source are copied."
+msgstr ""
+"ຄັດລອກ symbolic links ເປັນໄຟລ໌ ຫຼື ໄດເຣັກທໍຣີແທ້ໃນການສຳຮອງຂໍ້ມູນ. "
+"ເລືອກວ່າຈະຄັດລອກລິ້ງຄ໌ທັງໝົດ ຫຼື ສະເພາະລິ້ງຄ໌ທີ່ຊີ້ອອກນອກແຫຼ່ງຂໍ້ມູນ."
+
+#: qt/manageprofiles/copylinkswidget.py:45
+msgid "This option may increase backup size."
+msgstr "ຕົວເລືອກນີ້ອາດຈະເຮັດໃຫ້ຂະໜາດການສຳຮອງຂໍ້ມູນເພີ່ມຂຶ້ນ."
+
+#: qt/manageprofiles/copylinkswidget.py:46
+msgid "Disabled by default."
+msgstr "ປິດໄວ້ເປັນຄ່າເລີ່ມຕົ້ນ."
+
+#: qt/manageprofiles/copylinkswidget.py:59
+msgid ""
+"All symbolic links are replaced with real files or directories they point "
+"to. This increases backup size and may store the same files multiple times."
+msgstr ""
+"symbolic links ທັງໝົດຈະຖືກແທນທີ່ດ້ວຍໄຟລ໌ ຫຼື ໄດເຣັກທໍຣີແທ້ທີ່ພວກມັນຊີ້ໄປ. "
+"ສິ່ງນີ້ຈະເພີ່ມຂະໜາດການສຳຮອງຂໍ້ມູນ ແລະ ອາດຈະເກັບໄຟລ໌ດຽວກັນຫຼາຍຄັ້ງ."
+
+#: qt/manageprofiles/copylinkswidget.py:62
+msgid "Uses 'rsync --copy-links'."
+msgstr "ໃຊ້ 'rsync --copy-links'."
+
+#: qt/manageprofiles/copylinkswidget.py:67
+msgid "Only external"
+msgstr "ສະເພາະພາຍນອກ"
+
+#: qt/manageprofiles/copylinkswidget.py:71
+msgid ""
+"Only links pointing outside the backup source are copied as files. This "
+"increases backup size and may store the same files multiple times."
+msgstr ""
+"ສະເພາະລິ້ງຄ໌ທີ່ຊີ້ອອກນອກແຫຼ່ງຂໍ້ມູນສຳຮອງເທົ່ານັ້ນທີ່ຈະຖືກຄັດລອກເປັນໄຟລ໌. "
+"ສິ່ງນີ້ຈະເພີ່ມຂະໜາດການສຳຮອງຂໍ້ມູນ ແລະ ອາດຈະເກັບໄຟລ໌ດຽວກັນຫຼາຍຄັ້ງ."
+
+#: qt/manageprofiles/copylinkswidget.py:74
+msgid "Uses 'rsync --copy-unsafe-links'."
+msgstr "ໃຊ້ 'rsync --copy-unsafe-links'."
+
+#: qt/manageprofiles/excludesuggestions.py:33
+msgid "Editor & Office temporary files"
+msgstr "ໄຟລ໌ຊົ່ວຄາວຂອງ Editor & Office"
+
+#: qt/manageprofiles/excludesuggestions.py:34
+msgid "Emacs backup files"
+msgstr "ໄຟລ໌ສຳຮອງຂອງ Emacs"
+
+#: qt/manageprofiles/excludesuggestions.py:35
+msgid "Emacs autosave files"
+msgstr "ໄຟລ໌ບັນທຶກອັດຕະໂນມັດຂອງ Emacs"
+
+#: qt/manageprofiles/excludesuggestions.py:36
+msgid "Vim swap files"
+msgstr "ໄຟລ໌ swap ຂອງ Vim"
+
+#: qt/manageprofiles/excludesuggestions.py:37
+msgid "Microsoft Office temporary files"
+msgstr "ໄຟລ໌ຊົ່ວຄາວຂອງ Microsoft Office"
+
+#: qt/manageprofiles/excludesuggestions.py:40
+msgid "LibreOffice & other OpenDocument Editors lock files"
+msgstr "ໄຟລ໌ລັອກຂອງ LibreOffice & OpenDocument Editors ອື່ນໆ"
+
+#: qt/manageprofiles/excludesuggestions.py:44
+msgid "Thumbnails & Temporary Pictures"
+msgstr "ຮູບນ້ອຍ (Thumbnails) & ຮູບພາບຊົ່ວຄາວ"
+
+#: qt/manageprofiles/excludesuggestions.py:47
+msgid "Thumbnail cache on GNU/Linux and other unixoid OS'es"
+msgstr "ແຄຊ໌ຮູບນ້ອຍໃນ GNU/Linux ແລະ ລະບົບປະຕິບັດການແບບ unix ອື່ນໆ"
+
+#: qt/manageprofiles/excludesuggestions.py:50
+msgid "Thumbnail database on Windows"
+msgstr "ຖານຂໍ້ມູນຮູບນ້ອຍໃນ Windows"
+
+#: qt/manageprofiles/excludesuggestions.py:51
+msgid "Metadata directory on MacOS"
+msgstr "ໄດເຣັກທໍຣີ Metadata ໃນ MacOS"
+
+#: qt/manageprofiles/excludesuggestions.py:53
+msgid "Application-specific locks"
+msgstr "ໄຟລ໌ລັອກສະເພາະຂອງແອັບພລິເຄຊັນ"
+
+#: qt/manageprofiles/excludesuggestions.py:56
+msgid "Discord application lock file"
+msgstr "ໄຟລ໌ລັອກຂອງແອັບພລິເຄຊັນ Discord"
+
+#: qt/manageprofiles/excludesuggestions.py:57
+msgid "Discord session lock file"
+msgstr "ໄຟລ໌ລັອກເຊດຊັນຂອງ Discord"
+
+#: qt/manageprofiles/excludesuggestions.py:60
+msgid "Mozilla Firefox & Thunderbird lock file"
+msgstr "ໄຟລ໌ລັອກຂອງ Mozilla Firefox & Thunderbird"
+
+#: qt/manageprofiles/excludesuggestions.py:62
+msgid "Caches & Temporary directories"
+msgstr "ແຄຊ໌ & ໄດເຣັກທໍຣີຊົ່ວຄາວ"
+
+#: qt/manageprofiles/excludesuggestions.py:63
+msgid "User application cache"
+msgstr "ແຄຊ໌ແອັບພລິເຄຊັນຂອງຜູ້ໃຊ້"
+
+#: qt/manageprofiles/excludesuggestions.py:64
+#: qt/manageprofiles/excludesuggestions.py:67
+msgid "System temporary directory"
+msgstr "ໄດເຣັກທໍຣີຊົ່ວຄາວຂອງລະບົບ"
+
+#: qt/manageprofiles/excludesuggestions.py:72
+msgid "Package cache for Debian(-based) GNU/Linux distributions"
+msgstr "ແຄຊ໌ແພັກເກັດສຳລັບ Debian(-based) GNU/Linux distributions"
+
+#: qt/manageprofiles/excludesuggestions.py:77
+msgid "Flatpak app and runtime repository"
+msgstr "Flatpak app ແລະ runtime repository"
+
+#: qt/manageprofiles/excludesuggestions.py:81
+msgid "System runtime directories"
+msgstr "ໄດເຣັກທໍຣີ runtime ຂອງລະບົບ"
+
+#: qt/manageprofiles/excludesuggestions.py:84
+msgid "Kernel and process information"
+msgstr "ຂໍ້ມູນເຄີເນລ (Kernel) ແລະ ຂະບວນການ (process)"
+
+#: qt/manageprofiles/excludesuggestions.py:89
+msgid "Device and other hardware information (sysfs interface)"
+msgstr "ຂໍ້ມູນອຸປະກອນ ແລະ ຮາດແວອື່ນໆ (sysfs interface)"
+
+#: qt/manageprofiles/excludesuggestions.py:92
+msgid "Device nodes"
+msgstr "Device nodes"
+
+#: qt/manageprofiles/excludesuggestions.py:93
+msgid "Runtime system files"
+msgstr "ໄຟລ໌ລະບົບຂະນະເຮັດວຽກ"
+
+#: qt/manageprofiles/excludesuggestions.py:95
+msgid "Other non-persistent"
+msgstr "ອື່ນໆ ທີ່ບໍ່ຄົງທີ່"
+
+#: qt/manageprofiles/excludesuggestions.py:98
+msgid "List of currently mounted filesystems"
+msgstr "ລາຍຊື່ລະບົບໄຟລ໌ທີ່ກຳລັງເຊື່ອມຕໍ່ (mounted) ຢູ່"
+
+#: qt/manageprofiles/excludesuggestions.py:101
+msgid "System swap file (virtual memory)"
+msgstr "ໄຟລ໌ swap ຂອງລະບົບ (ໜ່ວຍຄວາມຈຳສະເມືອນ)"
+
+#: qt/manageprofiles/excludesuggestions.py:102
+msgid "GNOME virtual file system mount point"
+msgstr "ຈຸດເຊື່ອມຕໍ່ລະບົບໄຟລ໌ສະເມືອນຂອງ GNOME"
+
+#: qt/manageprofiles/excludesuggestions.py:103
+msgid "Recovered filesystem objects"
+msgstr "ວັດຖຸລະບົບໄຟລ໌ທີ່ຖືກກູ້ຄືນ"
+
+#: qt/manageprofiles/excludesuggestions.py:105
+msgid "Miscellaneous"
+msgstr "ອື່ນໆ"
+
+#: qt/manageprofiles/excludesuggestions.py:108
+msgid "Metadata directory on Microsoft Windows"
+msgstr "ໄດເຣັກທໍຣີ Metadata ໃນ Microsoft Windows"
+
+#: qt/manageprofiles/excludesuggestions.py:111
+msgid "User recycle bin"
+msgstr "ຖັງຂີ້ເຫຍື້ອຂອງຜູ້ໃຊ້"
+
+#: qt/manageprofiles/excludesuggestions.py:112
+msgid "System backup files"
+msgstr "ໄຟລ໌ສຳຮອງຂອງລະບົບ"
+
+#: qt/manageprofiles/excludesuggestions.py:139
+msgid "Exclude Suggestions"
+msgstr "ຄຳແນະນຳໃນການຍົກເວັ້ນ"
+
+#: qt/manageprofiles/excludesuggestions.py:144
+msgid "Select commonly used items to add to backup exclusions."
+msgstr "ເລືອກລາຍການທີ່ໃຊ້ທົ່ວໄປເພື່ອເພີ່ມເຂົ້າໃນການຍົກເວັ້ນການສຳຮອງຂໍ້ມູນ."
+
+#: qt/manageprofiles/excludesuggestions.py:157
+msgid "Default"
+msgstr "ຄ່າເລີ່ມຕົ້ນ"
+
+#: qt/manageprofiles/excludesuggestions.py:158
+msgid "Reset to predefined selection"
+msgstr "ຕັ້ງຄ່າໃໝ່ເປັນລາຍການທີ່ກຳນົດໄວ້ກ່ອນ"
+
+#: qt/manageprofiles/schedulewidget.py:30
+msgid ""
+"For example, \"repeatedly every 1 hour\" means a backup is triggered at each"
+" new clock hour. If the last successful backup was at 18:56, it will be "
+"triggered again at 19:00 because the hour boundary has been crossed. This "
+"schedule mode is useful if the computer is not running regularly."
+msgstr ""
+"ຕົວຢ່າງ, \"ຊໍ້າຄືນທຸກໆ 1 ຊົ່ວໂມງ\" "
+"ໝາຍເຖິງການສຳຮອງຂໍ້ມູນຈະຖືກກະຕຸ້ນໃນທຸກໆຕົ້ນຊົ່ວໂມງໃໝ່. "
+"ຫາກການສຳຮອງຂໍ້ມູນຄັ້ງຫຼ້າສຸດທີ່ສຳເລັດແມ່ນເວລາ 18:56, "
+"ມັນຈະຖືກກະຕຸ້ນອີກຄັ້ງໃນເວລາ 19:00 ເພາະຂ້າມຜ່ານຊົ່ວໂມງໃໝ່. "
+"ໂໝດການກຳນົດເວລານີ້ມີປະໂຫຍດຫາກຄອມພິວເຕີບໍ່ໄດ້ເປີດໃຊ້ງານເປັນປົກກະຕິ."
+
+#: qt/manageprofiles/schedulewidget.py:49
+msgid "Schedule"
+msgstr "ກຳນົດເວລາ"
+
+#: qt/manageprofiles/schedulewidget.py:88
+msgid "Day:"
+msgstr "ວັນ:"
+
+#: qt/manageprofiles/schedulewidget.py:93
+msgid "Weekday:"
+msgstr "ວັນໃນອາທິດ:"
+
+#: qt/manageprofiles/schedulewidget.py:98
+msgid "Time:"
+msgstr "ເວລາ:"
+
+#: qt/manageprofiles/schedulewidget.py:103
+msgid "Hours:"
+msgstr "ຊົ່ວໂມງ:"
+
+#: qt/manageprofiles/schedulewidget.py:109
+msgid "after the hour"
+msgstr "ຫຼັງຈາກຕົ້ນຊົ່ວໂມງ"
+
+#: qt/manageprofiles/schedulewidget.py:111
+msgid "Minutes:"
+msgstr "ນາທີ:"
+
+#: qt/manageprofiles/schedulewidget.py:115
+msgid ""
+"Run Back In Time as soon as the drive is connected (only once every X days)."
+" A sudo password prompt will appear."
+msgstr ""
+"ເປີດໃຊ້ Back In Time ທັນທີທີ່ເຊື່ອມຕໍ່ໄດຣຟ໌ (ພຽງຄັ້ງດຽວທຸກໆ X ມື້). "
+"ຈະມີການຖາມລະຫັດຜ່ານ sudo ປະກົດຂຶ້ນ."
+
+#: qt/manageprofiles/schedulewidget.py:121
+msgid ""
+"Trigger a backup when a new hour, day, week, or month begins. If the system "
+"was off, it runs on the next start."
+msgstr ""
+"ກະຕຸ້ນການສຳຮອງຂໍ້ມູນເມື່ອເລີ່ມຕົ້ນ ຊົ່ວໂມງ, ມື້, ອາທິດ, ຫຼື ເດືອນ ໃໝ່. "
+"ຫາກລະບົບຖືກປິດຢູ່, ມັນຈະເຮັດວຽກໃນການເລີ່ມຕົ້ນຄັ້ງຖັດໄປ."
+
+#: qt/manageprofiles/schedulewidget.py:133
+msgid "Every:"
+msgstr "ທຸກໆ:"
+
+#: qt/manageprofiles/schedulewidget.py:137
+msgid "Enable logging of debug messages"
+msgstr "ເປີດໃຊ້ການບັນທຶກຂໍ້ຄວາມແກ້ໄຂບັນຫາ (debug)"
+
+#: qt/manageprofiles/schedulewidget.py:141
+msgid "Writes debug-level messages into the system log via \"--debug\"."
+msgstr "ຂຽນຂໍ້ຄວາມລະດັບ debug ເຂົ້າໃນບັນທຶກລະບົບຜ່ານ \"--debug\"."
+
+#: qt/manageprofiles/schedulewidget.py:143
+msgid ""
+"Caution: Only use this temporarily for diagnostics, as it generates a large "
+"amount of output."
+msgstr ""
+"ຂໍ້ຄວນລະວັງ: ໃຊ້ສິ່ງນີ້ເປັນການຊົ່ວຄາວເພື່ອການວິເຄາະບັນຫາເທົ່ານັ້ນ, "
+"ເພາະມັນຈະສ້າງຂໍ້ມູນຜົນອອກເປັນຈຳນວນຫຼາຍ."
+
+#: qt/manageprofiles/schedulewidget.py:168
+msgid "Disabled"
+msgstr "ປິດໃຊ້ງານ"
+
+#: qt/manageprofiles/schedulewidget.py:169
+msgid "At every boot/reboot"
+msgstr "ທຸກໆການເປີດເຄື່ອງ/ເລີ່ມລະບົບໃໝ່"
+
+#: qt/manageprofiles/schedulewidget.py:171
+#: qt/manageprofiles/schedulewidget.py:173
+#: qt/manageprofiles/schedulewidget.py:175
+#, python-brace-format
+msgid "Every minute"
+msgid_plural "Every {n} minutes"
+msgstr[0] "ທຸກໆ {n} ນາທີ"
+
+#: qt/manageprofiles/schedulewidget.py:177
+#: qt/manageprofiles/schedulewidget.py:179
+#: qt/manageprofiles/schedulewidget.py:181
+#: qt/manageprofiles/schedulewidget.py:183
+#: qt/manageprofiles/schedulewidget.py:185
+#, python-brace-format
+msgid "Every hour"
+msgid_plural "Every {n} hours"
+msgstr[0] "ທຸກໆ {n} ຊົ່ວໂມງ"
+
+#: qt/manageprofiles/schedulewidget.py:186
+msgid "Custom hours"
+msgstr "ກຳນົດຊົ່ວໂມງເອງ"
+
+#: qt/manageprofiles/schedulewidget.py:187
+msgid "Every day"
+msgstr "ທຸກໆມື້"
+
+#: qt/manageprofiles/schedulewidget.py:189
+msgid "Repeatedly"
+msgstr "ຊໍ້າຄືນ"
+
+#: qt/manageprofiles/schedulewidget.py:191
+msgid "When drive gets connected (udev)"
+msgstr "ເມື່ອໄດຣຟ໌ຖືກເຊື່ອມຕໍ່ (udev)"
+
+#: qt/manageprofiles/schedulewidget.py:192
+msgid "Every week"
+msgstr "ທຸກໆອາທິດ"
+
+#: qt/manageprofiles/schedulewidget.py:193
+msgid "Every month"
+msgstr "ທຸກໆເດືອນ"
+
+#: qt/manageprofiles/schedulewidget.py:194
+msgid "Every year"
+msgstr "ທຸກໆປີ"
+
+#: qt/manageprofiles/schedulewidget.py:253
+msgid "Hour(s)"
+msgstr "ຊົ່ວໂມງ"
+
+#: qt/manageprofiles/schedulewidget.py:254
+#: qt/manageprofiles/tab_remove_retention.py:272
+msgid "Day(s)"
+msgstr "ມື້"
+
+#: qt/manageprofiles/schedulewidget.py:255
+#: qt/manageprofiles/tab_remove_retention.py:273
+msgid "Week(s)"
+msgstr "ອາທິດ"
+
+#: qt/manageprofiles/schedulewidget.py:256
+msgid "Month(s)"
+msgstr "ເດືອນ"
+
+#: qt/manageprofiles/schedulewidget.py:352
+msgid ""
+"Custom hours can only be a comma separated list of hours (e.g. 8,12,18,23) "
+"or */3 for periodic backups every 3 hours."
+msgstr ""
+"ຊົ່ວໂມງທີ່ກຳນົດເອງຕ້ອງເປັນລາຍການຊົ່ວໂມງທີ່ຄັ່ນດ້ວຍຈຸດ (ເຊັ່ນ: 8,12,18,23) "
+"ຫຼື */3 ສຳລັບການສຳຮອງຂໍ້ມູນທຸກໆ 3 ຊົ່ວໂມງ."
+
+#: qt/manageprofiles/sshkeyselector.py:54
+msgid "<Select another file…>"
+msgstr "<ເລືອກໄຟລ໌ອື່ນ…>"
+
+#: qt/manageprofiles/sshkeyselector.py:55
+msgid "Choose an existing private key file from somewhere else."
+msgstr "ເລືອກໄຟລ໌ກະແຈສ່ວນຕົວທີ່ມີຢູ່ຈາກບ່ອນອື່ນ."
+
+#: qt/manageprofiles/sshkeyselector.py:61
+msgid "<Generate new key-pair…>"
+msgstr "<ສ້າງຄູ່ກະແຈໃໝ່…>"
+
+#: qt/manageprofiles/sshkeyselector.py:62
+msgid "Create a new SSH key without passphrase."
+msgstr "ສ້າງກະແຈ SSH ໃໝ່ໂດຍບໍ່ມີລະຫັດປ້ອງກັນ (passphrase)."
+
+#: qt/manageprofiles/sshkeyselector.py:82
+#, python-brace-format
+msgid "Full path: {path}"
+msgstr "ເສັ້ນທາງເຕັມ: {path}"
+
+#: qt/manageprofiles/sshkeyselector.py:195
+msgid "Private key:"
+msgstr "ກະແຈສ່ວນຕົວ:"
+
+#: qt/manageprofiles/sshkeyselector.py:200
+msgid "Use system SSH configuration"
+msgstr "ໃຊ້ການກຳນົດຄ່າ SSH ຂອງລະບົບ"
+
+#: qt/manageprofiles/sshkeyselector.py:202
+msgid ""
+"Leaves the key file unselected. SSH connections will rely on the system’s "
+"existing client configuration (e.g., ~/.ssh/config)."
+msgstr ""
+"ປ່ອຍໃຫ້ໄຟລ໌ກະແຈບໍ່ຖືກເລືອກ. ການເຊື່ອມຕໍ່ SSH "
+"ຈະອີງໃສ່ການກຳນົດຄ່າລູກຂ່າຍທີ່ມີຢູ່ຂອງລະບົບ (ເຊັ່ນ: ~/.ssh/config)."
+
+#: qt/manageprofiles/sshproxywidget.py:47
+msgid "SSH Proxy"
+msgstr "SSH Proxy"
+
+#: qt/manageprofiles/sshproxywidget.py:55 qt/manageprofiles/tab_general.py:111
+#: qt/manageprofiles/tab_general.py:232
+msgid "Host:"
+msgstr "ໂຮສ:"
+
+#: qt/manageprofiles/sshproxywidget.py:59 qt/manageprofiles/tab_general.py:116
+msgid "Port:"
+msgstr "ພອດ:"
+
+#: qt/manageprofiles/sshproxywidget.py:63 qt/manageprofiles/tab_general.py:121
+#: qt/manageprofiles/tab_general.py:238
+msgid "User:"
+msgstr "ຜູ້ໃຊ້:"
+
+#: qt/manageprofiles/sshproxywidget.py:72
+msgid ""
+"Connect to the target host via this proxy (also known as a jump host). See "
+"\"-J\" in the \"ssh\" command documentation or \"ProxyJump\" in "
+"\"ssh_config\" man page for details."
+msgstr ""
+"ເຊື່ອມຕໍ່ກັບໂຮສປາຍທາງຜ່ານພຣັອກຊີນີ້ (ຫຼື ທີ່ຮູ້ຈັກກັນໃນຊື່ jump host). ເບິ່ງ"
+" \"-J\" ໃນເອກະສານຄຳສັ່ງ \"ssh\" ຫຼື \"ProxyJump\" ໃນໜ້າ man ຂອງ "
+"\"ssh_config\" ສຳລັບລາຍລະອຽດ."
+
+#: qt/manageprofiles/tab_exclude.py:63
+#, python-brace-format
+msgid ""
+"{BOLD}Info{ENDBOLD}: In 'SSH encrypted' mode, only single or double "
+"asterisks are functional (e.g. {example2}). Other types of wildcards and "
+"patterns will be ignored (e.g. {example1}). Filenames are unpredictable in "
+"this mode."
+msgstr ""
+"{BOLD}ຂໍ້ມູນ{ENDBOLD}: ໃນໂໝດ 'SSH ເຂົ້າລະຫັດ', ໃຊ້ໄດ້ສະເພາະດອກຈັນດ່ຽວ ຫຼື "
+"ຄູ່ເທົ່ານັ້ນ (ເຊັ່ນ: {example2}). ຕົວແທນ (wildcards) ແລະ "
+"ຮູບແບບປະເພດອື່ນໆຈະຖືກລະເລີຍ (ເຊັ່ນ: {example1}). "
+"ຊື່ໄຟລ໌ຈະບໍ່ສາມາດຄາດເດົາໄດ້ໃນໂໝດນີ້."
+
+#: qt/manageprofiles/tab_exclude.py:86
+msgid "Exclude patterns, files or directories"
+msgstr "ຍົກເວັ້ນຮູບແບບ, ໄຟລ໌ ຫຼື ໄດເຣັກທໍຣີ"
+
+#: qt/manageprofiles/tab_exclude.py:103
+msgid "Add pattern"
+msgstr "ເພີ່ມຮູບແບບ"
+
+#: qt/manageprofiles/tab_exclude.py:108 qt/manageprofiles/tab_include.py:70
+msgid "Add files"
+msgstr "ເພີ່ມໄຟລ໌"
+
+#: qt/manageprofiles/tab_exclude.py:113 qt/manageprofiles/tab_include.py:75
+msgid "Add directories"
+msgstr "ເພີ່ມໄດເຣັກທໍຣີ"
+
+#: qt/manageprofiles/tab_exclude.py:119
+msgid "Suggestions"
+msgstr "ຄຳແນະນຳ"
+
+#: qt/manageprofiles/tab_exclude.py:121
+msgid "Select from common used items to add to exclude list."
+msgstr "ເລືອກຈາກລາຍການທີ່ໃຊ້ທົ່ວໄປເພື່ອເພີ່ມເຂົ້າໃນລາຍການຍົກເວັ້ນ."
+
+#: qt/manageprofiles/tab_exclude.py:135
+msgid "Exclude files bigger than:"
+msgstr "ຍົກເວັ້ນໄຟລ໌ທີ່ມີຂະໜາດໃຫຍ່ກວ່າ:"
+
+#: qt/manageprofiles/tab_exclude.py:139
+#, python-brace-format
+msgid "Exclude files bigger than value in {size_unit}."
+msgstr "ຍົກເວັ້ນໄຟລ໌ທີ່ມີຂະໜາດໃຫຍ່ກວ່າຄ່າໃນ {size_unit}."
+
+#: qt/manageprofiles/tab_exclude.py:141
+msgid ""
+"With 'Full rsync mode' disabled, this setting affects only newly created "
+"files, as rsync treats it as transfer option rather than an exclusion rule. "
+"Consequently, large files that have already been backed up will remain in "
+"backups even if they are modified."
+msgstr ""
+"ເມື່ອປິດ 'ໂໝດ rsync ເຕັມຮູບແບບ', "
+"ການຕັ້ງຄ່ານີ້ຈະມີຜົນກັບສະເພາະໄຟລ໌ທີ່ສ້າງໃໝ່ເທົ່ານັ້ນ, ເພາະ rsync "
+"ຖືວ່າມັນເປັນຕົວເລືອກການສົ່ງຂໍ້ມູນຫຼາຍກວ່າເປັນກົດການຍົກເວັ້ນ. ດັ່ງນັ້ນ, "
+"ໄຟລ໌ຂະໜາດໃຫຍ່ທີ່ໄດ້ສຳຮອງຂໍ້ມູນໄປແລ້ວຈະຍັງຄົງຢູ່ໃນການສຳຮອງຂໍ້ມູນເຖິງແມ່ນວ່າມັນຈະຖືກແກ້ໄຂກໍຕາມ."
+
+#: qt/manageprofiles/tab_exclude.py:266
+msgid "Exclude pattern"
+msgstr "ຮູບແບບການຍົກເວັ້ນ"
+
+#: qt/manageprofiles/tab_exclude.py:268
+msgid "Enter an exclude pattern:"
+msgstr "ປ້ອນຮູບແບບການຍົກເວັ້ນ:"
+
+#: qt/manageprofiles/tab_exclude.py:273
+#, python-brace-format
+msgid "For help, see the rsync man page section {link}."
+msgstr "ສຳລັບຄວາມຊ່ວຍເຫຼືອ, ເບິ່ງໜ້າ rsync man ໃນສ່ວນ {link}."
+
+#: qt/manageprofiles/tab_exclude.py:276
+msgid "Open rsync man page"
+msgstr "ເປີດໜ້າ rsync man"
+
+#: qt/manageprofiles/tab_exclude.py:304
+msgid "Exclude files"
+msgstr "ຍົກເວັ້ນໄຟລ໌"
+
+#: qt/manageprofiles/tab_exclude.py:317
+msgid "Exclude directories"
+msgstr "ຍົກເວັ້ນໄດເຣັກທໍຣີ"
+
+#: qt/manageprofiles/tab_exclude.py:403
+msgid ""
+"Disabled because this pattern is not functional in mode 'SSH encrypted'."
+msgstr "ປິດໃຊ້ງານ ເພາະຮູບແບບນີ້ໃຊ້ການບໍ່ໄດ້ໃນໂໝດ 'SSH ເຂົ້າລະຫັດ'."
+
+#: qt/manageprofiles/tab_expert_options.py:46
+msgid ""
+"These options are for advanced configurations. Modify only if fully aware of"
+" their implications."
+msgstr ""
+"ຕົວເລືອກເຫຼົ່ານີ້ແມ່ນສຳລັບການກຳນົດຄ່າຂັ້ນສູງ. "
+"ຄວນແກ້ໄຂກໍຕໍ່ເມື່ອທ່ານຮູ້ເຖິງຜົນກະທົບຂອງມັນຢ່າງຖີ່ຖ້ວນ."
+
+#: qt/manageprofiles/tab_expert_options.py:55
+#: qt/manageprofiles/tab_expert_options.py:75
+#: qt/manageprofiles/tab_expert_options.py:100
+#, python-brace-format
+msgid "Run 'rsync' with '{cmd}':"
+msgstr "ເປີດໃຊ້ 'rsync' ດ້ວຍ '{cmd}':"
+
+#: qt/manageprofiles/tab_expert_options.py:62
+#: qt/manageprofiles/tab_expert_options.py:81
+msgid "as cron job"
+msgstr "ເປັນ cron job"
+
+#: qt/manageprofiles/tab_expert_options.py:68
+#: qt/manageprofiles/tab_expert_options.py:93
+#: qt/manageprofiles/tab_expert_options.py:124
+msgid "on remote host"
+msgstr "ໃນເຄື່ອງປາຍທາງ"
+
+#: qt/manageprofiles/tab_expert_options.py:87
+msgid "when taking a manual backup"
+msgstr "ເມື່ອເຮັດການສຳຮອງຂໍ້ມູນດ້ວຍຕົນເອງ"
+
+#: qt/manageprofiles/tab_expert_options.py:111
+msgid "Please install 'nocache' to enable this option."
+msgstr "ກະລຸນາຕິດຕັ້ງ 'nocache' ເພື່ອເປີດໃຊ້ຕົວເລືອກນີ້."
+
+#: qt/manageprofiles/tab_expert_options.py:117
+msgid "on local machine"
+msgstr "ໃນເຄື່ອງພາຍໃນ"
+
+#: qt/manageprofiles/tab_expert_options.py:131
+msgid "Redirect stdout to /dev/null in cronjobs."
+msgstr "ປ່ຽນທິດທາງ stdout ໄປຍັງ /dev/null ໃນ cronjobs."
+
+#: qt/manageprofiles/tab_expert_options.py:137
+msgid ""
+"Cron will automatically send an email with attached output of cronjobs if an"
+" MTA is installed."
+msgstr ""
+"Cron ຈະສົ່ງອີເມລພ້ອມກັບຜົນອອກຂອງ cronjobs ໂດຍອັດຕະໂນມັດ ຫາກມີການຕິດຕັ້ງ MTA."
+
+#: qt/manageprofiles/tab_expert_options.py:143
+msgid "Redirect stderr to /dev/null in cronjobs."
+msgstr "ປ່ຽນທິດທາງ stderr ໄປຍັງ /dev/null ໃນ cronjobs."
+
+#: qt/manageprofiles/tab_expert_options.py:149
+msgid ""
+"Cron will automatically send an email with attached errors of cronjobs if an"
+" MTA is installed."
+msgstr ""
+"Cron ຈະສົ່ງອີເມລພ້ອມກັບຂໍ້ຜິດພາດຂອງ cronjobs ໂດຍອັດຕະໂນມັດ ຫາກມີການຕິດຕັ້ງ "
+"MTA."
+
+#: qt/manageprofiles/tab_expert_options.py:159
+msgid "KB/sec"
+msgstr "KB/ວິນາທີ"
+
+#: qt/manageprofiles/tab_expert_options.py:164
+msgid "Limit rsync bandwidth usage:"
+msgstr "ຈຳກັດການນຳໃຊ້ແບນວິດຂອງ rsync:"
+
+#: qt/manageprofiles/tab_expert_options.py:205
+msgid "Preserve ACL"
+msgstr "ຮັກສາ ACL"
+
+#: qt/manageprofiles/tab_expert_options.py:223
+msgid "Preserve extended attributes (xattr)"
+msgstr "ຮັກສາຄຸນລັກສະນະຂະຫຍາຍ (xattr)"
+
+#: qt/manageprofiles/tab_expert_options.py:250
+msgid "Restrict to one file system"
+msgstr "ຈຳກັດໄວ້ສະເພາະລະບົບໄຟລ໌ດຽວ"
+
+#: qt/manageprofiles/tab_expert_options.py:268
+#, python-brace-format
+msgid "Options must be quoted e.g. {example}."
+msgstr "ຕົວເລືອກຕ້ອງຢູ່ໃນເຄື່ອງໝາຍຄຳເວົ້າ ເຊັ່ນ: {example}."
+
+#: qt/manageprofiles/tab_expert_options.py:277
+msgid "Paste additional options to rsync"
+msgstr "ວາງຕົວເລືອກເພີ່ມເຕີມສຳລັບ rsync"
+
+#: qt/manageprofiles/tab_expert_options.py:287
+msgid "Prefix to run before every command on remote host."
+msgstr "ຄຳນຳໜ້າທີ່ຈະເຮັດວຽກກ່ອນທຸກຄຳສັ່ງໃນເຄື່ອງປາຍທາງ."
+
+#: qt/manageprofiles/tab_expert_options.py:288
+#, python-brace-format
+msgid ""
+"Variables need to be escaped with \\$FOO. This doesn't touch rsync. So to "
+"add a prefix for rsync use \"{example_value}\" with {rsync_options_value}."
+msgstr ""
+"ຕົວປ່ຽນຕ້ອງໃຊ້ escape ດ້ວຍ \\$FOO. ສິ່ງນີ້ຈະບໍ່ກະທົບກັບ rsync. ດັ່ງນັ້ນ "
+"ເພື່ອເພີ່ມຄຳນຳໜ້າສຳລັບ rsync ໃຫ້ໃຊ້ \"{example_value}\" ກັບ "
+"{rsync_options_value}."
+
+#: qt/manageprofiles/tab_expert_options.py:294
+msgid "default"
+msgstr "ຄ່າເລີ່ມຕົ້ນ"
+
+#: qt/manageprofiles/tab_expert_options.py:299
+msgid "Add prefix to SSH commands"
+msgstr "ເພີ່ມຄຳນຳໜ້າໃນຄຳສັ່ງ SSH"
+
+#: qt/manageprofiles/tab_expert_options.py:334
+msgid "(default: {})"
+msgstr "(ຄ່າເລີ່ມຕົ້ນ: {})"
+
+#: qt/manageprofiles/tab_expert_options.py:335
+msgid "disabled"
+msgstr "ປິດໃຊ້ງານ"
+
+#: qt/manageprofiles/tab_expert_options.py:335
+msgid "enabled"
+msgstr "ເປີດໃຊ້ງານ"
+
+#: qt/manageprofiles/tab_general.py:66 qt/restoreconfigdialog.py:350
+msgid "Mode:"
+msgstr "ໂໝດ:"
+
+#: qt/manageprofiles/tab_general.py:73 qt/manageprofiles/tab_general.py:378
+#: qt/manageprofiles/tab_general.py:686
+msgid "Where to save backups"
+msgstr "ບ່ອນທີ່ຈະບັນທຶກການສຳຮອງຂໍ້ມູນ"
+
+#: qt/manageprofiles/tab_general.py:99
+msgid "SSH Settings"
+msgstr "ຕັ້ງຄ່າ SSH"
+
+#: qt/manageprofiles/tab_general.py:133
+msgid "Key file:"
+msgstr "ໄຟລ໌ກະແຈ:"
+
+#: qt/manageprofiles/tab_general.py:170 qt/manageprofiles/tab_general.py:178
+#: qt/manageprofiles/tab_general.py:183
+msgid "Password"
+msgstr "ລະຫັດຜ່ານ"
+
+#: qt/manageprofiles/tab_general.py:200
+msgid "Save Password to Keyring"
+msgstr "ບັນທຶກລະຫັດຜ່ານລົງໃນ Keyring"
+
+#: qt/manageprofiles/tab_general.py:204
+msgid "Cache Password for Cron (Security issue: root can read password)"
+msgstr ""
+"ເກັບລະຫັດຜ່ານໃນແຄຊ໌ສຳລັບ Cron (ບັນຫາດ້າຄວາມປອດໄພ: root "
+"ສາມາດອ່ານລະຫັດຜ່ານໄດ້)"
+
+#: qt/manageprofiles/tab_general.py:220
+msgid "Advanced"
+msgstr "ຂັ້ນສູງ"
+
+#: qt/manageprofiles/tab_general.py:250 qt/manageprofiles/tab_general.py:809
+msgid "Full backup path:"
+msgstr "ເສັ້ນທາງສຳຮອງຂໍ້ມູນເຕັມ:"
+
+#: qt/manageprofiles/tab_general.py:258
+msgid ""
+"Scheduling is disabled because no cron installation was found. Please "
+"install cron to enable scheduled backups."
+msgstr ""
+"ການກຳນົດເວລາຖືກປິດໃຊ້ງານ ເພາະບໍ່ພົບການຕິດຕັ້ງ cron. ກະລຸນາຕິດຕັ້ງ cron "
+"ເພື່ອເປີດໃຊ້ການສຳຮອງຂໍ້ມູນແບບກຳນົດເວລາ."
+
+#: qt/manageprofiles/tab_general.py:377
+msgid "The backup destination path cannot be empty."
+msgstr "ເສັ້ນທາງປາຍທາງການສຳຮອງຂໍ້ມູນຕ້ອງບໍ່ຫວ່າງເປົ່າ."
+
+#: qt/manageprofiles/tab_general.py:393
+msgid "The encryption password cannot be empty."
+msgstr "ລະຫັດຜ່ານການເຂົ້າລະຫັດຕ້ອງບໍ່ຫວ່າງເປົ່າ."
+
+#: qt/manageprofiles/tab_general.py:476
+msgid "Issues were found while validating the SSH configuration."
+msgstr "ພົບບັນຫາຂະນະກວດສອບຄວາມຖືກຕ້ອງຂອງການກຳນົດຄ່າ SSH."
+
+#: qt/manageprofiles/tab_general.py:478
+msgid "SSH profile setup failed"
+msgstr "ການຕັ້ງຄ່າໂປຣໄຟລ໌ SSH ລົ້ມເຫຼວ"
+
+#: qt/manageprofiles/tab_general.py:522
+msgid "Profile setup failed"
+msgstr "ການຕັ້ງຄ່າໂປຣໄຟລ໌ລົ້ມເຫຼວ"
+
+#: qt/manageprofiles/tab_general.py:657
+msgid "Backups are stored locally."
+msgstr "ການສຳຮອງຂໍ້ມູນຖືກເກັບໄວ້ພາຍໃນເຄື່ອງ."
+
+#: qt/manageprofiles/tab_general.py:659
+msgid "Backups are stored locally and encrypted using gocryptfs."
+msgstr "ການສຳຮອງຂໍ້ມູນຖືກເກັບໄວ້ພາຍໃນເຄື່ອງ ແລະ ເຂົ້າລະຫັດໂດຍໃຊ້ gocryptfs."
+
+#: qt/manageprofiles/tab_general.py:661
+msgid "Backups are stored on a remote system via SSH."
+msgstr "ການສຳຮອງຂໍ້ມູນຖືກເກັບໄວ້ໃນລະບົບປາຍທາງຜ່ານ SSH."
+
+#: qt/manageprofiles/tab_general.py:663
+msgid ""
+"Backups are stored on a remote system via SSH and encrypted using gocryptfs."
+msgstr ""
+"ການສຳຮອງຂໍ້ມູນຖືກເກັບໄວ້ໃນລະບົບປາຍທາງຜ່ານ SSH ແລະ ເຂົ້າລະຫັດໂດຍໃຊ້ "
+"gocryptfs."
+
+#: qt/manageprofiles/tab_general.py:709
+msgid "Really change the backup directory?"
+msgstr "ຕ້ອງການປ່ຽນໄດເຣັກທໍຣີສຳຮອງຂໍ້ມູນແທ້ຫຼືບໍ່?"
+
+#: qt/manageprofiles/tab_general.py:729
+msgid "The selected backup destination cannot be used for encryption."
+msgstr "ປາຍທາງການສຳຮອງຂໍ້ມູນທີ່ເລືອກບໍ່ສາມາດໃຊ້ສຳລັບການເຂົ້າລະຫັດໄດ້."
+
+#: qt/manageprofiles/tab_general.py:732
+msgid "It must either be empty or already initialized for gocryptfs."
+msgstr "ມັນຕ້ອງເປັນໂຟນເດີຫວ່າງ ຫຼື ໄດ້ຖືກເລີ່ມຕົ້ນສຳລັບ gocryptfs ແລ້ວ."
+
+#: qt/manageprofiles/tab_general.py:762
+msgid "Invalid file: Not a private SSH key"
+msgstr "ໄຟລ໌ບໍ່ຖືກຕ້ອງ: ບໍ່ແມ່ນກະແຈ SSH ສ່ວນຕົວ"
+
+#: qt/manageprofiles/tab_general.py:763
+#, python-brace-format
+msgid ""
+"The selected file ({path}) is a public SSH key. Please choose the "
+"corresponding private key file instead (without \".pub\")."
+msgstr ""
+"ໄຟລ໌ທີ່ເລືອກ ({path}) ແມ່ນກະແຈ SSH ສາທາລະນະ. "
+"ກະລຸນາເລືອກໄຟລ໌ກະແຈສ່ວນຕົວທີ່ກົງກັນແທນ (ທີ່ບໍ່ມີ \".pub\")."
+
+#: qt/manageprofiles/tab_general.py:787
+#, python-brace-format
+msgid ""
+"The file {path} already exists. Cannot create a new SSH key with that name."
+msgstr "ໄຟລ໌ {path} ມີຢູ່ແລ້ວ. ບໍ່ສາມາດສ້າງກະແຈ SSH ໃໝ່ດ້ວຍຊື່ນັ້ນໄດ້."
+
+#: qt/manageprofiles/tab_general.py:797
+#, python-brace-format
+msgid "Failed to create new SSH key in {path}."
+msgstr "ສ້າງກະແຈ SSH ໃໝ່ໃນ {path} ບໍ່ສຳເລັດ."
+
+#: qt/manageprofiles/tab_include.py:50
+msgid "Include files and directories"
+msgstr "ລວມເອົາໄຟລ໌ ແລະ ໄດເຣັກທໍຣີ"
+
+#: qt/manageprofiles/tab_include.py:170
+#, python-brace-format
+msgid ""
+"\"{path}\" is a symlink. The linked target will not be backed up until it is"
+" included, too."
+msgstr ""
+"\"{path}\" ແມ່ນ symlink. ເປົ້າໝາຍທີ່ຖືກລິ້ງຄ໌ຈະບໍ່ຖືກສຳຮອງຂໍ້ມູນ "
+"ຈົນກວ່າມັນຈະຖືກລວມເຂົ້າໄປນຳ."
+
+#: qt/manageprofiles/tab_include.py:174
+msgid "Include the symlink's target instead?"
+msgstr "ລວມເອົາເປົ້າໝາຍຂອງ symlink ແທນຫຼືບໍ່?"
+
+#: qt/manageprofiles/tab_include.py:186
+msgid "Include files"
+msgstr "ລວມເອົາໄຟລ໌"
+
+#: qt/manageprofiles/tab_include.py:206
+msgid "Include directories"
+msgstr "ລວມເອົາໄດເຣັກທໍຣີ"
+
+#: qt/manageprofiles/tab_options.py:39
+msgid "Enable notifications"
+msgstr "ເປີດການແຈ້ງເຕືອນ"
+
+#: qt/manageprofiles/tab_options.py:43
+msgid "Disable backups when on battery"
+msgstr "ປິດການສຳຮອງຂໍ້ມູນເມື່ອໃຊ້ແບັດເຕີຣີ"
+
+#: qt/manageprofiles/tab_options.py:49
+msgid "Power status not available from system"
+msgstr "ລະບົບບໍ່ມີຂໍ້ມູນສະຖານະພະລັງງານ"
+
+#: qt/manageprofiles/tab_options.py:52
+msgid "Run only one backup at a time"
+msgstr "ເປີດໃຊ້ການສຳຮອງຂໍ້ມູນພຽງຄັ້ງລະໜຶ່ງວຽກເທົ່ານັ້ນ"
+
+#: qt/manageprofiles/tab_options.py:56
+msgid ""
+"Other backups will be blocked until the current backup is completed. This is"
+" a global setting, meaning it will affect all profiles for this user. "
+"However, it must also be activated for all other users."
+msgstr ""
+"ການສຳຮອງຂໍ້ມູນອື່ນໆຈະຖືກບລັອກໄວ້ຈົນກວ່າການສຳຮອງຂໍ້ມູນປັດຈຸບັນຈະສຳເລັດ. "
+"ນີ້ແມ່ນການຕັ້ງຄ່າທົ່ວໄປ (global), "
+"ໝາຍຄວາມວ່າມັນຈະມີຜົນກັບທຸກໂປຣໄຟລ໌ສຳຮອງຂອງຜູ້ໃຊ້ນີ້. ແນວໃດກໍຕາມ, "
+"ມັນຕ້ອງຖືກເປີດໃຊ້ງານສຳລັບຜູ້ໃຊ້ອື່ນໆທັງໝົດນຳ."
+
+#: qt/manageprofiles/tab_options.py:63
+msgid "Backup replaced files on restore"
+msgstr "ສຳຮອງຂໍ້ມູນໄຟລ໌ທີ່ຖືກແທນທີ່ເມື່ອກູ້ຄືນ"
+
+#: qt/manageprofiles/tab_options.py:78
+msgid "Continue on errors (keep incomplete backups)"
+msgstr "ດຳເນີນການຕໍ່ເມື່ອເກີດຂໍ້ຜິດພາດ (ເກັບຮັກສາການສຳຮອງຂໍ້ມູນທີ່ບໍ່ສົມບູນ)"
+
+#: qt/manageprofiles/tab_options.py:82
+msgid "Use checksum to detect changes"
+msgstr "ໃຊ້ checksum ເພື່ອທວດສອບການປ່ຽນແປງ"
+
+#: qt/manageprofiles/tab_options.py:86
+msgid "Create a new backup whether there were changes or not."
+msgstr "ສ້າງການສຳຮອງຂໍ້ມູນໃໝ່ ບໍ່ວ່າຈະມີການປ່ຽນແປງຫຼືບໍ່."
+
+#: qt/manageprofiles/tab_options.py:95
+msgid "Warn if the free disk space falls below"
+msgstr "ເຕືອນຫາກພື້ນທີ່ດິດຫວ່າງຕໍ່າກວ່າ"
+
+#: qt/manageprofiles/tab_options.py:101
+msgid ""
+"Shows a warning when free space on the backup destination disk is less than "
+"the specified value."
+msgstr ""
+"ສະແດງຄຳເຕືອນເມື່ອພື້ນທີ່ຫວ່າງໃນດິດປາຍທາງການສຳຮອງຂໍ້ມູນໜ້ອຍກວ່າຄ່າທີ່ກຳນົດ."
+
+#: qt/manageprofiles/tab_options.py:103
+msgid ""
+"If the Remove & Retention policy is enabled and old backups are removed "
+"based on available free space, this value cannot be lower than the value set"
+" in the policy."
+msgstr ""
+"ຫາກເປີດໃຊ້ນະໂຍບາຍ ລຶບ & ການເກັບຮັກສາ ແລະ "
+"ການສຳຮອງຂໍ້ມູນເກົ່າຖືກລຶບອອກຕາມພື້ນທີ່ຫວ່າງທີ່ມີຢູ່, "
+"ຄ່ານີ້ຈະບໍ່ສາມາດຕໍ່າກວ່າຄ່າທີ່ຕັ້ງໄວ້ໃນນະໂຍບາຍ."
+
+#: qt/manageprofiles/tab_options.py:122
+msgid "Log Level:"
+msgstr "ລະດັບການບັນທຶກ (Log):"
+
+#: qt/manageprofiles/tab_options.py:185
+msgid "None"
+msgstr "ບໍ່ມີ"
+
+#: qt/manageprofiles/tab_remove_retention.py:206
+msgid "user manual"
+msgstr "ຄູ່ມືຜູ້ໃຊ້"
+
+#: qt/manageprofiles/tab_remove_retention.py:208
+#, python-brace-format
+msgid ""
+"The following rules are processed from top to bottom. Later rules override "
+"earlier ones. See the {manual_link} for details and examples."
+msgstr ""
+"ກົດຕໍ່ໄປນີ້ຈະຖືກປະມວນຜົນຈາກເທິງລົງລຸ່ມ. ກົດທີ່ຢູ່ຫຼັງຈະຂຽນທັບກົດກ່ອນໜ້າ. "
+"ເບິ່ງ {manual_link} ສຳລັບລາຍລະອຽດ ແລະ ຕົວຢ່າງ."
+
+#: qt/manageprofiles/tab_remove_retention.py:223
+msgid "Open user manual in browser."
+msgstr "ເປີດຄູ່ມືຜູ້ໃຊ້ໃນບຣາວເຊີ."
+
+#: qt/manageprofiles/tab_remove_retention.py:237
+msgid "Keep the most recent backup."
+msgstr "ເກັບການສຳຮອງຂໍ້ມູນຫຼ້າສຸດໄວ້."
+
+#: qt/manageprofiles/tab_remove_retention.py:241
+msgid "The most up-to-date backup is kept under all circumstances."
+msgstr "ການສຳຮອງຂໍ້ມູນທີ່ໃໝ່ທີ່ສຸດຈະຖືກເກັບໄວ້ໃນທຸກກໍລະນີ."
+
+#: qt/manageprofiles/tab_remove_retention.py:243
+msgid "That behavior cannot be changed."
+msgstr "ພຶດຕິກຳນັ້ນບໍ່ສາມາດປ່ຽນແປງໄດ້."
+
+#: qt/manageprofiles/tab_remove_retention.py:256
+msgid "Keep named backups."
+msgstr "ເກັບການສຳຮອງຂໍ້ມູນທີ່ມີຊື່ໄວ້."
+
+#: qt/manageprofiles/tab_remove_retention.py:259
+msgid ""
+"Backups that have been given a name, in addition to the usual timestamp, "
+"will be retained under all circumstances and will not be removed."
+msgstr ""
+"ການສຳຮອງຂໍ້ມູນທີ່ໄດ້ຮັບການຕັ້ງຊື່, ເພີ່ມເຕີມຈາກເວລາປົກກະຕິ, "
+"ຈະຖືກເກັບຮັກສາໄວ້ໃນທຸກກໍລະນີ ແລະ ຈະບໍ່ຖືກລຶບອອກ."
+
+#: qt/manageprofiles/tab_remove_retention.py:274
+msgid "Year(s)"
+msgstr "ປີ"
+
+#: qt/manageprofiles/tab_remove_retention.py:279
+msgid "Remove backups older than"
+msgstr "ລຶບການສຳຮອງຂໍ້ມູນທີ່ເກົ່າກວ່າ"
+
+#: qt/manageprofiles/tab_remove_retention.py:285
+msgid "Full days. Current day is ignored."
+msgstr "ມື້ເຕັມ. ມື້ປັດຈຸບັນຈະຖືກລະເລີຍ."
+
+#: qt/manageprofiles/tab_remove_retention.py:287
+msgid "Calendar weeks with Monday as first day. Current week is ignored."
+msgstr "ອາທິດຕາມປະຕິທິນໂດຍມີວັນຈັນເປັນມື້ທຳອິດ. ອາທິດປັດຈຸບັນຈະຖືກລະເລີຍ."
+
+#: qt/manageprofiles/tab_remove_retention.py:290
+msgid "12 months periods. Current month is ignored."
+msgstr "ໄລຍະເວລາ 12 ເດືອນ. ເດືອນປັດຈຸບັນຈະຖືກລະເລີຍ."
+
+#: qt/manageprofiles/tab_remove_retention.py:306
+msgid "Retention policy"
+msgstr "ນະໂຍບາຍການເກັບຮັກສາ"
+
+#: qt/manageprofiles/tab_remove_retention.py:311
+msgid "Run in background on remote host."
+msgstr "ເຮັດວຽກເບື້ອງຫຼັງໃນເຄື່ອງປາຍທາງ."
+
+#: qt/manageprofiles/tab_remove_retention.py:314
+msgid ""
+"The retention policy will be executed directly on the remote machine, not "
+"locally. The commands \"bash\", \"screen\", and \"flock\" must be installed "
+"and available on that remote machine."
+msgstr ""
+"ນະໂຍບາຍການເກັບຮັກສາຈະຖືກດຳເນີນການໂດຍກົງໃນເຄື່ອງປາຍທາງ, ບໍ່ແມ່ນພາຍໃນເຄື່ອງ. "
+"ຄຳສັ່ງ \"bash\", \"screen\", ແລະ \"flock\" ຕ້ອງຖືກຕິດຕັ້ງ ແລະ "
+"ພ້ອມໃຊ້ງານໃນເຄື່ອງປາຍທາງນັ້ນ."
+
+#: qt/manageprofiles/tab_remove_retention.py:318
+msgid "If selected, Back In Time will first test the remote machine."
+msgstr "ຫາກເລືອກ, Back In Time ຈະທົດສອບເຄື່ອງປາຍທາງກ່ອນ."
+
+#: qt/manageprofiles/tab_remove_retention.py:322
+msgid "The days are counted starting from today."
+msgstr "ມື້ຈະຖືກນັບເລີ່ມຕົ້ນຕັ້ງແຕ່ມື້ນີ້."
+
+#: qt/manageprofiles/tab_remove_retention.py:323
+msgid "Keep all backups for the last"
+msgstr "ເກັບການສຳຮອງຂໍ້ມູນທັງໝົດສຳຫຼັບ"
+
+#: qt/manageprofiles/tab_remove_retention.py:328
+#: qt/manageprofiles/tab_remove_retention.py:340
+msgid "day(s)."
+msgstr "ມື້ ທີ່ຜ່ານມາ."
+
+#: qt/manageprofiles/tab_remove_retention.py:335
+msgid "Keep the last backup for each day for the last"
+msgstr "ເກັບການສຳຮອງຂໍ້ມູນຫຼ້າສຸດຂອງແຕ່ລະມື້ສຳຫຼັບ"
+
+#: qt/manageprofiles/tab_remove_retention.py:345
+msgid ""
+"The weeks are counted starting from the current running week. A week starts "
+"on Monday."
+msgstr ""
+"ອາທິດຈະຖືກນັບເລີ່ມຕົ້ນຈາກອາທິດປັດຈຸບັນທີ່ກຳລັງດຳເນີນຢູ່. "
+"ອາທິດເລີ່ມຕົ້ນໃນວັນຈັນ."
+
+#: qt/manageprofiles/tab_remove_retention.py:348
+msgid "Keep the last backup for each week for the last"
+msgstr "ເກັບການສຳຮອງຂໍ້ມູນຫຼ້າສຸດຂອງແຕ່ລະອາທິດສຳຫຼັບ"
+
+#: qt/manageprofiles/tab_remove_retention.py:353
+msgid "week(s)."
+msgstr "ອາທິດ ທີ່ຜ່ານມາ."
+
+#: qt/manageprofiles/tab_remove_retention.py:358
+msgid ""
+"The months are counted as calendar months starting with the current month."
+msgstr "ເດືອນຈະຖືກນັບເປັນເດືອນຕາມປະຕິທິນເລີ່ມຕົ້ນດ້ວຍເດືອນປັດຈຸບັນ."
+
+#: qt/manageprofiles/tab_remove_retention.py:361
+msgid "Keep the last backup for each month for the last"
+msgstr "ເກັບການສຳຮອງຂໍ້ມູນຫຼ້າສຸດຂອງແຕ່ລະເດືອນສຳຫຼັບ"
+
+#: qt/manageprofiles/tab_remove_retention.py:366
+msgid "month(s)."
+msgstr "ເດືອນ ທີ່ຜ່ານມາ."
+
+#: qt/manageprofiles/tab_remove_retention.py:371
+msgid ""
+"The years are counted as calendar years starting with the current year."
+msgstr "ປີຈະຖືກນັບເປັນປີຕາມປະຕິທິນເລີ່ມຕົ້ນດ້ວຍປີປັດຈຸບັນ."
+
+#: qt/manageprofiles/tab_remove_retention.py:373
+msgid "Keep the last backup for each year for"
+msgstr "ເກັບການສຳຮອງຂໍ້ມູນຫຼ້າສຸດຂອງແຕ່ລະປີສຳລັບ"
+
+#: qt/manageprofiles/tab_remove_retention.py:375
+msgid "all years."
+msgstr "ທຸກໆປີ."
+
+#: qt/manageprofiles/tab_remove_retention.py:390
+msgid "… the free space is less than"
+msgstr "… ພື້ນທີ່ຫວ່າງໜ້ອຍກວ່າ"
+
+#: qt/manageprofiles/tab_remove_retention.py:395
+msgid "… the free inodes are less than"
+msgstr "… ໄອນອດ (inodes) ຫວ່າງໜ້ອຍກວ່າ"
+
+#: qt/manageprofiles/tab_remove_retention.py:404
+msgid "Remove oldest backup if …"
+msgstr "ລຶບການສຳຮອງຂໍ້ມູນທີ່ເກົ່າທີ່ສຸດ ຫາກ …"
+
+#: qt/net.launchpad.backintime.policy:21
+msgid "Authentication is required to run Back In Time as root."
+msgstr "ຕ້ອງມີການຢືນຢັນຕົວຕົນເພື່ອເປີດໃຊ້ Back In Time ໃນຖານະ root."
+
+#: qt/net.launchpad.backintime.policy:33 qt/net.launchpad.backintime.policy:43
+msgid ""
+"Authentication is required to change backup schedules triggered by external "
+"storage device connections."
+msgstr ""
+"ຕ້ອງມີການຢືນຢັນຕົວຕົນເພື່ອປ່ຽນແປງກຳນົດເວລາກຳນົດເວລາສຳຮອງຂໍ້ມູນທີ່ຖືກກະຕຸ້ນໂດຍການເຊື່ອມຕໍ່ອຸປະກອນເກັບຂໍ້ມູນພາຍນອກ."
+
+#: qt/placeswidget.py:54
+msgid "Shortcuts"
+msgstr "ທາງລັດ"
+
+#: qt/placeswidget.py:99
+msgid "Places"
+msgstr "ສະຖານທີ່"
+
+#: qt/placeswidget.py:100
+msgid "File System"
+msgstr "ລະບົບໄຟລ໌"
+
+#: qt/placeswidget.py:145
+msgid "Backup directories"
+msgstr "ໄດເຣັກທໍຣີສຳຮອງຂໍ້ມູນ"
+
+#: qt/qtsystrayicon.py:116
+#, python-brace-format
+msgid "Profile: {profile_name}"
+msgstr "ໂປຣໄຟລ໌: {profile_name}"
+
+#: qt/qtsystrayicon.py:119
+#, python-brace-format
+msgid "Profile: {profile_name} (by user \"{desktop_user}\")"
+msgstr "ໂປຣໄຟລ໌: {profile_name} (ໂດຍຜູ້ໃຊ້ \"{desktop_user}\")"
+
+#: qt/qtsystrayicon.py:148
+msgid "View Last Log"
+msgstr "ເບິ່ງບັນທຶກຫຼ້າສຸດ"
+
+#: qt/qtsystrayicon.py:154
+#, python-brace-format
+msgid "Start {appname}"
+msgstr "ເລີ່ມຕົ້ນ {appname}"
+
+#: qt/qtsystrayicon.py:246
+msgid "Working…"
+msgstr "ກຳລັງເຮັດວຽກ…"
+
+#: qt/qttools.py:520
+#, python-brace-format
+msgid "man page: {man_page_name}"
+msgstr "ໜ້າ man: {man_page_name}"
+
+#: qt/restoreconfigdialog.py:76
+msgid "Import configuration"
+msgstr "ນຳເຂົ້າການກຳນົດຄ່າ"
+
+#: qt/restoreconfigdialog.py:107
+msgid "No directory selected"
+msgstr "ບໍ່ໄດ້ເລືອກໄດເຣັກທໍຣີ"
+
+#: qt/restoreconfigdialog.py:156 qt/restoreconfigdialog.py:231
+msgid "Searching…"
+msgstr "ກຳລັງຄົ້ນຫາ…"
+
+#: qt/restoreconfigdialog.py:208
+#, python-brace-format
+msgid ""
+"Select the backup directory from which the configuration file should be "
+"imported. The path may look like: {samplePath}"
+msgstr ""
+"ເລືອກໄດເຣັກທໍຣີສຳຮອງຂໍ້ມູນທີ່ຈະນຳເຂົ້າໄຟລ໌ກຳນົດຄ່າ. ເສັ້ນທາງອາດຈະເປັນຄື: "
+"{samplePath}"
+
+#: qt/restoreconfigdialog.py:213
+msgid ""
+"If the directory is located on an external or remote drive, it must be "
+"manually mounted beforehand."
+msgstr ""
+"ຫາກໄດເຣັກທໍຣີຢູ່ໃນໄດຣຟ໌ພາຍນອກ ຫຼື ເຄື່ອງປາຍທາງ, ມັນຕ້ອງຖືກເຊື່ອມຕໍ່ (mount) "
+"ດ້ວຍຕົນເອງກ່ອນ."
+
+#: qt/restoreconfigdialog.py:234
+msgid "Scan again"
+msgstr "ສະແກນອີກຄັ້ງ"
+
+#: qt/restoreconfigdialog.py:253
+msgid "Show hidden directories"
+msgstr "ສະແດງໄດເຣັກທໍຣີທີ່ຊ່ອນຢູ່"
+
+#: qt/restoreconfigdialog.py:255
+msgid "Show/hide hidden directories (Ctrl+H)"
+msgstr "ສະແດງ/ຊ່ອນ ໄດເຣັກທໍຣີທີ່ຊ່ອນຢູ່ (Ctrl+H)"
+
+#: qt/restoreconfigdialog.py:308
+msgid "No config found in this directory."
+msgstr "ບໍ່ພົບການກຳນົດຄ່າໃນໄດເຣັກທໍຣີນີ້."
+
+#: qt/restoreconfigdialog.py:373
+msgid "Search complete."
+msgstr "ຄົ້ນຫາສຳເລັດ."
+
+#: qt/restoredialog.py:60
+msgid "Show full Log"
+msgstr "ສະແດງບັນທຶກເຕັມ"
+
+#: qt/restoredialog.py:123
+msgid ""
+"The restore is still running. The window cannot be closed until it is "
+"finished."
+msgstr "ການກູ້ຄືນຍັງຄົງດຳເນີນຢູ່. ບໍ່ສາມາດປິດໜ້າຈໍນີ້ໄດ້ຈົນກວ່າມັນຈະສຳເລັດ."
+
+#: qt/shutdowndlg.py:28
+msgid "Countdown to Shutdown"
+msgstr "ນັບຖອຍຫຼັງເພື່ອປິດເຄື່ອງ"
+
+#: qt/shutdowndlg.py:29
+msgid "The backup has finished."
+msgstr "ການສຳຮອງຂໍ້ມູນສຳເລັດແລ້ວ."
+
+#: qt/shutdowndlg.py:36
+msgid "Cancel Shutdown"
+msgstr "ຍົກເລີກການປິດເຄື່ອງ"
+
+#: qt/shutdowndlg.py:37
+msgid "Shutdown Now"
+msgstr "ປິດເຄື່ອງດຽວນີ້"
+
+#: qt/shutdowndlg.py:69
+#, python-brace-format
+msgid "The system will shut down in {n} second."
+msgid_plural "The system will shut down in {n} seconds."
+msgstr[0] "ລະບົບຈະປິດເຄື່ອງໃນອີກ {n} ວິນາທີ."
+
+#: qt/snapshotsdialog.py:62
+msgid "Options about comparing backups"
+msgstr "ຕົວເລືອກກ່ຽວກັບການປຽບທຽບການສຳຮອງຂໍ້ມູນ"
+
+#: qt/snapshotsdialog.py:74
+msgid "Parameters:"
+msgstr "ພາຣາມິເຕີ:"
+
+#: qt/snapshotsdialog.py:79
+msgid "Use %1 and %2 for path parameters"
+msgstr "ໃຊ້ %1 ແລະ %2 ສຳລັບພາຣາມິເຕີເສັ້ນທາງ"
+
+#: qt/snapshotsdialog.py:96
+msgid "Please set a diff command or press Cancel."
+msgstr "ກະລຸນາຕັ້ງຄ່າຄຳສັ່ງ diff ຫຼື ກົດ ຍົກເລີກ."
+
+#: qt/snapshotsdialog.py:102
+#, python-brace-format
+msgid ""
+"The command \"{cmd}\" cannot be found on this system. Please try something "
+"else or press Cancel."
+msgstr "ບໍ່ພົບຄຳສັ່ງ \"{cmd}\" ໃນລະບົບນີ້. ກະລຸນາລອງຄຳສັ່ງອື່ນ ຫຼື ກົດ ຍົກເລີກ."
+
+#: qt/snapshotsdialog.py:110
+#, python-brace-format
+msgid "No parameters set for the diff command. Using default value \"{params}\"."
+msgstr "ບໍ່ໄດ້ຕັ້ງຄ່າພາຣາມິເຕີສຳລັບຄຳສັ່ງ diff. ຈະໃຊ້ຄ່າເລີ່ມຕົ້ນ \"{params}\"."
+
+#: qt/snapshotsdialog.py:140 qt/timeline.py:118
+msgid "Backups"
+msgstr "ການສຳຮອງຂໍ້ມູນ"
+
+#: qt/snapshotsdialog.py:151
+msgid "Differing backups only"
+msgstr "ສະແດງສະເພາະການສຳຮອງຂໍ້ມູນທີ່ຕ່າງກັນ"
+
+#: qt/snapshotsdialog.py:160
+msgid "List only backups that are equal to:"
+msgstr "ສະແດງສະເພາະການສຳຮອງຂໍ້ມູນທີ່ຄືກັນກັບ:"
+
+#: qt/snapshotsdialog.py:172
+msgid "Deep check (more accurate, but slow)"
+msgstr "ກວດສອບແບບລະອຽດ (ຖືກຕ້ອງກວ່າ, ແຕ່ຊ້າ)"
+
+#: qt/snapshotsdialog.py:193
+msgid "Delete"
+msgstr "ລຶບ"
+
+#: qt/snapshotsdialog.py:198
+msgid "Select All"
+msgstr "ເລືອກທັງໝົດ"
+
+#: qt/snapshotsdialog.py:218
+msgid "Compare"
+msgstr "ປຽບທຽບ"
+
+#: qt/snapshotsdialog.py:233
+msgid "Go To"
+msgstr "ໄປຍັງ"
+
+#: qt/snapshotsdialog.py:235
+msgid "Options"
+msgstr "ຕົວເລືອກ"
+
+#: qt/snapshotsdialog.py:417
+msgid ""
+"It is not possible to compare a backup to itself, as the comparison would be"
+" redundant."
+msgstr ""
+"ບໍ່ສາມາດປຽບທຽບການສຳຮອງຂໍ້ມູນກັບຕົວມັນເອງໄດ້ ເພາະມັນເປັນການປຽບທຽບທີ່ຊໍ້າຊ້ອນ."
+
+#: qt/snapshotsdialog.py:467
+#, python-brace-format
+msgid "Really delete {file_or_dir} in backup {backup_id}?"
+msgstr "ຕ້ອງການລຶບ {file_or_dir} ໃນການສຳຮອງຂໍ້ມູນ {backup_id} ແທ້ຫຼືບໍ່?"
+
+#: qt/snapshotsdialog.py:472
+#, python-brace-format
+msgid "Really delete {file_or_dir} in {count} backups?"
+msgstr "ຕ້ອງການລຶບ {file_or_dir} ໃນ {count} ການສຳຮອງຂໍ້ມູນແທ້ຫຼືບໍ່?"
+
+#: qt/snapshotsdialog.py:475
+msgid "WARNING: This cannot be revoked."
+msgstr "ຄຳເຕືອນ: ສິ່ງນີ້ບໍ່ສາມາດຍົກເລີກ ຫຼື ກູ້ຄືນໄດ້."
+
+#: qt/snapshotsdialog.py:492
+#, python-brace-format
+msgid "Exclude {path} from future backups?"
+msgstr "ຍົກເວັ້ນ {path} ຈາກການສຳຮອງຂໍ້ມູນໃນອະນາຄົດຫຼືບໍ່?"
+
+#: qt/statusbar.py:85
+msgid "Root mode"
+msgstr "ໂໝດ Root"
+
+#: qt/statusbar.py:87
+msgid ""
+"Back In Time is currently running with root privileges (full system access)"
+msgstr "Back In Time ກຳລັງເຮັດວຽກດ້ວຍສິດທິ root (ເຂົ້າເຖິງລະບົບໄດ້ທັງໝົດ)"
+
+#: qt/timeline.py:65
+msgid "Today"
+msgstr "ມື້ນີ້"
+
+#: qt/timeline.py:70
+msgid "Yesterday"
+msgstr "ມື້ວານນີ້"
+
+#: qt/timeline.py:77
+msgid "This week"
+msgstr "ອາທິດນີ້"
+
+#: qt/timeline.py:82
+msgid "Last week"
+msgstr "ອາທິດແລ້ວ"
+
+#: qt/timeline.py:89
+msgid "This month"
+msgstr "ເດືອນນີ້"
+
+#: qt/timeline.py:96
+msgid "Last month"
+msgstr "ເດືອນແລ້ວ"
+
+#: qt/timeline.py:369
+#, python-brace-format
+msgid "Last check {time}"
+msgstr "ກວດສອບຫຼ້າສຸດ {time}"
+
+#: qt/timeline.py:402
+msgid "These are your files as they are right now. It is not a backup."
+msgstr "ເຫຼົ່ານີ້ແມ່ນໄຟລ໌ຂອງທ່ານໃນສະຖານະປັດຈຸບັນ. ມັນບໍ່ແມ່ນການສຳຮອງຂໍ້ມູນ."
+# REUSE-IgnoreEnd

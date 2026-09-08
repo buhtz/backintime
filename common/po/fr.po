@@ -18,10 +18,10 @@
 # REUSE-IgnoreStart
 msgid ""
 msgstr ""
-"Project-Id-Version: Back In Time 2.0.0-rc1\n"
+"Project-Id-Version: Back In Time 2.0.0-rc2\n"
 "Report-Msgid-Bugs-To: https://github.com/bit-team/backintime\n"
-"POT-Creation-Date: 2026-08-30 21:13+0200\n"
-"PO-Revision-Date: 2026-08-28 10:40+0000\n"
+"POT-Creation-Date: 2026-09-08 22:46+0200\n"
+"PO-Revision-Date: 2026-09-04 09:15+0000\n"
 "Last-Translator: Loufute <loufute@noreply.codeberg.org>\n"
 "Language-Team: French <https://translate.codeberg.org/projects/backintime/common/fr/>\n"
 "Language: fr\n"
@@ -548,24 +548,23 @@ msgstr "L'accès en écriture peut être restreint."
 
 #: common/tools.py:411
 msgid "Not enough free space on the device."
-msgstr ""
+msgstr "Espace libre insuffisant sur le périphérique."
 
 #: common/tools.py:415
 msgid "Not enough free space because the disk quota has been exceeded."
-msgstr ""
+msgstr "Espace libre insuffisant car le quota disque a été dépassé."
 
 #: common/tools.py:419
 msgid "Filesystem is read-only."
-msgstr ""
+msgstr "Le système de fichiers est en lecture seule."
 
 #: common/tools.py:422
 msgid "Unexpected error: "
-msgstr ""
+msgstr "Erreur inattendue : "
 
 #: common/tools.py:425
-#, fuzzy
 msgid "Creation failed:"
-msgstr "L'authentification SSH a échoué pour :"
+msgstr "La création a échoué :"
 
 #: common/tools.py:460
 #, python-brace-format
@@ -2122,11 +2121,11 @@ msgstr ""
 
 #: qt/manageprofiles/tab_general.py:478
 msgid "SSH profile setup failed"
-msgstr "L'installation du profil SSH a échoué"
+msgstr "La configuration du profil SSH a échoué"
 
 #: qt/manageprofiles/tab_general.py:522
 msgid "Profile setup failed"
-msgstr "L'installation du profil a échoué"
+msgstr "La configuration du profil a échoué"
 
 #: qt/manageprofiles/tab_general.py:657
 msgid "Backups are stored locally."
@@ -2462,19 +2461,19 @@ msgstr ""
 "Authentification nécessaire pour changer le calendrier de sauvegarde "
 "déclenché par les connexions de stockages externes."
 
-#: qt/placeswidget.py:53
+#: qt/placeswidget.py:54
 msgid "Shortcuts"
 msgstr "Raccourcis"
 
-#: qt/placeswidget.py:98
+#: qt/placeswidget.py:99
 msgid "Places"
 msgstr "Emplacements"
 
-#: qt/placeswidget.py:99
+#: qt/placeswidget.py:100
 msgid "File System"
 msgstr "Système de fichiers"
 
-#: qt/placeswidget.py:144
+#: qt/placeswidget.py:145
 msgid "Backup directories"
 msgstr "Répertoires sauvegardés"
 

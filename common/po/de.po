@@ -14,11 +14,11 @@
 # REUSE-IgnoreStart
 msgid ""
 msgstr ""
-"Project-Id-Version: Back In Time 2.0.0-rc1\n"
+"Project-Id-Version: Back In Time 2.0.0-rc2\n"
 "Report-Msgid-Bugs-To: https://github.com/bit-team/backintime\n"
-"POT-Creation-Date: 2026-08-30 21:13+0200\n"
-"PO-Revision-Date: 2026-08-19 19:25+0000\n"
-"Last-Translator: pixelcode <pixelcode@noreply.codeberg.org>\n"
+"POT-Creation-Date: 2026-09-08 22:46+0200\n"
+"PO-Revision-Date: 2026-09-01 06:42+0000\n"
+"Last-Translator: burned42 <burned42@noreply.codeberg.org>\n"
 "Language-Team: German <https://translate.codeberg.org/projects/backintime/common/de/>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
@@ -556,24 +556,25 @@ msgstr "Schreibzugriff kann eingeschränkt sein."
 
 #: common/tools.py:411
 msgid "Not enough free space on the device."
-msgstr ""
+msgstr "Nicht genügend freier Speicher auf dem Gerät."
 
 #: common/tools.py:415
 msgid "Not enough free space because the disk quota has been exceeded."
 msgstr ""
+"Nicht genügend freier Speicher, da das Speicherkontingent überschritten "
+"wurde."
 
 #: common/tools.py:419
 msgid "Filesystem is read-only."
-msgstr ""
+msgstr "Das Dateisystem ist schreibgeschützt."
 
 #: common/tools.py:422
 msgid "Unexpected error: "
-msgstr ""
+msgstr "Unerwarteter Fehler: "
 
 #: common/tools.py:425
-#, fuzzy
 msgid "Creation failed:"
-msgstr "SSH-Authentifizierung fehlgeschlagen für:"
+msgstr "Erstellung fehlgeschlagen:"
 
 #: common/tools.py:460
 #, python-brace-format
@@ -2446,19 +2447,19 @@ msgstr ""
 "Zur Änderung von Sicherungszeitplänen, die durch den Anschluss externer "
 "Speichergeräte ausgelöst werden, ist eine Authentifizierung erforderlich."
 
-#: qt/placeswidget.py:53
+#: qt/placeswidget.py:54
 msgid "Shortcuts"
 msgstr "Verknüpfungen"
 
-#: qt/placeswidget.py:98
+#: qt/placeswidget.py:99
 msgid "Places"
 msgstr "Orte"
 
-#: qt/placeswidget.py:99
+#: qt/placeswidget.py:100
 msgid "File System"
 msgstr "Dateisystem"
 
-#: qt/placeswidget.py:144
+#: qt/placeswidget.py:145
 msgid "Backup directories"
 msgstr "Sicherungsverzeichnisse"
 
