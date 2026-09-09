@@ -235,13 +235,37 @@ class PluginManager:
 
         candidates = self._find_plugin_candidates()
 
+        # e.g. /usr/share/backintime
+        base_path = Path(__file__).parent.parent
+
         known_plugins = [
-            Path('./common/plugins/usercallbackplugin.py').resolve(),
-            Path('./qt/plugins/notifyplugin.py').resolve(),
-            Path('./qt/plugins/systrayiconplugin.py').resolve(),
+            base_path / 'plugins/usercallbackplugin.py',
+            base_path / 'plugins/notifyplugin.py',
+            base_path / 'plugins/systrayiconplugin.py',
         ]
 
         unknown = set(candidates) - set(known_plugins)
+        unknown = list(unknown)
+
+        # WORKAROUND: Remove plugins found in the git repo
+        git_repo_plugins = [
+            str(Path('common/plugins/usercallbackplugin.py')),
+            str(Path('qt/plugins/notifyplugin.py')),
+            str(Path('qt/plugins/systrayiconplugin.py'))
+        ]
+        for u in unknown[:]:
+            for gp in git_repo_plugins:
+                if str(u).endswith(gp):
+                    unknown.remove(u)
+                    continue
+
+        # DEBUG
+        for c in candidates:
+            logger.debug(f'plugin candidate: {c}')
+        for k in known_plugins:
+            logger.debug(f'known plugin: {k}')
+        for u in unknown:
+            logger.debug(f'UNknown plugin: {u}')
 
         # See issue #2424 and module docstring for details.
         if len(unknown) != 0:
