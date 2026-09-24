@@ -50,7 +50,7 @@ class Backend:
         """Return the real backend source path."""
         raise NotImplementedError
 
-    def as_rsync_destination(self, path: Path) -> str:
+    def as_rsync_destination(self, path: Path | None = None) -> str:
         """Return ``path`` in the form required as an rsync destination.
 
         The return value may differ depending on the backend.
@@ -98,8 +98,12 @@ class LocalBackend(Backend):
         """Return the local source path"""
         return self.path
 
-    def as_rsync_destination(self, path: Path) -> str:
+    def as_rsync_destination(self, path: Path | None = None) -> str:
         """Return the local path unachnged as an rsync destination."""
+
+        if path is None:
+            path = self.path
+
         return str(path)
 
     def get_fingerprint_base(self) -> str:
@@ -166,7 +170,7 @@ class SSHBackend(Backend):
         """Return the source path on the remote machine"""
         return Path(self.host.path)
 
-    def as_rsync_destination(self, path: Path) -> str:
+    def as_rsync_destination(self, path: Path | None = None) -> str:
         """Convert a mounted path to the corresponding remote rsync
         destination.
 
@@ -180,8 +184,11 @@ class SSHBackend(Backend):
             backup@olaf:/Daten/Backup/.backintime/backintime/olaf/
             backup/profile/20260922-120000/backup
         """
-        relative = path.relative_to(self.path)
-        remote_path = self.source_path / relative
+        remote_path = self.source_path
+
+        if path is not None:
+            relative = path.relative_to(self.path)
+            remote_path = remote_path / relative
 
         return f'{self.host.user_host}:{remote_path}'
 

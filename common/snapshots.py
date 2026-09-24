@@ -2017,7 +2017,7 @@ class Snapshots:
             ssh_cmd = None
 
         return tools.free_space(
-            self.mount_manager.path,
+            self.mount_manager.backend.source_path,
             ssh_cmd
         )
 
