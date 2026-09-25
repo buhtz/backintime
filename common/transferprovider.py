@@ -12,7 +12,7 @@ The paths used for an rsync transfer are not necessarily identical to
 the paths used for normal filesystem operations. The TransferProvider
 provides suitable source and destination paths for an individual
 transfer and manages any temporary mounts required for that
-representation. That temporary mounts are created for the duration of
+representation. Temporary mounts are created for the duration of
 the transfer and removed afterwards.
 
 The four profile variants are handled as follows:
@@ -65,6 +65,48 @@ temporary transfer mounts.
 The TransferProvider must not assume that the path used by the
 MountManager is also a valid rsync source or destination.
 """
+from pathlib import Path
+import logger
+from mount import MountManager
+
 
 class TransferProvider:
-    pass
+    """Provide paths and temporary mounts required for rsync and similar
+    operations.
+    """
+    def __init__(self, mount_manager: MountManager, source, destination):
+        logger.debug(f'Init {__class__} : {source=} {destination=}')
+
+        self._mount_manager = mount_manager
+        self._source = source
+        self._destination = destination
+
+        self._transfer_source = None
+        self._transfer_destination = None
+
+    def __enter__(self):
+        # Prepare transfer, including temporary mounts.
+
+        if self._mount_manager.uses_ssh:
+            raise NotImplementedError
+
+        if self._mount_manager.uses_encryption:
+            raise NotImplementedError
+
+        # Local
+        self._transfer_source = self._source
+        self._transfer_destination = self._destination
+
+        return self
+
+    def __exit__(self, exc_type, exc_value, traceback):
+        # Cleanp temporary mounts.
+        pass
+
+    def source(self):
+        """Return the source path for the transfer."""
+        return self._transfer_source
+
+    def destination(self):
+        """Return the destination path for the transfer."""
+        return self._transfer_destination

@@ -206,6 +206,14 @@ class MountManager:
             else:
                 logger.debug('Password cache started')
 
+    @property
+    def uses_ssh(self):
+        return self.backend.TYPE is Backend.Type.SSH
+
+    @property
+    def uses_encryption(self):
+        return self.encryptor.TYPE is Encryptor.Type.GOCRYPTFS
+
     @contextmanager
     def mounted(self):
         """Mount on enter and umount on exit."""
